@@ -1,150 +1,338 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "GL/glut.h"
-#include "png/png.h"
+/**
+*	main.cpp
+*		2017/09/29	Mats
+*/
+
+#include <vector>
+#include "GL/glew.h"
+#include "GLFW/glfw3.h"
 #include "Constants.h"
+#include "GameMain.h"
+#include "image.h"
+#include "Vec2.h"
+#include "Vec4.h"
 
-#pragma comment(lib, "zlib.lib")
-#pragma comment(lib, "libpng.lib")
 
-GLuint texture;
 
-GLuint createTextureFromPNGFile(const char *filename) {
-	//長いので省略
-	//「libpngでPNGファイルを読み込む」のソース見てね
+GLuint g_texID;
+std::vector<CVec2> initializePos;
+std::vector<CVec2> endPos;
+std::vector<CVec4> rect;
 
-	FILE *fp;
-	png_structp pPng = NULL;
-	png_infop pInfo = NULL;
-	int depth, colorType, interlaceType;
-	unsigned int width, height;
-	int rowSize, imgSize;
-	unsigned int i;
-	unsigned char *data;
-	GLuint texture;
 
-	//PNGファイルを開く
-	fopen_s(&fp, filename, "rb");
-	if (!fp) {
-		fprintf(stderr, "createTextureFromPNGFile: Failed to fopen.");
-		return 0;
-	}
-
-	//PNGファイルを読み込むための構造体を作成
-	pPng = png_create_read_struct(
-		PNG_LIBPNG_VER_STRING,
-		NULL, NULL, NULL
-	);
-	pInfo = png_create_info_struct(pPng);
-
-	//初期化
-	png_init_io(pPng, fp);
-
-	//画像情報を読み込み
-	//画像の幅、高さ、ビット深度、色の表現方法、インターレースの情報を取得する
-	png_read_info(pPng, pInfo);
-	png_get_IHDR(pPng, pInfo,
-		&width, &height,
-		&depth, &colorType,
-		&interlaceType, NULL, NULL
-	);
-
-	//RGBとRGBAのみに対応
-	if (colorType != PNG_COLOR_TYPE_RGB && colorType != PNG_COLOR_TYPE_RGBA) {
-		fprintf(stderr, "createTextureFromPNGFile: Supprted color type are RGB and RGBA.");
-		return 0;
-	}
-
-	//インターレースは非対応
-	if (interlaceType != PNG_INTERLACE_NONE) {
-		fprintf(stderr, "createTextureFromPNGFile: Interlace image is not supprted.");
-		return 0;
-	}
-
-	//1行のデータサイズと画像の高さから必要なメモリ量を計算して、メモリ確保
-	rowSize = png_get_rowbytes(pPng, pInfo);
-	imgSize = rowSize * height;
-	data = (unsigned char*)malloc(imgSize);
-
-	//ピクセルの読み込み
-	for (i = 0; i < height; i++) {
-		png_read_row(pPng, &data[i * rowSize], NULL);
-	}
-
-	png_read_end(pPng, pInfo);
-
-	//OpenGLテクスチャの作成
-	glGenTextures(1, &texture);
-
-	//テクスチャを選択
-	glBindTexture(GL_TEXTURE_2D, texture);
-
-	//テクスチャにPNGファイルから読み込んだピクセルを書き込む
-	glTexImage2D(
-		GL_TEXTURE_2D, 0, GL_RGBA,
-		width, height,
-		0, GL_RGBA, GL_UNSIGNED_BYTE, data
-	);
-
-	//後片付け
-	free(data);
-	png_destroy_info_struct(pPng, &pInfo);
-	png_destroy_read_struct(&pPng, NULL, NULL);
-	fclose(fp);
-
-	return texture;
-
+/**
+*GLFWからのエラー報告を処理する
+*
+*@param	error	エラー番号
+*@para,	desc	エラー内容
+*/
+void ErrorCallback(int error, const char* desc)
+{
+	std::cerr << "ERROR : " << desc << std::endl;
 }
 
-void display(void) {
+enum class COL_TYPE : int
+{
+	RGB = 0,
+	RGBA = 1,
+};
 
-	glClear(GL_COLOR_BUFFER_BIT);
+enum class TEX_TYPE : int
+{
+	BMP = 0,
+	PNG = 1,
+	JPEG = 2,
+};
 
+/*
+void render()
+{
+static const GLfloat vtx[] = {
+0, 120,
+200, 120,
+200, 320,
+0, 320,
+};
+glVertexPointer(2, GL_FLOAT, 0, vtx);
+
+//テクスチャの領域指定
+static const GLfloat texuv[] = {
+1.0f, 0.0f,
+0.0f, 0.0f,
+0.0f, 1.0f,
+1.0f, 1.0f,
+};
+
+
+
+/*
+//cameraPos
+gluLookAt(
+0.0f, 0.0f, 0.0f,
+0.0f, 0.0f, -10.0f,
+0.0f, 1.0f, 0.0f
+);
+//
+glTranslated(0.0f, 0.0f, -579.41f);
+
+glTexCoordPointer(2, GL_FLOAT, 0, texuv);
+//テクスチャの画像指定
+glBindTexture(GL_TEXTURE_2D, g_texID);
+
+glDrawArrays(GL_QUADS, 0, 4);
+
+
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+}
+*/
+
+void render()
+{
+	for (int texID = 0;texID < g_texID;texID++)
+	{
+		//場所指定
+		const GLfloat vtx2[] = {
+			initializePos[texID].x, initializePos[texID].y,
+			endPos[texID].x, initializePos[texID].y,
+			endPos[texID].x, endPos[texID].y,
+			initializePos[texID].x, endPos[texID].y,
+		};
+		glVertexPointer(2, GL_FLOAT, 0, vtx2);
+
+		//テクスチャの領域指定
+		const GLfloat texuv[] = {
+			rect[texID].x, rect[texID].z,
+			rect[texID].y, rect[texID].z,
+			rect[texID].y, rect[texID].w,
+			rect[texID].x, rect[texID].w,
+		};
+
+		//頂点の設定
+		glTexCoordPointer(2, GL_FLOAT, 0, texuv);
+
+		//テクスチャの画像指定
+		glBindTexture(GL_TEXTURE_2D, texID);
+
+		//四角ポリゴン表示
+		glDrawArrays(GL_QUADS, 0, 4);
+
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	}
+}
+
+/*
+void setupTexture(GLuint texID, const char *file, const int width, const int height)
+{
+// 画像データのロード
+std::ifstream fstr(file, std::ios::binary);
+assert(fstr);
+
+const size_t fileSize = static_cast<size_t>(fstr.seekg(0, fstr.end).tellg());
+fstr.seekg(0, fstr.beg);
+std::vector<char> textureBuffer(fileSize);
+fstr.read(&textureBuffer[0], fileSize);
+
+//画像データとテクスチャiDを結びつける
+glBindTexture(GL_TEXTURE_2D, texID);
+glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, &textureBuffer[0]);
+
+//テクスチャの各種設定
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+}
+*/
+
+/**
+*テクスチャの読み込み、IDの設定、画像範囲
+*
+*@param	texID	ID
+*@param	file	ファイルパス
+*@param	posLeft		画像の左の位置
+*@param	posRight	画像の右の位置
+*@param	posBottom	画像の下の位置
+*@param	posTop		画像の上の位置
+*@param	rect		矩形
+*/
+void setupTexture(GLuint texID, const char *file, const float posLeft, const float posRight, const float posBottom, const float posTop, const CVec4 rect4, const COL_TYPE col_type, const TEX_TYPE tex_type)
+{
+	CImage* tex = NULL;
+	switch (tex_type)
+	{
+	case TEX_TYPE::BMP:
+		tex = new CBmpImage();
+		if (tex->load(file) == false)
+		{
+			std::cerr << "ERROR : 画像の読み込みに失敗" << std::endl;
+		}
+		break;
+
+	case TEX_TYPE::PNG:
+		tex = new CPngImage();
+		if (tex->load(file) == false)
+		{
+			std::cerr << "ERROR : 画像の読み込みに失敗" << std::endl;
+		}
+		break;
+
+	default:
+		break;
+	}
+
+	//画像データとテクスチャiDを結びつける
+	glBindTexture(GL_TEXTURE_2D, texID);
+	switch (col_type)
+	{
+	case COL_TYPE::RGB:
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tex->m_width, tex->m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, tex->m_bits);
+		break;
+	case COL_TYPE::RGBA:
+		//テクスチャにPNGファイルから読み込んだピクセルを書き込む
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex->m_width, tex->m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex->m_bits);
+		break;
+
+	default:
+		break;
+	}
+
+	//色々設定
+	initializePos.push_back(CVec2(posLeft, posBottom));
+	endPos.push_back(CVec2(posRight, posTop));
+
+	//画像の矩形範囲を設定
+	CVec4 changerect4 = CVec4(rect4.x / tex->m_width, rect4.y / tex->m_width, rect4.z / tex->m_height, rect4.w / tex->m_height);
+	rect.push_back(CVec4(changerect4));
+
+	//texIDを空いているところへ
+	glGenTextures(1, &g_texID);
+
+	if (tex == NULL)
+	{
+		std::cerr << "BMP,PNG,JPEGなんでもないです" << std::endl;
+	}
+}
+
+
+/**
+*	@file main.cpp
+*/
+//エントリーポイント
+int main()
+{
+	glfwSetErrorCallback(ErrorCallback);
+
+	//GL_TRUE/GL_FALSEはOpenGLの真偽値マクロ
+	//OpenGLおよびGLFWの初期化、成功するとGL_TRUEが返ってくる
+	if (glfwInit() != GL_TRUE)
+	{
+		return 1;
+	}
+
+	/*
+	*memo
+	*glfwCreateWindowはグラフィックス描画用のウィンドウを作成する関数
+	*	引数:描画範囲の縦、横、ウィンドウのタイトルバーに表示される文字、フルスクリーンモード用のパラメータ
+	*/
+	GLFWwindow* window = glfwCreateWindow(WINDOW_SIZE, "WhiteGL", nullptr, nullptr);
+	if (!window)
+	{
+		glfwTerminate();
+		return 1;
+	}
+
+	//指定したウィンドウに対応するOpenGLコンテキストを描画対象に設定する関数
+	glfwMakeContextCurrent(window);
+	/*
+	*memo
+	*GLFWの次はGLEWの初期化
+	*GLEWには終了させる関数がない、
+	*	GLEWは複雑な終了処理を必要とするオブジェクトを作成しないため
+	*	デフォルトの終了方法で十分
+	*/
+	if (glewInit() != GLEW_OK)
+	{
+		std::cerr << "ERROR : GLEWの初期化に失敗。" << std::endl;
+		glfwTerminate();
+		return 1;
+	}
+
+	/*
+	// モニタとの同期
+	glfwSwapInterval(1);
+
+	// 描画範囲の指定
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0.0f, g_windowWidth, 0.0f, g_windowHeight, -1.0f, 1.0f);
+
+	//テクスチャのロード
+	glGenTextures(1, &g_texID);
+	setupTexture(g_texID, PASS"Sparrow.bmp", 200, 200);
+	*/
+	// モニタとの同期
+	//glfwSwapInterval(1);
+
+	// 描画範囲の指定
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
+	glOrtho(0.0f, WIDTH, 0.0f, HEIGHT, -1.0f, 1.0f);
+
+	//================================
+	//テクスチャの描画
+	//================================
+	//使用許可
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	glBegin(GL_TRIANGLE_STRIP);
-	glTexCoord2f(0.0f, 0.0f);
-	glVertex2f(-0.2f, 0.2f);
-	glTexCoord2f(1.0f, 0.0f);
-	glVertex2f(0.2f, 0.2f);
-	glTexCoord2f(0.0f, 1.0f);
-	glVertex2f(-0.2f, -0.2f);
-	glTexCoord2f(1.0f, 1.0f);
-	glVertex2f(0.2f, -0.2f);
-	glEnd();
 
-	glDisable(GL_TEXTURE_2D);
+	setupTexture(g_texID, PASS"Sparrow.bmp", 0.0f, 200.0f, 100.0f, 300.0f, CVec4(0.0f, 200.0f, 0.0f, 200.0f), COL_TYPE::RGB, TEX_TYPE::BMP);
 
-	glFlush();
+	setupTexture(g_texID, PASS"Sparrow.bmp", 200.0f, 400.0f, 100.0f, 300.0f, CVec4(100.0f, 200.0f, 100.0f, 200.0f), COL_TYPE::RGB, TEX_TYPE::BMP);
 
-}
+	setupTexture(g_texID, PASS"player.bmp", 400.0f, 464.0f, 100.0f, 164.0f, CVec4(0.0f, 64.0f, 128.0f, 192.0f), COL_TYPE::RGB, TEX_TYPE::BMP);
 
-int main(int argc, char *argv[]) {
+	setupTexture(g_texID, PASS"player.png", 0.0f, 320.0f, 300.0f, 492.0f, CVec4(0.0f, 320.0f, 0.0f, 192.0f), COL_TYPE::RGBA, TEX_TYPE::PNG);
 
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_RGBA);
-	glutCreateWindow(argv[0]);
-	glutDisplayFunc(display);
+	CGameMain* gameMain = new CGameMain();
 
-	texture = createTextureFromPNGFile(PASS"Attackw.png");
-	if (!texture) {
-		fprintf(stderr, "Failed to createTextureFromPNGFile\n");
+	/**
+	*memo
+	*メインループ
+	*毎フレーム実行される
+	*glfwWindowShouldCloseはウィンドウを閉じるべきかどうかを調べる関数
+	*	引数で渡されたウィンドウに対してOS等から終了要求が来ていなければ0,着ていれば0以外を返す
+	*GLFWで作成したウィンドウが1つだけなら終了判定はこの関数を見るだけで十分
+	*/
+	while (!glfwWindowShouldClose(window))
+	{
+		glClearColor(0.1f, 0.3f, 0.5f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glfwPollEvents();
+
+		render();
+		gameMain->update();
+
+		glfwSwapBuffers(window);
 	}
 
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-	//テクスチャサンプリング設定
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	//透過設定
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	glutMainLoop();
+	/*
+	if (glfwWindowShouldClose(window))
+	{
+	return 0;
+	}
+	*/
+	//描画使用許可の破棄
+	glDisable(GL_TEXTURE_2D);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glfwTerminate();
 
 	return 0;
-
 }
