@@ -19,6 +19,7 @@ std::vector<CVec2> initializePos;
 std::vector<CVec2> endPos;
 std::vector<CVec4> rect;
 
+CGameMain* gameMain;
 
 /**
 *GLFW‚©‚ç‚ÌƒGƒ‰[•ñ‚ğˆ—‚·‚é
@@ -300,7 +301,11 @@ int main()
 
 	setupTexture(g_texID, PASS"player.png", 0.0f, 320.0f, 300.0f, 492.0f, CVec4(0.0f, 320.0f, 0.0f, 192.0f), COL_TYPE::RGBA, TEX_TYPE::PNG);
 
-	CGameMain* gameMain = new CGameMain();
+	//“§‰ßİ’è
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	gameMain = new CGameMain();
 
 	/**
 	*memo

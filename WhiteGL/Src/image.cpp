@@ -188,9 +188,97 @@ bool CTgaImage::load(const std::string& fileName)
 	return true;
 }
 
+bool CPngImage::loadchara(const char* fileName)
+{
+	//1
+	FILE *fp;
+	png_structp pPng = NULL;
+	png_infop pInfo = NULL;
+	int depth, colorType, interlaceType;
+	unsigned int width, height;
+	int rowSize, imgSize;
+	unsigned int i;
+	unsigned char *data;
+
+	
+
+	//PNGファイルを開く
+	fopen_s(&fp, fileName, "rb");
+	if (!fp) {
+		fprintf(stderr, "createTextureFromPNGFile: Failed to fopen.");
+		return false;
+	}
+
+	//PNGファイルを読み込むための構造体を作成
+	pPng = png_create_read_struct(
+		PNG_LIBPNG_VER_STRING,
+		NULL, NULL, NULL
+	);
+	pInfo = png_create_info_struct(pPng);
+
+	//初期化
+	png_init_io(pPng, fp);
+
+	//画像情報を読み込み
+	//画像の幅、高さ、ビット深度、色の表現方法、インターレースの情報を取得する
+	png_read_info(pPng, pInfo);
+	png_get_IHDR(pPng, pInfo,
+		&width, &height,
+		&depth, &colorType,
+		&interlaceType, NULL, NULL
+	);
+	
+	//RGBとRGBAのみに対応
+	if (colorType != PNG_COLOR_TYPE_RGB && colorType != PNG_COLOR_TYPE_RGBA) {
+		fprintf(stderr, "createTextureFromPNGFile: Supprted color type are RGB and RGBA.");
+		return false;
+	}
+	
+	//インターレースは非対応
+	if (interlaceType != PNG_INTERLACE_NONE) {
+		fprintf(stderr, "createTextureFromPNGFile: Interlace image is not supprted.");
+		return false;
+	}
+
+	//1行のデータサイズと画像の高さから必要なメモリ量を計算して、メモリ確保
+	rowSize = png_get_rowbytes(pPng, pInfo);
+	imgSize = rowSize * height;
+	data = (unsigned char*)malloc(imgSize);
+
+	//ピクセルの読み込み
+	for (i = 0; i < height; i++) {
+		png_read_row(pPng, &data[i * rowSize], NULL);
+	}
+
+	png_read_end(pPng, pInfo);
+
+	
+
+	this->m_width = width;
+	this->m_height = height;
+	this->m_bits = data;
+
+	this->m_bpp = depth;
+	this->m_format = GL_RGBA;
+	this->m_internalFormat = GL_RGBA;
+
+	//後片付け
+	free(data);
+	png_destroy_info_struct(pPng, &pInfo);
+	png_destroy_read_struct(&pPng, NULL, NULL);
+	fclose(fp);
+
+	return true;
+}
+
 bool CPngImage::load(const std::string& fileName)
 {
-	
+	//2
+	png_structp pPng = NULL;
+	png_infop pInfo = NULL;
+	unsigned char *data; // 生データを保持する
+	FILE       *fp = NULL;
+
 	unsigned int width, height;
 	int depth, colortype, interlacetype;
 	std::string filename = fileName;
@@ -234,7 +322,7 @@ bool CPngImage::load(const std::string& fileName)
 	this->m_bpp = depth;
 	this->m_format = GL_RGBA;
 	this->m_internalFormat = GL_RGBA;
-
+	
 	
 	return true;
 }

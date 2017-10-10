@@ -55,6 +55,8 @@ public:
 	*/
 	virtual bool load(const std::string& fileName) = 0;
 
+	virtual bool loadchara(const char* fileName) = 0;
+
 
 };
 
@@ -72,6 +74,8 @@ public:
 	*/
 	bool load(const std::string& fileName)override;
 
+	bool loadchara(const char* fileName)override { return false; }
+
 };
 
 //=====================================================
@@ -86,6 +90,8 @@ public:
 	*@return true...成功
 	*/
 	bool load(const std::string& fileName)override;
+
+	bool loadchara(const char* fileName)override { return false; }
 };
 
 //======================================================
@@ -93,25 +99,15 @@ public:
 //=====================================================
 class CPngImage : public CImage
 {
-private:
-	png_structp pPng = NULL;
-	png_infop pInfo = NULL;
-	unsigned char *data; // 生データを保持する
-	FILE       *fp = NULL;
 public:
-	~CPngImage()
-	{
-		//後片付け
-		free(data);
-		png_destroy_info_struct(pPng, &pInfo);
-		png_destroy_read_struct(&pPng, NULL, NULL);
-		fclose(fp);
-	}
 	/**
 	*@desc	BMPファイルの読み込み
 	*@param	fileName BMPファイル名
 	*@return true...成功
 	*/
 	bool load(const std::string& fileName)override;
+
+	bool loadchara(const char* fileName)override;
+
 	
 };
