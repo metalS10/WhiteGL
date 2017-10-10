@@ -13,11 +13,24 @@
 #include "Vec4.h"
 
 
+enum class COL_TYPE : int
+{
+	RGB = 0,
+	RGBA = 1,
+};
+
+enum class TEX_TYPE : int
+{
+	BMP = 0,
+	PNG = 1,
+	JPEG = 2,
+};
 
 GLuint g_texID;
 std::vector<CVec2> initializePos;
 std::vector<CVec2> endPos;
 std::vector<CVec4> rect;
+std::vector<TEX_TYPE> texType;
 
 CGameMain* gameMain;
 
@@ -32,18 +45,6 @@ void ErrorCallback(int error, const char* desc)
 	std::cerr << "ERROR : " << desc << std::endl;
 }
 
-enum class COL_TYPE : int
-{
-	RGB = 0,
-	RGBA = 1,
-};
-
-enum class TEX_TYPE : int
-{
-	BMP = 0,
-	PNG = 1,
-	JPEG = 2,
-};
 
 /*
 void render()
@@ -92,28 +93,54 @@ void render()
 {
 	for (int texID = 0;texID < g_texID;texID++)
 	{
-		//場所指定
-		const GLfloat vtx2[] = {
-			initializePos[texID].x, initializePos[texID].y,
-			endPos[texID].x, initializePos[texID].y,
-			endPos[texID].x, endPos[texID].y,
-			initializePos[texID].x, endPos[texID].y,
-		};
-		glVertexPointer(2, GL_FLOAT, 0, vtx2);
+		if (texType[texID] == TEX_TYPE::BMP)
+		{			
+			//場所指定
+			const GLfloat vtx2[] = {
+				initializePos[texID].x, initializePos[texID].y,
+				endPos[texID].x, initializePos[texID].y,
+				endPos[texID].x, endPos[texID].y,
+				initializePos[texID].x, endPos[texID].y,
+			};
+			glVertexPointer(2, GL_FLOAT, 0, vtx2);
 
-		//テクスチャの領域指定
-		const GLfloat texuv[] = {
-			rect[texID].x, rect[texID].z,
-			rect[texID].y, rect[texID].z,
-			rect[texID].y, rect[texID].w,
-			rect[texID].x, rect[texID].w,
-		};
+			//テクスチャの領域指定
+			const GLfloat texuv[] = {
+				rect[texID].x, rect[texID].z,
+				rect[texID].y, rect[texID].z,
+				rect[texID].y, rect[texID].w,
+				rect[texID].x, rect[texID].w,
+			};
+			//頂点の設定
+			glTexCoordPointer(2, GL_FLOAT, 0, texuv);
 
-		//頂点の設定
-		glTexCoordPointer(2, GL_FLOAT, 0, texuv);
+			//テクスチャの画像指定
+			glBindTexture(GL_TEXTURE_2D, texID);
+		}
+		else if (texType[texID] == TEX_TYPE::PNG)
+		{
+			//場所指定
+			const GLfloat vtx2[] = {
+				initializePos[texID].x, initializePos[texID].y,
+				endPos[texID].x, initializePos[texID].y,
+				endPos[texID].x, endPos[texID].y,
+				initializePos[texID].x, endPos[texID].y,
+			};
+			glVertexPointer(2, GL_FLOAT, 0, vtx2);
 
-		//テクスチャの画像指定
-		glBindTexture(GL_TEXTURE_2D, texID);
+			//テクスチャの領域指定
+			const GLfloat texuv[] = {
+				rect[texID].x, rect[texID].w,
+				rect[texID].y, rect[texID].w,
+				rect[texID].y, rect[texID].z,
+				rect[texID].x, rect[texID].z,
+			};
+			//頂点の設定
+			glTexCoordPointer(2, GL_FLOAT, 0, texuv);
+
+			//テクスチャの画像指定
+			glBindTexture(GL_TEXTURE_2D, texID);
+		}
 
 		//四角ポリゴン表示
 		glDrawArrays(GL_QUADS, 0, 4);
@@ -195,7 +222,7 @@ void setupTexture(GLuint texID, const char *file, const float posLeft, const flo
 	case COL_TYPE::RGBA:
 		//テクスチャにPNGファイルから読み込んだピクセルを書き込む
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex->m_width, tex->m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex->m_bits);
+		glTexImage2D(GL_TEXTURE_2D, 0, tex->m_format, tex->m_width, tex->m_height, 0, tex->m_internalFormat, GL_UNSIGNED_BYTE, tex->m_bits);
 		break;
 
 	default:
@@ -205,6 +232,7 @@ void setupTexture(GLuint texID, const char *file, const float posLeft, const flo
 	//色々設定
 	initializePos.push_back(CVec2(posLeft, posBottom));
 	endPos.push_back(CVec2(posRight, posTop));
+	texType.push_back(tex_type);
 
 	//画像の矩形範囲を設定
 	CVec4 changerect4 = CVec4(rect4.x / tex->m_width, rect4.y / tex->m_width, rect4.z / tex->m_height, rect4.w / tex->m_height);
@@ -299,7 +327,7 @@ int main()
 
 	setupTexture(g_texID, PASS"player.bmp", 400.0f, 464.0f, 100.0f, 164.0f, CVec4(0.0f, 64.0f, 128.0f, 192.0f), COL_TYPE::RGB, TEX_TYPE::BMP);
 
-	setupTexture(g_texID, PASS"Mel.png", 0.0f, 320.0f, 300.0f, 492.0f, CVec4(0.0f, 320.0f, 0.0f, 192.0f), COL_TYPE::RGBA, TEX_TYPE::PNG);
+	setupTexture(g_texID, PASS"kuribo.png", 0.0f, 320.0f, 300.0f, 492.0f, CVec4(0.0f, 320.0f, 0.0f, 192.0f), COL_TYPE::RGBA, TEX_TYPE::PNG);
 
 	//透過設定
 	glEnable(GL_BLEND);
