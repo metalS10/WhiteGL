@@ -154,6 +154,7 @@
     <ClCompile Include="Src\image.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Node.cpp" />
+    <ClCompile Include="Src\RendTexture.cpp" />
     <ClCompile Include="Src\Sprite.cpp" />
     <ClCompile Include="Src\Texture.cpp" />
   </ItemGroup>
@@ -166,6 +167,7 @@
     <ClInclude Include="Src\image.h" />
     <ClInclude Include="Src\Node.h" />
     <ClInclude Include="Src\Rect.h" />
+    <ClInclude Include="Src\RendTexture.h" />
     <ClInclude Include="Src\Sprite.h" />
     <ClInclude Include="Src\Texture.h" />
     <ClInclude Include="Src\Vec2.h" />
