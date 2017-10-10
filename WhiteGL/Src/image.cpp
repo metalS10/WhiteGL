@@ -190,7 +190,6 @@ bool CTgaImage::load(const std::string& fileName)
 
 bool CPngImage::load(const std::string& fileName)
 {
-	//1
 	FILE *fp;
 	png_structp pPng = NULL;
 	png_infop pInfo = NULL;
@@ -262,13 +261,8 @@ bool CPngImage::load(const std::string& fileName)
 	this->m_format = GL_RGBA;
 	this->m_internalFormat = GL_RGBA;
 
-	//Œã•Ð•t‚¯
-	free(data);
-	png_destroy_info_struct(pPng, &pInfo);
-	png_destroy_read_struct(&pPng, NULL, NULL);
-	fclose(fp);
 
-	//2
+	//2‚Â‚ß‚Ì‚â‚è•û
 	/*
 	png_structp pPng = NULL;
 	png_infop pInfo = NULL;
