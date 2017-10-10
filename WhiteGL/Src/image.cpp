@@ -228,7 +228,7 @@ bool CPngImage::load(const std::string& fileName)
 	);
 
 	//RGB‚ÆRGBA‚Ì‚Ý‚É‘Î‰ž
-	if (colorType != PNG_COLOR_TYPE_RGB && colorType != PNG_COLOR_TYPE_RGBA) {
+	if (colorType != PNG_COLOR_TYPE_RGB && colorType != PNG_COLOR_TYPE_RGBA && colorType != PNG_COLOR_TYPE_PALETTE && colorType != PNG_COLOR_TYPE_GRAY && colorType != PNG_COLOR_TYPE_RGB_ALPHA) {
 		fprintf(stderr, "createTextureFromPNGFile: Supprted color type are RGB and RGBA.");
 		return false;
 	}
@@ -258,8 +258,8 @@ bool CPngImage::load(const std::string& fileName)
 	this->m_bits = data;
 
 	this->m_bpp = depth;
-	this->m_format = GL_RGBA;
-	this->m_internalFormat = GL_RGBA;
+	this->m_format = colorType;
+	this->m_internalFormat = interlaceType;
 
 
 	//2‚Â‚ß‚Ì‚â‚è•û

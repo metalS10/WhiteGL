@@ -187,9 +187,13 @@ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 *@param	posTop		画像の上の位置
 *@param	rect		矩形
 */
-void setupTexture(GLuint texID, const char *file, const float posLeft, const float posRight, const float posBottom, const float posTop, const CVec4 rect4, const COL_TYPE col_type, const TEX_TYPE tex_type)
+void setupTexture(GLuint texID, const char *file, const float posLeft, const float posRight, const float posBottom, const float posTop, const CVec4 rect4, const TEX_TYPE tex_type)
 {
 	CImage* tex = NULL;
+
+	//画像データとテクスチャiDを結びつける
+	glBindTexture(GL_TEXTURE_2D, texID);
+
 	switch (tex_type)
 	{
 	case TEX_TYPE::BMP:
@@ -198,6 +202,8 @@ void setupTexture(GLuint texID, const char *file, const float posLeft, const flo
 		{
 			std::cerr << "ERROR : 画像の読み込みに失敗" << std::endl;
 		}
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tex->m_width, tex->m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, tex->m_bits);
+
 		break;
 
 	case TEX_TYPE::PNG:
@@ -206,28 +212,35 @@ void setupTexture(GLuint texID, const char *file, const float posLeft, const flo
 		{
 			std::cerr << "ERROR : 画像の読み込みに失敗" << std::endl;
 		}
+
+		if (tex->m_format == PNG_COLOR_TYPE_RGBA)
+		{
+			//テクスチャにPNGファイルから読み込んだピクセルを書き込む
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex->m_width, tex->m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex->m_bits);
+		}
+		else if (tex->m_format == PNG_COLOR_TYPE_RGB)
+		{
+			//テクスチャにPNGファイルから読み込んだピクセルを書き込む
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tex->m_width, tex->m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, tex->m_bits);
+		}
+		else if (tex->m_format == PNG_COLOR_TYPE_PALETTE)
+		{
+			//テクスチャにPNGファイルから読み込んだピクセルを書き込む
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_MAX_PALETTE_MATRICES_ARB, tex->m_width, tex->m_height, 0, GL_MAX_PALETTE_MATRICES_ARB, GL_UNSIGNED_BYTE, tex->m_bits);
+			//paletteってどう描画するんだろう
+		}
+		else if (tex->m_format == PNG_COLOR_TYPE_GRAY)
+		{
+			//テクスチャにPNGファイルから読み込んだピクセルを書き込む
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, tex->m_width, tex->m_height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, tex->m_bits);
+			//grayってどう描画するんだろう
+		}
 		break;
 
 	default:
 		break;
 	}
 
-	//画像データとテクスチャiDを結びつける
-	glBindTexture(GL_TEXTURE_2D, texID);
-	switch (col_type)
-	{
-	case COL_TYPE::RGB:
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tex->m_width, tex->m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, tex->m_bits);
-		break;
-	case COL_TYPE::RGBA:
-		//テクスチャにPNGファイルから読み込んだピクセルを書き込む
-
-		glTexImage2D(GL_TEXTURE_2D, 0, tex->m_format, tex->m_width, tex->m_height, 0, tex->m_internalFormat, GL_UNSIGNED_BYTE, tex->m_bits);
-		break;
-
-	default:
-		break;
-	}
 
 	//色々設定
 	initializePos.push_back(CVec2(posLeft, posBottom));
@@ -321,13 +334,13 @@ int main()
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 
-	setupTexture(g_texID, PASS"Sparrow.bmp", 0.0f, 200.0f, 100.0f, 300.0f, CVec4(0.0f, 200.0f, 0.0f, 200.0f), COL_TYPE::RGB, TEX_TYPE::BMP);
+	setupTexture(g_texID, PASS"Sparrow.bmp", 0.0f, 200.0f, 100.0f, 300.0f, CVec4(0.0f, 200.0f, 0.0f, 200.0f), TEX_TYPE::BMP);
 
-	setupTexture(g_texID, PASS"Sparrow.bmp", 200.0f, 400.0f, 100.0f, 300.0f, CVec4(100.0f, 200.0f, 100.0f, 200.0f), COL_TYPE::RGB, TEX_TYPE::BMP);
+	setupTexture(g_texID, PASS"Sparrow.bmp", 200.0f, 400.0f, 100.0f, 300.0f, CVec4(100.0f, 200.0f, 100.0f, 200.0f),TEX_TYPE::BMP);
 
-	setupTexture(g_texID, PASS"player.bmp", 400.0f, 464.0f, 100.0f, 164.0f, CVec4(0.0f, 64.0f, 128.0f, 192.0f), COL_TYPE::RGB, TEX_TYPE::BMP);
+	setupTexture(g_texID, PASS"player.bmp", 400.0f, 464.0f, 100.0f, 164.0f, CVec4(0.0f, 64.0f, 128.0f, 192.0f), TEX_TYPE::BMP);
 
-	setupTexture(g_texID, PASS"kuribo.png", 0.0f, 320.0f, 300.0f, 492.0f, CVec4(0.0f, 320.0f, 0.0f, 192.0f), COL_TYPE::RGBA, TEX_TYPE::PNG);
+	setupTexture(g_texID, PASS"kuribo.png", 0.0f, 320.0f, 300.0f, 492.0f, CVec4(0.0f, 320.0f, 0.0f, 192.0f),TEX_TYPE::PNG);
 
 	//透過設定
 	glEnable(GL_BLEND);
