@@ -188,7 +188,7 @@ bool CTgaImage::load(const std::string& fileName)
 	return true;
 }
 
-bool CPngImage::loadchara(const char* fileName)
+bool CPngImage::load(const std::string& fileName)
 {
 	//1
 	FILE *fp;
@@ -200,10 +200,10 @@ bool CPngImage::loadchara(const char* fileName)
 	unsigned int i;
 	unsigned char *data;
 
-	
+
 
 	//PNGファイルを開く
-	fopen_s(&fp, fileName, "rb");
+	fopen_s(&fp, fileName.c_str(), "rb");
 	if (!fp) {
 		fprintf(stderr, "createTextureFromPNGFile: Failed to fopen.");
 		return false;
@@ -227,13 +227,13 @@ bool CPngImage::loadchara(const char* fileName)
 		&depth, &colorType,
 		&interlaceType, NULL, NULL
 	);
-	
+
 	//RGBとRGBAのみに対応
 	if (colorType != PNG_COLOR_TYPE_RGB && colorType != PNG_COLOR_TYPE_RGBA) {
 		fprintf(stderr, "createTextureFromPNGFile: Supprted color type are RGB and RGBA.");
 		return false;
 	}
-	
+
 	//インターレースは非対応
 	if (interlaceType != PNG_INTERLACE_NONE) {
 		fprintf(stderr, "createTextureFromPNGFile: Interlace image is not supprted.");
@@ -252,7 +252,7 @@ bool CPngImage::loadchara(const char* fileName)
 
 	png_read_end(pPng, pInfo);
 
-	
+
 
 	this->m_width = width;
 	this->m_height = height;
@@ -268,12 +268,8 @@ bool CPngImage::loadchara(const char* fileName)
 	png_destroy_read_struct(&pPng, NULL, NULL);
 	fclose(fp);
 
-	return true;
-}
-
-bool CPngImage::load(const std::string& fileName)
-{
 	//2
+	/*
 	png_structp pPng = NULL;
 	png_infop pInfo = NULL;
 	unsigned char *data; // 生データを保持する
@@ -312,7 +308,7 @@ bool CPngImage::load(const std::string& fileName)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	gluBuild2DMipmaps(GL_TEXTURE_2D, 3, width, height, GL_RGBA, GL_UNSIGNED_BYTE, data);
-	*/
+	
 
 	//値を反映
 	this->m_width = width;
@@ -322,7 +318,7 @@ bool CPngImage::load(const std::string& fileName)
 	this->m_bpp = depth;
 	this->m_format = GL_RGBA;
 	this->m_internalFormat = GL_RGBA;
-	
+	*/
 	
 	return true;
 }

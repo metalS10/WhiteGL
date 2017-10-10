@@ -299,7 +299,7 @@ int main()
 
 	setupTexture(g_texID, PASS"player.bmp", 400.0f, 464.0f, 100.0f, 164.0f, CVec4(0.0f, 64.0f, 128.0f, 192.0f), COL_TYPE::RGB, TEX_TYPE::BMP);
 
-	setupTexture(g_texID, PASS"player.png", 0.0f, 320.0f, 300.0f, 492.0f, CVec4(0.0f, 320.0f, 0.0f, 192.0f), COL_TYPE::RGBA, TEX_TYPE::PNG);
+	setupTexture(g_texID, PASS"Attackw.png", 0.0f, 320.0f, 300.0f, 492.0f, CVec4(0.0f, 320.0f, 0.0f, 192.0f), COL_TYPE::RGBA, TEX_TYPE::PNG);
 
 	//ìßâﬂê›íË
 	glEnable(GL_BLEND);

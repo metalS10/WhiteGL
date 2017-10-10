@@ -55,7 +55,6 @@ public:
 	*/
 	virtual bool load(const std::string& fileName) = 0;
 
-	virtual bool loadchara(const char* fileName) = 0;
 
 
 };
@@ -74,8 +73,6 @@ public:
 	*/
 	bool load(const std::string& fileName)override;
 
-	bool loadchara(const char* fileName)override { return false; }
-
 };
 
 //=====================================================
@@ -91,7 +88,6 @@ public:
 	*/
 	bool load(const std::string& fileName)override;
 
-	bool loadchara(const char* fileName)override { return false; }
 };
 
 //======================================================
@@ -106,8 +102,6 @@ public:
 	*@return true...ê¨å˜
 	*/
 	bool load(const std::string& fileName)override;
-
-	bool loadchara(const char* fileName)override;
 
 	
 };
