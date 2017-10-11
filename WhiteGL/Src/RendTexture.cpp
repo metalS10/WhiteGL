@@ -57,6 +57,7 @@ void CRendTexture::render()
 			//四角ポリゴン表示
 			glDrawArrays(GL_QUADS, 0, 4);
 
+		
 
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -104,7 +105,7 @@ void CRendTexture::setupTexture(const char *file, const float posLeft, const flo
 			else if (tex->m_format == PNG_COLOR_TYPE_PALETTE)
 			{
 				//テクスチャにPNGファイルから読み込んだピクセルを書き込む
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_MAX_PALETTE_MATRICES_ARB, tex->m_width, tex->m_height, 0, GL_MAX_PALETTE_MATRICES_ARB, GL_UNSIGNED_BYTE, tex->m_bits);
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_PALETTE8_RGB8_OES, tex->m_width, tex->m_height, 0, GL_PALETTE8_RGB8_OES, GL_UNSIGNED_BYTE, tex->m_bits);
 				//paletteってどう描画するんだろう
 			}
 			else if (tex->m_format == PNG_COLOR_TYPE_GRAY)

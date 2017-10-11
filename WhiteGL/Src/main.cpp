@@ -23,7 +23,6 @@ void ErrorCallback(int error, const char* desc)
 }
 
 
-
 /**
 *	@file main.cpp
 */
@@ -104,7 +103,10 @@ int main()
 
 	rendTex->setupTexture(PASS"player.bmp", 400.0f, 464.0f, 100.0f, 164.0f, CVec4(0.0f, 64.0f, 128.0f, 192.0f), TEX_TYPE::BMP);
 
-	rendTex->setupTexture(PASS"kuribo.png", 0.0f, 320.0f, 300.0f, 492.0f, CVec4(0.0f, 320.0f, 0.0f, 192.0f),TEX_TYPE::PNG);
+	rendTex->setupTexture(PASS"kuribo.png", 0.0f, 100.0f, 300.0f, 400.0f, CVec4(0.0f, 64.0f, 0.0f, 64.0f),TEX_TYPE::PNG);
+
+	rendTex->setupTexture(PASS"kuribo.png", 100.0f, 300.0f, 300.0f, 500.0f, CVec4(0.0f, 64.0f, 0.0f, 64.0f), TEX_TYPE::PNG);
+
 
 	//ìßâﬂê›íË
 	glEnable(GL_BLEND);

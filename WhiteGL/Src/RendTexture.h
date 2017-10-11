@@ -22,12 +22,13 @@ enum class TEX_TYPE : int
 class CRendTexture
 {
 	
-
+	int i = 0;
 	GLuint g_texID;
 	std::vector<CVec2> initializePos;
 	std::vector<CVec2> endPos;
 	std::vector<CVec4> rect;
 	std::vector<TEX_TYPE> texType;
+	CVec2 vec2;
 
 public:
 

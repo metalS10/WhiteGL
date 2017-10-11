@@ -4,6 +4,7 @@
 #include "GL/glew.h"
 
 #include "png/png.h"
+
 #pragma comment(lib, "Src/png/zlib.lib")
 #pragma comment(lib, "Src/png/libpng.lib")
 
