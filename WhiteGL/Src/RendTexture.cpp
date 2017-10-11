@@ -108,7 +108,7 @@ void CRendTexture::setupTexture(const char *file, const float posLeft, const flo
 
 			int width, height;
 			bool hasAlpha;
-			char filename[] = PASS"player.png";
+			const char* filename = file;
 			bool success = loadPngImage(filename, width, height, hasAlpha, &textureImage);
 			if (!success) {
 				std::cout << "Unable to load png file" << std::endl;

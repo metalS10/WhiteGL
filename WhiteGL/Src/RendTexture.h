@@ -119,7 +119,7 @@ public:
 	*/
 	void setupTexture(const char *file, const float posLeft, const float posRight, const float posBottom, const float posTop, const CVec4 rect4, const TEX_TYPE tex_type);
 
-	bool loadPngImage(char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData) {
+	bool loadPngImage(const char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData) {
 		png_structp png_ptr;
 		png_infop info_ptr;
 		unsigned int sig_read = 0;
@@ -230,7 +230,6 @@ public:
 
 		/* Close the file */
 		fclose(fp);
-		SAFE_DELETE(outData);
 		/* That's it */
 		return true;
 	}
