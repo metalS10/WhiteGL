@@ -8,7 +8,6 @@
 #include "RendTexture.h"
 
 
-
 CGameMain* gameMain;
 
 /**
@@ -21,6 +20,9 @@ void ErrorCallback(int error, const char* desc)
 {
 	std::cerr << "ERROR : " << desc << std::endl;
 }
+
+
+
 
 
 /**
@@ -96,7 +98,7 @@ int main()
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	CRendTexture* rendTex = new CRendTexture();
-
+	
 	rendTex->setupTexture(PASS"Sparrow.bmp", 0.0f, 200.0f, 100.0f, 300.0f, CVec4(0.0f, 200.0f, 0.0f, 200.0f),TEX_TYPE::BMP);
 
 	rendTex->setupTexture(PASS"Sparrow.bmp", 200.0f, 400.0f, 100.0f, 300.0f, CVec4(100.0f, 200.0f, 100.0f, 200.0f),TEX_TYPE::BMP);
@@ -105,14 +107,13 @@ int main()
 
 	rendTex->setupTexture(PASS"kuribo.png", 0.0f, 100.0f, 300.0f, 400.0f, CVec4(0.0f, 64.0f, 0.0f, 64.0f),TEX_TYPE::PNG);
 
-	rendTex->setupTexture(PASS"kuribo.png", 100.0f, 300.0f, 300.0f, 500.0f, CVec4(0.0f, 64.0f, 0.0f, 64.0f), TEX_TYPE::PNG);
+	rendTex->setupTexture(PASS"player.png", 100.0f, 300.0f, 300.0f, 500.0f, CVec4(0.0f, 64.0f, 0.0f, 64.0f), TEX_TYPE::PNG);
+	
 
-
-	//ìßâﬂê›íË
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
 
 	gameMain = new CGameMain();
+	
 
 	/**
 	*memo
