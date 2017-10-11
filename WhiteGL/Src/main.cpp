@@ -22,9 +22,6 @@ void ErrorCallback(int error, const char* desc)
 }
 
 
-
-
-
 /**
 *	@file main.cpp
 */
