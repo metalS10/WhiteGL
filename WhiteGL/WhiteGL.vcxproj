@@ -164,6 +164,7 @@
   <ItemGroup>
     <ClInclude Include="Src\Animation.h" />
     <ClInclude Include="Src\Constants.h" />
+    <ClInclude Include="Src\FPS.h" />
     <ClInclude Include="Src\GameMain.h" />
     <ClInclude Include="Src\image.h" />
     <ClInclude Include="Src\Node.h" />

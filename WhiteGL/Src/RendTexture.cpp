@@ -63,43 +63,42 @@ void CRendTexture::render()
 	}
 }
 
-void CRendTexture::setupTexture(const char *file, const float posLeft, const float posRight, const float posBottom, const float posTop, const CVec4 rect4, const TEX_TYPE tex_type)
+void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID)
 {
-	CImage* tex = NULL;
 
 	//画像データとテクスチャiDを結びつける
-	glBindTexture(GL_TEXTURE_2D, g_texID);
+	glBindTexture(GL_TEXTURE_2D, texID);
 
 	switch (tex_type)
 	{
 	case TEX_TYPE::BMP:
-		tex = new CBmpImage();
-		if (tex->load(file) == false)
+		tex[texID] = new CBmpImage();
+		if (tex[texID]->load(file) == false)
 		{
 			std::cerr << "ERROR : 画像の読み込みに失敗" << std::endl;
 		}
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tex->m_width, tex->m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, tex->m_bits);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tex[texID]->m_width, tex[texID]->m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, tex[texID]->m_bits);
 
 		break;
 
 	case TEX_TYPE::PNG:
-		tex = new CPngImage();
-		if (tex->load(file) == false)
+		tex[texID] = new CPngImage();
+		if (tex[texID]->load(file) == false)
 		{
 			std::cerr << "ERROR : 画像の読み込みに失敗" << std::endl;
 		}
 
-		if (tex->m_format == PNG_COLOR_TYPE_RGBA)
+		if (tex[texID]->m_format == PNG_COLOR_TYPE_RGBA)
 		{
 			//テクスチャにPNGファイルから読み込んだピクセルを書き込む
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex->m_width, tex->m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex->m_bits);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex[texID]->m_width, tex[texID]->m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex[texID]->m_bits);
 		}
-		else if (tex->m_format == PNG_COLOR_TYPE_RGB)
+		else if (tex[texID]->m_format == PNG_COLOR_TYPE_RGB)
 		{
 			//テクスチャにPNGファイルから読み込んだピクセルを書き込む
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tex->m_width, tex->m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, tex->m_bits);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tex[texID]->m_width, tex[texID]->m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, tex[texID]->m_bits);
 		}
-		else if (tex->m_format == PNG_COLOR_TYPE_PALETTE)
+		else if (tex[texID]->m_format == PNG_COLOR_TYPE_PALETTE)
 		{
 			GLubyte* textureImage;
 			// The following two lines enable semi transparent
@@ -122,10 +121,10 @@ void CRendTexture::setupTexture(const char *file, const float posLeft, const flo
 
 			SAFE_DELETE(textureImage);
 		}
-		else if (tex->m_format == PNG_COLOR_TYPE_GRAY)
+		else if (tex[texID]->m_format == PNG_COLOR_TYPE_GRAY)
 		{
 			//テクスチャにPNGファイルから読み込んだピクセルを書き込む
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, tex->m_width, tex->m_height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, tex->m_bits);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, tex[texID]->m_width, tex[texID]->m_height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, tex[texID]->m_bits);
 			//grayってどう描画するんだろう
 		}
 		break;
@@ -135,27 +134,45 @@ void CRendTexture::setupTexture(const char *file, const float posLeft, const flo
 	}
 
 
-	//色々設定
-	initializePos.push_back(CVec2(posLeft, posBottom));
-	endPos.push_back(CVec2(posRight, posTop));
 	texType.push_back(tex_type);
+}
+
+void CRendTexture::setupTextureSize(CVec4 texSize, CVec4 texRect, GLuint texID)
+{
+	glBindTexture(GL_TEXTURE_2D, texID);
+	/*
+	//色々設定
+	if (initializePos.size() <= texID)
+	initializePos.push_back(CVec2(texSize.x, texSize.z));
+	else
+	initializePos[texID] = CVec2(texSize.x, texSize.z);
+
+	if (endPos.size() <= texID)
+	endPos.push_back(CVec2(texSize.y, texSize.w));
+	else
+	endPos[texID] = CVec2(texSize.y, texSize.w);
+
 
 	//画像の矩形範囲を設定
-	CVec4 changerect4 = CVec4(rect4.x / tex->m_width, rect4.y / tex->m_width, rect4.z / tex->m_height, rect4.w / tex->m_height);
+	CVec4 changerect4 = CVec4(texRect.x / tex[texID]->m_width, texRect.y / tex[texID]->m_width, texRect.z / tex[texID]->m_height, texRect.w / tex[texID]->m_height);
+	if (rect.size() <= texID)
+	rect.push_back(CVec4(changerect4));
+	else
+	rect[texID] = CVec4(changerect4);
+	*/
+	initializePos.push_back(CVec2(texSize.x, texSize.z));
+	endPos.push_back(CVec2(texSize.y, texSize.w));
+	CVec4 changerect4 = CVec4(texRect.x / tex[texID]->m_width, texRect.y / tex[texID]->m_width, texRect.z / tex[texID]->m_height, texRect.w / tex[texID]->m_height);
 	rect.push_back(CVec4(changerect4));
 
 	//texIDを空いているところへ
 	glGenTextures(1, &g_texID);
-
-	if (tex == NULL)
+	if (tex[texID] == NULL)
 	{
 		std::cerr << "BMP,PNG,JPEGなんでもないです" << std::endl;
 	}
-	else
-	{
-		SAFE_DELETE(tex);
-	}
 }
+
 
 bool CRendTexture::loadPngImage(const char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData) {
 	png_structp png_ptr;

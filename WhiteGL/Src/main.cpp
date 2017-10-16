@@ -6,6 +6,7 @@
 #include "Constants.h"
 #include "GameMain.h"
 #include "RendTexture.h"
+#include "FPS.h"
 
 
 CGameMain* gameMain;
@@ -96,21 +97,29 @@ int main()
 
 	CRendTexture* rendTex = new CRendTexture();
 	
-	rendTex->setupTexture(PASS"Sparrow.bmp", 0.0f, 200.0f, 100.0f, 300.0f, CVec4(0.0f, 200.0f, 0.0f, 200.0f),TEX_TYPE::BMP);
+	rendTex->setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 0);
+	rendTex->setupTextureSize(CVec4(0.0f, 200.0f, 100.0f, 300.0f), CVec4(0.0f, 200.0f, 0.0f, 200.0f), 0);
 
-	rendTex->setupTexture(PASS"Sparrow.bmp", 200.0f, 400.0f, 100.0f, 300.0f, CVec4(100.0f, 200.0f, 100.0f, 200.0f),TEX_TYPE::BMP);
 
-	rendTex->setupTexture(PASS"player.bmp", 400.0f, 464.0f, 100.0f, 164.0f, CVec4(0.0f, 64.0f, 128.0f, 192.0f), TEX_TYPE::BMP);
+	rendTex->setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 1);
+	rendTex->setupTextureSize(CVec4(200.0f, 400.0f, 100.0f, 300.0f), CVec4(100.0f, 200.0f, 100.0f, 200.0f), 1);
 
-	rendTex->setupTexture(PASS"kuribo.png", 0.0f, 100.0f, 300.0f, 400.0f, CVec4(0.0f, 64.0f, 0.0f, 64.0f),TEX_TYPE::PNG);
+	rendTex->setupTexture(PASS"player.bmp", TEX_TYPE::BMP, 2);
+	rendTex->setupTextureSize(CVec4(400.0f, 464.0f, 100.0f, 164.0f), CVec4(0.0f, 64.0f, 128.0f, 192.0f), 2);
 
-	rendTex->setupTexture(PASS"player.png", 100.0f, 200.0f, 300.0f, 400.0f, CVec4(0.0f, 64.0f, 0.0f, 64.0f), TEX_TYPE::PNG);
+	rendTex->setupTexture(PASS"kuribo.png", TEX_TYPE::PNG, 3);
+	rendTex->setupTextureSize(CVec4(0.0f, 100.0f, 300.0f, 400.0f), CVec4(0.0f, 64.0f, 0.0f, 64.0f), 3);
+
+	rendTex->setupTexture(PASS"player.png", TEX_TYPE::PNG, 4);
+	rendTex->setupTextureSize(CVec4(100.0f, 200.0f, 300.0f, 400.0f), CVec4(0.0f, 64.0f, 0.0f, 64.0f), 4);
+
 	
 
-	
+	int i = 0;
+	int j = 0;
 
 	gameMain = new CGameMain();
-	
+	FPS *fps = new FPS(60);//秒間60フレーム(可変sleep)
 
 	/**
 	*memo
@@ -127,7 +136,22 @@ int main()
 		glfwPollEvents();
 
 		rendTex->render();
-		gameMain->update();
+
+		fps->GetFPS();//FPSを得る
+		if (fps->draw) {//秒間60フレームのタイミングで描画
+			i++;
+			if (i >= 60)
+			{
+				i = 0;
+				j++;
+				if (j <= 4)
+				{
+				}
+				else
+					j = 0;
+				rendTex->setupTextureSize(CVec4(100.0f, 200.0f, 300.0f, 400.0f), CVec4(64.0f, 64.0f, 0.0f, 64.0f), 4);
+			}
+		}
 
 		glfwSwapBuffers(window);
 	}

@@ -30,4 +30,12 @@ public:
 
 	//ƒ[ƒ
 	void zero() { this->x = 0.0f;this->y = 0.0f;this->z = 0.0f;this->w = 0.0f; }
+
+	bool isEnpty()
+	{
+		if (this->x == 0.0f && this->y == 0.0f && this->z == 0.0f && this->w == 0.0f)
+			return false;
+		else
+			return true;
+	}
 };

@@ -24,14 +24,22 @@ enum class TEX_TYPE : int
 };
 class CRendTexture
 {
-	
+private:
+
 	int i = 0;
 	GLuint g_texID;
 	std::vector<CVec2> initializePos;
 	std::vector<CVec2> endPos;
 	std::vector<CVec4> rect;
 	std::vector<TEX_TYPE> texType;
-	CVec2 vec2;
+	//テクスチャ情報
+	CImage* tex[5];
+
+	~CRendTexture()
+	{
+		for (int i = 0;i >= g_texID;i++)
+			SAFE_DELETE(tex[i]);
+	}
 
 public:
 
@@ -79,7 +87,7 @@ public:
 	*/
 
 	void render();
-	
+
 
 	/*
 	void setupTexture(GLuint texID, const char *file, const int width, const int height)
@@ -117,10 +125,12 @@ public:
 	*@param	posTop		画像の上の位置
 	*@param	rect		矩形
 	*/
-	void setupTexture(const char *file, const float posLeft, const float posRight, const float posBottom, const float posTop, const CVec4 rect4, const TEX_TYPE tex_type);
+	void setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID);
+
+	void setupTextureSize(const CVec4 texSize, const CVec4 texRect, GLuint texID);
 
 	bool loadPngImage(const char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData);
-	
-	
+
+
 
 };
