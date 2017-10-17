@@ -115,11 +115,12 @@ int main()
 
 	
 
-	int i = 0;
-	int j = 0;
 
 	gameMain = new CGameMain();
 	FPS *fps = new FPS(60);//•bŠÔ60ƒtƒŒ[ƒ€(‰Â•Ïsleep)
+
+	int i = 0;
+	int j = 0;
 
 	/**
 	*memo
@@ -149,7 +150,7 @@ int main()
 				}
 				else
 					j = 0;
-				rendTex->setupTextureSize(CVec4(100.0f, 200.0f, 300.0f, 400.0f), CVec4(64.0f, 64.0f, 0.0f, 64.0f), 4);
+				rendTex->setupTextureSize(CVec4(100.0f, 200.0f, 300.0f, 400.0f), CVec4(64.0f*(j-1), 64.0f*j, 0.0f, 64.0f), 4);
 			}
 		}
 

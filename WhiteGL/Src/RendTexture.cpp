@@ -140,7 +140,7 @@ void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuin
 void CRendTexture::setupTextureSize(CVec4 texSize, CVec4 texRect, GLuint texID)
 {
 	glBindTexture(GL_TEXTURE_2D, texID);
-	/*
+	
 	//êFÅXê›íË
 	if (initializePos.size() <= texID)
 	initializePos.push_back(CVec2(texSize.x, texSize.z));
@@ -156,17 +156,17 @@ void CRendTexture::setupTextureSize(CVec4 texSize, CVec4 texRect, GLuint texID)
 	//âÊëúÇÃãÈå`îÕàÕÇê›íË
 	CVec4 changerect4 = CVec4(texRect.x / tex[texID]->m_width, texRect.y / tex[texID]->m_width, texRect.z / tex[texID]->m_height, texRect.w / tex[texID]->m_height);
 	if (rect.size() <= texID)
-	rect.push_back(CVec4(changerect4));
+	{
+		rect.push_back(CVec4(changerect4));
+
+		//texIDÇãÛÇ¢ÇƒÇ¢ÇÈÇ∆Ç±ÇÎÇ÷
+		glGenTextures(1, &g_texID);
+	}
 	else
 	rect[texID] = CVec4(changerect4);
-	*/
-	initializePos.push_back(CVec2(texSize.x, texSize.z));
-	endPos.push_back(CVec2(texSize.y, texSize.w));
-	CVec4 changerect4 = CVec4(texRect.x / tex[texID]->m_width, texRect.y / tex[texID]->m_width, texRect.z / tex[texID]->m_height, texRect.w / tex[texID]->m_height);
-	rect.push_back(CVec4(changerect4));
+	
+	
 
-	//texIDÇãÛÇ¢ÇƒÇ¢ÇÈÇ∆Ç±ÇÎÇ÷
-	glGenTextures(1, &g_texID);
 	if (tex[texID] == NULL)
 	{
 		std::cerr << "BMP,PNG,JPEGÇ»ÇÒÇ≈Ç‡Ç»Ç¢Ç≈Ç∑" << std::endl;
