@@ -33,7 +33,6 @@ private:
 	std::vector<CVec2> endPos;
 	std::vector<CVec4> rect;
 	std::vector<TEX_TYPE> texType;
-	std::vector<CAnimation*>* m_pAnim;
 	//テクスチャ情報
 	CImage* tex[5];
 

@@ -2,28 +2,18 @@
 
 void CRendTexture::update(std::vector<CAnimation*>* anim)
 {
-	for (int i = 0 ; i <= anim->size();i++)
+	for (int i = 1 ; i <= anim->size();i++)
 	{
-		
+		GLuint texID = i - 1;
+		CVec4* texRect = (*anim)[texID]->animUpdate();
 
-		CVec4* texRect = (*anim)[i]->animUpdate();
-
-		glBindTexture(GL_TEXTURE_2D, (GLuint)i);
+		glBindTexture(GL_TEXTURE_2D, (GLuint)texID);
 
 
 
 		//âÊëúÇÃãÈå`îÕàÕÇê›íË
-		CVec4 changerect4 = CVec4(texRect->x / tex[i]->m_width, texRect->y / tex[i]->m_width, texRect->z / tex[i]->m_height, texRect->w / tex[i]->m_height);
-		if (rect.size() <= i)
-		{
-			rect.push_back(CVec4(changerect4));
-
-			//texIDÇãÛÇ¢ÇƒÇ¢ÇÈÇ∆Ç±ÇÎÇ÷
-			glGenTextures(1, &g_texID);
-		}
-		else
-			rect[i] = CVec4(changerect4);
-
+		CVec4 changerect4 = CVec4(texRect->x / tex[texID]->m_width, texRect->y / tex[texID]->m_width, texRect->z / tex[texID]->m_height, texRect->w / tex[texID]->m_height);
+		rect[texID] = CVec4(changerect4);
 		
 	}
 }
@@ -171,9 +161,9 @@ void CRendTexture::setupTextureSize(CVec4 texSize, CVec4 texRect, GLuint texID)
 	
 	//êFÅXê›íË
 	if (initializePos.size() <= texID)
-	initializePos.push_back(CVec2(texSize.x, texSize.z));
+		initializePos.push_back(CVec2(texSize.x, texSize.z));
 	else
-	initializePos[texID] = CVec2(texSize.x, texSize.z);
+		initializePos[texID] = CVec2(texSize.x, texSize.z);
 
 	if (endPos.size() <= texID)
 	endPos.push_back(CVec2(texSize.y, texSize.w));

@@ -136,6 +136,8 @@ int main()
 
 	(*m_pAnim)[4]->addChipData(new CVec4(0.0f, 64.0f, 0.0f, 64.0f));
 	(*m_pAnim)[4]->addChipData(new CVec4(64.0f, 128.0f, 0.0f, 64.0f));
+	(*m_pAnim)[4]->addChipData(new CVec4(128.0f, 192.0f, 0.0f, 64.0f));
+
 
 
 
@@ -159,6 +161,8 @@ int main()
 		fps->GetFPS();//FPSを得る
 		if (fps->draw) {//秒間60フレームのタイミングで描画
 			rendTex->update(m_pAnim);
+
+			int l = 0;
 		}
 
 		glfwSwapBuffers(window);

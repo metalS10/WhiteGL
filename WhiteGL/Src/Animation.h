@@ -25,7 +25,7 @@ protected:
 	int m_Nowrect = 0;
 	//アニメーション枚数
 	int m_number = 0;
-	bool m_isLoop = true;
+	bool m_isLoop;
 	//現在のフレーム数
 	int m_currentFrame = 0;
 
@@ -57,6 +57,10 @@ public:
 				return m_Rect[m_Nowrect];
 			}
 		}
+		else
+		{
+			return m_Rect[m_Nowrect];
+		}
 	}
 
 	virtual void addChipData(CChip* pChip){}
@@ -70,17 +74,14 @@ public:
 
 class CListAnimation : public CAnimation
 {
-protected:
-	std::vector<CChip*> m_chipList;
-
 public:
 	CListAnimation(int interval, bool isLoop = false) :
 		CAnimation(interval,0, isLoop) {}
 	~CListAnimation()
 	{
 		//チップの解放
-		std::vector<CChip*>::iterator itr = this->m_chipList.begin();
-		while (itr != this->m_chipList.end())
+		std::vector<CChip*>::iterator itr = this->m_Rect.begin();
+		while (itr != this->m_Rect.end())
 		{
 			SAFE_DELETE((*itr));
 			itr++;
@@ -93,10 +94,10 @@ public:
 	void addChipData(CChip* pChip)override
 	{
 		//切り取る範囲を追加する
-		this->m_chipList.push_back(pChip);
+		this->m_Rect.push_back(pChip);
 
 		//切り取る範囲を追加したらアニメーションの最大数も更新する
-		this->m_number = this->m_chipList.size();
+		this->m_number = this->m_Rect.size()-1;
 	}
 
 	/**
@@ -106,8 +107,10 @@ public:
 	virtual CChip getCurrentChip() override
 	{
 		//添え字演算子で取得したデータ自体がCChip*　なのでその中身を返す
-		return *(this->m_chipList[this->m_currentFrame]);
+		return *(this->m_Rect[this->m_currentFrame]);
 	}
+
+	
 };
 
 class CNotAnimation : public CListAnimation
@@ -122,7 +125,7 @@ public:
 	/**
 	*	@desc更新処理は行わず返す値は必ず1になる
 	*/
-	CChip* animUpdate() override { return 0; }
+	CChip* animUpdate() override { return m_pChip; }
 	
 	void addChipData(CChip* pChip)override
 	{
