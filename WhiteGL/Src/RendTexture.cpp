@@ -1,5 +1,33 @@
 #include "RendTexture.h"
 
+void CRendTexture::update(std::vector<CAnimation*>* anim)
+{
+	for (int i = 0 ; i <= anim->size();i++)
+	{
+		
+
+		CVec4* texRect = (*anim)[i]->animUpdate();
+
+		glBindTexture(GL_TEXTURE_2D, (GLuint)i);
+
+
+
+		//‰æ‘œ‚Ì‹éŒ`”ÍˆÍ‚ðÝ’è
+		CVec4 changerect4 = CVec4(texRect->x / tex[i]->m_width, texRect->y / tex[i]->m_width, texRect->z / tex[i]->m_height, texRect->w / tex[i]->m_height);
+		if (rect.size() <= i)
+		{
+			rect.push_back(CVec4(changerect4));
+
+			//texID‚ð‹ó‚¢‚Ä‚¢‚é‚Æ‚±‚ë‚Ö
+			glGenTextures(1, &g_texID);
+		}
+		else
+			rect[i] = CVec4(changerect4);
+
+		
+	}
+}
+
 void CRendTexture::render()
 {
 	for (int texID = 0;texID < g_texID;texID++)

@@ -7,6 +7,7 @@
 #include "GameMain.h"
 #include "RendTexture.h"
 #include "FPS.h"
+#include "Animation.h"
 
 
 CGameMain* gameMain;
@@ -121,6 +122,23 @@ int main()
 
 	int i = 0;
 	int j = 0;
+	std::vector<CAnimation*>* m_pAnim = new std::vector<CAnimation*>();
+	m_pAnim->push_back(new CNotAnimation());
+	m_pAnim->push_back(new CNotAnimation());
+	m_pAnim->push_back(new CNotAnimation());
+	m_pAnim->push_back(new CNotAnimation());
+	m_pAnim->push_back(new CListAnimation(60,true));
+
+	(*m_pAnim)[0]->addChipData(new CVec4(0.0f, 200.0f, 0.0f, 200.0f));
+	(*m_pAnim)[1]->addChipData(new CVec4(100.0f, 200.0f, 100.0f, 200.0f));
+	(*m_pAnim)[2]->addChipData(new CVec4(0.0f, 64.0f, 128.0f, 192.0f));
+	(*m_pAnim)[3]->addChipData(new CVec4(0.0f, 64.0f, 0.0f, 64.0f));
+
+	(*m_pAnim)[4]->addChipData(new CVec4(0.0f, 64.0f, 0.0f, 64.0f));
+	(*m_pAnim)[4]->addChipData(new CVec4(64.0f, 128.0f, 0.0f, 64.0f));
+
+
+
 
 	/**
 	*memo
@@ -140,18 +158,7 @@ int main()
 
 		fps->GetFPS();//FPSを得る
 		if (fps->draw) {//秒間60フレームのタイミングで描画
-			i++;
-			if (i >= 60)
-			{
-				i = 0;
-				j++;
-				if (j <= 4)
-				{
-				}
-				else
-					j = 0;
-				rendTex->setupTextureSize(CVec4(100.0f, 200.0f, 300.0f, 400.0f), CVec4(64.0f*(j-1), 64.0f*j, 0.0f, 64.0f), 4);
-			}
+			rendTex->update(m_pAnim);
 		}
 
 		glfwSwapBuffers(window);

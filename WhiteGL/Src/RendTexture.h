@@ -13,6 +13,7 @@
 #include "Vec2.h"
 #include "Vec4.h"
 #include "Constants.h"
+#include "Animation.h"
 #pragma warning(disable:4996)
 
 
@@ -32,6 +33,7 @@ private:
 	std::vector<CVec2> endPos;
 	std::vector<CVec4> rect;
 	std::vector<TEX_TYPE> texType;
+	std::vector<CAnimation*>* m_pAnim;
 	//テクスチャ情報
 	CImage* tex[5];
 
@@ -86,6 +88,8 @@ public:
 	}
 	*/
 
+	void update(std::vector<CAnimation*>* anim);
+
 	void render();
 
 
@@ -130,7 +134,6 @@ public:
 	void setupTextureSize(const CVec4 texSize, const CVec4 texRect, GLuint texID);
 
 	bool loadPngImage(const char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData);
-
 
 
 };
