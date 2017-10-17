@@ -34,7 +34,7 @@ private:
 	std::vector<CVec4> rect;
 	std::vector<TEX_TYPE> texType;
 	//テクスチャ情報
-	CImage* tex[5];
+	CImage* tex[MAX_TEXTURE_NUMBER];
 
 	~CRendTexture()
 	{
