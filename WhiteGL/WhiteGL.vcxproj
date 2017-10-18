@@ -150,7 +150,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\GameEngine.cpp" />
     <ClCompile Include="Src\GameMain.cpp" />
+    <ClCompile Include="Src\GLFWEW.cpp" />
     <ClCompile Include="Src\image.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Node.cpp" />
@@ -165,7 +167,10 @@
     <ClInclude Include="Src\Animation.h" />
     <ClInclude Include="Src\Constants.h" />
     <ClInclude Include="Src\FPS.h" />
+    <ClInclude Include="Src\GameEngine.h" />
     <ClInclude Include="Src\GameMain.h" />
+    <ClInclude Include="Src\GamePad.h" />
+    <ClInclude Include="Src\GLFWEW.h" />
     <ClInclude Include="Src\image.h" />
     <ClInclude Include="Src\Node.h" />
     <ClInclude Include="Src\Rect.h" />
