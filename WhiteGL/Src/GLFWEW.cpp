@@ -195,7 +195,7 @@ namespace GLFWEW
 			{
 				if (buttons[e.glfwCode] == GLFW_PRESS)
 				{
-					gamepad.buttons | e.gamepadCode;
+					gamepad.buttons |= e.gamepadCode;
 				}
 				else if (buttons[e.glfwCode] == GLFW_RELEASE)
 				{
@@ -210,6 +210,7 @@ namespace GLFWEW
 				int glfwCode;
 				uint32_t gamepadCode;
 			}
+			//キーボードのキーとゲームパッドのボタンの違いをここで設定
 			keyMap[] =
 			{
 				{ GLFW_KEY_UP, GamePad::DPAD_UP },
@@ -221,7 +222,11 @@ namespace GLFWEW
 				{ GLFW_KEY_S, GamePad::B },
 				{ GLFW_KEY_Z, GamePad::X },
 				{ GLFW_KEY_X, GamePad::Y },
-				{ GLFW_KEY_D, GamePad::D },
+				{ GLFW_KEY_R, GamePad::R },
+				{ GLFW_KEY_L, GamePad::L },
+				{ GLFW_KEY_Z, GamePad::Z },
+
+
 			};
 			for (const auto& e : keyMap)
 			{

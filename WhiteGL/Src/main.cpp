@@ -101,7 +101,15 @@ int main()
 		prevTime = curTime;
 		FwewWindow.UpdateGamePad();
 		const GamePad gamepad = game.GetGamePad();
-		if (gamepad.buttons & GamePad::A)
+		if (gamepad.buttons & GamePad::B)
+		{
+			int a = 0;
+		}
+		if (gamepad.buttons & GamePad::X)
+		{
+			int a = 0;
+		}
+		if (gamepad.buttons & GamePad::Y)
 		{
 			int a = 0;
 		}

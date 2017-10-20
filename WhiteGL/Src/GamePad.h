@@ -22,7 +22,9 @@ struct GamePad
 		Y			= 0x0100,
 		L			= 0x0200,
 		R			= 0x0400,
-		Z,S,D,
+		Z			= 0x0800,
+		S			= 0x1600,
+		D			= 0x3200,
 	};
 	//‰Ÿ‚³‚ê‚Ä‚¢‚éŠÔƒtƒ‰ƒO‚ª—§‚Â
 	uint32_t buttons;
