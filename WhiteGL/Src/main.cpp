@@ -61,6 +61,9 @@ int main()
 
 	game.setupTexture(PASS"player.png", TEX_TYPE::PNG, 4, CVec4(100.0f, 200.0f, 300.0f, 400.0f), CVec4(0.0f, 64.0f, 0.0f, 64.0f));
 
+	game.setupTexture(PASS"player.png", TEX_TYPE::QUAD, 5, CVec4(0, 100, 0, 100), CVec4(0.0f, 64.0f, 0.0f, 64.0f));
+
+
 	
 
 
@@ -69,7 +72,8 @@ int main()
 	game.setChipAnim(new CNotAnimation());
 	game.setChipAnim(new CNotAnimation());
 	game.setChipAnim(new CNotAnimation());
-	game.setChipAnim(new CListAnimation(60,true));
+	game.setChipAnim(new CListAnimation(20,true));
+
 
 	game.setChipData(0,CVec4(0.0f, 200.0f, 0.0f, 200.0f));
 	game.setChipData(1,CVec4(100.0f, 200.0f, 100.0f, 200.0f));
@@ -79,6 +83,8 @@ int main()
 	game.setChipData(4, CVec4(0.0f, 64.0f, 0.0f, 64.0f));
 	game.setChipData(4, CVec4(64.0f, 128.0f, 0.0f, 64.0f));
 	game.setChipData(4, CVec4(128.0f, 192.0f, 0.0f, 64.0f));
+	game.setChipData(4, CVec4(192.0f, 256.0f, 0.0f, 64.0f));
+
 
 	FPS* fps = new FPS(60);
 

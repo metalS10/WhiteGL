@@ -14,6 +14,8 @@ void CGameEngine::setupTexture(const char* file,TEX_TYPE texType,GLuint texID,CV
 	glEnable(GL_TEXTURE_2D);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	//色データをメモリに登録するための許可を得る
+	glEnableClientState(GL_COLOR_ARRAY);
 
 	if (rendTex == NULL)
 		rendTex = new CRendTexture();
@@ -80,7 +82,7 @@ GLFWwindow* CGameEngine::init(int w,int h,const char* file)
 		glfwTerminate();
 		return NULL;
 	}
-	glOrtho(0.0f, WIDTH, 0.0f, HEIGHT, -1.0f, 1.0f);
+	glOrtho(0.0f, WINDOW_WIDTH, 0.0f, WINDOW_HEIGHT, -1.0f, 1.0f);
 
 	isInitialized = true;
 
@@ -110,7 +112,7 @@ const GamePad& CGameEngine::GetGamePad() const
 
 void CGameEngine::update()
 {
-	glClearColor(0.1f, 0.3f, 0.5f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glfwPollEvents();
 

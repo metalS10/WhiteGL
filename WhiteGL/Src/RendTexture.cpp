@@ -7,21 +7,24 @@ void CRendTexture::update(std::vector<CAnimation*>* anim)
 		GLuint texID = i - 1;
 		CVec4* texRect = (*anim)[texID]->animUpdate();
 
-		glBindTexture(GL_TEXTURE_2D, (GLuint)texID);
-
+		glBindTexture(GL_TEXTURE_2D, texID);
 
 
 		//画像の矩形範囲を設定
 		CVec4 changerect4 = CVec4(texRect->x / tex[texID]->m_width, texRect->y / tex[texID]->m_width, texRect->z / tex[texID]->m_height, texRect->w / tex[texID]->m_height);
-		rect[texID] = CVec4(changerect4);
 		
+		rect[texID] = CVec4(changerect4);
 	}
+	
 }
 
 void CRendTexture::render()
 {
+	// The following two lines enable semi transparent
+	glEnable(GL_BLEND);
 	for (int texID = 0;texID < g_texID;texID++)
 	{
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		if (texType[texID] == TEX_TYPE::BMP)
 		{
 			//場所指定
@@ -32,6 +35,14 @@ void CRendTexture::render()
 				initializePos[texID].x, endPos[texID].y,
 			};
 			glVertexPointer(2, GL_FLOAT, 0, vtx2);
+
+			const GLfloat color[] = {
+				1.0f,1.0f,1.0f,1.0f,
+				1.0f,1.0f,1.0f,1.0f,
+				1.0f,1.0f,1.0f,1.0f,
+				1.0f,1.0f,1.0f,1.0f,
+			};
+			glColorPointer(4, GL_FLOAT, 0, color);
 
 			//テクスチャの領域指定
 			const GLfloat texuv[] = {
@@ -57,6 +68,46 @@ void CRendTexture::render()
 			};
 			glVertexPointer(2, GL_FLOAT, 0, vtx2);
 
+			const GLfloat color[] = {
+				1.0f,1.0f,1.0f,1.0f,
+				1.0f,1.0f,1.0f,1.0f,
+				1.0f,1.0f,1.0f,1.0f,
+				1.0f,1.0f,1.0f,1.0f,
+			};
+			glColorPointer(4, GL_FLOAT, 0, color);
+
+			//テクスチャの領域指定
+			const GLfloat texuv[] = {
+				rect[texID].x, rect[texID].w,
+				rect[texID].y, rect[texID].w,
+				rect[texID].y, rect[texID].z,
+				rect[texID].x, rect[texID].z,
+			};
+			//頂点の設定
+			glTexCoordPointer(2, GL_FLOAT, 0, texuv);
+
+			//テクスチャの画像指定
+			glBindTexture(GL_TEXTURE_2D, texID);
+		}
+		else if (texType[texID] == TEX_TYPE::QUAD)
+		{
+			//場所指定
+			const GLfloat vtx2[] = {
+				initializePos[texID].x, initializePos[texID].y,
+				endPos[texID].x, initializePos[texID].y,
+				endPos[texID].x, endPos[texID].y,
+				initializePos[texID].x, endPos[texID].y,
+			};
+			glVertexPointer(2, GL_FLOAT, 0, vtx2);
+
+			const GLfloat color[] = {
+				1,1,0,1,
+				1,1,0,1,
+				1,1,0,1,
+				1,1,0,1,
+			};
+			glColorPointer(4, GL_FLOAT, 0, color);
+		
 			//テクスチャの領域指定
 			const GLfloat texuv[] = {
 				rect[texID].x, rect[texID].w,
@@ -118,10 +169,7 @@ void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuin
 		}
 		else if (tex[texID]->m_format == PNG_COLOR_TYPE_PALETTE)
 		{
-			GLubyte* textureImage;
-			// The following two lines enable semi transparent
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			GLubyte* textureImage;		
 
 			int width, height;
 			bool hasAlpha;
@@ -145,7 +193,16 @@ void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuin
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, tex[texID]->m_width, tex[texID]->m_height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, tex[texID]->m_bits);
 			//grayってどう描画するんだろう
 		}
+
 		break;
+
+	case TEX_TYPE::QUAD:
+		tex[texID] = new CPngImage();
+
+		tex[texID]->m_width = 1;tex[texID]->m_height = 1;
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_ONE, 1, 1, 0, GL_ONE, GL_UNSIGNED_BYTE, 0);
+		break;
+
 
 	default:
 		break;

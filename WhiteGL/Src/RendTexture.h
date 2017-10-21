@@ -22,12 +22,13 @@ enum class TEX_TYPE : int
 	BMP = 0,
 	PNG = 1,
 	JPEG = 2,
+	QUAD = 3,
 };
 class CRendTexture
 {
 private:
 
-	int i = 0;
+	int q = 0;
 	GLuint g_texID;
 	std::vector<CVec2> initializePos;
 	std::vector<CVec2> endPos;
@@ -35,6 +36,7 @@ private:
 	std::vector<TEX_TYPE> texType;
 	//テクスチャ情報
 	CImage* tex[MAX_TEXTURE_NUMBER];
+
 
 	~CRendTexture()
 	{
