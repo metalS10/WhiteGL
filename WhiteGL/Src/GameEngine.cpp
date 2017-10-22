@@ -5,7 +5,7 @@
 CGameMain* gameMain;
 
 
-void CGameEngine::setupTexture(const char* file,TEX_TYPE texType,GLuint texID,CVec4 texSize,CVec4 texRect)
+void CGameEngine::setupTexture(const char* file,TEX_TYPE texType,GLuint texID,CVec4 texSize,CVec4 texRect,CVec4 color)
 {
 	//================================
 	//テクスチャの描画
@@ -22,6 +22,7 @@ void CGameEngine::setupTexture(const char* file,TEX_TYPE texType,GLuint texID,CV
 
 	rendTex->setupTexture(file, texType, texID);
 	rendTex->setupTextureSize(texSize, texRect , texID);
+	rendTex->setupTextureColor(color, texID);
 }
 
 void CGameEngine::setChipAnim(CAnimation *&&_val)
@@ -134,6 +135,14 @@ void CGameEngine::update()
 void CGameEngine::update60()
 {
 	rendTex->update(m_pAnim);
+}
+void CGameEngine::inputKeyA()
+{
+	rendTex->TextureFade(5, true);
+}
+void CGameEngine::inputKeyS()
+{
+	rendTex->TextureFade(5, false);
 }
 
 /**

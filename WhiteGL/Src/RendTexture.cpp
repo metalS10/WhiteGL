@@ -7,6 +7,8 @@ void CRendTexture::update(std::vector<CAnimation*>* anim)
 		GLuint texID = i - 1;
 		CVec4* texRect = (*anim)[texID]->animUpdate();
 
+
+
 		glBindTexture(GL_TEXTURE_2D, texID);
 
 
@@ -15,7 +17,29 @@ void CRendTexture::update(std::vector<CAnimation*>* anim)
 		
 		rect[texID] = CVec4(changerect4);
 	}
-	
+	for (int i = 0;i <= MAX_TEXTURE_NUMBER;i++)
+	{
+		//フェードインアウト
+		if (actionFade[i])
+		{
+			//フェードアウト
+			if (fadeOut[i])
+			{
+				colorRGBA[i].w--;
+				if (colorRGBA[i].w <= 0.0f)
+					actionFade[i] = false;
+			}
+			//フェードイン
+			else
+			{
+				colorRGBA[i].w++;
+				if (colorRGBA[i].w >= 100.0f)
+					actionFade[i] = false;
+			}
+
+			glBindTexture(GL_TEXTURE_2D, i);
+		}
+	}
 }
 
 void CRendTexture::render()
@@ -25,6 +49,8 @@ void CRendTexture::render()
 	for (int texID = 0;texID < g_texID;texID++)
 	{
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
+
 		if (texType[texID] == TEX_TYPE::BMP)
 		{
 			//場所指定
@@ -37,10 +63,10 @@ void CRendTexture::render()
 			glVertexPointer(2, GL_FLOAT, 0, vtx2);
 
 			const GLfloat color[] = {
-				1.0f,1.0f,1.0f,1.0f,
-				1.0f,1.0f,1.0f,1.0f,
-				1.0f,1.0f,1.0f,1.0f,
-				1.0f,1.0f,1.0f,1.0f,
+				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
 			};
 			glColorPointer(4, GL_FLOAT, 0, color);
 
@@ -69,10 +95,11 @@ void CRendTexture::render()
 			glVertexPointer(2, GL_FLOAT, 0, vtx2);
 
 			const GLfloat color[] = {
-				1.0f,1.0f,1.0f,1.0f,
-				1.0f,1.0f,1.0f,1.0f,
-				1.0f,1.0f,1.0f,1.0f,
-				1.0f,1.0f,1.0f,1.0f,
+				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+
 			};
 			glColorPointer(4, GL_FLOAT, 0, color);
 
@@ -101,13 +128,13 @@ void CRendTexture::render()
 			glVertexPointer(2, GL_FLOAT, 0, vtx2);
 
 			const GLfloat color[] = {
-				1,1,0,1,
-				1,1,0,1,
-				1,1,0,1,
-				1,1,0,1,
+				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
 			};
 			glColorPointer(4, GL_FLOAT, 0, color);
-		
+
 			//テクスチャの領域指定
 			const GLfloat texuv[] = {
 				rect[texID].x, rect[texID].w,
@@ -134,7 +161,6 @@ void CRendTexture::render()
 
 void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID)
 {
-
 	//画像データとテクスチャiDを結びつける
 	glBindTexture(GL_TEXTURE_2D, texID);
 
@@ -208,7 +234,7 @@ void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuin
 		break;
 	}
 
-
+	colorRGBA.push_back(CVec4(100.0f, 100.0f, 100.0f, 100.0f));
 	texType.push_back(tex_type);
 }
 
@@ -362,4 +388,15 @@ bool CRendTexture::loadPngImage(const char *name, int &outWidth, int &outHeight,
 	fclose(fp);
 	/* That's it */
 	return true;
+}
+
+void CRendTexture::setupTextureColor(const CVec4 color, const GLuint texID)
+{
+	colorRGBA[texID] = color;
+}
+
+void CRendTexture::TextureFade(const GLuint texID, const bool out)
+{
+	actionFade[texID] = true;
+	fadeOut[texID] = out;
 }

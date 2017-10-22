@@ -27,15 +27,16 @@ enum class TEX_TYPE : int
 class CRendTexture
 {
 private:
-
-	int q = 0;
 	GLuint g_texID;
 	std::vector<CVec2> initializePos;
 	std::vector<CVec2> endPos;
 	std::vector<CVec4> rect;
 	std::vector<TEX_TYPE> texType;
+	std::vector<CVec4> colorRGBA;
 	//テクスチャ情報
 	CImage* tex[MAX_TEXTURE_NUMBER];
+	bool actionFade[MAX_TEXTURE_NUMBER];
+	bool fadeOut[MAX_TEXTURE_NUMBER];
 
 
 	~CRendTexture()
@@ -136,5 +137,7 @@ public:
 
 	bool loadPngImage(const char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData);
 
+	void setupTextureColor(const CVec4 cloar,const GLuint texID);
 
+	void TextureFade(const GLuint texID,const bool out);
 };

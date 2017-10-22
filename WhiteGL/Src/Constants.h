@@ -13,7 +13,7 @@
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 //テクスチャ最大数
-#define MAX_TEXTURE_NUMBER 5
+#define MAX_TEXTURE_NUMBER 6
 
 //絶対パス
 #define PASS "C:/Users/tatsu/Desktop/WhiteGL/WhiteGL/Resources/"

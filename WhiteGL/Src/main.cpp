@@ -50,18 +50,18 @@ int main()
 	GLFWwindow* window = game.init(WINDOW_SIZE,"WhiteV_GL");
 	if (window == NULL)
 		return false;
-	game.setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 0, CVec4(0.0f, 200.0f, 100.0f, 300.0f), CVec4(0.0f, 200.0f, 0.0f, 200.0f));
+	game.setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 0, CVec4(0.0f, 200.0f, 100.0f, 300.0f), CVec4(0.0f, 200.0f, 0.0f, 200.0f), CVec4(100.0f,100.0f,100.0f,100.0f));
 
 
-	game.setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 1, CVec4(200.0f, 400.0f, 100.0f, 300.0f), CVec4(100.0f, 200.0f, 100.0f, 200.0f));
+	game.setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 1, CVec4(200.0f, 400.0f, 100.0f, 300.0f), CVec4(100.0f, 200.0f, 100.0f, 200.0f), CVec4(100.0f, 100.0f, 100.0f, 100.0f));
 
-	game.setupTexture(PASS"player.bmp", TEX_TYPE::BMP, 2, CVec4(400.0f, 464.0f, 100.0f, 164.0f), CVec4(0.0f, 64.0f, 128.0f, 192.0f));
+	game.setupTexture(PASS"player.bmp", TEX_TYPE::BMP, 2, CVec4(400.0f, 464.0f, 100.0f, 164.0f), CVec4(0.0f, 64.0f, 128.0f, 192.0f), CVec4(100.0f, 100.0f, 100.0f, 100.0f));
 
-	game.setupTexture(PASS"kuribo.png", TEX_TYPE::PNG, 3, CVec4(0.0f, 100.0f, 300.0f, 400.0f), CVec4(0.0f, 64.0f, 0.0f, 64.0f));
+	game.setupTexture(PASS"kuribo.png", TEX_TYPE::PNG, 3, CVec4(0.0f, 100.0f, 300.0f, 400.0f), CVec4(0.0f, 64.0f, 0.0f, 64.0f), CVec4(100.0f, 100.0f, 100.0f, 100.0f));
 
-	game.setupTexture(PASS"player.png", TEX_TYPE::PNG, 4, CVec4(100.0f, 200.0f, 300.0f, 400.0f), CVec4(0.0f, 64.0f, 0.0f, 64.0f));
+	game.setupTexture(PASS"player.png", TEX_TYPE::PNG, 4, CVec4(100.0f, 200.0f, 300.0f, 400.0f), CVec4(0.0f, 64.0f, 0.0f, 64.0f), CVec4(100.0f, 100.0f, 100.0f, 100.0f));
 
-	game.setupTexture(PASS"player.png", TEX_TYPE::QUAD, 5, CVec4(0, 100, 0, 100), CVec4(0.0f, 64.0f, 0.0f, 64.0f));
+	game.setupTexture("", TEX_TYPE::QUAD, MAX_TEXTURE_NUMBER-1, CVec4(0, WINDOW_WIDTH, 0, WINDOW_HEIGHT), CVec4(0.0f, 64.0f, 0.0f, 64.0f), CVec4(100.0f, 100.0f, 100.0f, 0.0f));
 
 
 	
@@ -107,19 +107,19 @@ int main()
 		prevTime = curTime;
 		FwewWindow.UpdateGamePad();
 		const GamePad gamepad = game.GetGamePad();
-		if (gamepad.buttons & GamePad::B)
+		switch (gamepad.buttons)
 		{
-			int a = 0;
+			case GamePad::A:
+				game.inputKeyA();
+				break;
+			case GamePad::B:
+				game.inputKeyS();
+				break;
+			case GamePad::Y:
+				break;
+			default:
+				break;
 		}
-		if (gamepad.buttons & GamePad::X)
-		{
-			int a = 0;
-		}
-		if (gamepad.buttons & GamePad::Y)
-		{
-			int a = 0;
-		}
-
 		game.update();
 		fps->GetFPS();//FPSを得る
 		if (fps->draw) {//秒間60フレームのタイミングで描画
