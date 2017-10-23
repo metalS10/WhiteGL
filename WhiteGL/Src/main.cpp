@@ -50,27 +50,27 @@ int main()
 	GLFWwindow* window = game.init(WINDOW_SIZE,"WhiteV_GL");
 	if (window == NULL)
 		return false;
-	game.setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 0, CVec4(0.0f, 200.0f, 100.0f, 300.0f), CVec4(0.0f, 200.0f, 0.0f, 200.0f), CVec4(100.0f,100.0f,100.0f,100.0f));
+	game.setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 0, CVec4(0.0f, 200.0f, 100.0f, 300.0f), CVec4(0.0f, 200.0f, 0.0f, 200.0f));
 
 
-	game.setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 1, CVec4(200.0f, 400.0f, 100.0f, 300.0f), CVec4(100.0f, 200.0f, 100.0f, 200.0f), CVec4(100.0f, 100.0f, 100.0f, 100.0f));
+	game.setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 1, CVec4(200.0f, 400.0f, 100.0f, 300.0f), CVec4(100.0f, 200.0f, 100.0f, 200.0f));
 
-	game.setupTexture(PASS"player.bmp", TEX_TYPE::BMP, 2, CVec4(400.0f, 464.0f, 100.0f, 164.0f), CVec4(0.0f, 64.0f, 128.0f, 192.0f), CVec4(100.0f, 100.0f, 100.0f, 100.0f));
+	game.setupTexture(PASS"player.bmp", TEX_TYPE::BMP, 2, CVec4(400.0f, 464.0f, 100.0f, 164.0f), CVec4(0.0f, 64.0f, 128.0f, 192.0f));
 
-	game.setupTexture(PASS"kuribo.png", TEX_TYPE::PNG, 3, CVec4(0.0f, 100.0f, 300.0f, 400.0f), CVec4(0.0f, 64.0f, 0.0f, 64.0f), CVec4(100.0f, 100.0f, 100.0f, 100.0f));
+	game.setupTexture(PASS"kuribo.png", TEX_TYPE::PNG, 3, CVec4(0.0f, 100.0f, 300.0f, 400.0f), CVec4(0.0f, 64.0f, 0.0f, 64.0f));
 
-	game.setupTexture(PASS"player.png", TEX_TYPE::PNG, 4, CVec4(100.0f, 200.0f, 300.0f, 400.0f), CVec4(0.0f, 64.0f, 0.0f, 64.0f), CVec4(100.0f, 100.0f, 100.0f, 100.0f));
+	game.setupTexture(PASS"player.png", TEX_TYPE::PNG, 4, CVec4(100.0f, 200.0f, 300.0f, 400.0f), CVec4(0.0f, 64.0f, 0.0f, 64.0f));
 
-	game.setupTexture("", TEX_TYPE::QUAD, MAX_TEXTURE_NUMBER-1, CVec4(0, WINDOW_WIDTH, 0, WINDOW_HEIGHT), CVec4(0.0f, 64.0f, 0.0f, 64.0f), CVec4(100.0f, 100.0f, 100.0f, 0.0f));
-
-
-	
+	game.setupTexture("", TEX_TYPE::QUAD, MAX_TEXTURE_NUMBER-1, CVec4(0, WINDOW_WIDTH, 0, WINDOW_HEIGHT), CVec4(0.0f, 64.0f, 0.0f, 64.0f), CVec4(0.0f, 0.0f, 0.0f, 0.0f));
 
 
 	
+
+
+	
 	game.setChipAnim(new CNotAnimation());
 	game.setChipAnim(new CNotAnimation());
-	game.setChipAnim(new CNotAnimation());
+	game.setChipAnim(new CListAnimation(10,true));
 	game.setChipAnim(new CNotAnimation());
 	game.setChipAnim(new CListAnimation(20,true));
 
@@ -78,6 +78,9 @@ int main()
 	game.setChipData(0,CVec4(0.0f, 200.0f, 0.0f, 200.0f));
 	game.setChipData(1,CVec4(100.0f, 200.0f, 100.0f, 200.0f));
 	game.setChipData(2,CVec4(0.0f, 64.0f, 128.0f, 192.0f));
+	game.setChipData(2, CVec4(64.0f, 128.0f, 128.0f, 192.0f));
+	game.setChipData(2, CVec4(128.0f, 192.0f, 128.0f, 192.0f));
+	game.setChipData(2, CVec4(192.0f, 256.0f, 128.0f, 192.0f));
 	game.setChipData(3,CVec4(0.0f, 64.0f, 0.0f, 64.0f));
 
 	game.setChipData(4, CVec4(0.0f, 64.0f, 0.0f, 64.0f));

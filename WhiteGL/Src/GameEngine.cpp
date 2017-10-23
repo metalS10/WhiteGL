@@ -25,6 +25,26 @@ void CGameEngine::setupTexture(const char* file,TEX_TYPE texType,GLuint texID,CV
 	rendTex->setupTextureColor(color, texID);
 }
 
+void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec4 texSize, CVec4 texRect)
+{
+	//================================
+	//テクスチャの描画
+	//================================
+	//使用許可
+	glEnable(GL_TEXTURE_2D);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	//色データをメモリに登録するための許可を得る
+	glEnableClientState(GL_COLOR_ARRAY);
+
+	if (rendTex == NULL)
+		rendTex = new CRendTexture();
+
+	rendTex->setupTexture(file, texType, texID);
+	rendTex->setupTextureSize(texSize, texRect, texID);
+	rendTex->setupTextureColor(CVec4(100.0f,100.0f,100.0f,100.0f), texID);
+}
+
 void CGameEngine::setChipAnim(CAnimation *&&_val)
 {
 
@@ -136,8 +156,10 @@ void CGameEngine::update60()
 {
 	rendTex->update(m_pAnim);
 }
+
 void CGameEngine::inputKeyA()
 {
+	bool key = false;
 	rendTex->TextureFade(5, true);
 }
 void CGameEngine::inputKeyS()

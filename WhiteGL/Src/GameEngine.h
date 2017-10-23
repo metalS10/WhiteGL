@@ -20,7 +20,8 @@ public:
 	CGameEngine() {}
 	~CGameEngine(){}
 	GLFWwindow* init(int w, int h, const char* file);
-	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec4 texSize, CVec4 texRect,CVec4 color);
+	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec4 texSize, CVec4 texRect, CVec4 color);
+	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec4 texSize, CVec4 texRect);
 	void setChipAnim(CAnimation *&&_val);
 	void setChipData(GLuint texID, CVec4 rectData);
 	void update();
@@ -28,6 +29,8 @@ public:
 	const GamePad& GetGamePad() const;
 	static CGameEngine& Instance();
 	void Run();
+
+
 	void inputKeyA();
 	void inputKeyS();
 
