@@ -5,7 +5,7 @@
 CGameMain* gameMain;
 
 
-void CGameEngine::setupTexture(const char* file,TEX_TYPE texType,GLuint texID,CVec4 texSize,CVec4 texRect,CVec4 color)
+void CGameEngine::setupTexture(const char* file,TEX_TYPE texType,GLuint texID,CVec2 texPos,CVec4 texRect,CVec4 color)
 {
 	//================================
 	//テクスチャの描画
@@ -21,11 +21,11 @@ void CGameEngine::setupTexture(const char* file,TEX_TYPE texType,GLuint texID,CV
 		rendTex = new CRendTexture();
 
 	rendTex->setupTexture(file, texType, texID);
-	rendTex->setupTextureSize(texSize, texRect , texID);
+	rendTex->setupTextureSize(texPos, texRect , texID);
 	rendTex->setupTextureColor(color, texID);
 }
 
-void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec4 texSize, CVec4 texRect)
+void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect)
 {
 	//================================
 	//テクスチャの描画
@@ -41,7 +41,7 @@ void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID,
 		rendTex = new CRendTexture();
 
 	rendTex->setupTexture(file, texType, texID);
-	rendTex->setupTextureSize(texSize, texRect, texID);
+	rendTex->setupTextureSize(texPos, texRect, texID);
 	rendTex->setupTextureColor(CVec4(100.0f,100.0f,100.0f,100.0f), texID);
 }
 
@@ -161,11 +161,14 @@ void CGameEngine::inputKeyA()
 {
 	bool key = false;
 	rendTex->TextureFade(5, true);
-	rendTex->deleteTexture(2);
+	//rendTex->deleteTexture(2);
+	rendTex->setTexSize(2,2);
 }
 void CGameEngine::inputKeyS()
 {
 	rendTex->TextureFade(5, false);
+
+	rendTex->setTexSize(1, 2);
 }
 
 /**

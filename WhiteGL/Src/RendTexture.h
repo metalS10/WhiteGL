@@ -27,9 +27,9 @@ enum class TEX_TYPE : int
 class CRendTexture
 {
 private:
-	CVec2 initializePos[MAX_TEXTURE_NUMBER] = {};
-	CVec2 endPos[MAX_TEXTURE_NUMBER] = {};
+	CVec4 setPosition[MAX_TEXTURE_NUMBER] = {};
 	CVec4 rect[MAX_TEXTURE_NUMBER] = {};
+	CVec2 texWH[MAX_TEXTURE_NUMBER] = {};
 	TEX_TYPE texType[MAX_TEXTURE_NUMBER] = {};
 	CVec4 colorRGBA[MAX_TEXTURE_NUMBER] = {};
 	//テクスチャ情報
@@ -133,7 +133,7 @@ public:
 	*/
 	void setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID);
 
-	void setupTextureSize(const CVec4 texSize, const CVec4 texRect, GLuint texID);
+	void setupTextureSize(const CVec2 texPos, const CVec4 texRect, GLuint texID);
 
 	bool loadPngImage(const char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData);
 
@@ -142,4 +142,6 @@ public:
 	void TextureFade(const GLuint texID,const bool out);
 
 	void deleteTexture(const GLsizei texID);
+
+	void setTexSize(const int Size, const GLuint texID);
 };
