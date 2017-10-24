@@ -9,7 +9,7 @@ void CRendTexture::update(std::vector<CAnimation*>* anim)
 
 
 
-		glBindTexture(GL_TEXTURE_2D, texID);
+		glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
 
 
 		//画像の矩形範囲を設定
@@ -27,17 +27,23 @@ void CRendTexture::update(std::vector<CAnimation*>* anim)
 			{
 				colorRGBA[i].w--;
 				if (colorRGBA[i].w <= 0.0f)
+				{
+					colorRGBA[i].w = 0.0f;
 					actionFade[i] = false;
+				}
 			}
 			//フェードイン
 			else
 			{
 				colorRGBA[i].w++;
 				if (colorRGBA[i].w >= 100.0f)
+				{
+					colorRGBA[i].w = 100.0f;
 					actionFade[i] = false;
+				}
 			}
 
-			glBindTexture(GL_TEXTURE_2D, i);
+			glBindTexture(GL_TEXTURE_2D, g_texID[i]);
 		}
 	}
 }
@@ -46,123 +52,124 @@ void CRendTexture::render()
 {
 	// The following two lines enable semi transparent
 	glEnable(GL_BLEND);
-	for (int texID = 0;texID < g_texID;texID++)
+	for (int texID = 0;texID < MAX_TEXTURE_NUMBER;texID++)
 	{
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		
-
-		if (texType[texID] == TEX_TYPE::BMP)
+		if (g_texID[texID] != 0)
 		{
-			//場所指定
-			const GLfloat vtx2[] = {
-				initializePos[texID].x, initializePos[texID].y,
-				endPos[texID].x, initializePos[texID].y,
-				endPos[texID].x, endPos[texID].y,
-				initializePos[texID].x, endPos[texID].y,
-			};
-			glVertexPointer(2, GL_FLOAT, 0, vtx2);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-			const GLfloat color[] = {
-				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-			};
-			glColorPointer(4, GL_FLOAT, 0, color);
 
-			//テクスチャの領域指定
-			const GLfloat texuv[] = {
-				rect[texID].x, rect[texID].z,
-				rect[texID].y, rect[texID].z,
-				rect[texID].y, rect[texID].w,
-				rect[texID].x, rect[texID].w,
-			};
-			//頂点の設定
-			glTexCoordPointer(2, GL_FLOAT, 0, texuv);
+			if (texType[texID] == TEX_TYPE::BMP)
+			{
+				//場所指定
+				const GLfloat vtx2[] = {
+					initializePos[texID].x, initializePos[texID].y,
+					endPos[texID].x, initializePos[texID].y,
+					endPos[texID].x, endPos[texID].y,
+					initializePos[texID].x, endPos[texID].y,
+				};
+				glVertexPointer(2, GL_FLOAT, 0, vtx2);
+
+				const GLfloat color[] = {
+					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+				};
+				glColorPointer(4, GL_FLOAT, 0, color);
+
+				//テクスチャの領域指定
+				const GLfloat texuv[] = {
+					rect[texID].x, rect[texID].z,
+					rect[texID].y, rect[texID].z,
+					rect[texID].y, rect[texID].w,
+					rect[texID].x, rect[texID].w,
+				};
+				//頂点の設定
+				glTexCoordPointer(2, GL_FLOAT, 0, texuv);
+
+			}
+			else if (texType[texID] == TEX_TYPE::PNG)
+			{
+				//場所指定
+				const GLfloat vtx2[] = {
+					initializePos[texID].x, initializePos[texID].y,
+					endPos[texID].x, initializePos[texID].y,
+					endPos[texID].x, endPos[texID].y,
+					initializePos[texID].x, endPos[texID].y,
+				};
+				glVertexPointer(2, GL_FLOAT, 0, vtx2);
+
+				const GLfloat color[] = {
+					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+
+				};
+				glColorPointer(4, GL_FLOAT, 0, color);
+
+				//テクスチャの領域指定
+				const GLfloat texuv[] = {
+					rect[texID].x, rect[texID].w,
+					rect[texID].y, rect[texID].w,
+					rect[texID].y, rect[texID].z,
+					rect[texID].x, rect[texID].z,
+				};
+				//頂点の設定
+				glTexCoordPointer(2, GL_FLOAT, 0, texuv);
+
+			}
+			else if (texType[texID] == TEX_TYPE::QUAD)
+			{
+				//場所指定
+				const GLfloat vtx2[] = {
+					initializePos[texID].x, initializePos[texID].y,
+					endPos[texID].x, initializePos[texID].y,
+					endPos[texID].x, endPos[texID].y,
+					initializePos[texID].x, endPos[texID].y,
+				};
+				glVertexPointer(2, GL_FLOAT, 0, vtx2);
+
+				const GLfloat color[] = {
+					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+				};
+				glColorPointer(4, GL_FLOAT, 0, color);
+
+				//テクスチャの領域指定
+				const GLfloat texuv[] = {
+					rect[texID].x, rect[texID].w,
+					rect[texID].y, rect[texID].w,
+					rect[texID].y, rect[texID].z,
+					rect[texID].x, rect[texID].z,
+				};
+				//頂点の設定
+				glTexCoordPointer(2, GL_FLOAT, 0, texuv);
+			}
 
 			//テクスチャの画像指定
-			glBindTexture(GL_TEXTURE_2D, texID);
+			glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
+			//四角ポリゴン表示
+			glDrawArrays(GL_QUADS, 0, 4);
+
+
+
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		}
-		else if (texType[texID] == TEX_TYPE::PNG)
-		{
-			//場所指定
-			const GLfloat vtx2[] = {
-				initializePos[texID].x, initializePos[texID].y,
-				endPos[texID].x, initializePos[texID].y,
-				endPos[texID].x, endPos[texID].y,
-				initializePos[texID].x, endPos[texID].y,
-			};
-			glVertexPointer(2, GL_FLOAT, 0, vtx2);
-
-			const GLfloat color[] = {
-				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-
-			};
-			glColorPointer(4, GL_FLOAT, 0, color);
-
-			//テクスチャの領域指定
-			const GLfloat texuv[] = {
-				rect[texID].x, rect[texID].w,
-				rect[texID].y, rect[texID].w,
-				rect[texID].y, rect[texID].z,
-				rect[texID].x, rect[texID].z,
-			};
-			//頂点の設定
-			glTexCoordPointer(2, GL_FLOAT, 0, texuv);
-
-			//テクスチャの画像指定
-			glBindTexture(GL_TEXTURE_2D, texID);
-		}
-		else if (texType[texID] == TEX_TYPE::QUAD)
-		{
-			//場所指定
-			const GLfloat vtx2[] = {
-				initializePos[texID].x, initializePos[texID].y,
-				endPos[texID].x, initializePos[texID].y,
-				endPos[texID].x, endPos[texID].y,
-				initializePos[texID].x, endPos[texID].y,
-			};
-			glVertexPointer(2, GL_FLOAT, 0, vtx2);
-
-			const GLfloat color[] = {
-				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-				colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-			};
-			glColorPointer(4, GL_FLOAT, 0, color);
-
-			//テクスチャの領域指定
-			const GLfloat texuv[] = {
-				rect[texID].x, rect[texID].w,
-				rect[texID].y, rect[texID].w,
-				rect[texID].y, rect[texID].z,
-				rect[texID].x, rect[texID].z,
-			};
-			//頂点の設定
-			glTexCoordPointer(2, GL_FLOAT, 0, texuv);
-
-			//テクスチャの画像指定
-			glBindTexture(GL_TEXTURE_2D, texID);
-		}
-
-		//四角ポリゴン表示
-		glDrawArrays(GL_QUADS, 0, 4);
-
-
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	}
 }
 
 void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID)
 {
+	//texIDを空いているところへ
+	glGenTextures(1, &g_texID[texID]);
+
 	//画像データとテクスチャiDを結びつける
-	glBindTexture(GL_TEXTURE_2D, texID);
+	glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
 
 	switch (tex_type)
 	{
@@ -233,37 +240,23 @@ void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuin
 	default:
 		break;
 	}
+	glBindTexture(GL_TEXTURE_2D, 0);
 
-	colorRGBA.push_back(CVec4(100.0f, 100.0f, 100.0f, 100.0f));
-	texType.push_back(tex_type);
+	colorRGBA[texID] = (CVec4(100.0f, 100.0f, 100.0f, 100.0f));
+	texType[texID] = (tex_type);
 }
 
 void CRendTexture::setupTextureSize(CVec4 texSize, CVec4 texRect, GLuint texID)
 {
-	glBindTexture(GL_TEXTURE_2D, texID);
+	//glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
 	
-	//色々設定
-	if (initializePos.size() <= texID)
-		initializePos.push_back(CVec2(texSize.x, texSize.z));
-	else
-		initializePos[texID] = CVec2(texSize.x, texSize.z);
+	initializePos[texID] = CVec2(texSize.x, texSize.z);
 
-	if (endPos.size() <= texID)
-	endPos.push_back(CVec2(texSize.y, texSize.w));
-	else
 	endPos[texID] = CVec2(texSize.y, texSize.w);
 
 
 	//画像の矩形範囲を設定
 	CVec4 changerect4 = CVec4(texRect.x / tex[texID]->m_width, texRect.y / tex[texID]->m_width, texRect.z / tex[texID]->m_height, texRect.w / tex[texID]->m_height);
-	if (rect.size() <= texID)
-	{
-		rect.push_back(CVec4(changerect4));
-
-		//texIDを空いているところへ
-		glGenTextures(1, &g_texID);
-	}
-	else
 	rect[texID] = CVec4(changerect4);
 	
 	
@@ -272,8 +265,18 @@ void CRendTexture::setupTextureSize(CVec4 texSize, CVec4 texRect, GLuint texID)
 	{
 		std::cerr << "BMP,PNG,JPEGなんでもないです" << std::endl;
 	}
+//	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+void CRendTexture::deleteTexture(const GLsizei texID)
+{
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glDeleteTextures(1, &g_texID[texID]);
+	g_texID[texID] = 0;
+	rect[texID] = {};
+	endPos[texID] = {};
+	initializePos[texID] = {};
+}
 
 bool CRendTexture::loadPngImage(const char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData) {
 	png_structp png_ptr;
@@ -400,3 +403,4 @@ void CRendTexture::TextureFade(const GLuint texID, const bool out)
 	actionFade[texID] = true;
 	fadeOut[texID] = out;
 }
+

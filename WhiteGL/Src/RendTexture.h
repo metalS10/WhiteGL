@@ -27,21 +27,21 @@ enum class TEX_TYPE : int
 class CRendTexture
 {
 private:
-	GLuint g_texID;
-	std::vector<CVec2> initializePos;
-	std::vector<CVec2> endPos;
-	std::vector<CVec4> rect;
-	std::vector<TEX_TYPE> texType;
-	std::vector<CVec4> colorRGBA;
+	CVec2 initializePos[MAX_TEXTURE_NUMBER] = {};
+	CVec2 endPos[MAX_TEXTURE_NUMBER] = {};
+	CVec4 rect[MAX_TEXTURE_NUMBER] = {};
+	TEX_TYPE texType[MAX_TEXTURE_NUMBER] = {};
+	CVec4 colorRGBA[MAX_TEXTURE_NUMBER] = {};
 	//テクスチャ情報
-	CImage* tex[MAX_TEXTURE_NUMBER];
-	bool actionFade[MAX_TEXTURE_NUMBER];
-	bool fadeOut[MAX_TEXTURE_NUMBER];
+	GLuint g_texID[MAX_TEXTURE_NUMBER] = {};
+	CImage* tex[MAX_TEXTURE_NUMBER] = {};
+	bool actionFade[MAX_TEXTURE_NUMBER] = {};
+	bool fadeOut[MAX_TEXTURE_NUMBER] = {};
 
 
 	~CRendTexture()
 	{
-		for (int i = 0;i >= g_texID;i++)
+		for (int i = 0;i < MAX_TEXTURE_NUMBER;i++)
 			SAFE_DELETE(tex[i]);
 	}
 
@@ -140,4 +140,6 @@ public:
 	void setupTextureColor(const CVec4 cloar,const GLuint texID);
 
 	void TextureFade(const GLuint texID,const bool out);
+
+	void deleteTexture(const GLsizei texID);
 };

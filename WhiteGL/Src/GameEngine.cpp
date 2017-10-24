@@ -161,6 +161,7 @@ void CGameEngine::inputKeyA()
 {
 	bool key = false;
 	rendTex->TextureFade(5, true);
+	rendTex->deleteTexture(2);
 }
 void CGameEngine::inputKeyS()
 {
