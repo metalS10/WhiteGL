@@ -16,4 +16,16 @@ public:
 		:x(x),y(y){}
 	CVec2(const CVec2& v)
 		:x(v.x),y(v.y){}
+
+	inline CVec2& CVec2::operator+=(const CVec2& v)
+	{
+		add(v);
+		return *this;
+	}
+
+	inline void CVec2::add(const CVec2& v)
+	{
+		x += v.x;
+		y += v.y;
+	}
 };

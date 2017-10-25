@@ -63,10 +63,10 @@ void CRendTexture::render()
 			{
 				//場所指定
 				const GLfloat vtx2[] = {
-					setPosition[texID].x, setPosition[texID].z,
-					setPosition[texID].y, setPosition[texID].z,
-					setPosition[texID].y, setPosition[texID].w,
-					setPosition[texID].x, setPosition[texID].w,
+					_rectPos[texID].x, _rectPos[texID].z,
+					_rectPos[texID].y, _rectPos[texID].z,
+					_rectPos[texID].y, _rectPos[texID].w,
+					_rectPos[texID].x, _rectPos[texID].w,
 				};
 				glVertexPointer(2, GL_FLOAT, 0, vtx2);
 
@@ -93,10 +93,10 @@ void CRendTexture::render()
 			{
 				//場所指定
 				const GLfloat vtx2[] = {
-					setPosition[texID].x, setPosition[texID].z,
-					setPosition[texID].y, setPosition[texID].z,
-					setPosition[texID].y, setPosition[texID].w,
-					setPosition[texID].x, setPosition[texID].w,
+					_rectPos[texID].x, _rectPos[texID].z,
+					_rectPos[texID].y, _rectPos[texID].z,
+					_rectPos[texID].y, _rectPos[texID].w,
+					_rectPos[texID].x, _rectPos[texID].w,
 				};
 				glVertexPointer(2, GL_FLOAT, 0, vtx2);
 
@@ -124,10 +124,10 @@ void CRendTexture::render()
 			{
 				//場所指定
 				const GLfloat vtx2[] = {
-					setPosition[texID].x, setPosition[texID].z,
-					setPosition[texID].y, setPosition[texID].z,
-					setPosition[texID].y, setPosition[texID].w,
-					setPosition[texID].x, setPosition[texID].w,
+					_rectPos[texID].x, _rectPos[texID].z,
+					_rectPos[texID].y, _rectPos[texID].z,
+					_rectPos[texID].y, _rectPos[texID].w,
+					_rectPos[texID].x, _rectPos[texID].w,
 				};
 				glVertexPointer(2, GL_FLOAT, 0, vtx2);
 
@@ -170,6 +170,8 @@ void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuin
 
 	//画像データとテクスチャiDを結びつける
 	glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
+
+	texScale[texID] = CVec2(1, 1);
 
 	switch (tex_type)
 	{
@@ -251,8 +253,9 @@ void CRendTexture::setupTextureSize(const CVec2 texPos,const CVec4 texRect,const
 	//glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
 
 	//横幅縦幅をセット
-	texWH[texID] = CVec2(texRect.y - texRect.x, texRect.w - texRect.z);
-	setPosition[texID] = CVec4(texPos.x, texPos.x + texWH[texID].x, texPos.y, texPos.y + texWH[texID].y);
+	texWH[texID] = CVec2((texRect.y - texRect.x) * 0.5, (texRect.w - texRect.z) * 0.5);
+	_rectPos[texID] = CVec4(texPos.x - texWH[texID].x, texPos.x + texWH[texID].x, texPos.y - texWH[texID].y, texPos.y + texWH[texID].y);
+	_position[texID] = texPos;
 
 	//画像の矩形範囲を設定
 	CVec4 changerect4 = CVec4(texRect.x / tex[texID]->m_width, texRect.y / tex[texID]->m_width, texRect.z / tex[texID]->m_height, texRect.w / tex[texID]->m_height);
@@ -273,7 +276,7 @@ void CRendTexture::deleteTexture(const GLsizei texID)
 	glDeleteTextures(1, &g_texID[texID]);
 	g_texID[texID] = 0;
 	rect[texID] = {};
-	setPosition[texID] = {};
+	_rectPos[texID] = {};
 }
 
 bool CRendTexture::loadPngImage(const char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData) {
@@ -402,8 +405,14 @@ void CRendTexture::TextureFade(const GLuint texID, const bool out)
 	fadeOut[texID] = out;
 }
 
-void CRendTexture::setTexSize(const int Size, const GLuint texID)
+void CRendTexture::setScale(const CVec2 Size, const GLuint texID)
 {
-	CVec2 pos = CVec2(setPosition[texID].x, setPosition[texID].z);
-	setPosition[texID] = CVec4(pos.x, pos.x + texWH[texID].x * Size, pos.y, pos.y + texWH[texID].y * Size);
+	texScale[texID] = Size;
+	_rectPos[texID] = CVec4(_position[texID].x - texWH[texID].x * Size.x, _position[texID].x + texWH[texID].x * Size.x, _position[texID].y - texWH[texID].y * Size.y, _position[texID].y + texWH[texID].y * Size.y);
+}
+
+void CRendTexture::setPosition(const CVec2 velocity, const GLuint texID)
+{
+	_position[texID] += velocity;
+	_rectPos[texID] = CVec4(_position[texID].x - texWH[texID].x * texScale[texID].x, _position[texID].x + texWH[texID].x * texScale[texID].x, _position[texID].y - texWH[texID].y * texScale[texID].y, _position[texID].y + texWH[texID].y * texScale[texID].y);
 }

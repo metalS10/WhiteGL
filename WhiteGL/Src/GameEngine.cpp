@@ -156,19 +156,29 @@ void CGameEngine::update60()
 {
 	rendTex->update(m_pAnim);
 }
+void CGameEngine::setVelocity(CVec2 vel)
+{
+	if (vel.x > 0)
+	{
+		rendTex->setScale(CVec2(1, 1), 4);
+	}
+	else if (vel.x < 0)
+	{
+		rendTex->setScale(CVec2(-1, 1), 4);
+	}
+	rendTex->setPosition(vel, 4);
+}
 
 void CGameEngine::inputKeyA()
 {
 	bool key = false;
 	rendTex->TextureFade(5, true);
 	//rendTex->deleteTexture(2);
-	rendTex->setTexSize(2,2);
 }
 void CGameEngine::inputKeyS()
 {
 	rendTex->TextureFade(5, false);
 
-	rendTex->setTexSize(1, 2);
 }
 
 /**

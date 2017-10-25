@@ -172,6 +172,7 @@
     <ClInclude Include="Src\GamePad.h" />
     <ClInclude Include="Src\GLFWEW.h" />
     <ClInclude Include="Src\image.h" />
+    <ClInclude Include="Src\Move.h" />
     <ClInclude Include="Src\Node.h" />
     <ClInclude Include="Src\Rect.h" />
     <ClInclude Include="Src\RendTexture.h" />

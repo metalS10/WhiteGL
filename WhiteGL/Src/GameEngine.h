@@ -29,9 +29,16 @@ public:
 	const GamePad& GetGamePad() const;
 	static CGameEngine& Instance();
 	void Run();
+	void setVelocity(CVec2 vel);
 
 
 	void inputKeyA();
 	void inputKeyS();
+	void inputKeyRight();
+	void inputKeyLeft();
+	void inputKeyUp();
+	void inputKeyDown();
+	void exitArrowKey();
+
 
 };
