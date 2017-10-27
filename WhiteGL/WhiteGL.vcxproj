@@ -150,8 +150,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Character.cpp" />
+    <ClCompile Include="Src\Collision.cpp" />
+    <ClCompile Include="Src\CollisionArea.cpp" />
     <ClCompile Include="Src\GameEngine.cpp" />
-    <ClCompile Include="Src\GameMain.cpp" />
     <ClCompile Include="Src\GLFWEW.cpp" />
     <ClCompile Include="Src\image.cpp" />
     <ClCompile Include="Src\main.cpp" />
@@ -165,15 +167,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Animation.h" />
+    <ClInclude Include="Src\Character.h" />
+    <ClInclude Include="Src\Collision.h" />
+    <ClInclude Include="Src\CollisionArea.h" />
     <ClInclude Include="Src\Constants.h" />
     <ClInclude Include="Src\FPS.h" />
     <ClInclude Include="Src\GameEngine.h" />
-    <ClInclude Include="Src\GameMain.h" />
     <ClInclude Include="Src\GamePad.h" />
     <ClInclude Include="Src\GLFWEW.h" />
     <ClInclude Include="Src\image.h" />
     <ClInclude Include="Src\Move.h" />
     <ClInclude Include="Src\Node.h" />
+    <ClInclude Include="Src\Physical.h" />
     <ClInclude Include="Src\Rect.h" />
     <ClInclude Include="Src\RendTexture.h" />
     <ClInclude Include="Src\Sprite.h" />

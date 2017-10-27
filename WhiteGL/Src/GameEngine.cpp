@@ -2,8 +2,6 @@
 
 
 
-CGameMain* gameMain;
-
 
 void CGameEngine::setupTexture(const char* file,TEX_TYPE texType,GLuint texID,CVec2 texPos,CVec4 texRect,CVec4 color)
 {
@@ -107,7 +105,6 @@ GLFWwindow* CGameEngine::init(int w,int h,const char* file)
 
 	isInitialized = true;
 
-	gameMain = new CGameMain();
 	return m_Window;
 }
 
@@ -171,14 +168,12 @@ void CGameEngine::setVelocity(CVec2 vel)
 
 void CGameEngine::inputKeyA()
 {
-	bool key = false;
-	rendTex->TextureFade(5, true);
+	//rendTex->TextureFade(5, true);
 	//rendTex->deleteTexture(2);
 }
 void CGameEngine::inputKeyS()
 {
-	rendTex->TextureFade(5, false);
-
+	//rendTex->TextureFade(5, false);
 }
 
 /**

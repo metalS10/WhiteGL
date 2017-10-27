@@ -3,7 +3,6 @@
 */
 #pragma once
 #include "Constants.h"
-#include "GameMain.h"
 #include "RendTexture.h"
 #include "Animation.h"
 #include "GamePad.h"

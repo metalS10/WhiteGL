@@ -52,7 +52,6 @@ int main()
 		return false;
 	game.setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 0, CVec2(100.0f, 100.0f), CVec4(0.0f, 200.0f, 0.0f, 200.0f));
 
-
 	game.setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 1, CVec2(300.0f, 100.0f), CVec4(100.0f, 200.0f, 100.0f, 200.0f));
 
 	game.setupTexture(PASS"player.bmp", TEX_TYPE::BMP, 2, CVec2(400.0f, 100.0f), CVec4(0.0f, 64.0f, 128.0f, 192.0f));
@@ -72,8 +71,7 @@ int main()
 	game.setChipAnim(new CNotAnimation());
 	game.setChipAnim(new CListAnimation(10,true));
 	game.setChipAnim(new CNotAnimation());
-	game.setChipAnim(new CListAnimation(20,true));
-
+	game.setChipAnim(new CListAnimation(20,true));	
 
 	game.setChipData(0,CVec4(0.0f, 200.0f, 0.0f, 200.0f));
 	game.setChipData(1,CVec4(100.0f, 200.0f, 100.0f, 200.0f));
@@ -89,11 +87,11 @@ int main()
 	game.setChipData(4, CVec4(192.0f, 256.0f, 0.0f, 64.0f));
 
 
+
 	FPS* fps = new FPS(60);
 
 	GLFWEW::Window& FwewWindow = GLFWEW::Window::Instance();
 
-	double prevTime = glfwGetTime();
 
 	/**
 	*memo
@@ -105,12 +103,9 @@ int main()
 	*/
 	while (!glfwWindowShouldClose(window))
 	{
-		const double curTime = glfwGetTime();
-		const double delta = curTime - prevTime;
-		prevTime = curTime;
 		FwewWindow.UpdateGamePad();
 		const GamePad gamepad = game.GetGamePad();
-		switch (gamepad.buttons)
+		switch (gamepad.buttonDown)
 		{
 			case GamePad::A:
 				game.inputKeyA();
@@ -127,7 +122,7 @@ int main()
 		
 		game.update();
 		fps->GetFPS();//FPSを得る
-		if (fps->draw) {//秒間60フレームのタイミングで描画
+		if (fps->draw) {//秒間60フレーム
 			game.update60();
 			CVec2 vel = {};
 			if (gamepad.buttons & GamePad::DPAD_RIGHT)
@@ -145,6 +140,10 @@ int main()
 			else if (gamepad.buttons & GamePad::DPAD_DOWN)
 			{
 				vel.y = -5;
+			}
+			if (gamepad.buttons & GamePad::GameEnd)
+			{
+				//return 0;
 			}
 			game.setVelocity(vel);
 		}
