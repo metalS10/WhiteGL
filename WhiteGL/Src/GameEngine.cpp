@@ -45,7 +45,6 @@ void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID,
 
 void CGameEngine::setChipAnim(CAnimation *&&_val)
 {
-
 	m_pAnim->push_back(_val);
 }
 
@@ -168,12 +167,20 @@ void CGameEngine::setVelocity(CVec2 vel)
 
 void CGameEngine::inputKeyA()
 {
-	//rendTex->TextureFade(5, true);
+	rendTex->TextureFade(5, true);
 	//rendTex->deleteTexture(2);
 }
 void CGameEngine::inputKeyS()
 {
-	//rendTex->TextureFade(5, false);
+	rendTex->TextureFade(5, false);
+}
+void CGameEngine::inputKeyZ()
+{
+	rendTex->setScale(CVec2(1, 1), 4);
+}
+void CGameEngine::inputKeyX()
+{
+	rendTex->setScale(CVec2(2, 2), 4);
 }
 
 /**

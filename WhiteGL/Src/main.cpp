@@ -113,7 +113,11 @@ int main()
 			case GamePad::B:
 				game.inputKeyS();
 				break;
-			case GamePad::Y:
+			case GamePad::X:
+				game.inputKeyX();
+				break;
+			case GamePad::Z:
+				game.inputKeyZ();
 				break;
 			
 			default:

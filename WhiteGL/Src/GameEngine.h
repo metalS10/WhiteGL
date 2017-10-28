@@ -33,6 +33,8 @@ public:
 
 	void inputKeyA();
 	void inputKeyS();
+	void inputKeyZ();
+	void inputKeyX();
 	void inputKeyRight();
 	void inputKeyLeft();
 	void inputKeyUp();
