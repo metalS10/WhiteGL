@@ -1,5 +1,5 @@
 #include "PlayerFactory.h"
-#include "Model/Character/AttackCharacter/AttackCharacter.h"
+//#include "Model/Character/AttackCharacter/AttackCharacter.h"
 
 //==================================================
 //プレイヤー工場
@@ -13,25 +13,25 @@ std::vector<CAnimation*>* CPlayerPartsFactory::getAnimations()
 
 	//直立アニメーションの設定
 	//m_pAnimations->push_back(new CChipListAnimation(10,true));
-	m_pAnimations->push_back(new CChipNotAnimation());
+	m_pAnimations->push_back(new CNotAnimation());
 
 	//歩行アニメーションの設定
-	m_pAnimations->push_back(new CChipListAnimation(10, true));
+	m_pAnimations->push_back(new CListAnimation(10, true));
 	//ダメージを受けた時のアニメーションの設定
-	m_pAnimations->push_back(new CChipNotAnimation());
+	m_pAnimations->push_back(new CNotAnimation());
 	//落ちている時のアニメーションの設定
-	m_pAnimations->push_back(new CChipNotAnimation());
+	m_pAnimations->push_back(new CNotAnimation());
 	//攻撃アニメーション
-	m_pAnimations->push_back(new CChipListAnimation(10,false));
-	m_pAnimations->push_back(new CChipListAnimation(10, false));
+	m_pAnimations->push_back(new CListAnimation(10,false));
+	m_pAnimations->push_back(new CListAnimation(10, false));
 	//回避状態
-	m_pAnimations->push_back(new CChipNotAnimation());
+	m_pAnimations->push_back(new CNotAnimation());
 	//ダッシュアニメーションの設定
-	m_pAnimations->push_back(new CChipListAnimation(10, true));
+	m_pAnimations->push_back(new CListAnimation(10, true));
 	//回避中ジャンプアニメーションの設定
-	m_pAnimations->push_back(new CChipNotAnimation());
+	m_pAnimations->push_back(new CNotAnimation());
 	//回避落ちている時のアニメーションの設定
-	m_pAnimations->push_back(new CChipNotAnimation());
+	m_pAnimations->push_back(new CNotAnimation());
 
 	return m_pAnimations;
 }
@@ -55,7 +55,7 @@ std::vector<CPhysical*>* CPlayerPartsFactory::getPhysicals()
 
 	return m_pPhysicals;
 }
-
+/*
 std::vector<CAction*>* CPlayerPartsFactory::getActions()
 {
 	std::vector<CAction*>* m_pActions;
@@ -75,7 +75,7 @@ std::vector<CAction*>* CPlayerPartsFactory::getActions()
 
 	return m_pActions;
 }
-
+*/
 CBody* CPlayerPartsFactory::getBody()
 {
 	return new CBody();
@@ -240,18 +240,6 @@ void CBasePlayerFactory::settingInitialize(CPlayerCharacter* pPlayerCharacter)
 	//Bodyを送る
 	CCollisionArea* pMapArea = new CCollisionAreaMap(pPlayerCharacter->m_pBody);
 
-	//マップチップ衝突空間に領域を設定(*大事)
-	CCollisionTerritory* pMapChipBottomTerritory = new CCollisionTerritoryMapChipBottom();
-
-	//下のマップチップ領域と衝突した際のイベントコールバックを設定
-	pMapChipBottomTerritory->setEventCallback(&CCharacter::collisionBottomCallback);
-
-	//下のマップチップ領域を設定
-	pMapArea->addTerritory(pMapChipBottomTerritory);
-
-	pMapArea->addTerritory(new CCollisionTerritoryMapChipTop());
-	pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
-	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
 
 
 	

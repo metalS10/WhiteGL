@@ -28,4 +28,11 @@ public:
 		x += v.x;
 		y += v.y;
 	}
+
+	inline void CVec2::set(const float vx,const float vy)
+	{
+		x = vx;
+		y = vy;
+	}
+
 };

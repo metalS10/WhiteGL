@@ -1,5 +1,5 @@
 #pragma once
-#include "Model\Character\PlayerCharacter.h"
+#include "PlayerCharacter.h"
 
 class CPlayerPartsFactory : public CCharacterPartsFactory
 {
@@ -14,7 +14,7 @@ public:
 	 std::vector<CPhysical*>* getPhysicals()override;
 
 	//ƒAƒNƒVƒ‡ƒ“Žæ“¾
-	 std::vector<CAction*>* getActions()override;
+	 //std::vector<CAction*>* getActions()override;
 
 	//ŽÀ‘ÌŽæ“¾
 	 CBody* getBody()override;
@@ -59,7 +59,7 @@ public:
 
 	CPlayerCharacter* createPlayer()override
 	{
-		CPlayerCharacter* pChara = CPlayerCharacter::create();
+		CPlayerCharacter* pChara = new CPlayerCharacter();
 
 		CPlayerPartsFactory pFactory;
 
@@ -69,7 +69,7 @@ public:
 
 		pChara->m_pPhysicals = pFactory.getPhysicals();
 
-		pChara->m_pActions = pFactory.getActions();
+		//pChara->m_pActions = pFactory.getActions();
 
 		pChara->m_pBody = pFactory.getBody();
 

@@ -43,7 +43,7 @@ bool CPlayerCharacter::init()
 	return true;
 }
 
-void CPlayerCharacter::update(float deltaTime)
+void CPlayerCharacter::update()
 {
 	//x軸の加速度の初期化
 	this->m_pMove->m_accele.x = 0.0f;
@@ -55,7 +55,7 @@ void CPlayerCharacter::update(float deltaTime)
 	this->DodgeInterval();
 
 	//キャラクターの更新処理呼び出し
-	CCharacter::update(deltaTime);
+	CCharacter::update();
 }
 
 /**
@@ -252,7 +252,7 @@ void CPlayerCharacter::moveFunc()
 void CPlayerCharacter::animationFunc()
 {
 	//アニメーション
-	//(*this->m_pAnimations)[m_state]->update();
+	(*this->m_pAnimations)[m_state]->animUpdate();
 
 }
 
@@ -266,7 +266,6 @@ void CPlayerCharacter::animationFunc()
 /*
 void CPlayerCharacter::endOfScreen()
 {
-	/*
 	//左に移動している場合は画面左で止めるようにする
 	if (this->m_pMove->m_vel.x < 0.0f&&this->m_pMove->m_pos.x + m_pBody->m_left < WINDOW_LEFT)
 	{
@@ -278,8 +277,6 @@ void CPlayerCharacter::endOfScreen()
 		this->m_pMove->m_vel.x = 0.0f;
 		this->m_pMove->m_accele.x = 0.0f;
 	}
-	*/
-	/*
 	//右に移動している場合は画面右で止めるようにする
 	if (this->m_pMove->m_vel.x > 0.0f&&this->m_pMove->m_pos.x + m_pBody->m_right > WINDOW_RIGHT)
 	{
@@ -291,9 +288,6 @@ void CPlayerCharacter::endOfScreen()
 		this->m_pMove->m_vel.x = 0.0f;
 		this->m_pMove->m_accele.x = 0.0f;
 	}
-	*/
-//*/
-/**
 	//画面下で止めるようにする
 	if (this->m_pMove->m_pos.y + this->m_pBody->m_bottom < WINDOW_BOTTOM)
 	{

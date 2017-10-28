@@ -65,7 +65,7 @@ public:
 	//==================================================================
 
 	//XVˆ—
-	void update(float deltaTime)override;
+	void update()override;
 
 	/**
 	*	@desc“ü—Íˆ—

@@ -5,6 +5,8 @@
 *		ﾏｸﾛなどを設定する場
 */
 
+//絶対パス
+#define PASS "C:/Users/tatsu/Desktop/WhiteGL/WhiteGL/Resources/"
 #define NULL 0
 //削除
 #define SAFE_DELETE(p_)if(p_){delete p_;p_ = NULL;}
@@ -19,7 +21,7 @@
 //テクスチャ最大数
 #define MAX_TEXTURE_NUMBER 6
 
-#define TAG_PLAYER_1 1001
+//プレイヤー
+#define IMAGE_PLAYER PASS"player.png"
 
-//絶対パス
-#define PASS "C:/Users/tatsu/Desktop/WhiteGL/WhiteGL/Resources/"
+#define TAG_PLAYER_1 1001

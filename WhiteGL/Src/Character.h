@@ -40,7 +40,9 @@ public:
 	virtual bool init();
 
 	//更新処理
-	virtual void update(float deltaTime);
+	virtual void update();
+
+	void setTexture(const char* pass) {};
 
 	//アニメーションデータ群
 	std::vector<CAnimation*>* m_pAnimations = NULL;
