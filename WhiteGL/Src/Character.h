@@ -42,7 +42,7 @@ public:
 	//更新処理
 	virtual void update();
 
-	void setTexture(const char* pass) {};
+	void setTexture(const char* pass) { texPass = pass; }
 
 	//アニメーションデータ群
 	std::vector<CAnimation*>* m_pAnimations = NULL;
@@ -115,6 +115,7 @@ public:
 	//ゲームオーバー
 	bool m_gameOver = false;
 
+	const char* texPass = "";
 
 	//攻撃中の敵
 	CCharacter* m_pNowEnemy = NULL;

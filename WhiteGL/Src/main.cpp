@@ -3,7 +3,8 @@
 *		2017/09/29	Mats
 */
 #include "GameEngine.h"
-
+#include "Character.h"
+#include "PlayerFactory.h"
 #include "FPS.h"
 /**
 *GLFWからのエラー報告を処理する
@@ -47,23 +48,41 @@ int main()
 	//glMatrixMode(GL_PROJECTION);
 	//glLoadIdentity();
 
+	std::vector<CCharacter*>* m_pCharacters = NULL;
+	//キャラクターの集まりの生成
+	m_pCharacters = new std::vector<CCharacter*>();
+	CCharacterAggregate::getInstance()->set(m_pCharacters);
+
 	GLFWwindow* window = game.init(WINDOW_SIZE,"WhiteV_GL");
 	if (window == NULL)
 		return false;
-	game.setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 0, CVec2(100.0f, 100.0f), CVec4(0.0f, 200.0f, 0.0f, 200.0f));
+	game.setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 0, CVec2(100.0f, 100.0f), CVec4(0.0f, 0.0f, 200.0f, 200.0f));
 
-	game.setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 1, CVec2(300.0f, 100.0f), CVec4(100.0f, 200.0f, 100.0f, 200.0f));
+	game.setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 1, CVec2(300.0f, 100.0f), CVec4(100.0f, 100.0f, 100.0f, 100.0f));
 
-	game.setupTexture(PASS"player.bmp", TEX_TYPE::BMP, 2, CVec2(400.0f, 100.0f), CVec4(0.0f, 64.0f, 128.0f, 192.0f));
+	game.setupTexture(PASS"player.bmp", TEX_TYPE::BMP, 2, CVec2(400.0f, 100.0f), CVec4(0.0f, 128.0f, 64.0f, 64.0f));
 
-	game.setupTexture(PASS"kuribo.png", TEX_TYPE::PNG, 3, CVec2(32.0f, 232.0f), CVec4(0.0f, 64.0f, 0.0f, 64.0f));
+	game.setupTexture(PASS"kuribo.png", TEX_TYPE::PNG, 3, CVec2(32.0f, 232.0f), CVec4(0.0f, 0.0f, 64.0f, 64.0f));
 
-	game.setupTexture(PASS"player.png", TEX_TYPE::PNG, 4, CVec2(200.0f, 232.0f), CVec4(0.0f, 64.0f, 0.0f, 64.0f));
+	game.setupTexture(PASS"player.png", TEX_TYPE::PNG, 4, CVec2(200.0f, 232.0f), CVec4(0.0f, 0.0f, 64.0f, 64.0f));
 
-	game.setupTexture("", TEX_TYPE::QUAD, MAX_TEXTURE_NUMBER-1, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, WINDOW_WIDTH, 0.0f, WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f));
+	
+
+	CPlayerCharacter* pPlayerChara = (CPlayerCharacter*)CPlayerFactoryManager::getInstance()->create(320.0f, 200.0f);
+
+	//プレイヤー1のタグを設定
+	pPlayerChara->m_tag = TAG_PLAYER_1;
+
+	//CCharacterAggregateにプレイヤーを追加
+	CCharacterAggregate::getInstance()->add(pPlayerChara);
+
+	game.setupTexture(pPlayerChara->texPass, TEX_TYPE::PNG, 5, pPlayerChara->m_pMove->m_pos, (*pPlayerChara->m_pAnimations)[1]->getCurrentChip());
+
+	game.setupTexture("", TEX_TYPE::QUAD, MAX_TEXTURE_NUMBER-1, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH,  WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f));
 
 
 	
+
 
 
 	
@@ -92,6 +111,7 @@ int main()
 
 	GLFWEW::Window& FwewWindow = GLFWEW::Window::Instance();
 
+	
 
 	/**
 	*memo
@@ -147,9 +167,10 @@ int main()
 			}
 			if (gamepad.buttons & GamePad::GameEnd)
 			{
-				//return 0;
+				return 0;
 			}
 			game.setVelocity(vel);
+			(*m_pCharacters)[0]->update();
 		}
 		glfwSwapBuffers(window);
 	}

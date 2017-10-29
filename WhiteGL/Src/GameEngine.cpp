@@ -156,23 +156,23 @@ void CGameEngine::setVelocity(CVec2 vel)
 {
 	if (vel.x > 0)
 	{
-		rendTex->setScale(CVec2(1, 1), 4);
+		rendTex->setScale(CVec2(1, 1), 5);
 	}
 	else if (vel.x < 0)
 	{
-		rendTex->setScale(CVec2(-1, 1), 4);
+		rendTex->setScale(CVec2(-1, 1), 5);
 	}
-	rendTex->setPosition(vel, 4);
+	rendTex->setPosition(vel, 5);
 }
 
 void CGameEngine::inputKeyA()
 {
-	rendTex->TextureFade(5, true);
+	rendTex->TextureFade(6, true);
 	//rendTex->deleteTexture(2);
 }
 void CGameEngine::inputKeyS()
 {
-	rendTex->TextureFade(5, false);
+	rendTex->TextureFade(6, false);
 }
 void CGameEngine::inputKeyZ()
 {

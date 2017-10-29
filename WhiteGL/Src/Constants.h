@@ -19,7 +19,7 @@
 #define WINDOW_TOP WINDOW_HEIGHT
 #define WINDOW_BOTTOM 0
 //テクスチャ最大数
-#define MAX_TEXTURE_NUMBER 6
+#define MAX_TEXTURE_NUMBER 7
 
 //プレイヤー
 #define IMAGE_PLAYER PASS"player.png"

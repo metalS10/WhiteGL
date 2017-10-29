@@ -168,6 +168,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Src\Animation.h" />
     <ClInclude Include="Src\Character.h" />
     <ClInclude Include="Src\Collision.h" />
@@ -190,6 +191,9 @@
     <ClInclude Include="Src\Vec2.h" />
     <ClInclude Include="Src\Vec3.h" />
     <ClInclude Include="Src\Vec4.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="WhiteGL.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

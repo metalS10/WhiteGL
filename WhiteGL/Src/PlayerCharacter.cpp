@@ -54,6 +54,7 @@ void CPlayerCharacter::update()
 	//ジャスト回避インターバル
 	this->DodgeInterval();
 
+	this->animationFunc();
 	//キャラクターの更新処理呼び出し
 	CCharacter::update();
 }

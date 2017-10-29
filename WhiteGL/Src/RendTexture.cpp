@@ -252,13 +252,16 @@ void CRendTexture::setupTextureSize(const CVec2 texPos,const CVec4 texRect,const
 {
 	//glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
 
+	float Xright = texRect.x + texRect.z;
+	float Ytop = texRect.y + texRect.w;
+
 	//横幅縦幅をセット
-	texWH[texID] = CVec2((texRect.y - texRect.x) * 0.5, (texRect.w - texRect.z) * 0.5);
+	texWH[texID] = CVec2((Xright - texRect.x) * 0.5, (Ytop - texRect.y) * 0.5);
 	_rectPos[texID] = CVec4(texPos.x - texWH[texID].x, texPos.x + texWH[texID].x, texPos.y - texWH[texID].y, texPos.y + texWH[texID].y);
 	_position[texID] = texPos;
 
 	//画像の矩形範囲を設定
-	CVec4 changerect4 = CVec4(texRect.x / tex[texID]->m_width, texRect.y / tex[texID]->m_width, texRect.z / tex[texID]->m_height, texRect.w / tex[texID]->m_height);
+	CVec4 changerect4 = CVec4(texRect.x / tex[texID]->m_width, Xright / tex[texID]->m_width, texRect.y / tex[texID]->m_height, Ytop / tex[texID]->m_height);
 	rect[texID] = CVec4(changerect4);
 	
 	
