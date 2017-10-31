@@ -10,28 +10,28 @@ std::vector<CAnimation*>* CPlayerPartsFactory::getAnimations()
 {
 	//アニメーションデータ群の生成
 	std::vector<CAnimation*>* m_pAnimations = new std::vector<CAnimation*>();
-
+	
 	//直立アニメーションの設定
 	//m_pAnimations->push_back(new CChipListAnimation(10,true));
-	m_pAnimations->push_back(new CNotAnimation());
+	m_pAnimations->push_back(new CChipNotAnimation());
 
 	//歩行アニメーションの設定
-	m_pAnimations->push_back(new CListAnimation(10, true));
+	m_pAnimations->push_back(new CChipListAnimation(10, true));
 	//ダメージを受けた時のアニメーションの設定
-	m_pAnimations->push_back(new CNotAnimation());
+	m_pAnimations->push_back(new CChipNotAnimation());
 	//落ちている時のアニメーションの設定
-	m_pAnimations->push_back(new CNotAnimation());
+	m_pAnimations->push_back(new CChipNotAnimation());
 	//攻撃アニメーション
-	m_pAnimations->push_back(new CListAnimation(10,false));
-	m_pAnimations->push_back(new CListAnimation(10, false));
+	m_pAnimations->push_back(new CChipListAnimation(10,false));
+	m_pAnimations->push_back(new CChipListAnimation(10, false));
 	//回避状態
-	m_pAnimations->push_back(new CNotAnimation());
+	m_pAnimations->push_back(new CChipNotAnimation());
 	//ダッシュアニメーションの設定
-	m_pAnimations->push_back(new CListAnimation(10, true));
+	m_pAnimations->push_back(new CChipListAnimation(10, true));
 	//回避中ジャンプアニメーションの設定
-	m_pAnimations->push_back(new CNotAnimation());
+	m_pAnimations->push_back(new CChipNotAnimation());
 	//回避落ちている時のアニメーションの設定
-	m_pAnimations->push_back(new CNotAnimation());
+	m_pAnimations->push_back(new CChipNotAnimation());
 
 	return m_pAnimations;
 }
@@ -83,10 +83,11 @@ CBody* CPlayerPartsFactory::getBody()
 
 
 
-CCharacter* CPlayerFactory::create(float posX,float posY)
+CCharacter* CPlayerFactory::create(float posX,float posY,CGameEngine& gm)
 {
 	CPlayerCharacter* pChara = this->createPlayer();
 
+	pChara->game = gm;
 	//==============================================
 	//インスタンスに値を設定していく
 	//==============================================
@@ -104,6 +105,7 @@ CCharacter* CPlayerFactory::create(float posX,float posY)
 
 	//初期化
 	this->settingInitialize(pChara);
+
 
 	return pChara;
 }
@@ -298,8 +300,8 @@ void CPlayerFactoryManager::removeInstance()
 *@param	初期位置y
 *@return プレイヤー
 */
-CCharacter* CPlayerFactoryManager::create(float x, float y)
+CCharacter* CPlayerFactoryManager::create(float x, float y ,CGameEngine& gm)
 {
-	return this->m_factories[0]->create(x, y);
+	return this->m_factories[0]->create(x, y,gm);
 }
 

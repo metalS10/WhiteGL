@@ -24,9 +24,9 @@ enum class TEX_TYPE : int
 	JPEG = 2,
 	QUAD = 3,
 };
-class CRendTexture
+static class CRendTexture
 {
-private:
+public:
 	CVec4 _rectPos[MAX_TEXTURE_NUMBER] = {};
 	CVec2 _position[MAX_TEXTURE_NUMBER] = {};
 
@@ -42,6 +42,10 @@ private:
 	bool actionFade[MAX_TEXTURE_NUMBER] = {};
 	bool fadeOut[MAX_TEXTURE_NUMBER] = {};
 
+	CRendTexture()
+	{
+
+	}
 
 	~CRendTexture()
 	{
@@ -150,4 +154,7 @@ public:
 	void setScale(const CVec2 Size, const GLuint texID);
 
 	void setPosition(const CVec2 velocity, const GLuint texID);
+
+	void setTextureRect(CVec4 Rect);
+
 };

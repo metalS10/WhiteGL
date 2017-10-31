@@ -7,6 +7,7 @@
 //#include "ActionController.h"
 #include "Collision.h"
 #include "CollisionArea.h"
+#include "GameEngine.h"
 //#include "Map.h"
 
 //===============================================
@@ -46,6 +47,8 @@ public:
 
 	//アニメーションデータ群
 	std::vector<CAnimation*>* m_pAnimations = NULL;
+
+	CGameEngine& game = CGameEngine();
 
 	//移動データ
 	CMove* m_pMove = NULL;

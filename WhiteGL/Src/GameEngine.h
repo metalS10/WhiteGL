@@ -40,6 +40,6 @@ public:
 	void inputKeyUp();
 	void inputKeyDown();
 	void exitArrowKey();
-
+	CRendTexture* getRendTexture();
 
 };

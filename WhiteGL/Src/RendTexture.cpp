@@ -5,7 +5,8 @@ void CRendTexture::update(std::vector<CAnimation*>* anim)
 	for (int i = 1 ; i <= anim->size();i++)
 	{
 		GLuint texID = i - 1;
-		CVec4* texRect = (*anim)[texID]->animUpdate();
+		(*anim)[texID]->update();
+		CVec4 texRect = (*anim)[texID]->getCurrentChip();
 
 
 
@@ -13,7 +14,7 @@ void CRendTexture::update(std::vector<CAnimation*>* anim)
 
 
 		//‰æ‘œ‚Ì‹éŒ`”ÍˆÍ‚ðÝ’è
-		CVec4 changerect4 = CVec4(texRect->x / tex[texID]->m_width, texRect->y / tex[texID]->m_width, texRect->z / tex[texID]->m_height, texRect->w / tex[texID]->m_height);
+		CVec4 changerect4 = CVec4(texRect.x / tex[texID]->m_width, texRect.y / tex[texID]->m_width, texRect.z / tex[texID]->m_height, texRect.w / tex[texID]->m_height);
 		
 		rect[texID] = CVec4(changerect4);
 	}
@@ -418,4 +419,15 @@ void CRendTexture::setPosition(const CVec2 velocity, const GLuint texID)
 {
 	_position[texID] += velocity;
 	_rectPos[texID] = CVec4(_position[texID].x - texWH[texID].x * texScale[texID].x, _position[texID].x + texWH[texID].x * texScale[texID].x, _position[texID].y - texWH[texID].y * texScale[texID].y, _position[texID].y + texWH[texID].y * texScale[texID].y);
+}
+
+void CRendTexture::setTextureRect(CVec4 Rect)
+{
+	glBindTexture(GL_TEXTURE_2D, g_texID[5]);
+
+
+	//‰æ‘œ‚Ì‹éŒ`”ÍˆÍ‚ðÝ’è
+	CVec4 changerect4 = CVec4(Rect.x / tex[5]->m_width, Rect.y / tex[5]->m_width, Rect.z / tex[5]->m_height, Rect.w / tex[5]->m_height);
+
+	rect[5] = CVec4(changerect4);
 }

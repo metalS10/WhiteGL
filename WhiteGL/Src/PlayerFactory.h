@@ -48,7 +48,7 @@ protected:
 
 public:
 
-	virtual CCharacter* create(float posX, float posY);
+	virtual CCharacter* create(float posX, float posY,CGameEngine& gm);
 
 };
 
@@ -127,6 +127,6 @@ public:
 	*@param	初期位置y
 	*@return プレイヤー
 	*/
-	CCharacter* create(float x, float y);
+	CCharacter* create(float x, float y,CGameEngine& gm);
 };
 

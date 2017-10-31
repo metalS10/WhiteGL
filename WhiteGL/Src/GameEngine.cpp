@@ -202,3 +202,8 @@ void CGameEngine::Run()
 	}
 }
 */
+
+CRendTexture* CGameEngine::getRendTexture()
+{
+	return rendTex;
+}

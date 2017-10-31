@@ -23,6 +23,8 @@ CPlayerCharacter::CPlayerCharacter() {
 
 	this->m_hitPoint = 100.0f;
 
+	this->init();
+
 }
 
 //デストラクタ
@@ -253,7 +255,7 @@ void CPlayerCharacter::moveFunc()
 void CPlayerCharacter::animationFunc()
 {
 	//アニメーション
-	(*this->m_pAnimations)[m_state]->animUpdate();
+	(*this->m_pAnimations)[1]->update();
 
 }
 
@@ -436,13 +438,13 @@ void CPlayerCharacter::checkState()
 */
 void CPlayerCharacter::applyFunc()
 {
-	/*
+	
 	//位置データを反映
-	this->setPosition(this->m_pMove->m_pos);
+	//rendTex->setPosition(this->m_pMove->m_pos,5);
 
 	//チップデータを反映
-	this->setTextureRect((*this->m_pAnimations)[m_state]->getCurrentChip());
-	*/
+	//this->setTextureRect((*this->m_pAnimations)[1]->getCurrentChip());
+	
 }
 
 /**

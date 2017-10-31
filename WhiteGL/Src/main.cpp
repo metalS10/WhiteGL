@@ -27,7 +27,6 @@ int main()
 
 	CGameEngine& game = CGameEngine();
 	
-
 	/*
 	// モニタとの同期
 	glfwSwapInterval(1);
@@ -66,9 +65,9 @@ int main()
 
 	game.setupTexture(PASS"player.png", TEX_TYPE::PNG, 4, CVec2(200.0f, 232.0f), CVec4(0.0f, 0.0f, 64.0f, 64.0f));
 
-	
 
-	CPlayerCharacter* pPlayerChara = (CPlayerCharacter*)CPlayerFactoryManager::getInstance()->create(320.0f, 200.0f);
+
+	CPlayerCharacter* pPlayerChara = (CPlayerCharacter*)CPlayerFactoryManager::getInstance()->create(320.0f, 200.0f, game);
 
 	//プレイヤー1のタグを設定
 	pPlayerChara->m_tag = TAG_PLAYER_1;
@@ -82,15 +81,15 @@ int main()
 
 
 	
-
+	
 
 
 	
-	game.setChipAnim(new CNotAnimation());
-	game.setChipAnim(new CNotAnimation());
-	game.setChipAnim(new CListAnimation(10,true));
-	game.setChipAnim(new CNotAnimation());
-	game.setChipAnim(new CListAnimation(20,true));	
+	game.setChipAnim(new CChipNotAnimation());
+	game.setChipAnim(new CChipNotAnimation());
+	game.setChipAnim(new CChipListAnimation(10,true));
+	game.setChipAnim(new CChipNotAnimation());
+	game.setChipAnim(new CChipListAnimation(20,true));
 
 	game.setChipData(0,CVec4(0.0f, 200.0f, 0.0f, 200.0f));
 	game.setChipData(1,CVec4(100.0f, 200.0f, 100.0f, 200.0f));
@@ -105,6 +104,8 @@ int main()
 	game.setChipData(4, CVec4(128.0f, 192.0f, 0.0f, 64.0f));
 	game.setChipData(4, CVec4(192.0f, 256.0f, 0.0f, 64.0f));
 
+	int i = m_pCharacters->size();
+	std::cerr << i << std::endl;
 
 
 	FPS* fps = new FPS(60);
