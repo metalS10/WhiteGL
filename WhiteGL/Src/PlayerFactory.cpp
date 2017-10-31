@@ -83,11 +83,10 @@ CBody* CPlayerPartsFactory::getBody()
 
 
 
-CCharacter* CPlayerFactory::create(float posX,float posY,CGameEngine& gm)
+CCharacter* CPlayerFactory::create(float posX,float posY)
 {
 	CPlayerCharacter* pChara = this->createPlayer();
 
-	pChara->game = gm;
 	//==============================================
 	//インスタンスに値を設定していく
 	//==============================================
@@ -300,8 +299,8 @@ void CPlayerFactoryManager::removeInstance()
 *@param	初期位置y
 *@return プレイヤー
 */
-CCharacter* CPlayerFactoryManager::create(float x, float y ,CGameEngine& gm)
+CCharacter* CPlayerFactoryManager::create(float x, float y)
 {
-	return this->m_factories[0]->create(x, y,gm);
+	return this->m_factories[0]->create(x, y);
 }
 

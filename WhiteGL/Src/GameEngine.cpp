@@ -183,6 +183,11 @@ void CGameEngine::inputKeyX()
 	rendTex->setScale(CVec2(2, 2), 4);
 }
 
+void CGameEngine::setTextureRect(const CVec4 mrect)
+{	
+	rendTex->setTextureRect(mrect);
+}
+
 /**
 *	ƒQ[ƒ€‚ğÀs‚·‚é
 */
@@ -202,6 +207,7 @@ void CGameEngine::Run()
 	}
 }
 */
+
 
 CRendTexture* CGameEngine::getRendTexture()
 {

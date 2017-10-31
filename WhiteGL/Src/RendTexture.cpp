@@ -14,8 +14,7 @@ void CRendTexture::update(std::vector<CAnimation*>* anim)
 
 
 		//画像の矩形範囲を設定
-		CVec4 changerect4 = CVec4(texRect.x / tex[texID]->m_width, texRect.y / tex[texID]->m_width, texRect.z / tex[texID]->m_height, texRect.w / tex[texID]->m_height);
-		
+		CVec4 changerect4 = CVec4(texRect.x / tex[texID]->m_width, (texRect.x + texRect.z) / tex[texID]->m_width, texRect.y / tex[texID]->m_height, (texRect.y + texRect.w) / tex[texID]->m_height);
 		rect[texID] = CVec4(changerect4);
 	}
 	for (int i = 0;i <= MAX_TEXTURE_NUMBER;i++)
@@ -253,16 +252,16 @@ void CRendTexture::setupTextureSize(const CVec2 texPos,const CVec4 texRect,const
 {
 	//glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
 
-	float Xright = texRect.x + texRect.z;
-	float Ytop = texRect.y + texRect.w;
+	//float Xright = texRect.x + texRect.z;
+	//float Ytop = texRect.y + texRect.w;
 
 	//横幅縦幅をセット
-	texWH[texID] = CVec2((Xright - texRect.x) * 0.5, (Ytop - texRect.y) * 0.5);
+	texWH[texID] = CVec2(((texRect.x + texRect.z) - texRect.x) * 0.5, ((texRect.y + texRect.w) - texRect.y) * 0.5);
 	_rectPos[texID] = CVec4(texPos.x - texWH[texID].x, texPos.x + texWH[texID].x, texPos.y - texWH[texID].y, texPos.y + texWH[texID].y);
 	_position[texID] = texPos;
 
 	//画像の矩形範囲を設定
-	CVec4 changerect4 = CVec4(texRect.x / tex[texID]->m_width, Xright / tex[texID]->m_width, texRect.y / tex[texID]->m_height, Ytop / tex[texID]->m_height);
+	CVec4 changerect4 = CVec4(texRect.x / tex[texID]->m_width, (texRect.x + texRect.z) / tex[texID]->m_width, texRect.y / tex[texID]->m_height, (texRect.y + texRect.w) / tex[texID]->m_height);
 	rect[texID] = CVec4(changerect4);
 	
 	
@@ -421,13 +420,15 @@ void CRendTexture::setPosition(const CVec2 velocity, const GLuint texID)
 	_rectPos[texID] = CVec4(_position[texID].x - texWH[texID].x * texScale[texID].x, _position[texID].x + texWH[texID].x * texScale[texID].x, _position[texID].y - texWH[texID].y * texScale[texID].y, _position[texID].y + texWH[texID].y * texScale[texID].y);
 }
 
-void CRendTexture::setTextureRect(CVec4 Rect)
+void CRendTexture::setTextureRect(const CVec4 Rect)
 {
 	glBindTexture(GL_TEXTURE_2D, g_texID[5]);
 
 
 	//画像の矩形範囲を設定
-	CVec4 changerect4 = CVec4(Rect.x / tex[5]->m_width, Rect.y / tex[5]->m_width, Rect.z / tex[5]->m_height, Rect.w / tex[5]->m_height);
+	CVec4 changerect4 = CVec4(Rect.x / tex[5]->m_width, (Rect.x + Rect.z) / tex[5]->m_width, Rect.y / tex[5]->m_height, (Rect.y + Rect.w) / tex[5]->m_height);
+
+
 
 	rect[5] = CVec4(changerect4);
 }

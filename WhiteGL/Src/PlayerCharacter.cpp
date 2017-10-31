@@ -443,7 +443,7 @@ void CPlayerCharacter::applyFunc()
 	//rendTex->setPosition(this->m_pMove->m_pos,5);
 
 	//チップデータを反映
-	//this->setTextureRect((*this->m_pAnimations)[1]->getCurrentChip());
+	//game.setTextureRect((*this->m_pAnimations)[1]->getCurrentChip());
 	
 }
 

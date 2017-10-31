@@ -29,7 +29,7 @@ public:
 	static CGameEngine& Instance();
 	void Run();
 	void setVelocity(CVec2 vel);
-
+	void setTextureRect(const CVec4 mrect);
 
 	void inputKeyA();
 	void inputKeyS();

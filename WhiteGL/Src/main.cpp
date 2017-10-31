@@ -67,7 +67,7 @@ int main()
 
 
 
-	CPlayerCharacter* pPlayerChara = (CPlayerCharacter*)CPlayerFactoryManager::getInstance()->create(320.0f, 200.0f, game);
+	CPlayerCharacter* pPlayerChara = (CPlayerCharacter*)CPlayerFactoryManager::getInstance()->create(320.0f, 200.0f);
 
 	//プレイヤー1のタグを設定
 	pPlayerChara->m_tag = TAG_PLAYER_1;
@@ -91,18 +91,20 @@ int main()
 	game.setChipAnim(new CChipNotAnimation());
 	game.setChipAnim(new CChipListAnimation(20,true));
 
-	game.setChipData(0,CVec4(0.0f, 200.0f, 0.0f, 200.0f));
-	game.setChipData(1,CVec4(100.0f, 200.0f, 100.0f, 200.0f));
-	game.setChipData(2,CVec4(0.0f, 64.0f, 128.0f, 192.0f));
-	game.setChipData(2, CVec4(64.0f, 128.0f, 128.0f, 192.0f));
-	game.setChipData(2, CVec4(128.0f, 192.0f, 128.0f, 192.0f));
-	game.setChipData(2, CVec4(192.0f, 256.0f, 128.0f, 192.0f));
-	game.setChipData(3,CVec4(0.0f, 64.0f, 0.0f, 64.0f));
+	game.setChipData(0,CVec4(0.0f, 0.0f, 200.0f, 200.0f));
+	game.setChipData(1,CVec4(100.0f, 100.0f, 100.0f, 100.0f));
 
-	game.setChipData(4, CVec4(0.0f, 64.0f, 0.0f, 64.0f));
-	game.setChipData(4, CVec4(64.0f, 128.0f, 0.0f, 64.0f));
-	game.setChipData(4, CVec4(128.0f, 192.0f, 0.0f, 64.0f));
-	game.setChipData(4, CVec4(192.0f, 256.0f, 0.0f, 64.0f));
+	game.setChipData(2, CVec4(0.0f, 128.0f, 64.0f, 64.0f));
+	game.setChipData(2, CVec4(64.0f, 128.0f, 64.0f, 64.0f));
+	game.setChipData(2, CVec4(128.0f, 128.0f, 64.0f, 64.0f));
+	game.setChipData(2, CVec4(192.0f, 128.0f, 64.0f, 64.0f));
+
+	game.setChipData(3,CVec4(0.0f, 0.0f, 64.0f, 64.0f));
+
+	game.setChipData(4, CVec4(0.0f, 0.0f, 64.0f, 64.0f));
+	game.setChipData(4, CVec4(64.0f, 0.0f, 64.0f, 64.0f));
+	game.setChipData(4, CVec4(128.0f, 0.0f, 64.0f, 64.0f));
+	game.setChipData(4, CVec4(192.0f, 0.0f, 64.0f, 64.0f));
 
 	int i = m_pCharacters->size();
 	std::cerr << i << std::endl;
@@ -172,6 +174,8 @@ int main()
 			}
 			game.setVelocity(vel);
 			(*m_pCharacters)[0]->update();
+			game.setTextureRect((*pPlayerChara->m_pAnimations)[1]->getCurrentChip());
+
 		}
 		glfwSwapBuffers(window);
 	}

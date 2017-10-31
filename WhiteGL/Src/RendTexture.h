@@ -155,6 +155,6 @@ public:
 
 	void setPosition(const CVec2 velocity, const GLuint texID);
 
-	void setTextureRect(CVec4 Rect);
+	void setTextureRect(const CVec4 Rect);
 
 };
