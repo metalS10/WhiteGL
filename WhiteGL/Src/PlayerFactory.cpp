@@ -16,7 +16,7 @@ std::vector<CAnimation*>* CPlayerPartsFactory::getAnimations()
 	m_pAnimations->push_back(new CChipNotAnimation());
 
 	//歩行アニメーションの設定
-	m_pAnimations->push_back(new CChipListAnimation(10, true));
+	m_pAnimations->push_back(new CChipListAnimation(30, true));
 	//ダメージを受けた時のアニメーションの設定
 	m_pAnimations->push_back(new CChipNotAnimation());
 	//落ちている時のアニメーションの設定

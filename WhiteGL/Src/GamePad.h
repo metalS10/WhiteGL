@@ -26,7 +26,6 @@ struct GamePad
 		S			= 0x1000,
 		D			= 0x2000,
 		GameEnd		= 0x4000,
-
 	};
 	//‰Ÿ‚³‚ê‚Ä‚¢‚éŠÔƒtƒ‰ƒO‚ª—§‚Â
 	uint32_t buttons;

@@ -414,9 +414,9 @@ void CRendTexture::setScale(const CVec2 Size, const GLuint texID)
 	_rectPos[texID] = CVec4(_position[texID].x - texWH[texID].x * Size.x, _position[texID].x + texWH[texID].x * Size.x, _position[texID].y - texWH[texID].y * Size.y, _position[texID].y + texWH[texID].y * Size.y);
 }
 
-void CRendTexture::setPosition(const CVec2 velocity, const GLuint texID)
+void CRendTexture::setPosition(const CVec2 position, const GLuint texID)
 {
-	_position[texID] += velocity;
+	_position[texID] = position;
 	_rectPos[texID] = CVec4(_position[texID].x - texWH[texID].x * texScale[texID].x, _position[texID].x + texWH[texID].x * texScale[texID].x, _position[texID].y - texWH[texID].y * texScale[texID].y, _position[texID].y + texWH[texID].y * texScale[texID].y);
 }
 

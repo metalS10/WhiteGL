@@ -7,6 +7,7 @@
 //#include "ActionController.h"
 #include "Collision.h"
 #include "CollisionArea.h"
+#include "gameInput.h"
 //#include "Map.h"
 
 //===============================================
@@ -61,6 +62,15 @@ public:
 
 	//Õ“Ë”»’è‹óŠÔŒQ
 	std::vector<CCollisionArea*>* m_pCollisionAreas = NULL;
+
+	int m_texID = 0;
+
+	CVec2 m_scale = CVec2(1, 1);
+
+	void setScale(CVec2 scale);
+	void setScale(float scaleX,float scaleY);
+
+	Input::CGameInput* input = new Input::CGameInput();
 
 	/**
 	*@desc	DP‚ğ‰ñ•œ‚·‚éŠÖ”

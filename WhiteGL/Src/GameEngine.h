@@ -30,6 +30,8 @@ public:
 	void Run();
 	void setVelocity(CVec2 vel);
 	void setTextureRect(const CVec4 mrect);
+	void setPosition(CVec2 pos, GLuint texID);
+	void setScale(CVec2 scale,GLuint texID);
 
 	void inputKeyA();
 	void inputKeyS();

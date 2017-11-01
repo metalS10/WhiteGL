@@ -23,6 +23,8 @@ CPlayerCharacter::CPlayerCharacter() {
 
 	this->m_hitPoint = 100.0f;
 
+	this->m_texID = PLAYER_ID;
+
 	this->init();
 
 }
@@ -67,48 +69,48 @@ void CPlayerCharacter::update()
 */
 void CPlayerCharacter::inputFunc()
 {
-	/*
+	
 	//ダメージ中じゃなければ && 回避中じゃなければ
 	if (!this->m_isDamage && !this-> m_isAvoidance)
 	{
-		if (pGamepadInput->isPressed((int)XButtonType::LEFT) == true || pKeybordInput->isPressed((int)KeyType::LEFT) == true)
+		if (input->getOnKey(Input::Key::DPAD_LEFT) == true)
 		{
 
 			this->m_pMove->m_accele.x = -0.7f;
 			this->Allfalse();
 		}
 
-		if (pGamepadInput->isPressed((int)XButtonType::RIGHT) == true || pKeybordInput->isPressed((int)KeyType::RIGHT) == true)
+		if (input->getOnKey(Input::Key::DPAD_RIGHT) == true)
 		{
 			this->m_pMove->m_accele.x = 0.7f;
 			this->Allfalse();
 		}
 
-		if (pGamepadInput->isPressed((int)XButtonType::A) == true || pKeybordInput->isPressed((int)KeyType::UP) == true)
+		if (input->getOnKey(Input::Key::DPAD_UP) == true)
 		{
 			//地面についてたら
 			if (this->m_isGround)
 			{
 				//ジャンプを開始させる
-				(*this->m_pActions)[(int)ACTION::JUMP]->start();
-
+				//(*this->m_pActions)[(int)ACTION::JUMP]->start();
+				this->m_pMove->m_accele.y = 0.7f;
 				this->Allfalse();
 			}
 		}
-		if (pGamepadInput->isPressed((int)XButtonType::X) == true || pKeybordInput->isPressed((int)KeyType::Z) == true)
+		if (input->getOnKey(Input::Key::Z) == true)
 		{
 			//アニメーションの初期化
 			(*this->m_pAnimations)[(int)STATE::ATTACK]->start();
 			//弾発射(playerFactoryのgetActionsにも注意)
-			(*this->m_pActions)[(int)ACTION::ATTACK]->start();
+			//(*this->m_pActions)[(int)ACTION::ATTACK]->start();
 
 			this->Allfalse();
 			m_isAttack1 = true;
 		}
-		if (pGamepadInput->isPressed((int)XButtonType::Y) == true || pKeybordInput->isPressed((int)KeyType::X) == true)
+		if (input->getOnKey(Input::Key::X) == true)
 		{
 			//弾発射(playerFactoryのgetActionsにも注意)
-			(*this->m_pActions)[(int)ACTION::ATTACK_NOR]->start();
+			//(*this->m_pActions)[(int)ACTION::ATTACK_NOR]->start();
 
 			(*this->m_pAnimations)[(int)STATE::NOR]->start();
 
@@ -117,14 +119,14 @@ void CPlayerCharacter::inputFunc()
 			this->Allfalse();
 			m_isAttack2 = true;
 		}
-		if (pGamepadInput->isPressed((int)XButtonType::B) == true || pKeybordInput->isPressed((int)KeyType::C) == true)
+		if (input->getOnKey(Input::Key::D) == true)
 		{
 
 		}
 		//DPがあれば(0より上なら)
 		if (this->m_denkiPoint > 0)
 		{
-			if (pGamepadInput->isPressed((int)XButtonType::R_SHOULDER) == true || pKeybordInput->isPressed((int)KeyType::L_SHIFT) == true)
+			if (input->getOnKey(Input::Key::L_SHIFT) == true)
 			{
 				//ジャスト回避受付時間
 				this->m_DodgeTime = 30;
@@ -136,7 +138,7 @@ void CPlayerCharacter::inputFunc()
 			}
 		}
 		//デバッグ用
-		if (pKeybordInput->isPressed((int)KeyType::SPACE) == true)
+		if (input->getOnKey(Input::Key::SPACE) == true)
 		{
 			this->DPHeal(100);
 			this->m_hitPoint = 100;
@@ -145,7 +147,7 @@ void CPlayerCharacter::inputFunc()
 	//回避中なら
 	else if (m_isAvoidance)
 	{
-		if (pGamepadInput->isPressed((int)XButtonType::LEFT) == true || pKeybordInput->isPressed((int)KeyType::LEFT) == true)
+		if (input->getOnKey(Input::Key::DPAD_LEFT) == true)
 		{
 			//不思議な動きになるので空中での移動を制限
 			if (this->m_isGround)
@@ -160,7 +162,7 @@ void CPlayerCharacter::inputFunc()
 			this->Allfalse();
 		}
 
-		if (pGamepadInput->isPressed((int)XButtonType::RIGHT) == true || pKeybordInput->isPressed((int)KeyType::RIGHT) == true)
+		if (input->getOnKey(Input::Key::DPAD_RIGHT) == true)
 		{
 			//不思議な動きになるので空中での移動を制限
 			if (this->m_isGround)
@@ -174,13 +176,13 @@ void CPlayerCharacter::inputFunc()
 			this->m_pMove->m_accele.x = 20;
 			this->Allfalse();
 		}
-		if (pGamepadInput->isPressed((int)XButtonType::A) == true || pKeybordInput->isPressed((int)KeyType::UP) == true)
+		if (input->getOnKey(Input::Key::DPAD_UP) == true)
 		{
 			//地面についてたら
 			if (this->m_isGround)
 			{
 				//ジャンプを開始させる
-				(*this->m_pActions)[(int)ACTION::SUPERJUMP]->start();
+				//(*this->m_pActions)[(int)ACTION::SUPERJUMP]->start();
 
 				this->Allfalse();
 			}
@@ -188,7 +190,7 @@ void CPlayerCharacter::inputFunc()
 		//DPがあれば(0より上なら)
 		if (this->m_denkiPoint > 0)
 		{
-			if (pGamepadInput->isPressed((int)XButtonType::R_SHOULDER) == true || pKeybordInput->isPressed((int)KeyType::L_SHIFT) == true)
+			if (input->getOnKey(Input::Key::L_SHIFT) == true)
 			{
 				//徐々に減っていく
 				this->m_denkiPoint -= 0.1;
@@ -210,7 +212,7 @@ void CPlayerCharacter::inputFunc()
 		}
 
 	}
-	*/
+	
 }
 
 /**
@@ -222,9 +224,9 @@ void CPlayerCharacter::moveFunc()
 	*入力処理
 	*	今回入力は入力による移動というカテゴリで扱う
 	*/
-	/*
+	
 	this->inputFunc();
-
+	/*
 	//ジャンプ移動計算
 	(*this->m_pActions)[(int)ACTION::JUMP]->update(this);
 	
@@ -255,7 +257,7 @@ void CPlayerCharacter::moveFunc()
 void CPlayerCharacter::animationFunc()
 {
 	//アニメーション
-	(*this->m_pAnimations)[1]->update();
+	(*this->m_pAnimations)[m_state]->update();
 
 }
 
@@ -333,7 +335,7 @@ void CPlayerCharacter::collision()
 */
 void CPlayerCharacter::checkState()
 {
-	/*
+	
 	//向きの判定
 	if (this->m_pMove->m_vel.x != 0)
 	{
@@ -352,7 +354,7 @@ void CPlayerCharacter::checkState()
 			this->m_CharaLaunchVector.set(-1.0f, 0.0f);
 		}
 	}
-	*/
+	
 
 	//y移動速度が0なら
 	if (this->m_pMove->m_vel.y == 0.0f)

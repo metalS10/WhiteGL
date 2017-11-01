@@ -21,6 +21,9 @@
 //テクスチャ最大数
 #define MAX_TEXTURE_NUMBER 7
 
+//テクスチャID
+#define PLAYER_ID 5
+
 //プレイヤー
 #define IMAGE_PLAYER PASS"player.png"
 

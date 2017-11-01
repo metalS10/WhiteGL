@@ -176,6 +176,7 @@
     <ClInclude Include="Src\Constants.h" />
     <ClInclude Include="Src\FPS.h" />
     <ClInclude Include="Src\GameEngine.h" />
+    <ClInclude Include="Src\gameInput.h" />
     <ClInclude Include="Src\GamePad.h" />
     <ClInclude Include="Src\GLFWEW.h" />
     <ClInclude Include="Src\image.h" />

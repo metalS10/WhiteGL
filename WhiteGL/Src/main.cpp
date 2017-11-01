@@ -114,7 +114,9 @@ int main()
 
 	GLFWEW::Window& FwewWindow = GLFWEW::Window::Instance();
 
-	
+	Input::CGameInput* input = new Input::CGameInput();
+
+	pPlayerChara->input = input;
 
 	/**
 	*memo
@@ -146,35 +148,62 @@ int main()
 			default:
 				break;
 		}
-		
+
 		game.update();
 		fps->GetFPS();//FPS‚ð“¾‚é
 		if (fps->draw) {//•bŠÔ60ƒtƒŒ[ƒ€
 			game.update60();
-			CVec2 vel = {};
+			pPlayerChara->m_pMove->m_accele.y = 0;
 			if (gamepad.buttons & GamePad::DPAD_RIGHT)
 			{
-				vel.x = 5;
+				input->setOnKey(Input::Key::DPAD_LEFT, false);
+				input->setOnKey(Input::Key::DPAD_RIGHT,true);
+				//pPlayerChara->m_pMove->m_accele.x = 0.7f;
 			}
 			else if (gamepad.buttons & GamePad::DPAD_LEFT)
 			{
-				vel.x = -5;
+				input->setOnKey(Input::Key::DPAD_RIGHT, false);
+				input->setOnKey(Input::Key::DPAD_LEFT, true);
+				//pPlayerChara->m_pMove->m_accele.x = -0.7f;
+			}
+			else
+			{
+				input->setOnKey(Input::Key::DPAD_RIGHT, false);
+				input->setOnKey(Input::Key::DPAD_LEFT, false);
 			}
 			if (gamepad.buttons & GamePad::DPAD_UP)
 			{
-				vel.y = 5;
+				input->setOnKey(Input::Key::DPAD_UP, true);
+				input->setOnKey(Input::Key::DPAD_DOWN, false);
+
+				//pPlayerChara->m_pMove->m_accele.y = 1;
 			}
 			else if (gamepad.buttons & GamePad::DPAD_DOWN)
 			{
-				vel.y = -5;
+				input->setOnKey(Input::Key::DPAD_UP, false);
+				input->setOnKey(Input::Key::DPAD_DOWN, true);
+
+				//pPlayerChara->m_pMove->m_accele.y = -1;
+			}
+			else
+			{
+				input->setOnKey(Input::Key::DPAD_UP, false);
+				input->setOnKey(Input::Key::DPAD_DOWN, false);
+
 			}
 			if (gamepad.buttons & GamePad::GameEnd)
 			{
+				input->setOnKey(Input::Key::GameEnd, true);
 				return 0;
 			}
-			game.setVelocity(vel);
-			(*m_pCharacters)[0]->update();
-			game.setTextureRect((*pPlayerChara->m_pAnimations)[1]->getCurrentChip());
+			for (CCharacter* pChara: (*m_pCharacters))
+			{
+				pChara->update();
+				game.setTextureRect((*pChara->m_pAnimations)[pChara->m_state]->getCurrentChip());
+				game.setScale(pChara->m_scale,pChara->m_texID);
+				game.setPosition(pChara->m_pMove->m_pos, pChara->m_texID);
+
+			}
 
 		}
 		glfwSwapBuffers(window);

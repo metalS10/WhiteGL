@@ -154,15 +154,11 @@ void CGameEngine::update60()
 }
 void CGameEngine::setVelocity(CVec2 vel)
 {
-	if (vel.x > 0)
-	{
-		rendTex->setScale(CVec2(1, 1), 5);
-	}
-	else if (vel.x < 0)
-	{
-		rendTex->setScale(CVec2(-1, 1), 5);
-	}
 	rendTex->setPosition(vel, 5);
+}
+void CGameEngine::setScale(CVec2 scale, GLuint texID)
+{
+	rendTex->setScale(scale, texID);
 }
 
 void CGameEngine::inputKeyA()
@@ -186,6 +182,11 @@ void CGameEngine::inputKeyX()
 void CGameEngine::setTextureRect(const CVec4 mrect)
 {	
 	rendTex->setTextureRect(mrect);
+}
+
+void CGameEngine::setPosition(CVec2 pos, GLuint texID)
+{
+	rendTex->setPosition(pos, texID);
 }
 
 /**

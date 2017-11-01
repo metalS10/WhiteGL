@@ -74,6 +74,16 @@ void CCharacter::update()
 	
 }
 
+void CCharacter::setScale(CVec2 scale)
+{
+	this->m_scale = scale;
+}
+void CCharacter::setScale(float scaleX,float scaleY)
+{
+	this->m_scale.x = scaleX;
+	this->m_scale.y = scaleY;
+}
+
 /**
 *@desc	DP‰ñ•œˆ—
 *@param	‰ñ•œ’l
