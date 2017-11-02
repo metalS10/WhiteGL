@@ -256,7 +256,7 @@ void CRendTexture::setupTextureSize(const CVec2 texPos,const CVec4 texRect,const
 	//float Ytop = texRect.y + texRect.w;
 
 	//â°ïùècïùÇÉZÉbÉg
-	texWH[texID] = CVec2(((texRect.x + texRect.z) - texRect.x) * 0.5, ((texRect.y + texRect.w) - texRect.y) * 0.5);
+	texWH[texID] = CVec2(((texRect.x + texRect.z) - texRect.x) * 0.5f, ((texRect.y + texRect.w) - texRect.y) * 0.5f);
 	_rectPos[texID] = CVec4(texPos.x - texWH[texID].x, texPos.x + texWH[texID].x, texPos.y - texWH[texID].y, texPos.y + texWH[texID].y);
 	_position[texID] = texPos;
 

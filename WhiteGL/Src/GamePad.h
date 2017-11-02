@@ -23,8 +23,8 @@ struct GamePad
 		L			= 0x0200,
 		R			= 0x0400,
 		Z			= 0x0800,
-		S			= 0x1000,
-		D			= 0x2000,
+		L_SHIFT		= 0x1000,
+		SPACE		= 0x2000,
 		GameEnd		= 0x4000,
 	};
 	//‰Ÿ‚³‚ê‚Ä‚¢‚éŠÔƒtƒ‰ƒO‚ª—§‚Â

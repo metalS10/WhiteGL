@@ -24,7 +24,7 @@ enum class TEX_TYPE : int
 	JPEG = 2,
 	QUAD = 3,
 };
-static class CRendTexture
+class CRendTexture
 {
 public:
 	CVec4 _rectPos[MAX_TEXTURE_NUMBER] = {};
@@ -50,7 +50,10 @@ public:
 	~CRendTexture()
 	{
 		for (int i = 0;i < MAX_TEXTURE_NUMBER;i++)
+		{
+			deleteTexture(i);
 			SAFE_DELETE(tex[i]);
+		}
 	}
 
 public:

@@ -3,7 +3,6 @@
 *		2017/09/29	Mats
 */
 #include "GameEngine.h"
-#include "Character.h"
 #include "PlayerFactory.h"
 #include "FPS.h"
 /**
@@ -191,6 +190,23 @@ int main()
 				input->setOnKey(Input::Key::DPAD_DOWN, false);
 
 			}
+			if (gamepad.buttons & GamePad::L_SHIFT)
+			{
+				input->setOnKey(Input::Key::L_SHIFT, true);
+			}
+			else
+			{
+				input->setOnKey(Input::Key::L_SHIFT, false);
+			}
+			if (gamepad.buttons & GamePad::SPACE)
+			{
+				input->setOnKey(Input::Key::SPACE, true);
+			}
+			else
+			{
+				input->setOnKey(Input::Key::SPACE, false);
+			}
+
 			if (gamepad.buttons & GamePad::GameEnd)
 			{
 				input->setOnKey(Input::Key::GameEnd, true);

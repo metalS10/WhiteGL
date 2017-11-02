@@ -83,6 +83,22 @@ void CCharacter::setScale(float scaleX,float scaleY)
 	this->m_scale.x = scaleX;
 	this->m_scale.y = scaleY;
 }
+void CCharacter::setColor(CVec4 color)
+{
+	this->m_color = color;
+}
+void CCharacter::setColor(float r, float g, float b, float a)
+{
+	this->m_color.x = r;
+	this->m_color.y = g;
+	this->m_color.z = b;
+	this->m_color.w = a;
+}
+void CCharacter::setColor(float opacity)
+{
+	this->m_color.w = opacity;
+}
+
 
 /**
 *@desc	DP‰ñ•œˆ—

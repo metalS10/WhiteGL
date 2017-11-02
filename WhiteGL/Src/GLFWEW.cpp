@@ -225,6 +225,8 @@ namespace GLFWEW
 				{ GLFW_KEY_R, GamePad::R },
 				{ GLFW_KEY_L, GamePad::L },
 				{ GLFW_KEY_Z, GamePad::Z },
+				{ GLFW_KEY_LEFT_SHIFT, GamePad::L_SHIFT },
+				{ GLFW_KEY_SPACE, GamePad::SPACE },
 				{ GLFW_KEY_ESCAPE, GamePad::GameEnd },
 
 

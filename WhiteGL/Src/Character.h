@@ -4,11 +4,11 @@
 //===============================================
 #include "Animation.h"
 #include "Physical.h"
-//#include "ActionController.h"
+#include "ActionController.h"
 #include "Collision.h"
 #include "CollisionArea.h"
 #include "gameInput.h"
-//#include "Map.h"
+#include "Map.h"
 
 //===============================================
 //キャラクタータイプ
@@ -55,7 +55,7 @@ public:
 	std::vector<CPhysical*>*m_pPhysicals = NULL;
 
 	//行えるアクション群
-	//std::vector<CAction*>* m_pActions = NULL;
+	std::vector<CAction*>* m_pActions = NULL;
 
 	//実体データ(衝突判定データの元となるデータ)
 	CBody* m_pBody = NULL;
@@ -71,6 +71,12 @@ public:
 	void setScale(float scaleX,float scaleY);
 
 	Input::CGameInput* input = new Input::CGameInput();
+
+	CVec4 m_color = CVec4(1, 1, 1, 1);
+
+	void setColor(CVec4 color);
+	void setColor(float r, float g, float b, float a);
+	void setColor(float opacity);
 
 	/**
 	*@desc	DPを回復する関数
@@ -98,7 +104,7 @@ public:
 	CHARACTER_TYPE m_charaType = CHARACTER_TYPE::NONE;
 
 	//敵タイプ
-	//ENEMY_TYPE m_eneType = ENEMY_TYPE::NONE;
+	ENEMY_TYPE m_eneType = ENEMY_TYPE::NONE;
 
 
 	//キャラクターの方向のベクトル(弾の向きベクトル)
@@ -146,7 +152,7 @@ public:
 	float DamageTime = 60;
 
 	//多重ダメージ防止用
-	int InvisibleFrame = 0;
+	float InvisibleFrame = 0.0f;
 
 	//ダメージの入らない間
 	bool m_isInvisible = false;

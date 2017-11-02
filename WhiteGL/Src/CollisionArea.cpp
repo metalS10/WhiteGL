@@ -53,9 +53,6 @@ void CCollisionTerritoryEndOfScreenBottom::collision(CCharacter* pChara, CVec2 b
 			pChara->m_pMove->m_vel.y = 0.0f;
 			pChara->m_pMove->m_accele.y = 0.0f;
 
-			//ジャンプの停止はいったん削除化コメントアウトしておく
-			//この部分も考えなくてはならないが今考えるとまとまらないので
-			//今は考えない
 		}
 	}
 }

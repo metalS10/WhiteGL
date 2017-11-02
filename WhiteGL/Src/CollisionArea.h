@@ -377,10 +377,10 @@ public:
 	//引数付きコンストラクタ
 	CCollisionAreaEndOfScreen(CBody* pBody)
 	{
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, CVec2(0,pBody->m_bottom)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::TOP, CVec2(0, pBody->m_top)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, CVec2(pBody->m_right,0)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, CVec2(pBody->m_left,0)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, CVec2(0.0f,pBody->m_bottom)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::TOP, CVec2(0.0f, pBody->m_top)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, CVec2(pBody->m_right,0.0f)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, CVec2(pBody->m_left,0.0f)));
 	}
 	//デストラクタ
 	~CCollisionAreaEndOfScreen(){}
@@ -414,14 +414,14 @@ public:
 	CCollisionAreaMap(CBody* pBody)
 	{
 		//マップチップと当たるプレイヤーの当たる基準点
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, CVec2(pBody->m_left*0.5, pBody->m_bottom)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, CVec2(pBody->m_right*0.5, pBody->m_bottom)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::TOP, CVec2(pBody->m_left*0.5, pBody->m_top)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::TOP, CVec2(pBody->m_right*0.5, pBody->m_top)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, CVec2(pBody->m_right, pBody->m_top*0.5)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, CVec2(pBody->m_right, pBody->m_bottom*0.5)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, CVec2(pBody->m_left, pBody->m_top*0.5)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, CVec2(pBody->m_left, pBody->m_bottom*0.5)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, CVec2(pBody->m_left*0.5f, pBody->m_bottom)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, CVec2(pBody->m_right*0.5f, pBody->m_bottom)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::TOP, CVec2(pBody->m_left*0.5f, pBody->m_top)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::TOP, CVec2(pBody->m_right*0.5f, pBody->m_top)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, CVec2(pBody->m_right, pBody->m_top*0.5f)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, CVec2(pBody->m_right, pBody->m_bottom*0.5f)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, CVec2(pBody->m_left, pBody->m_top*0.5f)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, CVec2(pBody->m_left, pBody->m_bottom*0.5f)));
 	}
 	//デストラクタ
 	~CCollisionAreaMap(){}
@@ -571,10 +571,10 @@ public:
 	//引数付きコンストラクタ
 	CCollisionAreaOutOfScreen(CBody* pBody)
 	{
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, CVec2(0, pBody->m_bottom)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::TOP, CVec2(0, pBody->m_top)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, CVec2(pBody->m_right, 0)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, CVec2(pBody->m_left, 0)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, CVec2(0.0f, pBody->m_bottom)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::TOP, CVec2(0.0f, pBody->m_top)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, CVec2(pBody->m_right, 0.0f)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, CVec2(pBody->m_left, 0.0f)));
 	}
 	//デストラクタ
 	~CCollisionAreaOutOfScreen() {}
@@ -607,16 +607,16 @@ public:
 	CCollisionAreaCharacter(CBody* pBody)
 	{
 		//マップチップと当たるプレイヤーの当たる基準点
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, CVec2(pBody->m_left*0.5, pBody->m_bottom)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, CVec2(pBody->m_right*0.5, pBody->m_bottom)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, CVec2(pBody->m_left*0.25, pBody->m_bottom)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, CVec2(pBody->m_right*0.25, pBody->m_bottom)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::TOP, CVec2(pBody->m_left*0.5, pBody->m_top)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::TOP, CVec2(pBody->m_right*0.5, pBody->m_top)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, CVec2(pBody->m_right, pBody->m_top*0.5)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, CVec2(pBody->m_right, pBody->m_bottom*0.5)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, CVec2(pBody->m_left, pBody->m_top*0.5)));
-		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, CVec2(pBody->m_left, pBody->m_bottom*0.5)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, CVec2(pBody->m_left*0.5f, pBody->m_bottom)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, CVec2(pBody->m_right*0.5f, pBody->m_bottom)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, CVec2(pBody->m_left*0.25f, pBody->m_bottom)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, CVec2(pBody->m_right*0.25f, pBody->m_bottom)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::TOP, CVec2(pBody->m_left*0.5f, pBody->m_top)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::TOP, CVec2(pBody->m_right*0.5f, pBody->m_top)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, CVec2(pBody->m_right, pBody->m_top*0.5f)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, CVec2(pBody->m_right, pBody->m_bottom*0.5f)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, CVec2(pBody->m_left, pBody->m_top*0.5f)));
+		this->m_pBasePoints->push_back(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, CVec2(pBody->m_left, pBody->m_bottom*0.5f)));
 	}
 	//デストラクタ
 	~CCollisionAreaCharacter() {}

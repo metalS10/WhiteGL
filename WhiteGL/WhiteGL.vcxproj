@@ -150,13 +150,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\ActionController.cpp" />
+    <ClCompile Include="Src\AttackCharacter.cpp" />
+    <ClCompile Include="Src\AttackFactory.cpp" />
     <ClCompile Include="Src\Character.cpp" />
     <ClCompile Include="Src\Collision.cpp" />
     <ClCompile Include="Src\CollisionArea.cpp" />
+    <ClCompile Include="Src\EnemyBulletCharacter.cpp" />
+    <ClCompile Include="Src\EnemyBulletFactory.cpp" />
+    <ClCompile Include="Src\EnemyCharacter.cpp" />
+    <ClCompile Include="Src\EnemyFactory.cpp" />
     <ClCompile Include="Src\GameEngine.cpp" />
+    <ClCompile Include="Src\GimmickCharacter.cpp" />
+    <ClCompile Include="Src\GimmickFactory.cpp" />
     <ClCompile Include="Src\GLFWEW.cpp" />
     <ClCompile Include="Src\image.cpp" />
+    <ClCompile Include="Src\LaunchTrigger.cpp" />
     <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\Map.cpp" />
     <ClCompile Include="Src\Node.cpp" />
     <ClCompile Include="Src\PlayerCharacter.cpp" />
     <ClCompile Include="Src\PlayerFactory.cpp" />
@@ -169,17 +180,29 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Src\ActionController.h" />
     <ClInclude Include="Src\Animation.h" />
+    <ClInclude Include="Src\AttackCharacter.h" />
+    <ClInclude Include="Src\AttackFactory.h" />
     <ClInclude Include="Src\Character.h" />
     <ClInclude Include="Src\Collision.h" />
     <ClInclude Include="Src\CollisionArea.h" />
     <ClInclude Include="Src\Constants.h" />
+    <ClInclude Include="Src\EnemyBulletCharacter.h" />
+    <ClInclude Include="Src\EnemyBulletFactory.h" />
+    <ClInclude Include="Src\EnemyCharacter.h" />
+    <ClInclude Include="Src\EnemyFactory.h" />
     <ClInclude Include="Src\FPS.h" />
     <ClInclude Include="Src\GameEngine.h" />
     <ClInclude Include="Src\gameInput.h" />
     <ClInclude Include="Src\GamePad.h" />
+    <ClInclude Include="Src\GimmickCharacter.h" />
+    <ClInclude Include="Src\GimmickFactory.h" />
     <ClInclude Include="Src\GLFWEW.h" />
     <ClInclude Include="Src\image.h" />
+    <ClInclude Include="Src\LaunchData.h" />
+    <ClInclude Include="Src\LaunchTrigger.h" />
+    <ClInclude Include="Src\Map.h" />
     <ClInclude Include="Src\Move.h" />
     <ClInclude Include="Src\Node.h" />
     <ClInclude Include="Src\Physical.h" />
@@ -187,6 +210,7 @@
     <ClInclude Include="Src\PlayerFactory.h" />
     <ClInclude Include="Src\Rect.h" />
     <ClInclude Include="Src\RendTexture.h" />
+    <ClInclude Include="Src\sam\math.h" />
     <ClInclude Include="Src\Sprite.h" />
     <ClInclude Include="Src\Texture.h" />
     <ClInclude Include="Src\Vec2.h" />

@@ -19,9 +19,9 @@ CPlayerCharacter::CPlayerCharacter() {
 
 	this->m_tag = TAG_PLAYER_1;
 
-	this->m_denkiPoint = 100.0f;
+	this->m_denkiPoint = 100;
 
-	this->m_hitPoint = 100.0f;
+	this->m_hitPoint = 100;
 
 	this->m_texID = PLAYER_ID;
 
@@ -193,7 +193,7 @@ void CPlayerCharacter::inputFunc()
 			if (input->getOnKey(Input::Key::L_SHIFT) == true)
 			{
 				//™X‚ÉŒ¸‚Á‚Ä‚¢‚­
-				this->m_denkiPoint -= 0.1;
+				this->m_denkiPoint -= 0.1f;
 			}
 			else
 			{
