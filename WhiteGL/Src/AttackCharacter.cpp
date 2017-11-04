@@ -13,7 +13,7 @@ CAttackCharacter::CAttackCharacter()
 	//キャラクタータイプを敵キャラクターに設定
 	this->m_charaType = CHARACTER_TYPE::ATTACK;
 
-
+	this->m_texID = 6;
 }
 //デストラクタ
 CAttackCharacter::~CAttackCharacter()
@@ -30,6 +30,7 @@ bool CAttackCharacter::init()
 		std::cerr<<"攻撃の初期化に失敗"<<std::endl;
 		return false;
 	}
+
 	return true;
 }
 
@@ -71,6 +72,13 @@ void CAttackCharacter::moveFunc()
 
 	//移動計算
 	this->m_pMove->moveBy();
+
+	if ((*this->m_pAnimations)[m_state]->isEnd())
+	{
+		std::cerr << "削除" << std::endl;
+		
+		this->m_activeFlag = false;
+	}
 }
 
 

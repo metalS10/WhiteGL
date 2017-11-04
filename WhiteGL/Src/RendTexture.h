@@ -152,12 +152,12 @@ public:
 
 	void TextureFade(const GLuint texID,const bool out);
 
-	void deleteTexture(const GLsizei texID);
+	void deleteTexture(const GLuint texID);
 
 	void setScale(const CVec2 Size, const GLuint texID);
 
 	void setPosition(const CVec2 position, const GLuint texID);
 
-	void setTextureRect(const CVec4 Rect);
+	void setTextureRect(const CVec4 Rect, const GLuint texID);
 
 };

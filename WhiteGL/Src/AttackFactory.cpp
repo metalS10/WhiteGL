@@ -3,7 +3,7 @@
 std::vector<CAnimation*>* CAttackPartsFactory::getAnimations()
 {
 	//アニメーションデータ群の生成
-	//std::vector<CAnimation*>* m_pAnimations = new std::vector<CAnimation*>();
+	std::vector<CAnimation*>* m_pAnimations = new std::vector<CAnimation*>();
 
 	//アニメーションデータ群の作成
 	return new std::vector<CAnimation*>;
@@ -124,7 +124,6 @@ void CNormalAttackFactory::settingActions(CAttackCharacter* pChara, CVec2 vec)
 	//敵死亡アクションを0番で設定
 	//posに向きを兼ね備えたplayerの先を渡している
 	pChara->m_pActions->push_back(new CActionMoveStraight(pChara->m_pMove->m_pos + (vec * 60.0f), velX));
-
 }
 
 

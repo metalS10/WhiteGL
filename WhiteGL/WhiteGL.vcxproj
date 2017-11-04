@@ -168,6 +168,7 @@
     <ClCompile Include="Src\LaunchTrigger.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Map.cpp" />
+    <ClCompile Include="Src\MSlib.cpp" />
     <ClCompile Include="Src\Node.cpp" />
     <ClCompile Include="Src\PlayerCharacter.cpp" />
     <ClCompile Include="Src\PlayerFactory.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Src\LaunchTrigger.h" />
     <ClInclude Include="Src\Map.h" />
     <ClInclude Include="Src\Move.h" />
+    <ClInclude Include="Src\MSlib.h" />
     <ClInclude Include="Src\Node.h" />
     <ClInclude Include="Src\Physical.h" />
     <ClInclude Include="Src\PlayerCharacter.h" />

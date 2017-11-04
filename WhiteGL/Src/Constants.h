@@ -7,7 +7,13 @@
 
 //絶対パス
 #define PASS "C:/Users/tatsu/Desktop/WhiteGL/WhiteGL/Resources/"
+#ifndef NULL
+#ifdef __cplusplus
 #define NULL 0
+#else
+#define NULL ((void *)0)
+#endif
+#endif
 //削除
 #define SAFE_DELETE(p_)if(p_){delete p_;p_ = NULL;}
 //画面サイズ
@@ -19,7 +25,12 @@
 #define WINDOW_TOP WINDOW_HEIGHT
 #define WINDOW_BOTTOM 0
 //テクスチャ最大数
-#define MAX_TEXTURE_NUMBER 7
+#define MAX_TEXTURE_NUMBER 1000
+//弾
+#define MAX_BULLET_TEXTURE_NUMBER 1000
+//敵
+#define MAX_ENEMY_TEXTURE_NUMBER 1000
+
 
 //テクスチャID
 #define PLAYER_ID 5
@@ -27,8 +38,8 @@
 //プレイヤー
 #define IMAGE_PLAYER PASS"player.png"
 
-#define IMAGE_NORMALATTACK PASS""
-#define IMAGE_GETSUGATENSHO PASS""
+#define IMAGE_NORMALATTACK PASS"Attack/attack_sword.png"
+#define IMAGE_GETSUGATENSHO PASS"Attack/getsugatenshou.png"
 #define IMAGE_ENEMY PASS""
 #define IMAGE_NOKONOKO PASS""
 #define IMAGE_PATAPATA PASS""

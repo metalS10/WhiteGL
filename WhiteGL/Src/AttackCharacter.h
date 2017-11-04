@@ -6,7 +6,6 @@
 #include "CollisionArea.h"
 
 
-
 //’eƒ^ƒCƒv
 enum class ATTACK_TYPE : int
 {
@@ -67,6 +66,7 @@ public:
 			pRet = NULL;
 			return NULL;
 		}
+
 	}
 
 	/*

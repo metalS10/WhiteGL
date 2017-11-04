@@ -9,6 +9,7 @@
 #include "CollisionArea.h"
 #include "gameInput.h"
 #include "Map.h"
+#include "MSlib.h"
 
 //===============================================
 //キャラクタータイプ
@@ -234,6 +235,8 @@ public:
 
 	//地面に着地しているかどうか
 	bool m_isGround = false;
+
+	void removeFromParent();
 
 	//================================================================
 	//

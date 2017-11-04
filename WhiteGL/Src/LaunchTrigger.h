@@ -338,7 +338,7 @@ public:
 	*@desc	キャラクターの出撃
 	*@param	取り付けるレイヤー
 	*/
-	//void launchCharacters(cocos2d::Layer* pLayer);
+	void launchCharacters();
 };
 
 

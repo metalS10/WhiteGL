@@ -2,9 +2,13 @@
 *	main.cpp
 *		2017/09/29	Mats
 */
-#include "GameEngine.h"
+#include "MSlib.h"
 #include "PlayerFactory.h"
 #include "FPS.h"
+#include "LaunchTrigger.h"
+
+using namespace MS;
+
 /**
 *GLFWからのエラー報告を処理する
 *
@@ -15,6 +19,71 @@ void ErrorCallback(int error, const char* desc)
 {
 	std::cerr << "ERROR : " << desc << std::endl;
 }
+
+
+/**
+*	@desc	チェックと取り外し処理 ( 単体 )
+*	@tips	有効フラグが false のインスタンスをレイヤーから取り外す
+*/
+template <typename Ty>
+void checkAndRemove(Ty* pChara) {
+
+	if (pChara->m_activeFlag == false) {
+		pChara->removeFromParent();
+	}
+}
+
+/**
+*	@desc	チェックと取り外し処理 ( 複数 )
+*	@tips	有効フラグが false のインスタンスをレイヤーと std::vector から取り外す
+*/
+template <typename Ty>
+void checkAndRemove(std::vector<Ty*>* pCharas) {
+
+	// ローカル変数の型のテンプレート引数の指定として
+	// テンプレート引数を指定する場合は typename 指定をつけなければならない
+	typename std::vector<Ty*>::iterator itr = pCharas->begin();
+	while (itr != pCharas->end()) {
+
+		if ((*itr)->m_activeFlag == false)
+		{
+
+			(*itr)->removeFromParent();
+			itr = pCharas->erase(itr);
+
+		}
+		else
+		{
+			itr++;
+		}
+	}
+}
+
+/**
+*@desc	チェックと解放
+*@tips	有効フラグがfalseのインスタンスを開放しstd::vectorから取り外す
+*/
+template<typename Ty>
+void checkAndDelete(std::vector<Ty*>*pVector)
+{
+	//ローカル変数の方のテンプレート引数の指定として
+	//テンプレート引数を指定する場合はtypename指定をつけなければならない
+	typename std::vector<Ty*>::iterator itr = pVector->begin();
+	while (itr != pVector->end())
+	{
+		if ((*itr)->m_activeFlag == false)
+		{
+			SAFE_DELETE((*itr));
+			itr = pVector->erase(itr);
+		}
+		else
+		{
+			itr++;
+		}
+	}
+}
+
+
 /**
 *	@file main.cpp
 */
@@ -22,9 +91,6 @@ void ErrorCallback(int error, const char* desc)
 int main()
 {
 	glfwSetErrorCallback(ErrorCallback);
-
-
-	CGameEngine& game = CGameEngine();
 	
 	/*
 	// モニタとの同期
@@ -51,9 +117,12 @@ int main()
 	m_pCharacters = new std::vector<CCharacter*>();
 	CCharacterAggregate::getInstance()->set(m_pCharacters);
 
-	GLFWwindow* window = game.init(WINDOW_SIZE,"WhiteV_GL");
+	CGameEngine& game = CMS::getInstance()->getGame();
+	GLFWwindow* window = CMS::getInstance()->getWindow();
+
 	if (window == NULL)
 		return false;
+
 	game.setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 0, CVec2(100.0f, 100.0f), CVec4(0.0f, 0.0f, 200.0f, 200.0f));
 
 	game.setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 1, CVec2(300.0f, 100.0f), CVec4(100.0f, 100.0f, 100.0f, 100.0f));
@@ -74,11 +143,19 @@ int main()
 	//CCharacterAggregateにプレイヤーを追加
 	CCharacterAggregate::getInstance()->add(pPlayerChara);
 
-	game.setupTexture(pPlayerChara->texPass, TEX_TYPE::PNG, 5, pPlayerChara->m_pMove->m_pos, (*pPlayerChara->m_pAnimations)[1]->getCurrentChip());
+	game.setupTexture(pPlayerChara->texPass, TEX_TYPE::PNG, pPlayerChara->m_texID, pPlayerChara->m_pMove->m_pos, (*pPlayerChara->m_pAnimations)[0]->getCurrentChip());
 
 	game.setupTexture("", TEX_TYPE::QUAD, MAX_TEXTURE_NUMBER-1, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH,  WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f));
 
 
+	//出撃スケジュールの生成
+	std::vector<CLaunchTrigger*>* m_pLaunchSchedule = new std::vector<CLaunchTrigger*>();
+
+	//これで削除していないとステージを二度遊んだ時にバグが出る(最強の敵)
+	//CLaunchScheduler::getInstance()->removeInstance();
+
+	//出撃スケジュールを出撃スケジューラーに取り付ける
+	CLaunchScheduler::getInstance()->createLauncher(m_pLaunchSchedule);
 	
 	
 
@@ -229,14 +306,20 @@ int main()
 			{
 				input->setOnKey(Input::Key::X, false);
 			}
-			for (CCharacter* pChara: (*m_pCharacters))
+			for (CCharacter* pChara : (*m_pCharacters))
 			{
 				pChara->update();
-				game.setTextureRect((*pChara->m_pAnimations)[pChara->m_state]->getCurrentChip());
+				game.setTextureRect((*pChara->m_pAnimations)[pChara->m_state]->getCurrentChip(),pChara->m_texID);
 				game.setScale(pChara->m_scale,pChara->m_texID);
 				game.setPosition(pChara->m_pMove->m_pos, pChara->m_texID);
 
 			}
+
+			CLaunchScheduler::getInstance()->launchCharacters();
+			//出撃の完了したトリガーをすべて取り外す
+			checkAndDelete(m_pLaunchSchedule);
+			checkAndRemove(m_pCharacters);
+
 
 		}
 		glfwSwapBuffers(window);
@@ -245,3 +328,6 @@ int main()
 
 	return 0;
 }
+
+
+

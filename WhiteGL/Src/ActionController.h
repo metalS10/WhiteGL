@@ -9,7 +9,7 @@
 //前方宣言に関するコードはここから書く
 //=====================================================
 class CCharacter;
-
+typedef CVec2 Point;
 //=====================================================
 //アクションクラス
 //=====================================================
@@ -54,7 +54,7 @@ protected:
 	//ジャンプ加速度
 	float m_accele = 0.0f;
 	//ジャンプブースト
-	int m_boost = 0;
+	float m_boost = 0.0f;
 
 	//現在のジャンプブースト
 	int m_currentBoost = 0;
@@ -67,7 +67,7 @@ protected:
 
 public:
 
-	CActionJump(float accele, int boost):
+	CActionJump(float accele, float boost):
 		m_accele(accele),m_boost(boost){}
 
 	/**
@@ -164,7 +164,7 @@ private:
 	bool m_inAction = false;
 
 	//基準位置
-	CVec2 m_basePos;
+	Point m_basePos;
 
 	//半径
 	float m_radius = 0.0f;
@@ -182,7 +182,7 @@ public:
 	*@param	半径
 	*@param	速度
 	*/
-	CActionUpAndDownMove(CVec2 basePos, float radius, float vel);
+	CActionUpAndDownMove(Point basePos, float radius, float vel);
 
 	/**
 	*@desc	アクション開始
@@ -289,7 +289,7 @@ private:
 	bool m_inAction = false;
 
 	//基準位置
-	CVec2 m_basePos;
+	Point m_basePos;
 
 
 	//速度
@@ -310,9 +310,9 @@ public:
 	*@param	半径
 	*@param	速度
 	*/
-	CActionMoveStraight(CVec2 basePos, float vel);
+	CActionMoveStraight(Point basePos, float vel);
 
-	CActionMoveStraight(CVec2 basePos, float velX,float velY);
+	CActionMoveStraight(Point basePos, float velX,float velY);
 
 	/**
 	*@desc	アクション開始
@@ -397,7 +397,7 @@ private:
 	bool m_inAction = false;
 
 	//基準位置
-	CVec2 m_basePos;
+	Point m_basePos;
 
 	//速度
 	float m_vel = 0;
@@ -413,9 +413,9 @@ public:
 	*@param	半径
 	*@param	速度
 	*/
-	CActionCurve(CVec2 basePos, float vel);
+	CActionCurve(Point basePos, float vel);
 
-	CActionCurve(CVec2 basePos, float velX, float velY);
+	CActionCurve(Point basePos, float velX, float velY);
 
 
 	/**

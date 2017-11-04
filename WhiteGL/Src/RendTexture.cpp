@@ -273,7 +273,7 @@ void CRendTexture::setupTextureSize(const CVec2 texPos,const CVec4 texRect,const
 	}
 }
 
-void CRendTexture::deleteTexture(const GLsizei texID)
+void CRendTexture::deleteTexture(const GLuint texID)
 {
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDeleteTextures(1, &g_texID[texID]);
@@ -420,15 +420,15 @@ void CRendTexture::setPosition(const CVec2 position, const GLuint texID)
 	_rectPos[texID] = CVec4(_position[texID].x - texWH[texID].x * texScale[texID].x, _position[texID].x + texWH[texID].x * texScale[texID].x, _position[texID].y - texWH[texID].y * texScale[texID].y, _position[texID].y + texWH[texID].y * texScale[texID].y);
 }
 
-void CRendTexture::setTextureRect(const CVec4 Rect)
+void CRendTexture::setTextureRect(const CVec4 Rect,const GLuint texID)
 {
-	glBindTexture(GL_TEXTURE_2D, g_texID[5]);
+	glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
 
 
 	//‰æ‘œ‚Ì‹éŒ`”ÍˆÍ‚ðÝ’è
-	CVec4 changerect4 = CVec4(Rect.x / tex[5]->m_width, (Rect.x + Rect.z) / tex[5]->m_width, Rect.y / tex[5]->m_height, (Rect.y + Rect.w) / tex[5]->m_height);
+	CVec4 changerect4 = CVec4(Rect.x / tex[texID]->m_width, (Rect.x + Rect.z) / tex[texID]->m_width, Rect.y / tex[texID]->m_height, (Rect.y + Rect.w) / tex[texID]->m_height);
 
 
 
-	rect[5] = CVec4(changerect4);
+	rect[texID] = CVec4(changerect4);
 }

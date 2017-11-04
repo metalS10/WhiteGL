@@ -137,7 +137,7 @@ void CActionEnemyDead::stop()
 *@param	半径
 *@param	速度
 */
-CActionUpAndDownMove::CActionUpAndDownMove(CVec2 basePos, float radius, float vel)
+CActionUpAndDownMove::CActionUpAndDownMove(Point basePos, float radius, float vel)
 	:m_basePos(basePos), m_radius(radius), m_vel(vel)
 {
 	this->start();
@@ -312,13 +312,13 @@ void CActionCreateEnemy::stop()
 *@param	基準位置
 *@param	速度
 */
-CActionMoveStraight::CActionMoveStraight(CVec2 basePos, float vel)
+CActionMoveStraight::CActionMoveStraight(Point basePos, float vel)
 	:m_basePos(basePos), m_vel(vel)
 {
 	this->start();
 }
 
-CActionMoveStraight::CActionMoveStraight(CVec2 basePos, float velX,float velY)
+CActionMoveStraight::CActionMoveStraight(Point basePos, float velX,float velY)
 	: m_basePos(basePos), m_vel(velX),m_velY(velY)
 {
 	this->start();
@@ -439,12 +439,12 @@ void CActionShotBullet::update(CCharacter* pChara)
 *@param	基準位置
 *@param	速度
 */
-CActionCurve::CActionCurve(CVec2 basePos, float vel)
+CActionCurve::CActionCurve(Point basePos, float vel)
 	:m_basePos(basePos), m_vel(vel)
 {
 	this->start();
 }
-CActionCurve::CActionCurve(CVec2 basePos, float velX,float velY)
+CActionCurve::CActionCurve(Point basePos, float velX,float velY)
 	: m_basePos(basePos), m_vel(velX),m_velY(velY)
 {
 	this->start();

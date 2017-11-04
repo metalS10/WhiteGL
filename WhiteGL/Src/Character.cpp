@@ -113,6 +113,11 @@ void CCharacter::DPHeal(float dp_value)
 	}
 }
 
+void CCharacter::removeFromParent()
+{
+	MS::CMS::getInstance()->getGame().deleteTexture(this->m_texID);
+}
+
 
 //==================================================
 //キャラクターの集合体
