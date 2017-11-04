@@ -22,15 +22,17 @@ public:
 		add(v);
 		return *this;
 	}
-	inline CVec2& CVec2::operator+(const CVec2& v)
+	inline CVec2 CVec2::operator+(const CVec2& v)
 	{
-		add2(v);
-		return *this;
+		CVec2 result(*this);
+		result.add(v);
+		return result;
 	}
-	inline CVec2& CVec2::operator*(const float& v)
+	inline CVec2 CVec2::operator*(const float& v) const
 	{
-		multi(v);
-		return *this;
+		CVec2 result(*this);
+		result.multi(v);
+		return result;
 	}
 
 	inline void CVec2::add(const CVec2& v)
@@ -38,10 +40,11 @@ public:
 		x += v.x;
 		y += v.y;
 	}
-	inline void CVec2::add2(const CVec2& v)
+	void CVec2::add(const CVec2& v1, const CVec2& v2, CVec2* dst)
 	{
-		x += v.x;
-		y += v.y;
+
+		dst->x = v1.x + v2.x;
+		dst->y = v1.y + v2.y;
 	}
 	inline void CVec2::multi(const float& v)
 	{
