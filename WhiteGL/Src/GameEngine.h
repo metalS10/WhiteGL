@@ -28,10 +28,10 @@ public:
 	const GamePad& GetGamePad() const;
 	static CGameEngine& Instance();
 	void Run();
-	void setVelocity(CVec2 vel);
-	void setTextureRect(const CVec4 mrect);
+	void setTextureRect(const CVec4 mrect,const GLuint texID);
 	void setPosition(CVec2 pos, GLuint texID);
 	void setScale(CVec2 scale,GLuint texID);
+	void deleteTexture(const GLuint texID);
 
 	void inputKeyA();
 	void inputKeyS();
