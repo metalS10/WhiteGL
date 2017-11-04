@@ -72,6 +72,7 @@ public:
 		{
 			this->m_counter = 0;
 			this->m_isStart = true;
+			this->m_isEnd = false;
 		}
 	}
 
@@ -103,7 +104,7 @@ public:
 
 					//ループしないアニメーションに対しては飛び出たカウンターをデクリメントする
 					this->m_counter--;
-
+					m_isEnd = true;
 					m_isStart = false;
 				}
 			}
