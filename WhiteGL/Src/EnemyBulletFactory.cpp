@@ -23,13 +23,11 @@ std::vector<CPhysical*>* CEnemyBulletPartsFactory::getPhysicals()
 	return new std::vector<CPhysical*>;
 }
 
-/*
 std::vector<CAction*>* CEnemyBulletPartsFactory::getActions()
 {
 	//行えるアクション群を作成
 	return new std::vector<CAction*>;
 }
-*/
 
 CBody* CEnemyBulletPartsFactory::getBody()
 {
@@ -52,7 +50,7 @@ CCharacter* CEnemyBulletFactory::create(float posX, float posY, CVec2 vec)
 
 	this->settingPhysicals(pChara);
 
-	//this->settingActions(pChara,vec);
+	this->settingActions(pChara,vec);
 
 	this->settingBody(pChara);
 
@@ -108,14 +106,12 @@ void CNormalEnemyBulletFactory::settingPhysicals(CEnemyBulletCharacter* pChara)
 }
 
 //アクションの設定
-/*
 void CNormalEnemyBulletFactory::settingActions(CEnemyBulletCharacter* pChara, CVec2 vec)
 {
 	//敵死亡アクションを0番で設定
 	pChara->m_pActions->push_back(new CActionMoveStraight(pChara->m_pMove->m_pos, vec.x,vec.y));
 
 }
-*/
 
 //実体の設定
 void CNormalEnemyBulletFactory::settingBody(CEnemyBulletCharacter* pChara)
@@ -256,14 +252,12 @@ void CCustomEnemyBulletFactory::settingPhysicals(CEnemyBulletCharacter* pChara)
 }
 
 //アクションの設定
-/*
-void CCustomEnemyBulletFactory::settingActions(CEnemyBulletCharacter* pChara, cocos2d::Vec2 vec)
+void CCustomEnemyBulletFactory::settingActions(CEnemyBulletCharacter* pChara, CVec2 vec)
 {
 	//敵死亡アクションを0番で設定
 	pChara->m_pActions->push_back(new CActionCurve(pChara->m_pMove->m_pos, vec.x,vec.y));
 
 }
-*/
 
 //実体の設定
 void CCustomEnemyBulletFactory::settingBody(CEnemyBulletCharacter* pChara)
@@ -408,15 +402,13 @@ void CFireBallEnemyBulletFactory::settingPhysicals(CEnemyBulletCharacter* pChara
 }
 
 //アクションの設定
-/*
-void CFireBallEnemyBulletFactory::settingActions(CEnemyBulletCharacter* pChara, cocos2d::Vec2 vec)
+void CFireBallEnemyBulletFactory::settingActions(CEnemyBulletCharacter* pChara, CVec2 vec)
 {
 	float velX = 3.0f * vec.x;
 	pChara->m_pActions->push_back(new CActionJump(4.0f,3.0f));
 
 	pChara->m_pActions->push_back(new CActionMoveStraight(pChara->m_pMove->m_pos, velX));
 }
-*/
 
 //実体の設定
 void CFireBallEnemyBulletFactory::settingBody(CEnemyBulletCharacter* pChara)

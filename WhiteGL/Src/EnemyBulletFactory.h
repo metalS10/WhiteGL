@@ -19,7 +19,7 @@ public:
 	std::vector<CPhysical*>* getPhysicals()override;
 
 	//ƒAƒNƒVƒ‡ƒ“Žæ“¾
-	//std::vector<CAction*>* getActions()override;
+	std::vector<CAction*>* getActions()override;
 
 	//ŽÀ‘ÌŽæ“¾
 	CBody* getBody()override;
@@ -52,7 +52,7 @@ protected:
 
 	virtual void settingPhysicals(CEnemyBulletCharacter* pChara) = 0;
 
-	//virtual void settingActions(CEnemyBulletCharacter* pChara, CVec2) = 0;
+	virtual void settingActions(CEnemyBulletCharacter* pChara, CVec2) = 0;
 
 	virtual void settingBody(CEnemyBulletCharacter* pChara) = 0;
 
@@ -89,7 +89,7 @@ public:
 
 		pChara->m_pPhysicals = pFactory.getPhysicals();
 
-		//pChara->m_pActions = pFactory.getActions();
+		pChara->m_pActions = pFactory.getActions();
 
 		pChara->m_pBody = pFactory.getBody();
 
@@ -112,7 +112,7 @@ protected:
 
 	void settingPhysicals(CEnemyBulletCharacter* pChara)override;
 
-	//void settingActions(CEnemyBulletCharacter* pChara ,CVec2)override;
+	void settingActions(CEnemyBulletCharacter* pChara ,CVec2)override;
 
 	void settingBody(CEnemyBulletCharacter* pChara)override;
 
@@ -136,7 +136,7 @@ protected:
 
 	void settingPhysicals(CEnemyBulletCharacter* pChara)override;
 
-	//void settingActions(CEnemyBulletCharacter* pChara, CVec2)override;
+	void settingActions(CEnemyBulletCharacter* pChara, CVec2)override;
 
 	void settingBody(CEnemyBulletCharacter* pChara)override;
 
@@ -168,7 +168,7 @@ public:
 
 		pChara->m_pPhysicals = pFactory.getPhysicals();
 
-		//pChara->m_pActions = pFactory.getActions();
+		pChara->m_pActions = pFactory.getActions();
 
 		pChara->m_pBody = pFactory.getBody();
 
@@ -191,7 +191,7 @@ protected:
 
 	void settingPhysicals(CEnemyBulletCharacter* pChara)override;
 
-	//void settingActions(CEnemyBulletCharacter* pChara, CVec2)override;
+	void settingActions(CEnemyBulletCharacter* pChara, CVec2)override;
 
 	void settingBody(CEnemyBulletCharacter* pChara)override;
 

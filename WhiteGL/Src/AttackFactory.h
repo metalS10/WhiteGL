@@ -19,7 +19,7 @@ public:
 	std::vector<CPhysical*>* getPhysicals()override;
 
 	//ƒAƒNƒVƒ‡ƒ“Žæ“¾
-	//std::vector<CAction*>* getActions()override;
+	std::vector<CAction*>* getActions()override;
 
 	//ŽÀ‘ÌŽæ“¾
 	CBody* getBody()override;
@@ -54,7 +54,7 @@ protected:
 
 	virtual void settingPhysicals(CAttackCharacter* pChara) = 0;
 
-	//virtual void settingActions(CAttackCharacter* pChara, CVec2) = 0;
+	virtual void settingActions(CAttackCharacter* pChara, CVec2) = 0;
 
 	virtual void settingBody(CAttackCharacter* pChara) = 0;
 
@@ -91,7 +91,7 @@ public:
 
 		pChara->m_pPhysicals = pFactory.getPhysicals();
 
-		//pChara->m_pActions = pFactory.getActions();
+		pChara->m_pActions = pFactory.getActions();
 
 		pChara->m_pBody = pFactory.getBody();
 
@@ -116,7 +116,7 @@ protected:
 
 	void settingPhysicals(CAttackCharacter* pChara)override;
 
-	//void settingActions(CAttackCharacter* pChara, CVec2)override;
+	void settingActions(CAttackCharacter* pChara, CVec2)override;
 
 	void settingBody(CAttackCharacter* pChara)override;
 
@@ -140,7 +140,7 @@ protected:
 
 	void settingPhysicals(CAttackCharacter* pChara)override;
 
-	//void settingActions(CAttackCharacter* pChara, cocos2d::Vec2)override;
+	void settingActions(CAttackCharacter* pChara, CVec2)override;
 
 	void settingBody(CAttackCharacter* pChara)override;
 

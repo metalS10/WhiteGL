@@ -16,7 +16,7 @@ public:
 	std::vector<CPhysical*>* getPhysicals()override;
 
 	//ƒAƒNƒVƒ‡ƒ“Žæ“¾
-	//std::vector<CAction*>* getActions()override;
+	std::vector<CAction*>* getActions()override;
 
 	//ŽÀ‘ÌŽæ“¾
 	CBody* getBody()override;
@@ -68,7 +68,7 @@ public:
 		pChara->m_pAnimations = pFactory.getAnimations();
 		pChara->m_pMove = pFactory.getMove();
 		pChara->m_pPhysicals = pFactory.getPhysicals();
-		//pChara->m_pActions = pFactory.getActions();
+		pChara->m_pActions = pFactory.getActions();
 		pChara->m_pBody = pFactory.getBody();
 		pChara->m_pCollisionAreas = pFactory.getCollisionAreas();
 
@@ -89,7 +89,7 @@ public:
 		pChara->m_pAnimations = pFactory.getAnimations();
 		pChara->m_pMove = pFactory.getMove();
 		pChara->m_pPhysicals = pFactory.getPhysicals();
-		//pChara->m_pActions = pFactory.getActions();
+		pChara->m_pActions = pFactory.getActions();
 		pChara->m_pBody = pFactory.getBody();
 		pChara->m_pCollisionAreas = pFactory.getCollisionAreas();
 
@@ -110,7 +110,7 @@ public:
 		pChara->m_pAnimations = pFactory.getAnimations();
 		pChara->m_pMove = pFactory.getMove();
 		pChara->m_pPhysicals = pFactory.getPhysicals();
-		//pChara->m_pActions = pFactory.getActions();
+		pChara->m_pActions = pFactory.getActions();
 		pChara->m_pBody = pFactory.getBody();
 		pChara->m_pCollisionAreas = pFactory.getCollisionAreas();
 
@@ -131,7 +131,7 @@ public:
 		pChara->m_pAnimations = pFactory.getAnimations();
 		pChara->m_pMove = pFactory.getMove();
 		pChara->m_pPhysicals = pFactory.getPhysicals();
-		//pChara->m_pActions = pFactory.getActions();
+		pChara->m_pActions = pFactory.getActions();
 		pChara->m_pBody = pFactory.getBody();
 		pChara->m_pCollisionAreas = pFactory.getCollisionAreas();
 
@@ -151,7 +151,7 @@ public:
 		pChara->m_pAnimations = pFactory.getAnimations();
 		pChara->m_pMove = pFactory.getMove();
 		pChara->m_pPhysicals = pFactory.getPhysicals();
-		//pChara->m_pActions = pFactory.getActions();
+		pChara->m_pActions = pFactory.getActions();
 		pChara->m_pBody = pFactory.getBody();
 		pChara->m_pCollisionAreas = pFactory.getCollisionAreas();
 
@@ -171,7 +171,7 @@ public:
 		pChara->m_pAnimations = pFactory.getAnimations();
 		pChara->m_pMove = pFactory.getMove();
 		pChara->m_pPhysicals = pFactory.getPhysicals();
-		//pChara->m_pActions = pFactory.getActions();
+		pChara->m_pActions = pFactory.getActions();
 		pChara->m_pBody = pFactory.getBody();
 		pChara->m_pCollisionAreas = pFactory.getCollisionAreas();
 

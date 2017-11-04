@@ -56,12 +56,10 @@ bool CEnemyBulletCharacter::init(float posX, float posY)
 void CEnemyBulletCharacter::moveFunc()
 {
 	//取り付けられているアクションの更新
-	/*
 	for (CAction* pAction : (*m_pActions))
 	{
 		pAction->update(this);
 	}
-	*/
 
 	//物理計算
 	for (CPhysical* pPhysical : (*m_pPhysicals))
@@ -209,7 +207,7 @@ void CEnemyBulletCharacter::hits(CCharacter* pChara)
 	//敵キャラクターのアクションに適死亡アクションを取り付ける
 	//this->m_pActions->push_back(new CActionEnemyDead(2.0f, 6.0f));
 	//↓
-	//(*this->m_pActions)[0]->start();
+	(*this->m_pActions)[0]->start();
 
 
 

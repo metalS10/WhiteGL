@@ -338,7 +338,7 @@ public:
 	virtual std::vector<CPhysical*>* getPhysicals() = 0;
 
 	//ƒAƒNƒVƒ‡ƒ“Žæ“¾
-	//virtual std::vector<CAction*>* getActions() = 0;
+	virtual std::vector<CAction*>* getActions() = 0;
 
 	//ŽÀ‘ÌŽæ“¾
 	virtual CBody* getBody() = 0;

@@ -56,12 +56,12 @@ bool CAttackCharacter::init(float posX, float posY)
 void CAttackCharacter::moveFunc()
 {
 	//取り付けられているアクションの更新
-	/*
+	
 	for (CAction* pAction : (*m_pActions))
 	{
 		pAction->update(this);
 	}
-	*/
+	
 
 	//物理計算
 	for (CPhysical* pPhysical : (*m_pPhysicals))

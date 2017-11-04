@@ -22,11 +22,31 @@ public:
 		add(v);
 		return *this;
 	}
+	inline CVec2& CVec2::operator+(const CVec2& v)
+	{
+		add2(v);
+		return *this;
+	}
+	inline CVec2& CVec2::operator*(const float& v)
+	{
+		multi(v);
+		return *this;
+	}
 
 	inline void CVec2::add(const CVec2& v)
 	{
 		x += v.x;
 		y += v.y;
+	}
+	inline void CVec2::add2(const CVec2& v)
+	{
+		x += v.x;
+		y += v.y;
+	}
+	inline void CVec2::multi(const float& v)
+	{
+		x *= v;
+		y *= v;
 	}
 
 	inline void CVec2::set(const float vx, const float vy)

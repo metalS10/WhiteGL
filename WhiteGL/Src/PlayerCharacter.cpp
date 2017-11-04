@@ -92,8 +92,7 @@ void CPlayerCharacter::inputFunc()
 			if (this->m_isGround)
 			{
 				//ジャンプを開始させる
-				//(*this->m_pActions)[(int)ACTION::JUMP]->start();
-				this->m_pMove->m_accele.y = 0.7f;
+				(*this->m_pActions)[(int)ACTION::JUMP]->start();
 				this->Allfalse();
 			}
 		}
@@ -102,7 +101,7 @@ void CPlayerCharacter::inputFunc()
 			//アニメーションの初期化
 			(*this->m_pAnimations)[(int)STATE::ATTACK]->start();
 			//弾発射(playerFactoryのgetActionsにも注意)
-			//(*this->m_pActions)[(int)ACTION::ATTACK]->start();
+			(*this->m_pActions)[(int)ACTION::ATTACK]->start();
 
 			this->Allfalse();
 			m_isAttack1 = true;
@@ -110,7 +109,7 @@ void CPlayerCharacter::inputFunc()
 		if (input->getOnKey(Input::Key::X) == true)
 		{
 			//弾発射(playerFactoryのgetActionsにも注意)
-			//(*this->m_pActions)[(int)ACTION::ATTACK_NOR]->start();
+			(*this->m_pActions)[(int)ACTION::ATTACK_NOR]->start();
 
 			(*this->m_pAnimations)[(int)STATE::NOR]->start();
 
@@ -182,7 +181,7 @@ void CPlayerCharacter::inputFunc()
 			if (this->m_isGround)
 			{
 				//ジャンプを開始させる
-				//(*this->m_pActions)[(int)ACTION::SUPERJUMP]->start();
+				(*this->m_pActions)[(int)ACTION::SUPERJUMP]->start();
 
 				this->Allfalse();
 			}
@@ -226,7 +225,7 @@ void CPlayerCharacter::moveFunc()
 	*/
 	
 	this->inputFunc();
-	/*
+	
 	//ジャンプ移動計算
 	(*this->m_pActions)[(int)ACTION::JUMP]->update(this);
 	
@@ -242,7 +241,7 @@ void CPlayerCharacter::moveFunc()
 	(*this->m_pActions)[(int)ACTION::SUPERJUMP]->update(this);
 
 
-	*/
+	
 	//物理計算
 	for (CPhysical* pPhysical : (*m_pPhysicals))
 	{

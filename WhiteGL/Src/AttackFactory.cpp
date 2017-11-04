@@ -22,13 +22,13 @@ std::vector<CPhysical*>* CAttackPartsFactory::getPhysicals()
 	//適用させる物理演算作成
 	return new std::vector<CPhysical*>;
 }
-/*
+
 std::vector<CAction*>* CAttackPartsFactory::getActions()
 {
 	//行えるアクション群を作成
 	return new std::vector<CAction*>;
 }
-*/
+
 
 CBody* CAttackPartsFactory::getBody()
 {
@@ -56,7 +56,7 @@ CCharacter* CAttackFactory::create(float posX, float posY, CVec2 vec)
 
 	this->settingPhysicals(pChara);
 
-	//this->settingActions(pChara, vec);
+	this->settingActions(pChara, vec);
 
 	this->settingBody(pChara);
 
@@ -116,17 +116,17 @@ void CNormalAttackFactory::settingPhysicals(CAttackCharacter* pChara)
 }
 
 //アクションの設定
-/*
+
 void CNormalAttackFactory::settingActions(CAttackCharacter* pChara, CVec2 vec)
 {
 	//攻撃の移動速度
 	float velX = 0 * vec.x;
 	//敵死亡アクションを0番で設定
 	//posに向きを兼ね備えたplayerの先を渡している
-	pChara->m_pActions->push_back(new CActionMoveStraight(pChara->m_pMove->m_pos + (vec * 60), velX));
+	pChara->m_pActions->push_back(new CActionMoveStraight(pChara->m_pMove->m_pos + (vec * 60.0f), velX));
 
 }
-*/
+
 
 //実体の設定
 void CNormalAttackFactory::settingBody(CAttackCharacter* pChara)
@@ -276,18 +276,18 @@ void CNorAttackFactory::settingPhysicals(CAttackCharacter* pChara)
 {
 
 }
-/*
+
 //アクションの設定
-void CNorAttackFactory::settingActions(CAttackCharacter* pChara, cocos2d::Vec2 vec)
+void CNorAttackFactory::settingActions(CAttackCharacter* pChara, CVec2 vec)
 {
 	//攻撃の移動速度
 	float velX = 20 * vec.x;
 	//敵死亡アクションを0番で設定
 	//posに向きを兼ね備えたplayerの先を渡している
-	pChara->m_pActions->push_back(new CActionMoveStraight(pChara->m_pMove->m_pos + (vec * 30), velX));
+	pChara->m_pActions->push_back(new CActionMoveStraight(pChara->m_pMove->m_pos + (vec * 30.0f), velX));
 
 }
-*/
+
 
 //実体の設定
 void CNorAttackFactory::settingBody(CAttackCharacter* pChara)

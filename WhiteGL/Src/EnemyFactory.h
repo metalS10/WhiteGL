@@ -16,7 +16,7 @@ public:
 	std::vector<CPhysical*>* getPhysicals()override;
 
 	//ƒAƒNƒVƒ‡ƒ“æ“¾
-	//std::vector<CAction*>* getActions()override;
+	std::vector<CAction*>* getActions()override;
 
 	//À‘Ìæ“¾
 	CBody* getBody()override;
@@ -86,7 +86,7 @@ public:
 
 		pChara->m_pPhysicals = pFactory.getPhysicals();
 
-		//pChara->m_pActions = pFactory.getActions();
+		pChara->m_pActions = pFactory.getActions();
 
 		pChara->m_pBody = pFactory.getBody();
 

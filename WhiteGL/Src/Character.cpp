@@ -10,13 +10,13 @@ CCharacter::CCharacter()
 CCharacter::~CCharacter()
 {
 	SAFE_DELETE(this->m_pBody);
-	/*
+	
 	for (CAction* pAction : (*m_pActions))
 	{
 		SAFE_DELETE(pAction);
 	}
 	SAFE_DELETE(this->m_pActions);
-	*/
+	
 	for (CPhysical* pPhysical : (*m_pPhysicals))
 	{
 		SAFE_DELETE(pPhysical);

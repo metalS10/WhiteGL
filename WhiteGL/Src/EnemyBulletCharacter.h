@@ -226,7 +226,7 @@ public:
 
 	void collisionBottomCallback(int event)override
 	{
-		//(*this->m_pActions)[0]->restart(this);
+		(*this->m_pActions)[0]->restart(this);
 	}
 
 };

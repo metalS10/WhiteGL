@@ -12,7 +12,7 @@
 std::vector<CAnimation*>* CEnemyPartsFactory::getAnimations()
 {
 	//アニメーションデータ群の生成
-	//std::vector<CAnimation*>* m_pAnimations = new std::vector<CAnimation*>();
+	std::vector<CAnimation*>* m_pAnimations = new std::vector<CAnimation*>();
 
 	//アニメーションデータ群の作成
 	return new std::vector<CAnimation*>;
@@ -32,13 +32,13 @@ std::vector<CPhysical*>* CEnemyPartsFactory::getPhysicals()
 	return new std::vector<CPhysical*>;
 }
 
-/*
+
 std::vector<CAction*>* CEnemyPartsFactory::getActions()
 {
 	//行えるアクション群を作成
 	return new std::vector<CAction*>;
 }
-*/
+
 CBody* CEnemyPartsFactory::getBody()
 {
 	return new CBody();
@@ -125,7 +125,7 @@ void CKuriboFactory::settingPhysicals(CEnemyCharacter* pChara)
 //アクションの設定
 void CKuriboFactory::settingActions(CEnemyCharacter* pChara)
 {
-	/*
+	
 	//敵死亡アクションを0番で設定(順番に気を付ける)
 	pChara->m_pActions->push_back(new CActionEnemyDead(2.0f, 6.0f));
 
@@ -134,7 +134,7 @@ void CKuriboFactory::settingActions(CEnemyCharacter* pChara)
 
 	//弾発射アクションを設定
 	pChara->m_pActions->push_back(new CActionShotEnemyBullet((int)BULLET_TYPE::NORMAL, 60));
-	*/
+	
 }
 
 //実体の設定
@@ -265,13 +265,13 @@ void CGreenNokoNokoFactory::settingPhysicals(CEnemyCharacter* pChara)
 //アクションの設定
 void CGreenNokoNokoFactory::settingActions(CEnemyCharacter* pChara)
 {
-	/*
+	
 	//敵死亡アクションを0番で設定
 	pChara->m_pActions->push_back(new CActionEnemyDead(2.0f, 6.0f));
 
 	//敵ダメージアクション設定
 	pChara->m_pActions->push_back(new CActionEnemyDamage(5, 1, 3));
-	*/
+	
 
 }
 
@@ -391,7 +391,7 @@ void CGreenPataPataFactory::settingPhysicals(CEnemyCharacter* pChara)
 //アクションの設定
 void CGreenPataPataFactory::settingActions(CEnemyCharacter* pChara)
 {
-	/*
+	
 	//敵死亡アクションを0番で設定
 	pChara->m_pActions->push_back(new CActionEnemyDeadAndCreateEnemy((int)ENEMY_TYPE::NOKONOKO));
 
@@ -401,7 +401,7 @@ void CGreenPataPataFactory::settingActions(CEnemyCharacter* pChara)
 
 	//弾発射アクションを設定
 	pChara->m_pActions->push_back(new CActionShotEnemyBullet((int)BULLET_TYPE::CUSTOM, 60));
-	*/
+	
 }
 
 //実体の設定
@@ -489,13 +489,13 @@ void CKillerHoudaiFactory::settingAnimations(CEnemyCharacter* pChara)
 void CKillerHoudaiFactory::settingPhysicals(CEnemyCharacter* pChara)
 {
 	//重力演算の設定
-	//pChara->m_pPhysicals->push_back(new CPhysicalGravity());
+	pChara->m_pPhysicals->push_back(new CPhysicalGravity());
 }
 
 //アクションの設定
 void CKillerHoudaiFactory::settingActions(CEnemyCharacter* pChara)
 {
-	//pChara->m_pActions->push_back(new CActionCreateEnemy((int)ENEMY_TYPE::KILLER));
+	pChara->m_pActions->push_back(new CActionCreateEnemy((int)ENEMY_TYPE::KILLER));
 }
 
 //実体の設定
@@ -610,14 +610,14 @@ void CKillerFactory::settingAnimations(CEnemyCharacter* pChara)
 void CKillerFactory::settingPhysicals(CEnemyCharacter* pChara)
 {
 	//重力演算の設定
-	//pChara->m_pPhysicals->push_back(new CPhysicalGravity());
+	pChara->m_pPhysicals->push_back(new CPhysicalGravity());
 }
 
 //アクションの設定
 void CKillerFactory::settingActions(CEnemyCharacter* pChara)
 {
 
-	//pChara->m_pActions->push_back(new CActionEnemyDead(1.0f, -6.0f));
+	pChara->m_pActions->push_back(new CActionEnemyDead(1.0f, -6.0f));
 }
 
 //実体の設定
@@ -742,7 +742,7 @@ void CTRoiFactory::settingPhysicals(CEnemyCharacter* pChara)
 //アクションの設定
 void CTRoiFactory::settingActions(CEnemyCharacter* pChara)
 {
-	/*
+	
 	//敵死亡アクションを0番で設定(順番に気を付ける)
 	pChara->m_pActions->push_back(new CActionEnemyDead(2.0f, 6.0f));
 
@@ -754,7 +754,6 @@ void CTRoiFactory::settingActions(CEnemyCharacter* pChara)
 
 	//TRoi専用アクションを設定
 	pChara->m_pActions->push_back(new CActionTRoi(3, false, 300));
-	*/
 
 }
 

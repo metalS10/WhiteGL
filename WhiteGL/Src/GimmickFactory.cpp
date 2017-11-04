@@ -8,7 +8,7 @@
 std::vector<CAnimation*>* CGimmickPartsFactory::getAnimations()
 {
 	//アニメーションデータ群の生成
-	//std::vector<CAnimation*>* m_pAnimations = new std::vector<CAnimation*>();
+	std::vector<CAnimation*>* m_pAnimations = new std::vector<CAnimation*>();
 
 	//アニメーションデータ群の作成
 	return new std::vector<CAnimation*>;
@@ -27,13 +27,11 @@ std::vector<CPhysical*>* CGimmickPartsFactory::getPhysicals()
 	//適用させる物理演算作成
 	return new std::vector<CPhysical*>;
 }
-/*
 std::vector<CAction*>* CGimmickPartsFactory::getActions()
 {
 	//行えるアクション群を作成
 	return new std::vector<CAction*>;
 }
-*/
 
 CBody* CGimmickPartsFactory::getBody()
 {
@@ -526,7 +524,7 @@ void CRollBlockFactory::settingPhysicals(CGimmickCharacter* pChara)
 //アクションの設定
 void CRollBlockFactory::settingActions(CGimmickCharacter* pChara)
 {
-	//pChara->m_pActions->push_back(new CActionRoll());
+	pChara->m_pActions->push_back(new CActionRoll());
 }
 
 //実体の設定
@@ -618,7 +616,7 @@ void CTikuwaBlockFactory::settingPhysicals(CGimmickCharacter* pChara)
 //アクションの設定
 void CTikuwaBlockFactory::settingActions(CGimmickCharacter* pChara)
 {
-	//pChara->m_pActions->push_back(new CActionDown());
+	pChara->m_pActions->push_back(new CActionDown());
 }
 
 //実体の設定
@@ -667,7 +665,7 @@ void CTikuwaBlockFactory::settingInitialize(CGimmickCharacter* pChara)
 	//生きているフラグを立てる
 	//pChara->setPosition(pChara->m_pMove->m_pos);
 	//チップデータを反映
-	///pChara->setTextureRect((*pChara->m_pAnimations)[pChara->m_state]->getCurrentChip());
+	//pChara->setTextureRect((*pChara->m_pAnimations)[pChara->m_state]->getCurrentChip());
 }
 
 //========================================
@@ -815,17 +813,24 @@ void CHatenaBlockFactory::settingPhysicals(CGimmickCharacter* pChara)
 void CHatenaBlockFactory::settingActions(CGimmickCharacter* pChara)
 {
 	int enemy = rand() % 4;
-	if (enemy == 0)
+	switch (enemy)
+	{
+	case 0:
 		enemy = (int)ENEMY_TYPE::KURIBO;
-	if (enemy == 1)
+		break;
+	case 1:
 		enemy = (int)ENEMY_TYPE::NOKONOKO;
-	if (enemy == 2)
+		break;
+	case 2:
 		enemy = (int)ENEMY_TYPE::PATAPATA;
-	if (enemy == 3)
+		break;
+	case 3:
 		enemy = (int)ENEMY_TYPE::KILLERHODAI;
-
-
-	//pChara->m_pActions->push_back(new CActionCreateCharacter(enemy));
+		break;
+	default:
+		break;
+	}
+	pChara->m_pActions->push_back(new CActionCreateCharacter(enemy));
 }
 
 //実体の設定

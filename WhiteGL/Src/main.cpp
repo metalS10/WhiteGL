@@ -212,6 +212,23 @@ int main()
 				input->setOnKey(Input::Key::GameEnd, true);
 				return 0;
 			}
+			if (gamepad.buttons & GamePad::Z)
+			{
+				input->setOnKey(Input::Key::Z, true);
+			}
+			else
+			{
+				input->setOnKey(Input::Key::Z, false);
+			}
+			
+			if (gamepad.buttons & GamePad::X)
+			{
+				input->setOnKey(Input::Key::X, true);
+			}
+			else
+			{
+				input->setOnKey(Input::Key::X, false);
+			}
 			for (CCharacter* pChara: (*m_pCharacters))
 			{
 				pChara->update();

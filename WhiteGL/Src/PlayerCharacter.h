@@ -3,6 +3,7 @@
 //追加のインクルードはここから
 //============================================
 #include "Character.h"
+#include "AttackCharacter.h"
 
 
 //==================================================
@@ -113,8 +114,8 @@ public:
 	void collisionBottomCallback(int event)override
 	{
 		//ジャンプを停止させる
-		//(*this->m_pActions)[(int)ACTION::JUMP]->stop();
-		//(*this->m_pActions)[(int)ACTION::SUPERJUMP]->stop();
+		(*this->m_pActions)[(int)ACTION::JUMP]->stop();
+		(*this->m_pActions)[(int)ACTION::SUPERJUMP]->stop();
 	}
 	void collisionTopCallback(int event)override {}
 	void collisionRightCallback(int event)override {}

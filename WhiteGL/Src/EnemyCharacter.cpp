@@ -56,12 +56,10 @@ bool CEnemyCharacter::init(float posX, float posY)
 void CEnemyCharacter::moveFunc()
 {
 	//取り付けられているアクションの更新
-	/*
 	for (CAction* pAction : (*m_pActions))
 	{
 		pAction->update(this);
 	}
-	*/
 
 	//物理計算
 	for (CPhysical* pPhysical : (*m_pPhysicals))
@@ -231,9 +229,9 @@ void CEnemyCharacter::hitsPlayerCharacter( CCharacter* pChara )
 
 	if (posY > 0.0f)
 	{
-		/*
+		
 		//上だった
-		CCLOG(u8"勝利");
+		std::cerr << u8"勝利" << std::endl;
 
 		//敵の死亡フラグを立てる
 		//つまり生きているか死んでいるかのフラグにfalseを入れる
@@ -259,7 +257,7 @@ void CEnemyCharacter::hitsPlayerCharacter( CCharacter* pChara )
 		//==============================================================
 		//ジャンプアクションの再起動
 		(*pChara->m_pActions)[0]->restart(pChara);
-		*/
+		
 	}
 	else
 	{
@@ -287,7 +285,7 @@ void CEnemyCharacter::hitsBulletCharacter(CCharacter* pChara)
 		if (this->m_eneType != ENEMY_TYPE::KILLER && this->m_eneType != ENEMY_TYPE::TROI)
 		{
 			//ダメージアクション
-			//(*this->m_pActions)[1]->restart(this);
+			(*this->m_pActions)[1]->restart(this);
 		}
 		else if (this->m_eneType == ENEMY_TYPE::TROI && !pPlayerChara->m_stageClear)
 		{
@@ -329,7 +327,7 @@ void CEnemyCharacter::hitsBulletCharacter(CCharacter* pChara)
 			//敵の死亡フラグを立てる
 			//つまり生きているか死んでいるかのフラグにfalseを入れる
 			this->m_isAlive = false;
-			//(*this->m_pActions)[0]->start();
+			(*this->m_pActions)[0]->start();
 		}
 		this->m_enemyDeadOneFrame++;
 

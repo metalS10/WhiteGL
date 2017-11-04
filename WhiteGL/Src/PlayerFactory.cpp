@@ -55,7 +55,7 @@ std::vector<CPhysical*>* CPlayerPartsFactory::getPhysicals()
 
 	return m_pPhysicals;
 }
-/*
+
 std::vector<CAction*>* CPlayerPartsFactory::getActions()
 {
 	std::vector<CAction*>* m_pActions;
@@ -75,7 +75,7 @@ std::vector<CAction*>* CPlayerPartsFactory::getActions()
 
 	return m_pActions;
 }
-*/
+
 CBody* CPlayerPartsFactory::getBody()
 {
 	return new CBody();

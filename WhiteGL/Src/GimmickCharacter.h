@@ -197,7 +197,7 @@ public:
 	
 	void collisionBottomCallback(int event)override
 	{
-		//(*this->m_pActions)[0]->start();
+		(*this->m_pActions)[0]->start();
 	}
 	void collisionTopCallback(int event)override
 	{
@@ -254,7 +254,7 @@ public:
 	}
 	void collisionTopCallback(int event)override
 	{
-		//(*this->m_pActions)[0]->start();
+		(*this->m_pActions)[0]->start();
 	}
 	void collisionRightCallback(int event)override
 	{
@@ -307,7 +307,7 @@ public:
 	void collisionTopCallback(int event)override
 	{
 		CCharacter* pPlayer = CCharacterAggregate::getInstance()->getAtTag(TAG_PLAYER_1);
-		//(*pPlayer->m_pActions)[0]->restart(pPlayer);
+		(*pPlayer->m_pActions)[0]->restart(pPlayer);
 	}
 	void collisionRightCallback(int event)override
 	{
@@ -355,7 +355,7 @@ public:
 
 	void collisionBottomCallback(int event)override
 	{
-		//(*this->m_pActions)[0]->start();
+		(*this->m_pActions)[0]->start();
 	}
 	void collisionTopCallback(int event)override
 	{
