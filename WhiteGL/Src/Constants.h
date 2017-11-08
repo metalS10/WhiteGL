@@ -6,7 +6,7 @@
 */
 
 //絶対パス
-#define PASS "C:/Users/tatsu/Desktop/WhiteGL/WhiteGL/Resources/"
+#define PASS "../WhiteGL/Resources/"
 #ifndef NULL
 #ifdef __cplusplus
 #define NULL 0
@@ -38,14 +38,18 @@
 //プレイヤー
 #define IMAGE_PLAYER PASS"player.png"
 
+//攻撃
 #define IMAGE_NORMALATTACK PASS"Attack/attack_sword.png"
 #define IMAGE_GETSUGATENSHO PASS"Attack/getsugatenshou.png"
+
+//敵
 #define IMAGE_ENEMY PASS""
 #define IMAGE_NOKONOKO PASS""
 #define IMAGE_PATAPATA PASS""
 #define IMAGE_KILLER PASS""
 #define IMAGE_TROI PASS""
 
+//ギミック
 #define IMAGE_DAMAGEBLOCK PASS""
 #define IMAGE_ROLLBLOCK PASS""
 #define IMAGE_TIKUWABLOCK PASS""
@@ -53,12 +57,15 @@
 #define IMAGE_HATENABLOCK PASS""
 #define IMAGE_WORP PASS""
 
+//弾
 #define IMAGE_NORMAL_FIRE PASS""
 #define IMAGE_FIREBALL PASS""
-#define IMAGE_FIREBALL PASS""
+
+//マップ
+#define MAP_DATA_1 PASS"mapData/1_MapData.tmx"
 #define IMAGE_FIREBALL PASS""
 
 #define TAG_PLAYER_1 1001
 
 #define M_PI       3.14159265358979323846f   // pi
-
+#define CC_DLL     __declspec(dllimport)

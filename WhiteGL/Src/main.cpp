@@ -6,6 +6,7 @@
 #include "PlayerFactory.h"
 #include "FPS.h"
 #include "LaunchTrigger.h"
+#include "interpreter/interpreter.h"
 
 using namespace MS;
 
@@ -157,7 +158,8 @@ int main()
 	//出撃スケジュールを出撃スケジューラーに取り付ける
 	CLaunchScheduler::getInstance()->createLauncher(m_pLaunchSchedule);
 	
-	
+	LoadXml* xml = new LoadXml();
+	xml->loadFile();
 
 
 	
@@ -193,6 +195,8 @@ int main()
 	Input::CGameInput* input = new Input::CGameInput();
 
 	pPlayerChara->input = input;
+
+
 
 	/**
 	*memo

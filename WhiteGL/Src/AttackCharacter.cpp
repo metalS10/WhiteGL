@@ -73,12 +73,6 @@ void CAttackCharacter::moveFunc()
 	//ˆÚ“®ŒvŽZ
 	this->m_pMove->moveBy();
 
-	if ((*this->m_pAnimations)[m_state]->isEnd())
-	{
-		std::cerr << "íœ" << std::endl;
-		
-		this->m_activeFlag = false;
-	}
 }
 
 

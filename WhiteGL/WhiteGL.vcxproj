@@ -165,6 +165,8 @@
     <ClCompile Include="Src\GimmickFactory.cpp" />
     <ClCompile Include="Src\GLFWEW.cpp" />
     <ClCompile Include="Src\image.cpp" />
+    <ClCompile Include="Src\interpreter\interpreter2.cpp" />
+    <ClCompile Include="Src\interpreter\xmlparser.cpp" />
     <ClCompile Include="Src\LaunchTrigger.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Map.cpp" />
@@ -201,6 +203,8 @@
     <ClInclude Include="Src\GimmickFactory.h" />
     <ClInclude Include="Src\GLFWEW.h" />
     <ClInclude Include="Src\image.h" />
+    <ClInclude Include="Src\interpreter\interpreter.h" />
+    <ClInclude Include="Src\interpreter\xmlparser.h" />
     <ClInclude Include="Src\LaunchData.h" />
     <ClInclude Include="Src\LaunchTrigger.h" />
     <ClInclude Include="Src\Map.h" />
@@ -212,7 +216,6 @@
     <ClInclude Include="Src\PlayerFactory.h" />
     <ClInclude Include="Src\Rect.h" />
     <ClInclude Include="Src\RendTexture.h" />
-    <ClInclude Include="Src\sam\math.h" />
     <ClInclude Include="Src\Sprite.h" />
     <ClInclude Include="Src\Texture.h" />
     <ClInclude Include="Src\Vec2.h" />
