@@ -26,6 +26,8 @@
 #define WINDOW_BOTTOM 0
 //テクスチャ最大数
 #define MAX_TEXTURE_NUMBER 1000
+//レイヤー最大数(使わない場合は0)
+#define MAX_LAYER_NUMBER 3
 //弾
 #define MAX_BULLET_TEXTURE_NUMBER 1000
 //敵
@@ -65,7 +67,9 @@
 #define MAP_DATA_1 PASS"mapData/1_MapData.tmx"
 #define IMAGE_FIREBALL PASS""
 
+//タグ
 #define TAG_PLAYER_1 1001
 
+//Math
 #define M_PI       3.14159265358979323846f   // pi
 #define CC_DLL     __declspec(dllimport)

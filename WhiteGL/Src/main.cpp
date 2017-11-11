@@ -159,7 +159,10 @@ int main()
 	CLaunchScheduler::getInstance()->createLauncher(m_pLaunchSchedule);
 	
 	LoadXml* xml = new LoadXml();
-	xml->loadFile();
+	xml->loadFile(MAP_DATA_1);
+	xml->elementData.size();
+	xml->m_elementName.size();
+	xml->m_layerData[0];
 
 
 	

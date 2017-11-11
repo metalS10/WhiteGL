@@ -1,17 +1,38 @@
 #pragma once
 #include "xmlparser.h"
+#include "Element.h"
 #include "../Constants.h"
 
 class LoadXml
 {
+private:
+	//要素名
+	std::string element;
+	//属性名
+	std::string elementName;
+	//属性値
+	int elementValue;
+
+	//読み込みレイヤー数
+	int m_layerNumber = 0;
+
 public:
-	int loadFile( /*int argc, const char* argv[]*/)
+
+	//要素データ
+	std::vector<CElement> elementData;
+	std::vector<char> m_elementName;
+	std::vector<int> m_width = {};
+	std::vector<int> m_height = {};
+	CLayerData m_layerData[MAX_LAYER_NUMBER] = {};
+
+
+	int loadFile(const char* fileName)
 	{
 		//XMLリーダーの生成
 		XmlReader* pReader = new XmlReader();
 
 		//ファイルを読み込みコンテキストを作成
-		if (pReader->create(MAP_DATA_1) == false)
+		if (pReader->create(fileName) == false)
 		{
 			std::cout << "xml create is false !!!" << std::endl;
 		}
@@ -28,7 +49,7 @@ public:
 				//要素の名前を取得
 				std::string name = pReader->getName();
 
-				std::cout << "要素名 = " << name << std::endl;
+				//std::cout << "要素名 = " << name << std::endl;
 
 				//属性が存在した場合は属性を取得
 				for (auto attr : pReader->getAttributes())
@@ -38,9 +59,52 @@ public:
 
 					//属性の値を取得
 					std::string attrValue = attr.getValue();
+					if (std::atoi(attrValue.c_str()) || attrValue == "0")
+					{
+						int valuenumber = std::stoi(attrValue);
+						//std::cout << "属性名 = " << attrKey << std::endl;
+						//std::cout << "属性値 = " << valuenumber << std::endl;
+						elementData.push_back(CElement(attrKey, valuenumber));
+					}
+					else
+					{
+						//std::cout << "属性名 = " << attrKey << std::endl;
+						//std::cout << "属性値 = " << attrValue << std::endl;
+					}
 
-					std::cout << "属性名 = " << attrKey << std::endl;
-					std::cout << "属性値 = " << attrValue << std::endl;
+					if (name == "tile")
+						if (attrKey == "gid")
+							for (CLayerData& layer : m_layerData)
+								if (!layer.m_gidcomp)
+								{
+									layer.addgid(std::stoi(attrValue));
+									break;
+								}
+
+					//レイヤーのセット
+					if (name == "tileset" || name == "image")
+					{
+						this->setLayerData(attrKey, attrValue);
+					}
+
+					if (name == "layer")
+					{
+						if (attrKey == "name")
+						{
+							m_elementName.push_back(*attrValue.c_str());
+							m_layerNumber++;
+						}
+						else if (attrKey == "width")
+						{
+							m_width.push_back(std::stoi(attrValue));
+						}
+						else if (attrKey == "height")
+						{
+							m_height.push_back(std::stoi(attrValue));
+						}
+					}
+
+					
 				}
 			}
 			break;
@@ -54,7 +118,7 @@ public:
 			{
 				std::string text = pReader->getText();
 
-				std::cout << "テキスト = " << text << std::endl;
+				//std::cout << "テキスト = " << text << std::endl;
 			}
 			break;
 
@@ -65,5 +129,73 @@ public:
 		SAFE_DELETE(pReader);
 
 		return 0;
+	}
+
+	void setLayerData(std::string attrKey,std::string attrValue)
+	{
+		if (attrKey == "firstgid")
+		{
+			for (CLayerData& layer : m_layerData)
+				if (!layer.m_datacomp)
+				{
+					layer.m_firstgid = std::stoi(attrValue);
+					break;
+				}
+		}
+		else if (attrKey == "name")
+		{
+			for (CLayerData& layer : m_layerData)
+				if (!layer.m_datacomp)
+				{
+					layer.m_mapChip = attrValue;
+					break;
+				}
+		}
+		else if (attrKey == "tilewidth")
+		{
+			for (CLayerData& layer : m_layerData)
+				if (!layer.m_datacomp)
+				{
+					layer.m_tileWidth = std::stoi(attrValue);
+					break;
+				}
+		}
+		else if (attrKey == "tileheight")
+		{
+			for (CLayerData& layer : m_layerData)
+				if (!layer.m_datacomp)
+				{
+					layer.m_tileHeight = std::stoi(attrValue);
+					break;
+				}
+		}
+		else if (attrKey == "source")
+		{
+			for (CLayerData& layer : m_layerData)
+				if (!layer.m_datacomp)
+				{
+					layer.m_imageSource = attrValue;
+					break;
+				}
+		}
+		else if (attrKey == "width")
+		{
+			for (CLayerData& layer : m_layerData)
+				if (!layer.m_datacomp)
+				{
+					layer.m_width = std::stoi(attrValue);
+					break;
+				}
+		}
+		else if (attrKey == "height")
+		{
+			for (CLayerData& layer : m_layerData)
+				if (!layer.m_datacomp)
+				{
+					layer.m_height = std::stoi(attrValue);
+					layer.m_datacomp = true;
+					break;
+				}
+		}
 	}
 };
