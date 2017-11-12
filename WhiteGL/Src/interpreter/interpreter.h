@@ -21,8 +21,8 @@ public:
 	//要素データ
 	std::vector<CElement> elementData;
 	std::vector<char> m_elementName;
-	std::vector<int> m_width = {};
-	std::vector<int> m_height = {};
+	int m_width = 0;
+	int m_height = 0;
 	CLayerData m_layerData[MAX_LAYER_NUMBER] = {};
 
 
@@ -73,38 +73,32 @@ public:
 					}
 
 					if (name == "tile")
+					{
 						if (attrKey == "gid")
 							for (CLayerData& layer : m_layerData)
 								if (!layer.m_gidcomp)
 								{
-									layer.addgid(std::stoi(attrValue));
+									layer.addgid(m_width, m_height, std::stoi(attrValue));
 									break;
 								}
-
+					}
 					//レイヤーのセット
 					if (name == "tileset" || name == "image")
 					{
 						this->setLayerData(attrKey, attrValue);
 					}
 
-					if (name == "layer")
+					if (name == "map")
 					{
-						if (attrKey == "name")
+						if (attrKey == "width")
 						{
-							m_elementName.push_back(*attrValue.c_str());
-							m_layerNumber++;
-						}
-						else if (attrKey == "width")
-						{
-							m_width.push_back(std::stoi(attrValue));
+							m_width = std::stoi(attrValue);
 						}
 						else if (attrKey == "height")
 						{
-							m_height.push_back(std::stoi(attrValue));
+							m_height = std::stoi(attrValue);
 						}
 					}
-
-					
 				}
 			}
 			break;

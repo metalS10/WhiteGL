@@ -24,10 +24,10 @@ public:
 	bool m_gidcomp = false;
 	std::vector<int> m_gid;
 
-	void addgid(int gid)
+	void addgid(int width,int height,int gid)
 	{
 		m_gid.push_back(gid);
-		if ((100 * 15) <= m_gid.size())
+		if ((width * height) <= m_gid.size())
 		{
 			m_gidcomp = true;
 		}
