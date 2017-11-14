@@ -7,6 +7,7 @@
 #include "Animation.h"
 #include "GamePad.h"
 #include "GLFWEW.h"
+#include "interpreter/interpreter.h"
 
 class CGameEngine
 {
@@ -43,5 +44,8 @@ public:
 	void inputKeyDown();
 	void exitArrowKey();
 	CRendTexture* getRendTexture();
+
+
+	void loadTMXMap(CLayerData layerData,int width,int height);
 
 };

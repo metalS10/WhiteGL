@@ -163,12 +163,30 @@ public:
 					break;
 				}
 		}
+		else if (attrKey == "tilecount")
+		{
+			for (CLayerData& layer : m_layerData)
+				if (!layer.m_datacomp)
+				{
+					layer.m_tilecount = std::stoi(attrValue);
+					break;
+				}
+		}
+		else if (attrKey == "columns")
+		{
+			for (CLayerData& layer : m_layerData)
+				if (!layer.m_datacomp)
+				{
+					layer.m_columns = std::stoi(attrValue);
+					break;
+				}
+		}
 		else if (attrKey == "source")
 		{
 			for (CLayerData& layer : m_layerData)
 				if (!layer.m_datacomp)
 				{
-					layer.m_imageSource = attrValue;
+					layer.m_imageSource = MAP_PASS + attrValue;
 					break;
 				}
 		}
@@ -177,7 +195,7 @@ public:
 			for (CLayerData& layer : m_layerData)
 				if (!layer.m_datacomp)
 				{
-					layer.m_width = std::stoi(attrValue);
+					layer.m_imagewidth = std::stoi(attrValue);
 					break;
 				}
 		}
@@ -186,7 +204,7 @@ public:
 			for (CLayerData& layer : m_layerData)
 				if (!layer.m_datacomp)
 				{
-					layer.m_height = std::stoi(attrValue);
+					layer.m_imageheight = std::stoi(attrValue);
 					layer.m_datacomp = true;
 					break;
 				}

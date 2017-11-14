@@ -17,9 +17,11 @@ public:
 	std::string m_mapChip;
 	int m_tileWidth;
 	int m_tileHeight;
+	int m_tilecount;
+	int m_columns;
 	std::string m_imageSource;
-	int m_width;
-	int m_height;
+	int m_imagewidth;
+	int m_imageheight;
 	bool m_datacomp = false;
 	bool m_gidcomp = false;
 	std::vector<int> m_gid;

@@ -190,6 +190,33 @@ void CGameEngine::deleteTexture(const GLuint texID)
 	rendTex->deleteTexture(texID);
 }
 
+void CGameEngine::loadTMXMap(CLayerData layerData,int width,int height)
+{
+	int countW = 0;
+	int countH = height-1;
+	for (int i = 0 ;i < layerData.m_gid.size();i++)
+	{
+		if (layerData.m_gid[i] != 0)
+		{
+			int gidten = (int)((layerData.m_gid[i] - layerData.m_firstgid + 1) / layerData.m_columns < 0.0 ? (layerData.m_gid[i] - layerData.m_firstgid + 1) / layerData.m_columns - 0.9 : (layerData.m_gid[i] - layerData.m_firstgid + 1) / layerData.m_columns);
+			int gidone = (layerData.m_gid[i] - layerData.m_firstgid + 1) % (layerData.m_columns);
+			float rectL = layerData.m_tileWidth * gidone - layerData.m_tileWidth;
+			float rectB = layerData.m_tileHeight * gidten;
+			setupTexture(layerData.m_imageSource.c_str(), TEX_TYPE::PNG, START_MAP_TEXTURE_NUMBER + i, CVec2(layerData.m_tileWidth * 0.5 + (layerData.m_tileWidth * countW), layerData.m_tileHeight * 0.5 + (layerData.m_tileHeight * countH)), CVec4(rectL, rectB, layerData.m_tileWidth, layerData.m_tileHeight));
+		}
+		if (countW >= width-1)
+		{
+			countW = 0;
+			countH--;
+		}
+		else
+		{
+			countW++;
+		}
+	}
+}
+
+
 /**
 *	ƒQ[ƒ€‚ğÀs‚·‚é
 */

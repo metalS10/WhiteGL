@@ -25,13 +25,15 @@
 #define WINDOW_TOP WINDOW_HEIGHT
 #define WINDOW_BOTTOM 0
 //テクスチャ最大数
-#define MAX_TEXTURE_NUMBER 1000
+#define MAX_TEXTURE_NUMBER 10000
 //レイヤー最大数(使わない場合は0)
 #define MAX_LAYER_NUMBER 3
 //弾
 #define MAX_BULLET_TEXTURE_NUMBER 1000
 //敵
 #define MAX_ENEMY_TEXTURE_NUMBER 1000
+//マップ描画
+#define START_MAP_TEXTURE_NUMBER 500
 
 
 //テクスチャID
@@ -64,9 +66,8 @@
 #define IMAGE_FIREBALL PASS""
 
 //マップ
-#define MAP_DATA_1 PASS"mapData/1_MapData.tmx"
-#define IMAGE_FIREBALL PASS""
-
+#define MAP_PASS PASS"mapData/"
+#define MAP_DATA_1 PASS"mapData/2_MapData.tmx"
 //タグ
 #define TAG_PLAYER_1 1001
 

@@ -6,7 +6,6 @@
 #include "PlayerFactory.h"
 #include "FPS.h"
 #include "LaunchTrigger.h"
-#include "interpreter/interpreter.h"
 
 using namespace MS;
 
@@ -163,6 +162,8 @@ int main()
 	xml->elementData.size();
 	xml->m_elementName.size();
 	xml->m_layerData[0];
+
+	game.loadTMXMap(xml->m_layerData[0],xml->m_width,xml->m_height);
 
 
 	
