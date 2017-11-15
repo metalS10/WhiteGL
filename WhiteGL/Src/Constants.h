@@ -67,7 +67,8 @@
 
 //マップ
 #define MAP_PASS PASS"mapData/"
-#define MAP_DATA_1 PASS"mapData/2_MapData.tmx"
+#define MAP_DATA_1 PASS"mapData/1_MapData.tmx"
+#define MAP_DATA_2 PASS"mapData/2_MapData.tmx"
 //タグ
 #define TAG_PLAYER_1 1001
 

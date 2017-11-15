@@ -202,7 +202,7 @@ void CGameEngine::loadTMXMap(CLayerData layerData,int width,int height)
 			int gidone = (layerData.m_gid[i] - layerData.m_firstgid + 1) % (layerData.m_columns);
 			float rectL = layerData.m_tileWidth * gidone - layerData.m_tileWidth;
 			float rectB = layerData.m_tileHeight * gidten;
-			setupTexture(layerData.m_imageSource.c_str(), TEX_TYPE::PNG, START_MAP_TEXTURE_NUMBER + i, CVec2(layerData.m_tileWidth * 0.5 + (layerData.m_tileWidth * countW), layerData.m_tileHeight * 0.5 + (layerData.m_tileHeight * countH)), CVec4(rectL, rectB, layerData.m_tileWidth, layerData.m_tileHeight));
+			setupTexture(layerData.m_imageSource.c_str(), TEX_TYPE::PNG, START_MAP_TEXTURE_NUMBER + i + countMap, CVec2(layerData.m_tileWidth * 0.5 + (layerData.m_tileWidth * countW), layerData.m_tileHeight * 0.5 + (layerData.m_tileHeight * countH)), CVec4(rectL, rectB, layerData.m_tileWidth, layerData.m_tileHeight));
 		}
 		if (countW >= width-1)
 		{
@@ -214,6 +214,7 @@ void CGameEngine::loadTMXMap(CLayerData layerData,int width,int height)
 			countW++;
 		}
 	}
+	countMap += layerData.m_gid.size();
 }
 
 

@@ -16,6 +16,8 @@ private :
 	std::vector<CAnimation*>* m_pAnim = NULL;
 	GLFWwindow* m_Window = NULL;
 	bool isInitialized = false;
+
+	int countMap = 0;
 public:
 	CGameEngine() {}
 	~CGameEngine(){}

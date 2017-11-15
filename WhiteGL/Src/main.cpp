@@ -159,11 +159,11 @@ int main()
 	
 	LoadXml* xml = new LoadXml();
 	xml->loadFile(MAP_DATA_1);
-	xml->elementData.size();
-	xml->m_elementName.size();
-	xml->m_layerData[0];
 
-	game.loadTMXMap(xml->m_layerData[0],xml->m_width,xml->m_height);
+	game.loadTMXMap(xml->m_layerData[0], xml->m_width, xml->m_height);
+	//game.loadTMXMap(xml->m_layerData[1], xml->m_width, xml->m_height);
+	//game.loadTMXMap(xml->m_layerData[2], xml->m_width, xml->m_height);
+
 
 
 	
@@ -187,10 +187,6 @@ int main()
 	game.setChipData(4, CVec4(64.0f, 0.0f, 64.0f, 64.0f));
 	game.setChipData(4, CVec4(128.0f, 0.0f, 64.0f, 64.0f));
 	game.setChipData(4, CVec4(192.0f, 0.0f, 64.0f, 64.0f));
-
-	int i = m_pCharacters->size();
-	std::cerr << i << std::endl;
-
 
 	FPS* fps = new FPS(60);
 
