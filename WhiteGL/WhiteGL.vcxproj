@@ -203,6 +203,7 @@
     <ClInclude Include="Src\GimmickFactory.h" />
     <ClInclude Include="Src\GLFWEW.h" />
     <ClInclude Include="Src\image.h" />
+    <ClInclude Include="Src\interpreter\CCTMXTiledMap.h" />
     <ClInclude Include="Src\interpreter\Element.h" />
     <ClInclude Include="Src\interpreter\interpreter.h" />
     <ClInclude Include="Src\interpreter\xmlparser.h" />

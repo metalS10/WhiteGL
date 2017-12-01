@@ -1,6 +1,7 @@
 #pragma once
 #include<iostream>
 #include "image.h"
+#include "Constants.h"
 
 #include <map>
 

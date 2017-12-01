@@ -15,8 +15,8 @@ class CLayerData
 public:
 	int m_firstgid;
 	std::string m_mapChip;
-	int m_tileWidth;
-	int m_tileHeight;
+	float m_tileWidth;
+	float m_tileHeight;
 	int m_tilecount;
 	int m_columns;
 	std::string m_imageSource;

@@ -4,6 +4,7 @@
 #include "GL/glew.h"
 
 #include "png/png.h"
+#include "Constants.h"
 
 #pragma comment(lib, "Src/png/zlib.lib")
 #pragma comment(lib, "Src/png/libpng.lib")
@@ -11,7 +12,6 @@
 #pragma comment(lib,"opengl32.lib")
 #pragma comment(lib,"glu32.lib")
 
-#define SAFE_DELETE(p_)if(p_){delete p_;p_ = NULL;}
 
 //============================================================
 //

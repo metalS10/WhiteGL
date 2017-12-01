@@ -57,7 +57,7 @@ protected:
 	float m_boost = 0.0f;
 
 	//現在のジャンプブースト
-	int m_currentBoost = 0;
+	float m_currentBoost = 0.0f;
 
 	//ジャンプ中かどうかのフラグ	true...ジャンプ中
 	bool m_isJumping = false;

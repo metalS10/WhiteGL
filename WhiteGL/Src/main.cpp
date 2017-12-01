@@ -157,14 +157,13 @@ int main()
 	//出撃スケジュールを出撃スケジューラーに取り付ける
 	CLaunchScheduler::getInstance()->createLauncher(m_pLaunchSchedule);
 	
-	LoadXml* xml = new LoadXml();
-	xml->loadFile(MAP_DATA_1);
+	
+	LoadXml* xml = new LoadXml(MAP_DATA_1);
 
 	game.loadTMXMap(xml->m_layerData[0], xml->m_width, xml->m_height);
 	//game.loadTMXMap(xml->m_layerData[1], xml->m_width, xml->m_height);
 	//game.loadTMXMap(xml->m_layerData[2], xml->m_width, xml->m_height);
-
-
+	
 
 	
 	game.setChipAnim(new CChipNotAnimation());

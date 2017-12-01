@@ -5,8 +5,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-
-#define SAFE_DELETE( p_ ) if( p_ ){ delete p_ ; p_ = NULL; }
+#include "../Constants.h"
 
 //==========================================
 //

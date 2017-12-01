@@ -64,3 +64,77 @@ public:
 	}
 
 };
+
+class Size
+{
+public:
+	/**Width of the Size.*/
+	float width;
+	/**Height of the Size.*/
+	float height;
+public:
+	/**Conversion from Vec2 to Size.*/
+	operator CVec2() const
+	{
+		return CVec2(width, height);
+	}
+
+public:
+	/**
+	@{
+	Constructor.
+	@param width Width of the size.
+	@param height Height of the size.
+	@param other Copy constructor.
+	@param point Conversion from a point.
+	*/
+	Size();
+	Size(float width, float height);
+	Size(const Size& other);
+	explicit Size(const CVec2& point);
+	/**@}*/
+
+	/**
+	* @js NA
+	* @lua NA
+	*/
+	Size& operator= (const Size& other);
+	/**
+	* @js NA
+	* @lua NA
+	*/
+	Size& operator= (const CVec2& point);
+	/**
+	* @js NA
+	* @lua NA
+	*/
+	Size operator+(const Size& right) const;
+	/**
+	* @js NA
+	* @lua NA
+	*/
+	Size operator-(const Size& right) const;
+	/**
+	* @js NA
+	* @lua NA
+	*/
+	Size operator*(float a) const;
+	/**
+	* @js NA
+	* @lua NA
+	*/
+	Size operator/(float a) const;
+	/**
+	Set the width and height of Size.
+	* @js NA
+	* @lua NA
+	*/
+	void setSize(float width, float height);
+	/**
+	Check if two size is the same.
+	* @js NA
+	*/
+	bool equals(const Size& target) const;
+	/**Size(0,0).*/
+	static const Size ZERO;
+};

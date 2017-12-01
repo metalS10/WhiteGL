@@ -17,7 +17,7 @@ bool CMap::init(const std::string& tmxFile)
 	/*
 	if (!TMXTiledMap::initWithTMXFile(tmxFile))
 		return false;
-		*/
+	*/
 
 	return true;
 }
@@ -26,47 +26,44 @@ bool CMap::init(const std::string& tmxFile)
 *@desc	タイルの２次元配列上の座標を取得
 *@param	対象位置
 */
-
-/*
 CVec2 CMap::getTileCoord(CVec2 pos)
 {
 	//マップの原点位置
-	cocos2d::Point pt = this->getPosition();
+	CVec2 pt = this->getPosition();
 
 	//マップタイルサイズ
-	cocos2d::Size tileSize = this->getTileSize();
+	CSize& tileSize = this->getTileSize();
 
 	//マップの配列サイズ
-	cocos2d::Size mapSize = this->getMapSize();
+	CSize& mapSize = this->getMapSize();
 
-	int x = (pos.x + pt.x) / tileSize.width;
-	int y = ((mapSize.height * tileSize.height) - pos.y) / tileSize.height;
+	float x = (pos.x + pt.x) / tileSize.width;
+	float y = ((mapSize.height * tileSize.height) - pos.y) / tileSize.height;
 
 	//左上原点の場合
 	//int y = (pos_.y + this->getPosition().y)/this->getTileSize().height;
 
-	return cocos2d::Point(x, y);
+	return CVec2(x, y);
 }
-*/
 /**
 *@desc	タイル位置の取得
 *@param	対象位置
 */
-/*
-cocos2d::Point CMap::getTilePosition(cocos2d::Point pos)
+
+CVec2 CMap::getTilePosition(CVec2 pos)
 {
 	//マップの原点位置
-	cocos2d::Point pt = this->getPosition();
+	CVec2 pt = this->getPosition();
 
 	//マップタイルサイズ
-	cocos2d::Size tileSize = this->getTileSize();
+	CSize& tileSize = this->getTileSize();
 
-	int x = (pos.x + pt.x) / tileSize.width;
-	int y = (pos.y + pt.y) / tileSize.height;
+	float x = (pos.x + pt.x) / tileSize.width;
+	float y = (pos.y + pt.y) / tileSize.height;
 
-	return cocos2d::Point(x * tileSize.width, y * tileSize.height);
+	return CVec2(x * tileSize.width, y * tileSize.height);
 }
-*/
+
 
 /**
 *@desc	点とマップチップとの衝突判定
@@ -80,16 +77,16 @@ bool CMap::hitTest(float posX, float posY)
 	CCollisionPoint cpt(CVec2(posX, posY));
 
 	//点と衝突しているマップチップの原点(左下の点)を取得
-	//CVec2 basePoint = this->getTilePosition(CVec2(posX, posY));
+	CVec2 basePoint = this->getTilePosition(CVec2(posX, posY));
 
 	//マップチップの位置(マップチップの中心位置)
-	//CVec2 tilePos = CVec2(basePoint.x + 16.0f, basePoint.y + 16.0f);
+	CVec2 tilePos = CVec2(basePoint.x + 16.0f, basePoint.y + 16.0f);
 
 	//(-16,16,16,-16)
-	//CCollisionRect crect(CBody(-16, 16, 16, -16), tilePos);
+	CCollisionRect crect(CBody(-16, 16, 16, -16), tilePos);
 
 	//collisionを使用して判定
-	//return cpt.collision(&crect);
+	return cpt.collision(&crect);
 	return false;
 }
 
@@ -102,15 +99,15 @@ bool CMap::hitTest(float posX, float posY)
 */
 BLOCK_TYPE CMap::checkTile(float posX, float posY,LAYER_TYPE layerType)
 {
-	/*
+	
 	//レイヤーを取得
-	cocos2d::TMXLayer* pLayer = this->getLayer(this->m_layerName[(int)layerType]);
+	//cocos2d::TMXLayer* pLayer = this->getLayer(this->m_layerName[(int)layerType]);
 
 	//タイルの２次元配列上の座標を取得
-	cocos2d::Point tileCoord = this->getTileCoord(cocos2d::Point(posX, posY));
+	CVec2 tileCoord = this->getTileCoord(CVec2(posX, posY));
 
 	//マップの配列サイズ
-	cocos2d::Size mapSize = this->getMapSize();
+	CSize& mapSize = this->getMapSize();
 
 	///////
 	//タイルの２次元配列上の座標が0未満またはマップサイズより大きい場合
@@ -121,8 +118,8 @@ BLOCK_TYPE CMap::checkTile(float posX, float posY,LAYER_TYPE layerType)
 	}
 	
 	//マップチップデータの取得
-	return (BLOCK_TYPE)pLayer->getTileGIDAt(tileCoord);
-	*/
+	//return (BLOCK_TYPE)pLayer->getTileGIDAt(tileCoord);
+	
 	return (BLOCK_TYPE)0;
 }
 
@@ -136,15 +133,15 @@ BLOCK_TYPE CMap::checkTile(float posX, float posY,LAYER_TYPE layerType)
 */
 bool CMap::changeTile(int mapChipID, float posX, float posY,LAYER_TYPE layerType)
 {
-	/*
+	
 	//レイヤーを取得
-	cocos2d::TMXLayer* pLayer = this->getLayer(this->m_layerName[(int)layerType]);
+	//cocos2d::TMXLayer* pLayer = this->getLayer(this->m_layerName[(int)layerType]);
 
 	//タイルの２次元配列上の座標を取得
-	cocos2d::Point tileCoord = this->getTileCoord(cocos2d::Point(posX, posY));
+	CVec2 tileCoord = this->getTileCoord(CVec2(posX, posY));
 
 	//マップの配列サイズ
-	cocos2d::Size mapSize = this->getMapSize();
+	CSize& mapSize = this->getMapSize();
 
 	//////
 	//タイルの２次元配列上の座標が0未満またはマップサイズより大きい場合
@@ -155,8 +152,8 @@ bool CMap::changeTile(int mapChipID, float posX, float posY,LAYER_TYPE layerType
 	}
 
 	//マップチップデータの反映
-	pLayer->setTileGID(mapChipID, tileCoord);
-	*/
+	//pLayer->setTileGID(mapChipID, tileCoord);
+	
 	return true;
 }
 
@@ -302,12 +299,12 @@ void CMap::checkEnemyLaunch(float X,float Y)
 	//レイヤーのx位置に画面の右サイズ分を足すことで
 	//表示されている画面の右端の位置を取得できる
 	float checkPosX = -pt.x + WINDOW_RIGHT;
-	/*
 	//マップチップのサイズを取得(32,32)
-	CVec2 tileSize = pMap->getTileSize();
+
+	CSize& tileSize = this->getTileSize();
 
 	//タイルの2次元配列上の座標を取得(x座標のみをチェック)
-	CVec2 tileCoord = pMap->getTileCoord(cocos2d::Point(checkPosX, 0.0f));
+	CVec2 tileCoord = pMap->getTileCoord(CVec2(checkPosX, 0.0f));
 
 	//現在参照中の敵出撃ラインのチェック
 	if (pMap->m_launchEnemyLine == tileCoord.x)
@@ -317,7 +314,7 @@ void CMap::checkEnemyLaunch(float X,float Y)
 		for (float y = tileSize.height;y < WINDOW_TOP;y += tileSize.height)
 		{
 			//チェックするタイルの座標を設定(xは固定でy座標をチェックしていく)
-			cocos2d::Point tilePos(checkPosX, y);
+			CVec2 tilePos(checkPosX, y);
 
 			//そのx座標の2次元配列上のy位置にあるすべてのタイルを取得
 			//そのタイルのタイルタイプ(=敵タイプ)を取得
@@ -346,7 +343,6 @@ void CMap::checkEnemyLaunch(float X,float Y)
 		//敵出撃ラインの更新
 		pMap->m_launchEnemyLine++;
 	}
-	*/
 }
 
 /*
@@ -364,19 +360,19 @@ void CMap::checkGimmickLaunch(float X, float Y)
 	//表示されている画面の右端の位置を取得できる
 	float checkPosX = -pt.x + WINDOW_RIGHT;
 
-	/*
+	
 	//マップチップのサイズを取得(32,32)
-	CVec2 tileSize = pMap->getTileSize();
+	CSize& tileSize = this->getTileSize();
 
 	//タイルの2次元配列上の座標を取得(x座標のみをチェック)
-	CVec2 tileCoord = pMap->getTileCoord(cocos2d::Point(checkPosX, 0.0f));
+	CVec2 tileCoord = pMap->getTileCoord(CVec2(checkPosX, 0.0f));
 
 	//現在参照中の敵出撃ラインのチェック
 	if (pMap->m_launchGimmickLine == tileCoord.x)
 	{
 
 		//下から順にタイルサイズ分ずつタイルをチェックしていく
-		for (float y = tileSize.height * 0.5;y < WINDOW_TOP;y += tileSize.height)
+		for (float y = tileSize.height * 0.5f;y < WINDOW_TOP;y += tileSize.height)
 		{
 			//チェックするタイルの座標を設定(xは固定でy座標をチェックしていく)
 			CVec2 tilePos(checkPosX, y);
@@ -408,7 +404,6 @@ void CMap::checkGimmickLaunch(float X, float Y)
 		//敵出撃ラインの更新
 		pMap->m_launchGimmickLine++;
 	}
-	*/
 }
 
 

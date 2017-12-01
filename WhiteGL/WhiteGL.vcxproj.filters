@@ -224,6 +224,9 @@
     <ClInclude Include="Src\interpreter\Element.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Src\interpreter\CCTMXTiledMap.h">
+      <Filter>ヘッダー ファイル\interpreter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WhiteGL.rc">

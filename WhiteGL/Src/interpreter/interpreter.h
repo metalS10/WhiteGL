@@ -21,12 +21,16 @@ public:
 	//要素データ
 	std::vector<CElement> elementData;
 	std::vector<char> m_elementName;
-	int m_width = 0;
-	int m_height = 0;
+	float m_width = 0;
+	float m_height = 0;
 	CLayerData m_layerData[MAX_LAYER_NUMBER] = {};
 
+	LoadXml(const char* fileName)
+	{
+		loadFile(fileName);
+	}
 
-	int loadFile(const char* fileName)
+	void loadFile(const char* fileName)
 	{
 		//XMLリーダーの生成
 		XmlReader* pReader = new XmlReader();
@@ -78,7 +82,7 @@ public:
 							for (CLayerData& layer : m_layerData)
 								if (!layer.m_gidcomp)
 								{
-									layer.addgid(m_width, m_height, std::stoi(attrValue));
+									layer.addgid(m_width, m_height, std::stof(attrValue));
 									break;
 								}
 					}
@@ -92,11 +96,11 @@ public:
 					{
 						if (attrKey == "width")
 						{
-							m_width = std::stoi(attrValue);
+							m_width = std::stof(attrValue);
 						}
 						else if (attrKey == "height")
 						{
-							m_height = std::stoi(attrValue);
+							m_height = std::stof(attrValue);
 						}
 					}
 				}
@@ -122,7 +126,6 @@ public:
 		}
 		SAFE_DELETE(pReader);
 
-		return 0;
 	}
 
 	void setLayerData(std::string attrKey,std::string attrValue)
@@ -130,84 +133,118 @@ public:
 		if (attrKey == "firstgid")
 		{
 			for (CLayerData& layer : m_layerData)
+			{
 				if (!layer.m_datacomp)
 				{
 					layer.m_firstgid = std::stoi(attrValue);
 					break;
 				}
+			}
 		}
 		else if (attrKey == "name")
 		{
 			for (CLayerData& layer : m_layerData)
+			{
 				if (!layer.m_datacomp)
 				{
 					layer.m_mapChip = attrValue;
 					break;
 				}
+			}
 		}
 		else if (attrKey == "tilewidth")
 		{
 			for (CLayerData& layer : m_layerData)
+			{
 				if (!layer.m_datacomp)
 				{
-					layer.m_tileWidth = std::stoi(attrValue);
+					layer.m_tileWidth = std::stof(attrValue);
 					break;
 				}
+			}
 		}
 		else if (attrKey == "tileheight")
 		{
 			for (CLayerData& layer : m_layerData)
+			{
 				if (!layer.m_datacomp)
 				{
-					layer.m_tileHeight = std::stoi(attrValue);
+					layer.m_tileHeight = std::stof(attrValue);
 					break;
 				}
+			}
 		}
 		else if (attrKey == "tilecount")
 		{
 			for (CLayerData& layer : m_layerData)
+			{
 				if (!layer.m_datacomp)
 				{
 					layer.m_tilecount = std::stoi(attrValue);
 					break;
 				}
+			}
 		}
 		else if (attrKey == "columns")
 		{
 			for (CLayerData& layer : m_layerData)
+			{
 				if (!layer.m_datacomp)
 				{
 					layer.m_columns = std::stoi(attrValue);
 					break;
 				}
+			}
 		}
 		else if (attrKey == "source")
 		{
 			for (CLayerData& layer : m_layerData)
+			{
 				if (!layer.m_datacomp)
 				{
 					layer.m_imageSource = MAP_PASS + attrValue;
 					break;
 				}
+			}
 		}
 		else if (attrKey == "width")
 		{
 			for (CLayerData& layer : m_layerData)
+			{
 				if (!layer.m_datacomp)
 				{
 					layer.m_imagewidth = std::stoi(attrValue);
 					break;
 				}
+			}
 		}
 		else if (attrKey == "height")
 		{
 			for (CLayerData& layer : m_layerData)
+			{
 				if (!layer.m_datacomp)
 				{
 					layer.m_imageheight = std::stoi(attrValue);
 					layer.m_datacomp = true;
 					break;
 				}
+			}
 		}
 	}
+	/*
+	inline const Size& getTileSize() const 
+	{
+		return Size(this->m_layerData[0].m_tileWidth, this->m_layerData[0].m_tileHeight);
+	}
+
+	inline const Size& getMapSize() const
+	{
+		return Size(this->m_width, this->m_height);
+	}
+
+	inline const CVec2& getPosition() const
+	{
+		return CVec2(0.0f, 0.0f);
+	}
+	*/
 };

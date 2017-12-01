@@ -4,6 +4,8 @@
 //=========================================================
 #include <stdio.h>
 #include "Constants.h"
+#include "interpreter/CCTMXTiledMap.h"
+#include "Vec2.h"
 #include <vector>
 
 //=====================================================
@@ -57,7 +59,7 @@ enum class GIMMICK_TYPE : int
 //=========================================================
 //マップクラス
 //=========================================================
-class CMap /*:public cocos2d::TMXTiledMap*/
+class CMap :public TMXTiledMap
 {
 
 
@@ -98,20 +100,20 @@ public:
 		return NULL;
 	}
 
-	virtual bool init(const std::string& tmxFile);
+	bool init(const std::string& tmxFile);
 
 
 	/**
 	*@desc	タイルの1次元配列上の座標を取得
 	*@param	左上を原点とした配列上の座標位置
 	*/
-	//cocos2d::Point getTileCoord(cocos2d::Point pos);
+	CVec2 getTileCoord(CVec2 pos);
 
 	/**
 	*@desc	タイルの1次元配列上の座標を取得
 	*@param	左下を原点とした対象の座標位置
 	*/
-	//cocos2d::Point getTilePosition(cocos2d::Point pos);
+	CVec2 getTilePosition(CVec2 pos);
 
 	/**
 	*@desc	点とマップチップとの衝突判定
