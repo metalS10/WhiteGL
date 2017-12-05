@@ -420,6 +420,13 @@ void CRendTexture::setPosition(const CVec2 position, const GLuint texID)
 	_rectPos[texID] = CVec4(_position[texID].x - texWH[texID].x * texScale[texID].x, _position[texID].x + texWH[texID].x * texScale[texID].x, _position[texID].y - texWH[texID].y * texScale[texID].y, _position[texID].y + texWH[texID].y * texScale[texID].y);
 }
 
+void CRendTexture::setMapPosition(const CVec2 position, const GLuint texID)
+{
+	_position[texID] = position;
+	_rectPos[texID] = CVec4(_position[texID].x - texWH[texID].x * texScale[texID].x, _position[texID].x + texWH[texID].x * texScale[texID].x, _position[texID].y - texWH[texID].y * texScale[texID].y, _position[texID].y + texWH[texID].y * texScale[texID].y);
+}
+
+
 void CRendTexture::setTextureRect(const CVec4 Rect,const GLuint texID)
 {
 	glBindTexture(GL_TEXTURE_2D, g_texID[texID]);

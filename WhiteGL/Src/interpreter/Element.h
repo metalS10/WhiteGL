@@ -26,7 +26,7 @@ public:
 	bool m_gidcomp = false;
 	std::vector<int> m_gid;
 
-	void addgid(int width,int height,int gid)
+	void addgid(float width, float height, int gid)
 	{
 		m_gid.push_back(gid);
 		if ((width * height) <= m_gid.size())

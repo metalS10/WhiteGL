@@ -18,6 +18,14 @@ bool CMap::init(const std::string& tmxFile)
 	if (!TMXTiledMap::initWithTMXFile(tmxFile))
 		return false;
 	*/
+	CGameEngine& game = MS::CMS::getInstance()->getGame();
+
+	LoadXml* xml = new LoadXml(tmxFile.c_str());
+
+	game.loadTMXMap(xml->m_layerData[0], xml->m_width, xml->m_height);
+	//game.loadTMXMap(xml->m_layerData[1], xml->m_width, xml->m_height);
+	//game.loadTMXMap(xml->m_layerData[2], xml->m_width, xml->m_height);
+	game.TMXMapSetPos(0.0f, 0.0f);
 
 	return true;
 }
@@ -207,7 +215,7 @@ CMap* CMapManager::createMap(const std::string & fileName_)
 	}
 
 	//初期位置の設定
-	//this->m_pMap->setPosition(0.0f, 0.0f);
+	game.TMXMapSetPos(0.0f, 0.0f);
 
 	//取り付けられているすべてのタイルのエイリアスのデフォルトをアンチエイリアスに設定
 	//ちらつき防止
@@ -245,7 +253,7 @@ CMap* CMapManager::setMap(const std::string & fileName_)
 		}
 
 		//初期位置の設定
-		//this->m_pMap->setPosition(0.0f, 0.0f);
+		game.TMXMapSetPos(0.0f, 0.0f);
 
 		//取り付けられているすべてのタイルのエイリアスのデフォルトをアンチエイリアスに設定
 		//ちらつき防止
@@ -269,7 +277,7 @@ CMap* CMapManager::setMap(const std::string & fileName_)
 		}
 
 		//初期位置の設定
-		//this->m_pMap->setPosition(0.0f, 0.0f);
+		game.TMXMapSetPos(0.0f, 0.0f);
 
 		//取り付けられているすべてのタイルのエイリアスのデフォルトをアンチエイリアスに設定
 		//ちらつき防止

@@ -49,5 +49,6 @@ public:
 
 
 	void loadTMXMap(CLayerData layerData,int width,int height);
+	void TMXMapSetPos(float x,float y);
 
 };

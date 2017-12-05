@@ -7,6 +7,7 @@
 #include "interpreter/CCTMXTiledMap.h"
 #include "Vec2.h"
 #include <vector>
+#include "MSlib.h"
 
 //=====================================================
 //前方宣言に関するコードはここから書く
@@ -84,6 +85,7 @@ public:
 		"launchgimmick",
 	};
 public:
+
 	//コンストラクタ
 	CMap(){}
 
@@ -171,6 +173,7 @@ public:
 	*/
 	void removeLaunchGimmickBlock(CGimmickLaunchData* pLaunchData);
 
+
 };
 
 //========================================================================
@@ -213,6 +216,7 @@ public:
 	//マップの設定
 	CMap* setMap(const std::string & fileName);
 
+	CGameEngine& game = MS::CMS::getInstance()->getGame();
 
 	
 };

@@ -157,13 +157,8 @@ int main()
 	//出撃スケジュールを出撃スケジューラーに取り付ける
 	CLaunchScheduler::getInstance()->createLauncher(m_pLaunchSchedule);
 	
-	
-	LoadXml* xml = new LoadXml(MAP_DATA_1);
-
-	game.loadTMXMap(xml->m_layerData[0], xml->m_width, xml->m_height);
-	//game.loadTMXMap(xml->m_layerData[1], xml->m_width, xml->m_height);
-	//game.loadTMXMap(xml->m_layerData[2], xml->m_width, xml->m_height);
-	
+	CMap* pMap = new CMap();
+	pMap->create(MAP_DATA_1);
 
 	
 	game.setChipAnim(new CChipNotAnimation());
@@ -232,7 +227,7 @@ int main()
 		fps->GetFPS();//FPSを得る
 		if (fps->draw) {//秒間60フレーム
 			game.update60();
-			pPlayerChara->m_pMove->m_accele.y = 0;
+
 			if (gamepad.buttons & GamePad::DPAD_RIGHT)
 			{
 				input->setOnKey(Input::Key::DPAD_LEFT, false);
@@ -309,22 +304,24 @@ int main()
 			{
 				input->setOnKey(Input::Key::X, false);
 			}
-			for (CCharacter* pChara : (*m_pCharacters))
-			{
-				pChara->update();
-				game.setTextureRect((*pChara->m_pAnimations)[pChara->m_state]->getCurrentChip(),pChara->m_texID);
-				game.setScale(pChara->m_scale,pChara->m_texID);
-				game.setPosition(pChara->m_pMove->m_pos, pChara->m_texID);
-
-			}
+			
 
 			CLaunchScheduler::getInstance()->launchCharacters();
 			//出撃の完了したトリガーをすべて取り外す
 			checkAndDelete(m_pLaunchSchedule);
 			checkAndRemove(m_pCharacters);
-
-
+			
+			for (CCharacter* pChara : (*m_pCharacters))
+			{
+				pChara->update();
+				game.setTextureRect((*pChara->m_pAnimations)[pChara->m_state]->getCurrentChip(), pChara->m_texID);
+				game.setScale(pChara->m_scale, pChara->m_texID);
+				game.setPosition(pChara->m_pMove->m_pos, pChara->m_texID);
+			}
 		}
+
+		
+
 		glfwSwapBuffers(window);
 	}
 

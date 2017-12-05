@@ -158,6 +158,9 @@ public:
 
 	void setPosition(const CVec2 position, const GLuint texID);
 
+	void setMapPosition(const CVec2 position, const GLuint texID);
+
+
 	void setTextureRect(const CVec4 Rect, const GLuint texID);
 
 };

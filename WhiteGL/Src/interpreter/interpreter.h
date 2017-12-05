@@ -21,8 +21,8 @@ public:
 	//要素データ
 	std::vector<CElement> elementData;
 	std::vector<char> m_elementName;
-	float m_width = 0;
-	float m_height = 0;
+	float m_width = 0.0f;
+	float m_height = 0.0f;
 	CLayerData m_layerData[MAX_LAYER_NUMBER] = {};
 
 	LoadXml(const char* fileName)
@@ -82,7 +82,7 @@ public:
 							for (CLayerData& layer : m_layerData)
 								if (!layer.m_gidcomp)
 								{
-									layer.addgid(m_width, m_height, std::stof(attrValue));
+									layer.addgid(m_width, m_height, std::stoi(attrValue));
 									break;
 								}
 					}

@@ -194,6 +194,7 @@ void CGameEngine::loadTMXMap(CLayerData layerData,int width,int height)
 {
 	int countW = 0;
 	int countH = height-1;
+	int tileID = 0;
 	for (int i = 0 ;i < layerData.m_gid.size();i++)
 	{
 		if (layerData.m_gid[i] != 0)
@@ -202,7 +203,8 @@ void CGameEngine::loadTMXMap(CLayerData layerData,int width,int height)
 			int gidone = (layerData.m_gid[i] - layerData.m_firstgid + 1) % (layerData.m_columns);
 			float rectL = layerData.m_tileWidth * gidone - layerData.m_tileWidth;
 			float rectB = layerData.m_tileHeight * gidten;
-			setupTexture(layerData.m_imageSource.c_str(), TEX_TYPE::PNG, START_MAP_TEXTURE_NUMBER + i + countMap, CVec2(layerData.m_tileWidth * 0.5 + (layerData.m_tileWidth * countW), layerData.m_tileHeight * 0.5 + (layerData.m_tileHeight * countH)), CVec4(rectL, rectB, layerData.m_tileWidth, layerData.m_tileHeight));
+			setupTexture(layerData.m_imageSource.c_str(), TEX_TYPE::PNG, START_MAP_TEXTURE_NUMBER + tileID + countMap, CVec2(layerData.m_tileWidth * 0.5 + (layerData.m_tileWidth * countW), layerData.m_tileHeight * 0.5 + (layerData.m_tileHeight * countH)), CVec4(rectL, rectB, layerData.m_tileWidth, layerData.m_tileHeight));
+			tileID++;
 		}
 		if (countW >= width-1)
 		{
@@ -215,6 +217,13 @@ void CGameEngine::loadTMXMap(CLayerData layerData,int width,int height)
 		}
 	}
 	countMap += layerData.m_gid.size();
+}
+void CGameEngine::TMXMapSetPos(float x, float y)
+{
+	for (int i = 0;i < countMap;i++)
+	{
+		rendTex->setMapPosition(CVec2(x, y), START_MAP_TEXTURE_NUMBER + i);
+	}
 }
 
 
