@@ -5,6 +5,7 @@
 #include <string>
 #include "../Vec2.h"
 #include "../Rect.h"
+#include "../MSlib.h"
 
 /**
  * @addtogroup _2d
@@ -32,6 +33,7 @@ class /*CC_DLL*/ TMXTiledMap
 public:
 
 	TMXTiledMap() {}
+	
 	~TMXTiledMap() {}
 
     /** The map's size property measured in tiles. 
@@ -52,7 +54,7 @@ public:
      */
     inline CSize& getTileSize() const { return _tileSize; };
 
-	inline const CVec2& getPosition() const { return CVec2(0, 0); };
+	inline const CVec2 getPosition() const { return CVec2(0.0f, 0.0f); };
     
     /** Set the tiles's size property measured in pixels. 
      *
@@ -72,7 +74,9 @@ public:
      */
     inline void setMapOrientation(int mapOrientation) { _mapOrientation = mapOrientation; };
 
-
+	
+	//XML‚Ìƒf[ƒ^(tmx)
+	LoadXml* xml;
     /** the map's size property measured in tiles */
     CSize& _mapSize = CSize(0.0f,0.0f);
     /** the tiles's size property measured in pixels */
@@ -80,7 +84,26 @@ public:
     /** map orientation */
     int _mapOrientation = 0;
   
+	void load(const std::string& tmxFile)
+	{
+		CGameEngine& game = MS::CMS::getInstance()->getGame();
 
+		xml = new LoadXml(tmxFile.c_str());
+
+		game.loadTMXMap(xml->m_layerData[0], xml->m_width, xml->m_height);
+		//game.loadTMXMap(xml->m_layerData[1], xml->m_width, xml->m_height);
+		//game.loadTMXMap(xml->m_layerData[2], xml->m_width, xml->m_height);
+		game.TMXMapSetPos(0.0f, 0.0f);
+
+		_tileSize = CSize(xml->m_layerData[0].m_tileWidth, xml->m_layerData[0].m_tileHeight);
+		_mapSize = CSize(xml->m_width, xml->m_height);
+	}
+	int i = 0;
+	// public
+	int getLayer(const int layerName)
+	{
+		return xml->m_layerData[layerName].m_gid[i++];
+	}
 };
 
 #endif //__CCTMX_TILE_MAP_H__

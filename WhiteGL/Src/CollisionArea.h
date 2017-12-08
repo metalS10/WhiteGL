@@ -170,6 +170,127 @@ public:
 };
 
 
+
+//============================================
+//下にあるマップチップ領域との衝突判定
+//============================================
+class CCollisionTerritoryMapChipBottom : public CCollisionTerritory
+{
+	/**
+	*@desc	衝突判定
+	*@param	衝突対象
+	*@param	基準点
+	*/
+	virtual void collision(CCharacter* pChara, CVec2 basePt)override;
+
+	/**
+	*@desc	衝突判定
+	*@param	衝突対象
+	*@param	衝突された自分
+	*@param	基準点
+	*/
+	virtual void collision(CCharacter* pChara, CCharacter* pSelf, CVec2 basePt) override {}
+
+public:
+	/**
+	*@desc	コンストラクタ
+	*		領域タイプの設定を初期化子で TERRITORY_TYPE::BOTTOMに
+	*		設定しておく
+	*/
+	CCollisionTerritoryMapChipBottom() :CCollisionTerritory(TERRITORY_TYPE::BOTTOM) {}
+};
+
+
+//============================================
+//上にあるマップチップ領域との衝突判定
+//============================================
+class CCollisionTerritoryMapChipTop : public CCollisionTerritory
+{
+	/**
+	*@desc	衝突判定
+	*@param	衝突対象
+	*@param	基準点
+	*/
+	virtual void collision(CCharacter* pChara, CVec2 basePt)override;
+
+	/**
+	*@desc	衝突判定
+	*@param	衝突対象
+	*@param	衝突された自分
+	*@param	基準点
+	*/
+	virtual void collision(CCharacter* pChara, CCharacter* pSelf, CVec2 basePt) override {}
+
+public:
+	/**
+	*@desc	コンストラクタ
+	*		領域タイプの設定を初期化子で TERRITORY_TYPE::BOTTOMに
+	*		設定しておく
+	*/
+	CCollisionTerritoryMapChipTop() :CCollisionTerritory(TERRITORY_TYPE::TOP) {}
+};
+
+//============================================
+//右にあるマップチップ領域との衝突判定
+//============================================
+class CCollisionTerritoryMapChipRight : public CCollisionTerritory
+{
+	/**
+	*@desc	衝突判定
+	*@param	衝突対象
+	*@param	基準点
+	*/
+	virtual void collision(CCharacter* pChara, CVec2 basePt)override;
+
+	/**
+	*@desc	衝突判定
+	*@param	衝突対象
+	*@param	衝突された自分
+	*@param	基準点
+	*/
+	virtual void collision(CCharacter* pChara, CCharacter* pSelf, CVec2 basePt) override {}
+
+public:
+	/**
+	*@desc	コンストラクタ
+	*		領域タイプの設定を初期化子で TERRITORY_TYPE::BOTTOMに
+	*		設定しておく
+	*/
+	CCollisionTerritoryMapChipRight() :CCollisionTerritory(TERRITORY_TYPE::RIGHT) {}
+};
+
+//============================================
+//左にあるマップチップ領域との衝突判定
+//============================================
+class CCollisionTerritoryMapChipLeft : public CCollisionTerritory
+{
+	/**
+	*@desc	衝突判定
+	*@param	衝突対象
+	*@param	基準点
+	*/
+	virtual void collision(CCharacter* pChara, CVec2 basePt)override;
+
+	/**
+	*@desc	衝突判定
+	*@param	衝突対象
+	*@param	衝突された自分
+	*@param	基準点
+	*/
+	virtual void collision(CCharacter* pChara, CCharacter* pSelf, CVec2 basePt) override {}
+
+public:
+	/**
+	*@desc	コンストラクタ
+	*		領域タイプの設定を初期化子で TERRITORY_TYPE::BOTTOMに
+	*		設定しておく
+	*/
+	CCollisionTerritoryMapChipLeft() :CCollisionTerritory(TERRITORY_TYPE::LEFT) {}
+};
+
+
+
+
 //============================================
 //下にいるキャラクターとの衝突判定
 //============================================

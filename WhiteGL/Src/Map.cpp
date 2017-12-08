@@ -18,14 +18,7 @@ bool CMap::init(const std::string& tmxFile)
 	if (!TMXTiledMap::initWithTMXFile(tmxFile))
 		return false;
 	*/
-	CGameEngine& game = MS::CMS::getInstance()->getGame();
-
-	LoadXml* xml = new LoadXml(tmxFile.c_str());
-
-	game.loadTMXMap(xml->m_layerData[0], xml->m_width, xml->m_height);
-	//game.loadTMXMap(xml->m_layerData[1], xml->m_width, xml->m_height);
-	//game.loadTMXMap(xml->m_layerData[2], xml->m_width, xml->m_height);
-	game.TMXMapSetPos(0.0f, 0.0f);
+	this->load(tmxFile);
 
 	return true;
 }
@@ -66,8 +59,8 @@ CVec2 CMap::getTilePosition(CVec2 pos)
 	//マップタイルサイズ
 	CSize& tileSize = this->getTileSize();
 
-	float x = (pos.x + pt.x) / tileSize.width;
-	float y = (pos.y + pt.y) / tileSize.height;
+	int x = (pos.x + pt.x) / tileSize.width;
+	int y = (pos.y + pt.y) / tileSize.height;
 
 	return CVec2(x * tileSize.width, y * tileSize.height);
 }
@@ -95,7 +88,6 @@ bool CMap::hitTest(float posX, float posY)
 
 	//collisionを使用して判定
 	return cpt.collision(&crect);
-	return false;
 }
 
 /**
@@ -110,6 +102,9 @@ BLOCK_TYPE CMap::checkTile(float posX, float posY,LAYER_TYPE layerType)
 	
 	//レイヤーを取得
 	//cocos2d::TMXLayer* pLayer = this->getLayer(this->m_layerName[(int)layerType]);
+
+	int pLayer = this->getLayer((int)layerType);
+
 
 	//タイルの２次元配列上の座標を取得
 	CVec2 tileCoord = this->getTileCoord(CVec2(posX, posY));
@@ -128,7 +123,7 @@ BLOCK_TYPE CMap::checkTile(float posX, float posY,LAYER_TYPE layerType)
 	//マップチップデータの取得
 	//return (BLOCK_TYPE)pLayer->getTileGIDAt(tileCoord);
 	
-	return (BLOCK_TYPE)0;
+	return (BLOCK_TYPE)pLayer;
 }
 
 /**

@@ -28,12 +28,18 @@ public:
 		result.add(v);
 		return result;
 	}
+	inline CVec2& CVec2::operator*=(const float& v)
+	{
+		multi(v);
+		return *this;
+	}
 	inline CVec2 CVec2::operator*(const float& v) const
 	{
 		CVec2 result(*this);
 		result.multi(v);
 		return result;
 	}
+	
 
 	inline void CVec2::add(const CVec2& v)
 	{

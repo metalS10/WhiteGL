@@ -241,6 +241,19 @@ void CBasePlayerFactory::settingInitialize(CPlayerCharacter* pPlayerCharacter)
 	//Bodyを送る
 	CCollisionArea* pMapArea = new CCollisionAreaMap(pPlayerCharacter->m_pBody);
 
+	//マップチップ衝突空間に領域を設定(*大事)
+	CCollisionTerritory* pMapChipBottomTerritory = new CCollisionTerritoryMapChipBottom();
+
+	//下のマップチップ領域と衝突した際のイベントコールバックを設定
+	pMapChipBottomTerritory->setEventCallback(&CCharacter::collisionBottomCallback);
+
+	//下のマップチップ領域を設定
+	pMapArea->addTerritory(pMapChipBottomTerritory);
+
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipTop());
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
+
 
 
 	

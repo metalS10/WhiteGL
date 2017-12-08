@@ -91,6 +91,7 @@ void CCollisionTerritoryEndOfScreenLeft::collision(CCharacter* pChara, CVec2 bas
 	}
 }
 
+
 //=============================================
 //下のマップチップ領域との衝突判定
 //=============================================
@@ -98,6 +99,240 @@ void CCollisionTerritoryEndOfScreenLeft::collision(CCharacter* pChara, CVec2 bas
 *@desc	衝突判定
 *@param	衝突対象
 */
+void CCollisionTerritoryMapChipBottom::collision(CCharacter* pChara, CVec2 basePt)
+{
+	//下に移動しているかどうか
+	if (pChara->m_pMove->m_vel.y < 0.0f)
+	{
+		//衝突してきた点(キャラクターの点)
+		CVec2 pt(pChara->m_pMove->m_pos.x + basePt.x, pChara->m_pMove->m_pos.y + basePt.y);
+
+		//衝突しているかどうか
+		if (CMapManager::getInstance()->getMap()->hitTest(pt.x, pt.y))
+		{
+			//衝突していた
+
+			//ブロックのタイプを取得
+			BLOCK_TYPE mapChipID = CMapManager::getInstance()->getMap()->checkTile(pt.x, pt.y);
+
+			if (mapChipID != BLOCK_TYPE::NONE)
+			{
+				//イベントコールバックの呼び出し
+				this->callEventCallback(pChara, (int)mapChipID);
+				//戻すべき位置の計算
+
+				//タイルのサイズ(32,32)
+				CSize tileSize = CMapManager::getInstance()->getMap()->getTileSize();
+
+				//キャラクターがめり込んでいるブロックの下のブロックの位置 = ブロック数 * ブロック高さ
+				float blockPos = floor((pt.y) / tileSize.height) * tileSize.height;
+
+				//戻すべき位置
+				//	修正位置(キャラクターがめり込んでいるブロックの上の位置) =
+				//	キャラクターがめり込んでいるブロックの下のブロックの位置 + ブロック1個分 - 位置y
+				//めり込んだ分の計算
+				float boundary = pt.y - (blockPos + tileSize.height);
+
+				//最終的に戻す値(めり込んだ分を戻す)
+				pChara->m_pMove->m_pos.y -= boundary;
+
+				//リセットする値
+				pChara->m_pMove->m_vel.y = 0.0f;
+				pChara->m_pMove->m_accele.y = 0.0f;
+
+			}
+		}
+	}
+}
+
+
+//=============================================
+//上のマップチップ領域との衝突判定
+//=============================================
+/***
+*@desc	衝突判定
+*@param	衝突対象
+*/
+void CCollisionTerritoryMapChipTop::collision(CCharacter* pChara, CVec2 basePt)
+{
+	//上に移動しているかどうか
+	if (pChara->m_pMove->m_vel.y > 0.0f)
+	{
+		//衝突してきた点(キャラクターの点)
+		CVec2 pt(pChara->m_pMove->m_pos.x + basePt.x, pChara->m_pMove->m_pos.y + basePt.y);
+
+		//衝突しているかどうか
+		if (CMapManager::getInstance()->getMap()->hitTest(pt.x, pt.y))
+		{
+			//衝突していた
+
+			//ブロックのタイプを取得
+			BLOCK_TYPE mapChipID = CMapManager::getInstance()->getMap()->checkTile(pt.x, pt.y);
+
+			if (mapChipID != BLOCK_TYPE::NONE)
+			{
+				//イベントコールバックの呼び出し
+				this->callEventCallback(pChara, (int)mapChipID);
+
+				//戻すべき位置の計算
+
+				//タイルのサイズ(32,32)
+				CSize tileSize = CMapManager::getInstance()->getMap()->getTileSize();
+
+				//キャラクターがめり込んでいるブロックの上のブロックの位置 = ブロック数 * ブロック高さ
+				float blockPos = floor((pt.y) / tileSize.height) * tileSize.height;
+
+				//戻すべき位置
+				//	修正位置(キャラクターがめり込んでいるブロックの上の位置) =
+				//	キャラクターがめり込んでいるブロックの上のブロックの位置 + ブロック1個分 - 位置y
+				//めり込んだ分の計算
+				float boundary = pt.y - (blockPos);
+
+				//最終的に戻す値(めり込んだ分を戻す)
+				pChara->m_pMove->m_pos.y -= boundary;
+
+				//リセットする値
+				pChara->m_pMove->m_vel.y = 0.0f;
+				pChara->m_pMove->m_accele.y = 0.0f;
+
+			}
+		}
+	}
+}
+
+//=============================================
+//右のマップチップ領域との衝突判定
+//=============================================
+/**
+*@desc	衝突判定
+*@param	衝突対象
+*/
+
+void CCollisionTerritoryMapChipRight::collision(CCharacter* pChara, CVec2 basePt)
+{
+	//右に移動しているかどうか
+	if (pChara->m_pMove->m_vel.x > 0.0f)
+	{
+		//衝突してきた点(キャラクターの点)
+		CVec2 pt(pChara->m_pMove->m_pos.x + basePt.x, pChara->m_pMove->m_pos.y + basePt.y);
+
+		//衝突しているかどうか
+		if (CMapManager::getInstance()->getMap()->hitTest(pt.x, pt.y))
+		{
+			//衝突していた
+
+			//ブロックのタイプを取得
+			BLOCK_TYPE mapChipID = CMapManager::getInstance()->getMap()->checkTile(pt.x, pt.y);
+
+			if (mapChipID != BLOCK_TYPE::NONE)
+			{
+				//イベントコールバックの呼び出し
+				this->callEventCallback(pChara, (int)mapChipID);
+				//戻すべき位置の計算
+
+				//タイルのサイズ(32,32)
+				CSize tileSize = CMapManager::getInstance()->getMap()->getTileSize();
+
+				//キャラクターがめり込んでいるブロックの上のブロックの位置 = ブロック数 * ブロック高さ
+				float blockPos = floor((pt.x) / tileSize.width) * -tileSize.width;
+
+				//戻すべき位置
+				//	修正位置(キャラクターがめり込んでいるブロックの上の位置) =
+				//	キャラクターがめり込んでいるブロックの上のブロックの位置 + ブロック1個分 - 位置y
+				//めり込んだ分の計算
+				float boundary = pt.x + (blockPos);
+
+				//最終的に戻す値(めり込んだ分を戻す)
+				pChara->m_pMove->m_pos.x -= boundary;
+
+
+
+				//キャラクターが敵なら
+				if (pChara->m_charaType == CHARACTER_TYPE::ENEMY)
+				{
+					//向きを変える
+					pChara->m_moveVector *= -1;
+
+					pChara->m_pMove->m_vel.x *= -1;
+				}
+				else
+				{
+					//リセットする値
+					pChara->m_pMove->m_vel.x = 0.0f;
+					pChara->m_pMove->m_accele.x = 0.0f;
+				}
+
+			}
+		}
+	}
+}
+
+
+//=============================================
+//左のマップチップ領域との衝突判定
+//=============================================
+/***
+*@desc	衝突判定
+*@param	衝突対象
+*/
+
+void CCollisionTerritoryMapChipLeft::collision(CCharacter* pChara, CVec2 basePt)
+{
+	//左に移動しているかどうか
+	if (pChara->m_pMove->m_vel.x < 0.0f)
+	{
+		//衝突してきた点(キャラクターの点)
+		CVec2 pt(pChara->m_pMove->m_pos.x + basePt.x, pChara->m_pMove->m_pos.y + basePt.y);
+
+		//衝突しているかどうか
+		if (CMapManager::getInstance()->getMap()->hitTest(pt.x, pt.y))
+		{
+			//衝突していた
+
+			//ブロックのタイプを取得
+			BLOCK_TYPE mapChipID = CMapManager::getInstance()->getMap()->checkTile(pt.x, pt.y);
+
+			if (mapChipID != BLOCK_TYPE::NONE)
+			{
+				//イベントコールバックの呼び出し
+				this->callEventCallback(pChara, (int)mapChipID);
+
+				//戻すべき位置の計算
+
+				//タイルのサイズ(32,32)
+				CSize tileSize = CMapManager::getInstance()->getMap()->getTileSize();
+
+				//キャラクターがめり込んでいるブロックの上のブロックの位置 = ブロック数 * ブロック高さ
+				float blockPos = floor((pt.x) / tileSize.width) * tileSize.width;
+
+				//戻すべき位置
+				//	修正位置(キャラクターがめり込んでいるブロックの上の位置) =
+				//	キャラクターがめり込んでいるブロックの上のブロックの位置 + ブロック1個分 - 位置y
+				//めり込んだ分の計算
+				float boundary = pt.x - (blockPos + tileSize.width);
+
+				//最終的に戻す値(めり込んだ分を戻す)
+				pChara->m_pMove->m_pos.x -= boundary;
+
+				//キャラクターが敵なら
+				if (pChara->m_charaType == CHARACTER_TYPE::ENEMY)
+				{
+					//向きを変える
+					pChara->m_moveVector *= -1;
+
+					pChara->m_pMove->m_vel.x *= -1;
+				}
+				else
+				{
+					//リセットする値
+					pChara->m_pMove->m_vel.x = 0.0f;
+					pChara->m_pMove->m_accele.x = 0.0f;
+				}
+
+			}
+		}
+	}
+}
 
 
 //=============================================

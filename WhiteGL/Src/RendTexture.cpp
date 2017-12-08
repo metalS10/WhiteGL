@@ -417,13 +417,18 @@ void CRendTexture::setScale(const CVec2 Size, const GLuint texID)
 void CRendTexture::setPosition(const CVec2 position, const GLuint texID)
 {
 	_position[texID] = position;
-	_rectPos[texID] = CVec4(_position[texID].x - texWH[texID].x * texScale[texID].x, _position[texID].x + texWH[texID].x * texScale[texID].x, _position[texID].y - texWH[texID].y * texScale[texID].y, _position[texID].y + texWH[texID].y * texScale[texID].y);
+	_rectPos[texID] = CVec4(
+		_position[texID].x - texWH[texID].x * texScale[texID].x,
+		_position[texID].x + texWH[texID].x * texScale[texID].x,
+		_position[texID].y - texWH[texID].y * texScale[texID].y,
+		_position[texID].y + texWH[texID].y * texScale[texID].y);
 }
 
 void CRendTexture::setMapPosition(const CVec2 position, const GLuint texID)
 {
 	_position[texID] = position;
-	_rectPos[texID] = CVec4(_position[texID].x - texWH[texID].x * texScale[texID].x, _position[texID].x + texWH[texID].x * texScale[texID].x, _position[texID].y - texWH[texID].y * texScale[texID].y, _position[texID].y + texWH[texID].y * texScale[texID].y);
+	CVec4 defrect = _rectPos[texID];
+	_rectPos[texID] = CVec4(_position[texID].x + defrect.x, _position[texID].x + defrect.y, _position[texID].y + defrect.z, _position[texID].y + defrect.w);
 }
 
 

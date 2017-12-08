@@ -157,9 +157,8 @@ int main()
 	//出撃スケジュールを出撃スケジューラーに取り付ける
 	CLaunchScheduler::getInstance()->createLauncher(m_pLaunchSchedule);
 	
-	CMap* pMap = new CMap();
-	pMap->create(MAP_DATA_1);
-
+	
+	CMapManager::getInstance()->setMap(MAP_DATA_1);
 	
 	game.setChipAnim(new CChipNotAnimation());
 	game.setChipAnim(new CChipNotAnimation());
