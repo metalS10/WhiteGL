@@ -96,7 +96,6 @@ public:
 	*/
 	Size();
 	Size(float width, float height);
-	Size(int width, int height);
 
 	Size(const Size& other);
 	explicit Size(const CVec2& point);
