@@ -210,7 +210,7 @@ CMap* CMapManager::createMap(const std::string & fileName_)
 	}
 
 	//初期位置の設定
-	game.TMXMapSetPos(0.0f, 0.0f);
+	m_pMap->setPosition(0.0f, 0.0f);
 
 	//取り付けられているすべてのタイルのエイリアスのデフォルトをアンチエイリアスに設定
 	//ちらつき防止
@@ -248,7 +248,7 @@ CMap* CMapManager::setMap(const std::string & fileName_)
 		}
 
 		//初期位置の設定
-		game.TMXMapSetPos(0.0f, 0.0f);
+		m_pMap->setPosition(0.0f, 0.0f);
 
 		//取り付けられているすべてのタイルのエイリアスのデフォルトをアンチエイリアスに設定
 		//ちらつき防止
@@ -272,7 +272,7 @@ CMap* CMapManager::setMap(const std::string & fileName_)
 		}
 
 		//初期位置の設定
-		game.TMXMapSetPos(0.0f, 0.0f);
+		m_pMap->setPosition(0.0f, 0.0f);
 
 		//取り付けられているすべてのタイルのエイリアスのデフォルトをアンチエイリアスに設定
 		//ちらつき防止

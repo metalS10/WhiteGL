@@ -54,7 +54,16 @@ public:
      */
     inline CSize& getTileSize() const { return _tileSize; };
 
-	inline const CVec2 getPosition() const { return CVec2(0.0f, 0.0f); };
+	inline const CVec2 getPosition() const { return _mapPosition; };
+	inline void setPosition(float x, float y)
+	{
+		setPosition(CVec2(x,y));
+	}
+	inline void setPosition(CVec2 vec2) { _mapPosition = vec2; 
+		CGameEngine& game = MS::CMS::getInstance()->getGame();
+		game.TMXMapSetPos(_mapPosition.x, _mapPosition.y);
+	};
+
     
     /** Set the tiles's size property measured in pixels. 
      *
@@ -72,7 +81,7 @@ public:
      *
      * @param mapOrientation The map orientation.
      */
-    inline void setMapOrientation(int mapOrientation) { _mapOrientation = mapOrientation; };
+    inline void setMapOrientation(int mapOrientation) { _mapOrientation = mapOrientation;};
 
 	
 	//XML‚Ìƒf[ƒ^(tmx)
@@ -83,6 +92,8 @@ public:
     CSize& _tileSize = CSize(0.0f, 0.0f);
     /** map orientation */
     int _mapOrientation = 0;
+	//pos
+	CVec2 _mapPosition = CVec2(0.0f,0.0f);
   
 	void load(const std::string& tmxFile)
 	{
@@ -91,8 +102,8 @@ public:
 		xml = new LoadXml(tmxFile.c_str());
 
 		game.loadTMXMap(xml->m_layerData[0], xml->m_width, xml->m_height);
-		//game.loadTMXMap(xml->m_layerData[1], xml->m_width, xml->m_height);
-		//game.loadTMXMap(xml->m_layerData[2], xml->m_width, xml->m_height);
+		game.loadTMXMap(xml->m_layerData[1], xml->m_width, xml->m_height);
+		game.loadTMXMap(xml->m_layerData[2], xml->m_width, xml->m_height);
 		game.TMXMapSetPos(0.0f, 0.0f);
 
 		_tileSize = CSize(xml->m_layerData[0].m_tileWidth, xml->m_layerData[0].m_tileHeight);

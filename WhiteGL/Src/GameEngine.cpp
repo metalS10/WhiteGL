@@ -225,7 +225,10 @@ void CGameEngine::TMXMapSetPos(float x, float y)
 		rendTex->setMapPosition(CVec2(x, y), START_MAP_TEXTURE_NUMBER + i);
 	}
 }
-
+void CGameEngine::layerSetPos(float x, float y,GLuint texID)
+{
+	rendTex->setMapPosition(CVec2(x, y), texID);
+}
 
 /**
 *	ƒQ[ƒ€‚ğÀs‚·‚é

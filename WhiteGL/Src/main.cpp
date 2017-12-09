@@ -83,6 +83,52 @@ void checkAndDelete(std::vector<Ty*>*pVector)
 	}
 }
 
+/*
+*@desc	画面スクロール
+*@tips	今回は強制スクロールではなくキャラクターの移動による画面のスクロールとなる
+*/
+void scroll()
+{
+	CMap* map = CMapManager::getInstance()->getMap();
+
+	//マップの位置を取得
+	CVec2 pt = map->getPosition();
+
+	//プレイヤーキャラクターの取得
+	CCharacter* pPlayerChara = CCharacterAggregate::getInstance()->getAtTag(TAG_PLAYER_1);
+
+	//プレイヤーの位置が320.0fを超えたら
+	if (pt.x > WINDOW_RIGHT*0.7f - pPlayerChara->m_pMove->m_pos.x)
+	{
+		//原点位置を超えた分に設定する
+		pt.x = WINDOW_RIGHT*0.7f - pPlayerChara->m_pMove->m_pos.x;
+
+		//超えた分を設定する
+		map->setPosition(pt);
+		pPlayerChara->m_pMove->m_pos.x -= pPlayerChara->m_pMove->m_vel.x;
+
+
+		//スクロールが行われたときに敵の出撃判定を行う
+		map->checkEnemyLaunch(pt.x, pt.y);
+
+		//ギミックの出撃判定も行う
+		map->checkGimmickLaunch(pt.x, pt.y);
+
+	}
+	//プレイヤーの位置が320.0fを超えたら
+	if (pt.x < WINDOW_RIGHT*0.2f - pPlayerChara->m_pMove->m_pos.x)
+	{
+		//原点位置を超えた分に設定する
+		pt.x = WINDOW_RIGHT*0.2f - pPlayerChara->m_pMove->m_pos.x;
+
+
+		pPlayerChara->m_pMove->m_pos.x -= pPlayerChara->m_pMove->m_vel.x;
+
+		//超えた分を設定する
+		map->setPosition(pt);
+	}
+}
+
 
 /**
 *	@file main.cpp
@@ -91,6 +137,9 @@ void checkAndDelete(std::vector<Ty*>*pVector)
 int main()
 {
 	glfwSetErrorCallback(ErrorCallback);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	float i = 0.0f;
 	
 	/*
 	// モニタとの同期
@@ -207,6 +256,7 @@ int main()
 		{
 			case GamePad::A:
 				game.inputKeyA();
+				i = 1.0f;
 				break;
 			case GamePad::B:
 				game.inputKeyS();
@@ -221,11 +271,19 @@ int main()
 			default:
 				break;
 		}
+		
 
 		game.update();
 		fps->GetFPS();//FPSを得る
 		if (fps->draw) {//秒間60フレーム
 			game.update60();
+
+			
+			gluLookAt(
+				i, 0.0f, 0.0f,
+				i, 0.0f, -10.0f,
+				0.0f, 1.0f, 0.0f
+			);
 
 			if (gamepad.buttons & GamePad::DPAD_RIGHT)
 			{
@@ -317,9 +375,10 @@ int main()
 				game.setScale(pChara->m_scale, pChara->m_texID);
 				game.setPosition(pChara->m_pMove->m_pos, pChara->m_texID);
 			}
+
+			//scroll();
 		}
 
-		
 
 		glfwSwapBuffers(window);
 	}

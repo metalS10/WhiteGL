@@ -50,5 +50,6 @@ public:
 
 	void loadTMXMap(CLayerData layerData,int width,int height);
 	void TMXMapSetPos(float x,float y);
+	void layerSetPos(float x, float y,GLuint texID);
 
 };

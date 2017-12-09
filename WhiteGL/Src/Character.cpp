@@ -119,6 +119,11 @@ void CCharacter::removeFromParent()
 }
 
 
+void CCharacter::setPosition(CVec2 vec, GLuint texID)
+{
+	MS::CMS::getInstance()->getGame().layerSetPos(vec.x,vec.y, this->m_texID);
+}
+
 //==================================================
 //キャラクターの集合体
 //	シングルトン化させて他のファイルで扱えるようにしておく
@@ -224,4 +229,5 @@ int CCharacterAggregate::getSize()
 {
 	return (int)this->m_pCharacters->size();
 }
+
 
