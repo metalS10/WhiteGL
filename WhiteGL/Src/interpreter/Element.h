@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+
 class CElement
 {
 public:
@@ -34,4 +35,6 @@ public:
 			m_gidcomp = true;
 		}
 	}
+
+	
 };

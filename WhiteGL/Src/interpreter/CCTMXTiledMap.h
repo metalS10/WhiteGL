@@ -100,11 +100,26 @@ public:
 	}
 	int i = 0;
 	// public
-	int getLayer(const int layerName)
+	CLayerData getLayer(const int layerName)
 	{
-		return xml->m_layerData[layerName].m_gid[i++];
+		return xml->m_layerData[layerName];
 	}
+
+	uint32_t getTileGIDAt(const CVec2& pos, const int layerData)
+	{
+
+		int idx = static_cast<int>(((int)pos.x + (int)pos.y * xml->m_width));
+		// Bits on the far end of the 32-bit global tile ID are used for tile flags
+		uint32_t tile = xml->m_layerData[layerData].m_gid[idx];
+
+
+
+		return (tile & kTMXFlippedMask);
+	}
+
 };
+
+
 
 #endif //__CCTMX_TILE_MAP_H__
 
