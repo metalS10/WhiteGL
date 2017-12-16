@@ -8,6 +8,9 @@
 #include "LaunchTrigger.h"
 
 using namespace MS;
+float i = 0.0f;
+//float updateWindwRight = WINDOW_RIGHT;
+
 
 /**
 *GLFWからのエラー報告を処理する
@@ -92,21 +95,21 @@ void scroll()
 	CMap* map = CMapManager::getInstance()->getMap();
 
 	//マップの位置を取得
-	CVec2 pt = map->getPosition();
+	CVec2 pt = map->getp();
 
 	//プレイヤーキャラクターの取得
 	CCharacter* pPlayerChara = CCharacterAggregate::getInstance()->getAtTag(TAG_PLAYER_1);
 
-	//プレイヤーの位置が320.0fを超えたら
+	//プレイヤーの位置が前の値を超えたら
 	if (pt.x > WINDOW_RIGHT*0.7f - pPlayerChara->m_pMove->m_pos.x)
 	{
 		//原点位置を超えた分に設定する
 		pt.x = WINDOW_RIGHT*0.7f - pPlayerChara->m_pMove->m_pos.x;
 
 		//超えた分を設定する
-		map->setPosition(pt);
-		pPlayerChara->m_pMove->m_pos.x -= pPlayerChara->m_pMove->m_vel.x;
+		map->setp(pt);
 
+		i = pPlayerChara->m_pMove->m_vel.x;
 
 		//スクロールが行われたときに敵の出撃判定を行う
 		map->checkEnemyLaunch(pt.x, pt.y);
@@ -114,19 +117,41 @@ void scroll()
 		//ギミックの出撃判定も行う
 		map->checkGimmickLaunch(pt.x, pt.y);
 
+		//updateWindwRight = pPlayerChara->m_pMove->m_pos.x + pt.x + (WINDOW_RIGHT * 0.3f);
 	}
-	//プレイヤーの位置が320.0fを超えたら
-	if (pt.x < WINDOW_RIGHT*0.2f - pPlayerChara->m_pMove->m_pos.x)
+	//プレイヤーの位置が後ろの値超えたら
+	else if (pt.x < WINDOW_RIGHT*0.2f - pPlayerChara->m_pMove->m_pos.x)
 	{
 		//原点位置を超えた分に設定する
 		pt.x = WINDOW_RIGHT*0.2f - pPlayerChara->m_pMove->m_pos.x;
 
-
-		pPlayerChara->m_pMove->m_pos.x -= pPlayerChara->m_pMove->m_vel.x;
-
 		//超えた分を設定する
-		map->setPosition(pt);
+		map->setp(pt);
+
+		i = pPlayerChara->m_pMove->m_vel.x;
+
+
+		//updateWindwRight = pPlayerChara->m_pMove->m_pos.x + pt.x + (WINDOW_RIGHT * 0.8f);
+
+
 	}
+	/*
+	else if (pPlayerChara->m_pMove->m_vel.x && updateWindwRight*0.2f >= pPlayerChara->m_pMove->m_pos.x || pPlayerChara->m_pMove->m_vel.x && updateWindwRight*0.7f <= pPlayerChara->m_pMove->m_pos.x)
+	{
+		i = pPlayerChara->m_pMove->m_vel.x;
+
+	}
+	*/
+	else
+	{
+		i = 0.0f;
+		
+	}
+	gluLookAt(
+		i, 0.0f, 0.0f,
+		i, 0.0f, -10.0f,
+		0.0f, 1.0f, 0.0f
+	);
 }
 
 
@@ -137,9 +162,6 @@ void scroll()
 int main()
 {
 	glfwSetErrorCallback(ErrorCallback);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	float i = 0.0f;
 	
 	/*
 	// モニタとの同期
@@ -256,8 +278,12 @@ int main()
 		{
 			case GamePad::A:
 				game.inputKeyA();
-				i = 1.0f;
+				i += 0.1f;
 				break;
+			case GamePad::R:
+				i += -0.1f;
+				break;
+
 			case GamePad::B:
 				game.inputKeyS();
 				break;
@@ -279,11 +305,7 @@ int main()
 			game.update60();
 
 			
-			gluLookAt(
-				i, 0.0f, 0.0f,
-				i, 0.0f, -10.0f,
-				0.0f, 1.0f, 0.0f
-			);
+			
 
 			if (gamepad.buttons & GamePad::DPAD_RIGHT)
 			{
@@ -295,7 +317,6 @@ int main()
 			{
 				input->setOnKey(Input::Key::DPAD_RIGHT, false);
 				input->setOnKey(Input::Key::DPAD_LEFT, true);
-				//pPlayerChara->m_pMove->m_accele.x = -0.7f;
 			}
 			else
 			{
@@ -307,14 +328,12 @@ int main()
 				input->setOnKey(Input::Key::DPAD_UP, true);
 				input->setOnKey(Input::Key::DPAD_DOWN, false);
 
-				//pPlayerChara->m_pMove->m_accele.y = 1;
 			}
 			else if (gamepad.buttons & GamePad::DPAD_DOWN)
 			{
 				input->setOnKey(Input::Key::DPAD_UP, false);
 				input->setOnKey(Input::Key::DPAD_DOWN, true);
 
-				//pPlayerChara->m_pMove->m_accele.y = -1;
 			}
 			else
 			{
@@ -375,8 +394,7 @@ int main()
 				game.setScale(pChara->m_scale, pChara->m_texID);
 				game.setPosition(pChara->m_pMove->m_pos, pChara->m_texID);
 			}
-
-			//scroll();
+			scroll();
 		}
 
 

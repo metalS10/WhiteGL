@@ -60,9 +60,11 @@ public:
 		setPosition(CVec2(x,y));
 	}
 	inline void setPosition(CVec2 vec2) { _mapPosition = vec2; 
-		CGameEngine& game = MS::CMS::getInstance()->getGame();
-		game.TMXMapSetPos(_mapPosition.x, _mapPosition.y);
+		//CGameEngine& game = MS::CMS::getInstance()->getGame();
+		//game.TMXMapSetPos(_mapPosition.x, _mapPosition.y);
 	};
+	inline CVec2 getp() { return po; };
+	inline void setp(CVec2 p) { po = p; };
 
     
     /** Set the tiles's size property measured in pixels. 
@@ -94,6 +96,8 @@ public:
     int _mapOrientation = 0;
 	//pos
 	CVec2 _mapPosition = CVec2(0.0f,0.0f);
+
+	CVec2 po = CVec2(0,0);
   
 	void load(const std::string& tmxFile)
 	{

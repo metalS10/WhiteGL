@@ -78,9 +78,9 @@
 #define CC_DLL     __declspec(dllimport)
 
 typedef enum TMXTileFlags_ {
-	kTMXTileHorizontalFlag = 0x80000000,
-	kTMXTileVerticalFlag = 0x40000000,
-	kTMXTileDiagonalFlag = 0x20000000,
-	kTMXFlipedAll = (kTMXTileHorizontalFlag | kTMXTileVerticalFlag | kTMXTileDiagonalFlag),
-	kTMXFlippedMask = ~(kTMXFlipedAll)
+    kTMXTileHorizontalFlag  = 0x80000000,
+    kTMXTileVerticalFlag    = 0x40000000,
+    kTMXTileDiagonalFlag    = 0x20000000,
+    kTMXFlipedAll           = (kTMXTileHorizontalFlag|kTMXTileVerticalFlag|kTMXTileDiagonalFlag),
+    kTMXFlippedMask         = ~(kTMXFlipedAll)
 } TMXTileFlags;
