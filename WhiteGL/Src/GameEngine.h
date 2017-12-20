@@ -18,6 +18,10 @@ private :
 	bool isInitialized = false;
 
 	int countMap = 0;
+
+	int EnemyTexID = START_ENEMY_TEXTURE_NUMBER;
+
+
 public:
 	CGameEngine() {}
 	~CGameEngine(){}

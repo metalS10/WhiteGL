@@ -166,14 +166,14 @@ void CKuriboFactory::settingCollisionAreas(CEnemyCharacter* pChara)
 	CCollisionArea* pMapArea = new CCollisionAreaMap(pChara->m_pBody);
 
 	//マップチップ衝突空間に領域を設定
-	/*
+	
 	//下のマップチップ領域を設定
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipBottom());
 	//右のマップチップ領域を設定
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
 	//左のマップチップ領域を設定
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
-	*/
+	
 
 
 	//画面端の衝突判定空間を取り付ける
@@ -304,14 +304,14 @@ void CGreenNokoNokoFactory::settingCollisionAreas(CEnemyCharacter* pChara)
 	CCollisionArea* pMapArea = new CCollisionAreaMap(pChara->m_pBody);
 
 	//マップチップ衝突空間に領域を設定
-	/*
+	
 	//下のマップチップ領域を設定
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipBottom());
 	//右のマップチップ領域を設定
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
 	//左のマップチップ領域を設定
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
-	*/
+	
 
 	//画面端の衝突判定空間を取り付ける
 	pChara->m_pCollisionAreas->push_back(pMapArea);
@@ -527,14 +527,14 @@ void CKillerHoudaiFactory::settingCollisionAreas(CEnemyCharacter* pChara)
 	CCollisionArea* pMapArea = new CCollisionAreaMap(pChara->m_pBody);
 
 	//マップチップ衝突空間に領域を設定
-	/*
+	
 	//下のマップチップ領域を設定
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipBottom());
 	//右のマップチップ領域を設定
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
 	//左のマップチップ領域を設定
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
-	*/
+	
 
 	//画面端の衝突判定空間を取り付ける
 	pChara->m_pCollisionAreas->push_back(pMapArea);
@@ -650,14 +650,14 @@ void CKillerFactory::settingCollisionAreas(CEnemyCharacter* pChara)
 
 	//マップチップ衝突空間に領域を設定
 	
-	/*
+	
 	//下のマップチップ領域を設定
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipBottom());
 	//右のマップチップ領域を設定
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
 	//左のマップチップ領域を設定
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
-	*/
+	
 
 	//画面端の衝突判定空間を取り付ける
 	pChara->m_pCollisionAreas->push_back(pMapArea);
@@ -787,14 +787,14 @@ void CTRoiFactory::settingCollisionAreas(CEnemyCharacter* pChara)
 
 	//マップチップ衝突空間に領域を設定
 
-	/*
+	
 	//下のマップチップ領域を設定
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipBottom());
 	//右のマップチップ領域を設定
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
 	//左のマップチップ領域を設定
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
-	*/
+	
 
 	//画面端の衝突判定空間を取り付ける
 	pChara->m_pCollisionAreas->push_back(pMapArea);

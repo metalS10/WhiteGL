@@ -12,8 +12,14 @@ CEnemyCharacter::CEnemyCharacter()
 {
 	//キャラクタータイプを敵キャラクターに設定
 	this->m_charaType = CHARACTER_TYPE::ENEMY;
+	this->m_texID = MS::CMS::getInstance()->getTexID((int)ID_TYPE::ENEMY);
 
+	if (m_texID >= START_ENEMY_TEXTURE_NUMBER + 1000)
+	{
+		m_texID = START_ENEMY_TEXTURE_NUMBER;
+	}
 
+	MS::CMS::getInstance()->setTexID(m_texID + 1, (int)ID_TYPE::ENEMY);
 }
 //デストラクタ
 CEnemyCharacter::~CEnemyCharacter()
@@ -229,7 +235,7 @@ void CEnemyCharacter::hitsPlayerCharacter( CCharacter* pChara )
 
 	if (posY > 0.0f)
 	{
-		
+		/*
 		//上だった
 		std::cerr << u8"勝利" << std::endl;
 
@@ -257,6 +263,7 @@ void CEnemyCharacter::hitsPlayerCharacter( CCharacter* pChara )
 		//==============================================================
 		//ジャンプアクションの再起動
 		(*pChara->m_pActions)[0]->restart(pChara);
+		*/
 		
 	}
 	else

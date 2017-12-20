@@ -201,7 +201,7 @@ void CLaunchScheduler::createLauncher(std::vector<CLaunchTrigger*>* pLaunchSched
 *@desc	キャラクターの出撃
 *@param	取り付けるレイヤー
 */
-void CLaunchScheduler::launchCharacters()
+void CLaunchScheduler::launchCharacters(CGameEngine& game)
 {
 	//スケジューラーに取り付けられている起動できるトリガー全てを起動する
 	std::shared_ptr<CLauncher::CLaunchTriggerIterator>itr = this->m_pLauncher->iterator();
@@ -223,9 +223,8 @@ void CLaunchScheduler::launchCharacters()
 
 			//キャラクターをメインレイヤーに取り付ける
 			//pLayer->addChild(pChara);
+			game.setupTexture(pChara->texPass, TEX_TYPE::PNG, pChara->m_texID, pChara->m_pMove->m_pos, (*pChara->m_pAnimations)[0]->getCurrentChip());
 
-			MS::CMS* a = MS::CMS::getInstance();
-			a->getGame().setupTexture(pChara->texPass, TEX_TYPE::PNG, pChara->m_texID, pChara->m_pMove->m_pos, (*pChara->m_pAnimations)[0]->getCurrentChip());
 		}
 	}
 }

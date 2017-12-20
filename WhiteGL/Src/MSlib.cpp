@@ -38,3 +38,13 @@ GLFWwindow* CMS::getWindow()
 {
 	return window;
 }
+
+void CMS::setTexID(int ID,int idType)
+{
+	TexID[idType] = ID;
+}
+
+int CMS::getTexID(int idType)
+{
+	return 	TexID[idType];
+}

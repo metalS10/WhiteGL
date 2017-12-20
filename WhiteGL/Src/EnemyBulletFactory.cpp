@@ -158,7 +158,7 @@ void CNormalEnemyBulletFactory::settingCollisionAreas(CEnemyBulletCharacter* pCh
 
 	//マップチップ衝突空間に領域を設定
 
-	/*
+	
 	//下のマップチップ領域を設定
 	CCollisionTerritory* pMapChipBottomTerritory = new CCollisionTerritoryMapChipBottom();
 	pMapChipBottomTerritory->setEventCallback(&CCharacter::collisionBottomCallback);
@@ -173,7 +173,7 @@ void CNormalEnemyBulletFactory::settingCollisionAreas(CEnemyBulletCharacter* pCh
 	CCollisionTerritory* pMapChipLeftTerritory = new CCollisionTerritoryMapChipLeft();
 	pMapChipLeftTerritory->setEventCallback(&CCharacter::collisionLeftCallback);
 	pMapArea->addTerritory(pMapChipLeftTerritory);
-	*/
+	
 
 
 	//画面端の衝突判定空間を取り付ける
@@ -305,7 +305,7 @@ void CCustomEnemyBulletFactory::settingCollisionAreas(CEnemyBulletCharacter* pCh
 	//マップチップ衝突空間に領域を設定
 
 	//下のマップチップ領域を設定
-	/*
+	
 	CCollisionTerritory* pMapChipBottomTerritory = new CCollisionTerritoryMapChipBottom();
 	pMapChipBottomTerritory->setEventCallback(&CCharacter::collisionBottomCallback);
 	pMapArea->addTerritory(pMapChipBottomTerritory);
@@ -319,7 +319,7 @@ void CCustomEnemyBulletFactory::settingCollisionAreas(CEnemyBulletCharacter* pCh
 	CCollisionTerritory* pMapChipLeftTerritory = new CCollisionTerritoryMapChipLeft();
 	pMapChipLeftTerritory->setEventCallback(&CCharacter::collisionLeftCallback);
 	pMapArea->addTerritory(pMapChipLeftTerritory);
-	*/
+	
 
 
 	//画面端の衝突判定空間を取り付ける
@@ -455,7 +455,7 @@ void CFireBallEnemyBulletFactory::settingCollisionAreas(CEnemyBulletCharacter* p
 
 	//マップチップ衝突空間に領域を設定
 
-	/*
+	
 	//下のマップチップ領域を設定
 	CCollisionTerritory* pMapChipBottomTerritory = new CCollisionTerritoryMapChipBottom();
 	pMapChipBottomTerritory->setEventCallback(&CCharacter::collisionBottomCallback);
@@ -470,7 +470,7 @@ void CFireBallEnemyBulletFactory::settingCollisionAreas(CEnemyBulletCharacter* p
 	CCollisionTerritory* pMapChipLeftTerritory = new CCollisionTerritoryMapChipLeft();
 	pMapChipLeftTerritory->setEventCallback(&CCharacter::collisionLeftCallback);
 	pMapArea->addTerritory(pMapChipLeftTerritory);
-	*/
+	
 
 
 	//画面端の衝突判定空間を取り付ける

@@ -12,6 +12,15 @@ CGimmickCharacter::CGimmickCharacter()
 {
 	//キャラクタータイプを敵キャラクターに設定
 	this->m_charaType = CHARACTER_TYPE::GIMMICK;
+
+	this->m_texID = MS::CMS::getInstance()->getTexID((int)ID_TYPE::GIMMICK);
+
+	if (m_texID >= START_GIMMICK_TEXTURE_NUMBER + 1000)
+	{
+		m_texID = START_GIMMICK_TEXTURE_NUMBER;
+	}
+
+	MS::CMS::getInstance()->setTexID(m_texID + 1, (int)ID_TYPE::GIMMICK);
 }
 //デストラクタ
 CGimmickCharacter::~CGimmickCharacter()

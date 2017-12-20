@@ -1,6 +1,14 @@
 #pragma once
 #include "GameEngine.h"
 
+enum class ID_TYPE : int
+{
+	ENEMY	=	0,
+	ATTACK	=	1,
+	ENEMY_ATTACK	=	2,
+	GIMMICK	=	3,
+};
+
 namespace MS
 {
 	class CMS
@@ -16,6 +24,9 @@ namespace MS
 
 		static CMS* m_pSharedMS;
 
+		int TexID[(int)ID_TYPE::GIMMICK + 1] = {START_ENEMY_TEXTURE_NUMBER,START_BULLET_TEXTURE_NUMBER,START_ENEMY_BULLET_TEXTURE_NUMBER,START_GIMMICK_TEXTURE_NUMBER };
+
+
 	public:
 
 		//共有インスタンスの取得
@@ -26,5 +37,9 @@ namespace MS
 
 		CGameEngine& getGame();
 		GLFWwindow* getWindow();
+
+		void setTexID(int id ,int idType);
+		int getTexID(int idType);
+
 	};
 }

@@ -28,13 +28,18 @@
 #define MAX_TEXTURE_NUMBER 10000
 //レイヤー最大数(使わない場合は0)
 #define MAX_LAYER_NUMBER 3
+//テクスチャIDの設定---------------------------------------------------------------
 //弾
-#define MAX_BULLET_TEXTURE_NUMBER 1000
+#define START_BULLET_TEXTURE_NUMBER 1000
 //敵
-#define MAX_ENEMY_TEXTURE_NUMBER 1000
+#define START_ENEMY_TEXTURE_NUMBER START_BULLET_TEXTURE_NUMBER + 1000
+//敵攻撃
+#define START_ENEMY_BULLET_TEXTURE_NUMBER START_ENEMY_TEXTURE_NUMBER+1000
+//ギミック
+#define START_GIMMICK_TEXTURE_NUMBER START_ENEMY_BULLET_TEXTURE_NUMBER + 1000
 //マップ描画
 #define START_MAP_TEXTURE_NUMBER 500
-
+//--------------------------------------------------------------------------------
 
 //テクスチャID
 #define PLAYER_ID 5
@@ -47,22 +52,22 @@
 #define IMAGE_GETSUGATENSHO PASS"Attack/getsugatenshou.png"
 
 //敵
-#define IMAGE_ENEMY PASS""
+#define IMAGE_ENEMY PASS"Images/Enemy/Enemy.png"
 #define IMAGE_NOKONOKO PASS""
 #define IMAGE_PATAPATA PASS""
 #define IMAGE_KILLER PASS""
 #define IMAGE_TROI PASS""
 
 //ギミック
-#define IMAGE_DAMAGEBLOCK PASS""
+#define IMAGE_DAMAGEBLOCK PASS"Images/damageBlock.png"
 #define IMAGE_ROLLBLOCK PASS""
 #define IMAGE_TIKUWABLOCK PASS""
 #define IMAGE_NOTEBLOCK PASS""
 #define IMAGE_HATENABLOCK PASS""
-#define IMAGE_WORP PASS""
+#define IMAGE_WORP PASS"Images/Gimmick/worp.png"
 
 //弾
-#define IMAGE_NORMAL_FIRE PASS""
+#define IMAGE_NORMAL_FIRE PASS"Images/normalBullet.png"
 #define IMAGE_FIREBALL PASS""
 
 //マップ

@@ -13,7 +13,14 @@ CAttackCharacter::CAttackCharacter()
 	//キャラクタータイプを敵キャラクターに設定
 	this->m_charaType = CHARACTER_TYPE::ATTACK;
 
-	this->m_texID = 6;
+	this->m_texID = MS::CMS::getInstance()->getTexID((int)ID_TYPE::ATTACK);
+
+	if (m_texID >= START_BULLET_TEXTURE_NUMBER + 1000)
+	{
+		m_texID = START_BULLET_TEXTURE_NUMBER;
+	}
+
+	MS::CMS::getInstance()->setTexID(m_texID + 1, (int)ID_TYPE::ATTACK);
 }
 //デストラクタ
 CAttackCharacter::~CAttackCharacter()

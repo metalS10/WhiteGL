@@ -38,8 +38,8 @@ CVec2 CMap::getTileCoord(CVec2 pos)
 	//マップの配列サイズ
 	CSize& mapSize = this->getMapSize();
 
-	float x = (pos.x + pt.x) / tileSize.width;
-	float y = ((mapSize.height * tileSize.height) - pos.y) / tileSize.height;
+	int x = (pos.x + pt.x) / tileSize.width;
+	int y = ((mapSize.height * tileSize.height) - pos.y) / tileSize.height;
 
 	//左上原点の場合
 	//int y = (pos_.y + this->getPosition().y)/this->getTileSize().height;

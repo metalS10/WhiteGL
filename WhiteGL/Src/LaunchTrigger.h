@@ -310,6 +310,7 @@ private:
 	//コンストラクタ
 	CLaunchScheduler();
 
+
 public:
 	//共有インスタンスの取得
 	static CLaunchScheduler* getInstance();
@@ -338,7 +339,7 @@ public:
 	*@desc	キャラクターの出撃
 	*@param	取り付けるレイヤー
 	*/
-	void launchCharacters();
+	void launchCharacters(CGameEngine& game);
 };
 
 

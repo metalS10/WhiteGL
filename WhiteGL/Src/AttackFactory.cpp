@@ -172,7 +172,7 @@ void CNormalAttackFactory::settingCollisionAreas(CAttackCharacter* pChara)
 
 	//マップチップ衝突空間に領域を設定
 
-	/*
+	
 	//下のマップチップ領域を設定
 	CCollisionTerritory* pMapChipBottomTerritory = new CCollisionTerritoryMapChipBottom();
 	pMapChipBottomTerritory->setEventCallback(&CCharacter::collisionBottomCallback);
@@ -192,7 +192,7 @@ void CNormalAttackFactory::settingCollisionAreas(CAttackCharacter* pChara)
 
 	//画面端の衝突判定空間を取り付ける
 	pChara->m_pCollisionAreas->push_back(pMapArea);
-	*/
+	
 }
 
 //初期化設定
@@ -333,7 +333,7 @@ void CNorAttackFactory::settingCollisionAreas(CAttackCharacter* pChara)
 
 	//マップチップ衝突空間に領域を設定
 
-	/*
+	
 	//下のマップチップ領域を設定
 	CCollisionTerritory* pMapChipBottomTerritory = new CCollisionTerritoryMapChipBottom();
 	pMapChipBottomTerritory->setEventCallback(&CCharacter::collisionBottomCallback);
@@ -353,7 +353,7 @@ void CNorAttackFactory::settingCollisionAreas(CAttackCharacter* pChara)
 
 	//画面端の衝突判定空間を取り付ける
 	pChara->m_pCollisionAreas->push_back(pMapArea);
-	*/
+	
 }
 
 //初期化設定

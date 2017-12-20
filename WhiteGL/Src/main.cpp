@@ -8,8 +8,7 @@
 #include "LaunchTrigger.h"
 
 using namespace MS;
-float i = 0.0f;
-//float updateWindwRight = WINDOW_RIGHT;
+float cameraMoveX = 0.0f;
 
 
 /**
@@ -109,7 +108,7 @@ void scroll()
 		//超えた分を設定する
 		map->setp(pt);
 
-		i = pPlayerChara->m_pMove->m_vel.x;
+		cameraMoveX = pPlayerChara->m_pMove->m_vel.x;
 
 		//スクロールが行われたときに敵の出撃判定を行う
 		map->checkEnemyLaunch(pt.x, pt.y);
@@ -117,7 +116,6 @@ void scroll()
 		//ギミックの出撃判定も行う
 		map->checkGimmickLaunch(pt.x, pt.y);
 
-		//updateWindwRight = pPlayerChara->m_pMove->m_pos.x + pt.x + (WINDOW_RIGHT * 0.3f);
 	}
 	//プレイヤーの位置が後ろの値超えたら
 	else if (pt.x < WINDOW_RIGHT*0.2f - pPlayerChara->m_pMove->m_pos.x)
@@ -128,28 +126,20 @@ void scroll()
 		//超えた分を設定する
 		map->setp(pt);
 
-		i = pPlayerChara->m_pMove->m_vel.x;
+		cameraMoveX = pPlayerChara->m_pMove->m_vel.x;
 
 
-		//updateWindwRight = pPlayerChara->m_pMove->m_pos.x + pt.x + (WINDOW_RIGHT * 0.8f);
 
 
 	}
-	/*
-	else if (pPlayerChara->m_pMove->m_vel.x && updateWindwRight*0.2f >= pPlayerChara->m_pMove->m_pos.x || pPlayerChara->m_pMove->m_vel.x && updateWindwRight*0.7f <= pPlayerChara->m_pMove->m_pos.x)
-	{
-		i = pPlayerChara->m_pMove->m_vel.x;
-
-	}
-	*/
 	else
 	{
-		i = 0.0f;
+		cameraMoveX = 0.0f;
 		
 	}
 	gluLookAt(
-		i, 0.0f, 0.0f,
-		i, 0.0f, -10.0f,
+		cameraMoveX, 0.0f, 0.0f,
+		cameraMoveX, 0.0f, -10.0f,
 		0.0f, 1.0f, 0.0f
 	);
 }
@@ -194,6 +184,8 @@ int main()
 	if (window == NULL)
 		return false;
 
+	//画像描画テスト
+	/*
 	game.setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 0, CVec2(100.0f, 100.0f), CVec4(0.0f, 0.0f, 200.0f, 200.0f));
 
 	game.setupTexture(PASS"Sparrow.bmp", TEX_TYPE::BMP, 1, CVec2(300.0f, 100.0f), CVec4(100.0f, 100.0f, 100.0f, 100.0f));
@@ -203,7 +195,7 @@ int main()
 	game.setupTexture(PASS"kuribo.png", TEX_TYPE::PNG, 3, CVec2(32.0f, 232.0f), CVec4(0.0f, 0.0f, 64.0f, 64.0f));
 
 	game.setupTexture(PASS"player.png", TEX_TYPE::PNG, 4, CVec2(200.0f, 232.0f), CVec4(0.0f, 0.0f, 64.0f, 64.0f));
-
+	*/
 
 
 	CPlayerCharacter* pPlayerChara = (CPlayerCharacter*)CPlayerFactoryManager::getInstance()->create(320.0f, 200.0f);
@@ -230,7 +222,9 @@ int main()
 	
 	
 	CMapManager::getInstance()->setMap(MAP_DATA_1);
-	
+
+	//アニメーションテスト
+	/*
 	game.setChipAnim(new CChipNotAnimation());
 	game.setChipAnim(new CChipNotAnimation());
 	game.setChipAnim(new CChipListAnimation(10,true));
@@ -251,7 +245,7 @@ int main()
 	game.setChipData(4, CVec4(64.0f, 0.0f, 64.0f, 64.0f));
 	game.setChipData(4, CVec4(128.0f, 0.0f, 64.0f, 64.0f));
 	game.setChipData(4, CVec4(192.0f, 0.0f, 64.0f, 64.0f));
-
+	*/
 	FPS* fps = new FPS(60);
 
 	GLFWEW::Window& FwewWindow = GLFWEW::Window::Instance();
@@ -278,10 +272,8 @@ int main()
 		{
 			case GamePad::A:
 				game.inputKeyA();
-				i += 0.1f;
 				break;
 			case GamePad::R:
-				i += -0.1f;
 				break;
 
 			case GamePad::B:
@@ -382,7 +374,7 @@ int main()
 			}
 			
 
-			CLaunchScheduler::getInstance()->launchCharacters();
+			CLaunchScheduler::getInstance()->launchCharacters(game);
 			//出撃の完了したトリガーをすべて取り外す
 			checkAndDelete(m_pLaunchSchedule);
 			checkAndRemove(m_pCharacters);
