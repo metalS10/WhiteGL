@@ -25,7 +25,7 @@ void CRendTexture::update(std::vector<CAnimation*>* anim)
 			//フェードアウト
 			if (fadeOut[i])
 			{
-				colorRGBA[i].w--;
+				colorRGBA[i].w -= actionFadeInterval[i];
 				if (colorRGBA[i].w <= 0.0f)
 				{
 					colorRGBA[i].w = 0.0f;
@@ -35,7 +35,7 @@ void CRendTexture::update(std::vector<CAnimation*>* anim)
 			//フェードイン
 			else
 			{
-				colorRGBA[i].w++;
+				colorRGBA[i].w += actionFadeInterval[i];
 				if (colorRGBA[i].w >= 100.0f)
 				{
 					colorRGBA[i].w = 100.0f;
@@ -402,9 +402,10 @@ void CRendTexture::setupTextureColor(const CVec4 color, const GLuint texID)
 	colorRGBA[texID] = color;
 }
 
-void CRendTexture::TextureFade(const GLuint texID, const bool out)
+void CRendTexture::TextureFade(const GLuint texID, const bool out,const float fadeInterval)
 {
 	actionFade[texID] = true;
+	actionFadeInterval[texID] = fadeInterval;
 	fadeOut[texID] = out;
 }
 
@@ -443,4 +444,27 @@ void CRendTexture::setTextureRect(const CVec4 Rect,const GLuint texID)
 
 
 	rect[texID] = CVec4(changerect4);
+}
+
+void CRendTexture::allTextureDelete()
+{
+	for (int i = 0;i < MAX_TEXTURE_NUMBER;i++)
+	{
+		if (i != MAX_TEXTURE_NUMBER - 1)
+		{
+			deleteTexture(i);
+			SAFE_DELETE(tex[i]);
+		}
+	}
+}
+void CRendTexture::allTextureDeletenotPlayer()
+{
+	for (int i = 0;i < MAX_TEXTURE_NUMBER;i++)
+	{
+		if (i != PLAYER_ID && i != MAX_TEXTURE_NUMBER - 1)
+		{
+			deleteTexture(i);
+			SAFE_DELETE(tex[i]);
+		}
+	}
 }

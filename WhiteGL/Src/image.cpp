@@ -203,7 +203,10 @@ bool CPngImage::load(const std::string& fileName)
 
 	//PNGファイルを開く
 	fopen_s(&fp, fileName.c_str(), "rb");
+	
+
 	if (!fp) {
+
 		fprintf(stderr, "createTextureFromPNGFile: Failed to fopen.");
 		return false;
 	}
@@ -226,16 +229,24 @@ bool CPngImage::load(const std::string& fileName)
 		&depth, &colorType,
 		&interlaceType, NULL, NULL
 	);
-
+	
 	//RGBとRGBAのみに対応
 	if (colorType != PNG_COLOR_TYPE_RGB && colorType != PNG_COLOR_TYPE_RGBA && colorType != PNG_COLOR_TYPE_PALETTE && colorType != PNG_COLOR_TYPE_GRAY && colorType != PNG_COLOR_TYPE_RGB_ALPHA) {
 		fprintf(stderr, "createTextureFromPNGFile: Supprted color type are RGB and RGBA.");
+		//読み込み中の画像を閉じる
+		fclose(fp);
+		//読み込み中の画像の削除
+		png_destroy_read_struct(&pPng, &pInfo, nullptr);
 		return false;
 	}
 
 	//インターレースは非対応
 	if (interlaceType != PNG_INTERLACE_NONE) {
 		fprintf(stderr, "createTextureFromPNGFile: Interlace image is not supprted.");
+		//読み込み中の画像を閉じる
+		fclose(fp);
+		//読み込み中の画像の削除
+		png_destroy_read_struct(&pPng, &pInfo, nullptr);
 		return false;
 	}
 
@@ -250,6 +261,7 @@ bool CPngImage::load(const std::string& fileName)
 	}
 
 	png_read_end(pPng, pInfo);
+	fclose(fp);
 
 
 

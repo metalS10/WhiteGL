@@ -824,7 +824,7 @@ void CTRoiFactory::settingState(CEnemyCharacter* pChara)
 {
 	//–¼‘O‚ÌÝ’è
 	pChara->m_name = "ƒgƒ‚­‚È‚¢–Ø”n";
-	pChara->m_maxHitPoint = 50;
+	pChara->m_maxHitPoint = 10;
 
 	pChara->m_hitPoint = pChara->m_maxHitPoint;
 

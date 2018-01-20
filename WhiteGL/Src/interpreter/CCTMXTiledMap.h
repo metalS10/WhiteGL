@@ -105,9 +105,7 @@ public:
 
 		xml = new LoadXml(tmxFile.c_str());
 
-		game.loadTMXMap(xml->m_layerData[0], xml->m_width, xml->m_height);
-		game.loadTMXMap(xml->m_layerData[1], xml->m_width, xml->m_height);
-		game.loadTMXMap(xml->m_layerData[2], xml->m_width, xml->m_height);
+		game.loadTMXMap(xml->m_layerData, xml->m_width, xml->m_height);
 		game.TMXMapSetPos(0.0f, 0.0f);
 
 		_tileSize = CSize(xml->m_layerData[0].m_tileWidth, xml->m_layerData[0].m_tileHeight);

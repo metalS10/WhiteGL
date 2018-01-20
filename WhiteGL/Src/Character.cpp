@@ -121,7 +121,7 @@ void CCharacter::removeFromParent()
 
 void CCharacter::setPosition(CVec2 vec, GLuint texID)
 {
-	MS::CMS::getInstance()->getGame().layerSetPos(vec.x,vec.y, this->m_texID);
+	this->m_pMove->m_pos = vec;
 }
 
 //==================================================
@@ -210,6 +210,7 @@ CCharacter* CCharacterAggregate::getAtTag(int tag)
 			return pChara;
 		}
 	}
+	return NULL;
 }
 
 /**

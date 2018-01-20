@@ -40,6 +40,7 @@ public:
 	GLuint g_texID[MAX_TEXTURE_NUMBER] = {};
 	CImage* tex[MAX_TEXTURE_NUMBER] = {};
 	bool actionFade[MAX_TEXTURE_NUMBER] = {};
+	float actionFadeInterval[MAX_TEXTURE_NUMBER] = {};
 	bool fadeOut[MAX_TEXTURE_NUMBER] = {};
 
 	CRendTexture()
@@ -150,7 +151,7 @@ public:
 
 	void setupTextureColor(const CVec4 cloar,const GLuint texID);
 
-	void TextureFade(const GLuint texID,const bool out);
+	void TextureFade(const GLuint texID,const bool out,const float fadeInterval);
 
 	void deleteTexture(const GLuint texID);
 
@@ -163,4 +164,6 @@ public:
 
 	void setTextureRect(const CVec4 Rect, const GLuint texID);
 
+	void allTextureDelete();
+	void allTextureDeletenotPlayer();
 };

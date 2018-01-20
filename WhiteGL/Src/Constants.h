@@ -42,7 +42,7 @@
 //--------------------------------------------------------------------------------
 
 //テクスチャID
-#define PLAYER_ID 5
+#define PLAYER_ID 0
 
 //プレイヤー
 #define IMAGE_PLAYER PASS"player.png"
@@ -56,7 +56,7 @@
 #define IMAGE_NOKONOKO PASS""
 #define IMAGE_PATAPATA PASS""
 #define IMAGE_KILLER PASS""
-#define IMAGE_TROI PASS""
+#define IMAGE_TROI PASS"Images/Enemy/enemy_Troi.png"
 
 //ギミック
 #define IMAGE_DAMAGEBLOCK PASS"Images/damageBlock.png"
@@ -73,7 +73,7 @@
 //マップ
 #define MAP_PASS PASS"mapData/"
 #define MAP_DATA_1 PASS"mapData/1_MapData.tmx"
-#define MAP_DATA_2 PASS"mapData/2_MapData.tmx"
+#define MAP_DATA_2 PASS"mapData/MapData2.tmx"
 //タグ
 #define TAG_PLAYER_1 1001
 

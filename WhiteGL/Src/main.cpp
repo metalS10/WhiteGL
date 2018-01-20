@@ -7,9 +7,11 @@
 #include "FPS.h"
 #include "LaunchTrigger.h"
 
+
 using namespace MS;
 float cameraMoveX = 0.0f;
-
+float cameraPosX = 0.0f;
+bool movingstage = false;
 
 /**
 *GLFWからのエラー報告を処理する
@@ -21,8 +23,6 @@ void ErrorCallback(int error, const char* desc)
 {
 	std::cerr << "ERROR : " << desc << std::endl;
 }
-
-
 /**
 *	@desc	チェックと取り外し処理 ( 単体 )
 *	@tips	有効フラグが false のインスタンスをレイヤーから取り外す
@@ -85,6 +85,24 @@ void checkAndDelete(std::vector<Ty*>*pVector)
 	}
 }
 
+void openMap(std::string mapData ,std::vector<CCharacter*>* charasters)
+{
+	CGameEngine& game = CMS::getInstance()->getGame();
+
+	for (CCharacter* pChara : (*charasters))
+	{
+		if (pChara->m_tag != TAG_PLAYER_1)
+		{
+			pChara->m_activeFlag = false;
+		}
+	}
+
+	game.allTextureDeletenotPlayer();
+	
+	CMapManager::getInstance()->setMap(mapData);
+
+}
+
 /*
 *@desc	画面スクロール
 *@tips	今回は強制スクロールではなくキャラクターの移動による画面のスクロールとなる
@@ -137,6 +155,7 @@ void scroll()
 		cameraMoveX = 0.0f;
 		
 	}
+	cameraPosX += cameraMoveX;
 	gluLookAt(
 		cameraMoveX, 0.0f, 0.0f,
 		cameraMoveX, 0.0f, -10.0f,
@@ -173,14 +192,21 @@ int main()
 	//glMatrixMode(GL_PROJECTION);
 	//glLoadIdentity();
 
-	std::vector<CCharacter*>* m_pCharacters = NULL;
-	//キャラクターの集まりの生成
-	m_pCharacters = new std::vector<CCharacter*>();
-	CCharacterAggregate::getInstance()->set(m_pCharacters);
-
+	
 	CGameEngine& game = CMS::getInstance()->getGame();
 	GLFWwindow* window = CMS::getInstance()->getWindow();
+	//出撃スケジュールの生成
+	std::vector<CLaunchTrigger*>* m_pLaunchSchedule = new std::vector<CLaunchTrigger*>();
 
+	//これで削除していないとステージを二度遊んだ時にバグが出る(最強の敵)
+	//CLaunchScheduler::getInstance()->removeInstance();
+
+	//出撃スケジュールを出撃スケジューラーに取り付ける
+	CLaunchScheduler::getInstance()->createLauncher(m_pLaunchSchedule);
+
+	//キャラクターの集まりの生成
+	std::vector<CCharacter*>* m_pCharacters = new std::vector<CCharacter*>();
+	CCharacterAggregate::getInstance()->set(m_pCharacters);
 	if (window == NULL)
 		return false;
 
@@ -211,17 +237,11 @@ int main()
 	game.setupTexture("", TEX_TYPE::QUAD, MAX_TEXTURE_NUMBER-1, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH,  WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f));
 
 
-	//出撃スケジュールの生成
-	std::vector<CLaunchTrigger*>* m_pLaunchSchedule = new std::vector<CLaunchTrigger*>();
-
-	//これで削除していないとステージを二度遊んだ時にバグが出る(最強の敵)
-	//CLaunchScheduler::getInstance()->removeInstance();
-
-	//出撃スケジュールを出撃スケジューラーに取り付ける
-	CLaunchScheduler::getInstance()->createLauncher(m_pLaunchSchedule);
+	
 	
 	
 	CMapManager::getInstance()->setMap(MAP_DATA_1);
+
 
 	//アニメーションテスト
 	/*
@@ -264,31 +284,11 @@ int main()
 	*	引数で渡されたウィンドウに対してOS等から終了要求が来ていなければ0,着ていれば0以外を返す
 	*GLFWで作成したウィンドウが1つだけなら終了判定はこの関数を見るだけで十分
 	*/
-	while (!glfwWindowShouldClose(window))
+	while (!glfwWindowShouldClose(window) && glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
 	{
 		FwewWindow.UpdateGamePad();
 		const GamePad gamepad = game.GetGamePad();
-		switch (gamepad.buttonDown)
-		{
-			case GamePad::A:
-				game.inputKeyA();
-				break;
-			case GamePad::R:
-				break;
-
-			case GamePad::B:
-				game.inputKeyS();
-				break;
-			case GamePad::X:
-				game.inputKeyX();
-				break;
-			case GamePad::Z:
-				game.inputKeyZ();
-				break;
-			
-			default:
-				break;
-		}
+		
 		
 
 		game.update();
@@ -343,6 +343,8 @@ int main()
 			}
 			if (gamepad.buttons & GamePad::SPACE)
 			{
+				
+
 				input->setOnKey(Input::Key::SPACE, true);
 			}
 			else
@@ -353,7 +355,6 @@ int main()
 			if (gamepad.buttons & GamePad::GameEnd)
 			{
 				input->setOnKey(Input::Key::GameEnd, true);
-				return 0;
 			}
 			if (gamepad.buttons & GamePad::Z)
 			{
@@ -372,13 +373,39 @@ int main()
 			{
 				input->setOnKey(Input::Key::X, false);
 			}
+			if (pPlayerChara->m_nextStage)
+			{
+				//openMap(MAP_DATA_2, m_pCharacters);
+				if (!movingstage)
+				{
+					if (game.ActionStage(MAX_TEXTURE_NUMBER - 1, 1.0f, false) == true)
+					{
+						movingstage = true;
+						openMap(MAP_DATA_2, m_pCharacters);
+						gluLookAt(
+							-cameraPosX, 0.0f, 0.0f,
+							-cameraPosX, 0.0f, -10.0f,
+							0.0f, 1.0f, 0.0f
+						);
+						cameraPosX = 0.0f;
+						pPlayerChara->setPosition(CVec2(320.0f, 200.0f), PLAYER_ID);
+					}
+				}
+				if (movingstage == true)
+				{
+					if (game.ActionStage(MAX_TEXTURE_NUMBER - 1, 1.0f, true))
+					{
+						movingstage = false;
+						pPlayerChara->m_nextStage = false;
+					}
+				}
+			}
+			CLaunchScheduler::getInstance()->launchCharacters(game);
 			
 
-			CLaunchScheduler::getInstance()->launchCharacters(game);
 			//出撃の完了したトリガーをすべて取り外す
 			checkAndDelete(m_pLaunchSchedule);
 			checkAndRemove(m_pCharacters);
-			
 			for (CCharacter* pChara : (*m_pCharacters))
 			{
 				pChara->update();
@@ -386,6 +413,9 @@ int main()
 				game.setScale(pChara->m_scale, pChara->m_texID);
 				game.setPosition(pChara->m_pMove->m_pos, pChara->m_texID);
 			}
+			game.setPosition(CVec2(WINDOW_RIGHT * 0.5 + cameraPosX,WINDOW_TOP * 0.5), MAX_TEXTURE_NUMBER - 1);
+
+			
 			scroll();
 		}
 

@@ -600,8 +600,6 @@ void CActionCreateCharacter::start()
 */
 void CActionCreateCharacter::update(CCharacter* pChara)
 {
-
-
 	if (this->m_inAction == true && this->count == 0)
 	{
 

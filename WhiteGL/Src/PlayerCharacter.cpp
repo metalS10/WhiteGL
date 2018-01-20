@@ -353,8 +353,6 @@ void CPlayerCharacter::checkState()
 			this->m_CharaLaunchVector.set(-1.0f, 0.0f);
 		}
 	}
-	
-
 	//yˆÚ“®‘¬“x‚ª0‚È‚ç
 	if (this->m_pMove->m_vel.y == 0.0f)
 	{

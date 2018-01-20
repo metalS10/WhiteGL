@@ -102,6 +102,8 @@ GLFWwindow* CGameEngine::init(int w,int h,const char* file)
 	}
 	glOrtho(0.0f, WINDOW_WIDTH, 0.0f, WINDOW_HEIGHT, -1.0f, 1.0f);
 
+	
+
 	isInitialized = true;
 
 	return m_Window;
@@ -152,6 +154,8 @@ void CGameEngine::update60()
 {
 	rendTex->update(m_pAnim);
 }
+
+
 void CGameEngine::setScale(CVec2 scale, GLuint texID)
 {
 	rendTex->setScale(scale, texID);
@@ -159,12 +163,10 @@ void CGameEngine::setScale(CVec2 scale, GLuint texID)
 
 void CGameEngine::inputKeyA()
 {
-	rendTex->TextureFade(6, true);
 	//rendTex->deleteTexture(2);
 }
 void CGameEngine::inputKeyS()
 {
-	rendTex->TextureFade(6, false);
 }
 void CGameEngine::inputKeyZ()
 {
@@ -190,33 +192,39 @@ void CGameEngine::deleteTexture(const GLuint texID)
 	rendTex->deleteTexture(texID);
 }
 
-void CGameEngine::loadTMXMap(CLayerData layerData,int width,int height)
+void CGameEngine::loadTMXMap(CLayerData layerData[MAX_LAYER_NUMBER],int width,int height)
 {
 	int countW = 0;
 	int countH = height-1;
 	int tileID = 0;
-	for (int i = 0 ;i < layerData.m_gid.size();i++)
+	for (int j = 0;j < MAX_LAYER_NUMBER; j++)
 	{
-		if (layerData.m_gid[i] != 0)
+		for (int i = 0;i < layerData[j].m_gid.size();i++)
 		{
-			int gidten = (int)((layerData.m_gid[i] - layerData.m_firstgid + 1) / layerData.m_columns < 0.0 ? (layerData.m_gid[i] - layerData.m_firstgid + 1) / layerData.m_columns - 0.9 : (layerData.m_gid[i] - layerData.m_firstgid + 1) / layerData.m_columns);
-			int gidone = (layerData.m_gid[i] - layerData.m_firstgid + 1) % (layerData.m_columns);
-			float rectL = layerData.m_tileWidth * gidone - layerData.m_tileWidth;
-			float rectB = layerData.m_tileHeight * gidten;
-			setupTexture(layerData.m_imageSource.c_str(), TEX_TYPE::PNG, START_MAP_TEXTURE_NUMBER + tileID + countMap, CVec2(layerData.m_tileWidth * 0.5 + (layerData.m_tileWidth * countW), layerData.m_tileHeight * 0.5 + (layerData.m_tileHeight * countH)), CVec4(rectL, rectB, layerData.m_tileWidth, layerData.m_tileHeight));
-			tileID++;
+			if (layerData[j].m_gid[i] != 0)
+			{
+				int gidten = (int)((layerData[j].m_gid[i] - layerData[j].m_firstgid + 1) / layerData[j].m_columns < 0.0 ? (layerData[j].m_gid[i] - layerData[j].m_firstgid + 1) / layerData[j].m_columns - 0.9 : (layerData[j].m_gid[i] - layerData[j].m_firstgid + 1) / layerData[j].m_columns);
+				int gidone = (layerData[j].m_gid[i] - layerData[j].m_firstgid + 1) % (layerData[j].m_columns);
+				float rectL = layerData[j].m_tileWidth * gidone - layerData[j].m_tileWidth;
+				float rectB = layerData[j].m_tileHeight * gidten;
+				setupTexture(layerData[j].m_imageSource.c_str(), TEX_TYPE::PNG, START_MAP_TEXTURE_NUMBER + tileID + countMap, CVec2(layerData[j].m_tileWidth * 0.5 + (layerData[j].m_tileWidth * countW), layerData[j].m_tileHeight * 0.5 + (layerData[j].m_tileHeight * countH)), CVec4(rectL, rectB, layerData[j].m_tileWidth, layerData[j].m_tileHeight));
+				tileID++;
+			}
+			if (countW >= width - 1)
+			{
+				countW = 0;
+				countH--;
+			}
+			else
+			{
+				countW++;
+			}
 		}
-		if (countW >= width-1)
-		{
-			countW = 0;
-			countH--;
-		}
-		else
-		{
-			countW++;
-		}
+		countMap += layerData[j].m_gid.size();
 	}
-	countMap += layerData.m_gid.size();
+	//レイヤーまで終わったら初期化
+	countMap = 0;
+
 }
 void CGameEngine::TMXMapSetPos(float x, float y)
 {
@@ -250,8 +258,47 @@ void CGameEngine::Run()
 }
 */
 
+//アクション系
+bool CGameEngine::ActionStage(GLuint texID, const float fadeInterval, const bool fade)
+{
+	if (!actionone1)
+	{
+		rendTex->TextureFade(texID, fade, fadeInterval);
+		actionone1 = true;
+	}
+	if (getFadeEnd(texID))
+	{
+		actionone1 = false;
+		return true;
+	}
+	return false;
+}
+void* CGameEngine::TextureFade(const GLuint texID, const bool out, const float fadeInterval)
+{
+
+	rendTex->TextureFade(texID, out, fadeInterval);
+	return this;
+}
+bool CGameEngine::getFadeEnd(const GLuint texID)
+{
+	return !rendTex->actionFade[texID];
+}
 
 CRendTexture* CGameEngine::getRendTexture()
 {
 	return rendTex;
 }
+
+
+void CGameEngine::allTextureDelete()
+{
+	rendTex->allTextureDelete();
+	//rendTex->g_texID;
+}
+
+void CGameEngine::allTextureDeletenotPlayer()
+{
+	rendTex->allTextureDeletenotPlayer();
+}
+
+

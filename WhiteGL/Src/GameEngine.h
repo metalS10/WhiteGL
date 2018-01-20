@@ -9,6 +9,7 @@
 #include "GLFWEW.h"
 #include "interpreter/interpreter.h"
 
+class CCharacter;
 class CGameEngine
 {
 private :
@@ -21,6 +22,9 @@ private :
 
 	int EnemyTexID = START_ENEMY_TEXTURE_NUMBER;
 
+	bool actionone1 = false;
+
+
 
 public:
 	CGameEngine() {}
@@ -32,6 +36,7 @@ public:
 	void setChipData(GLuint texID, CVec4 rectData);
 	void update();
 	void update60();
+	void charaUpdate(CCharacter* pCharas);
 	const GamePad& GetGamePad() const;
 	static CGameEngine& Instance();
 	void Run();
@@ -39,6 +44,12 @@ public:
 	void setPosition(CVec2 pos, GLuint texID);
 	void setScale(CVec2 scale,GLuint texID);
 	void deleteTexture(const GLuint texID);
+	void allTextureDelete();
+	void allTextureDeletenotPlayer();
+	//ƒAƒNƒVƒ‡ƒ“
+	bool ActionStage(const GLuint texID, const float fadeInterval, const bool fade);
+	void* TextureFade(const GLuint texID, const bool out ,const float fadeInterval);
+	bool getFadeEnd(const GLuint texID);
 
 	void inputKeyA();
 	void inputKeyS();
@@ -52,8 +63,15 @@ public:
 	CRendTexture* getRendTexture();
 
 
-	void loadTMXMap(CLayerData layerData,int width,int height);
+	void loadTMXMap(CLayerData layerData[MAX_LAYER_NUMBER],int width,int height);
 	void TMXMapSetPos(float x,float y);
 	void layerSetPos(float x, float y,GLuint texID);
+
+	
+
+	
+
+
+
 
 };
