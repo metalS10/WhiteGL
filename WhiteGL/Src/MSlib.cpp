@@ -38,6 +38,10 @@ GLFWwindow* CMS::getWindow()
 {
 	return window;
 }
+Input::CGameInput* CMS::getInput()
+{
+	return input;
+}
 
 void CMS::setTexID(int ID,int idType)
 {
@@ -47,4 +51,14 @@ void CMS::setTexID(int ID,int idType)
 int CMS::getTexID(int idType)
 {
 	return 	TexID[idType];
+}
+
+void CMS::setScene(CScene* scene)
+{
+	m_pScene = scene;
+}
+
+CScene* CMS::getScene()
+{
+	return m_pScene;
 }

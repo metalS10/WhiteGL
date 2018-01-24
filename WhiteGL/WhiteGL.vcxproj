@@ -153,6 +153,7 @@
     <ClCompile Include="Src\ActionController.cpp" />
     <ClCompile Include="Src\AttackCharacter.cpp" />
     <ClCompile Include="Src\AttackFactory.cpp" />
+    <ClCompile Include="Src\GameMainScene.cpp" />
     <ClCompile Include="Src\Character.cpp" />
     <ClCompile Include="Src\Collision.cpp" />
     <ClCompile Include="Src\CollisionArea.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="Src\Animation.h" />
     <ClInclude Include="Src\AttackCharacter.h" />
     <ClInclude Include="Src\AttackFactory.h" />
+    <ClInclude Include="Src\GameMainScene.h" />
     <ClInclude Include="Src\Character.h" />
     <ClInclude Include="Src\Collision.h" />
     <ClInclude Include="Src\CollisionArea.h" />
@@ -216,6 +218,7 @@
     <ClInclude Include="Src\Physical.h" />
     <ClInclude Include="Src\PlayerCharacter.h" />
     <ClInclude Include="Src\PlayerFactory.h" />
+    <ClInclude Include="Src\public\Scene.h" />
     <ClInclude Include="Src\Rect.h" />
     <ClInclude Include="Src\RendTexture.h" />
     <ClInclude Include="Src\Sprite.h" />

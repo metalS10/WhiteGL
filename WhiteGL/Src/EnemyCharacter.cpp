@@ -324,6 +324,7 @@ void CEnemyCharacter::hitsBulletCharacter(CCharacter* pChara)
 			cocos2d::Sequence* sequence = cocos2d::Sequence::create(cocos2d::TintTo::create(0.5f, 255,0,0),cocos2d::FadeOut::create(0.3),cocos2d::CallFunc::create(this,callfunc_selector(CEnemyCharacter::isDeath)), NULL);
 			this->runAction(sequence);
 			*/
+			this->isDeath();
 			//ステージクリアをtrue
 			pPlayerChara->m_stageClear = true;
 
