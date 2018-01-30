@@ -6,7 +6,7 @@
 #include "PlayerFactory.h"
 #include "FPS.h"
 #include "LaunchTrigger.h"
-#include "GameMainScene.h"
+#include "TitleScene.h"
 
 
 using namespace MS;
@@ -75,11 +75,12 @@ int main()
 	game.setupTexture("", TEX_TYPE::QUAD, MAX_TEXTURE_NUMBER-1, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH,  WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f));
 
 	//ゲームメインシーンを生成
-	CMS::getInstance()->setScene(new CGameMain());
+	CMS::getInstance()->setScene(new CTitle());
 	//現在のシーンに反映
-	scene = CMS::getInstance()->getScene();
+	//scene = CMS::getInstance()->getScene();
 	
-	
+	Input::CGameInput* input = MS::CMS::getInstance()->getInput();
+
 	
 
 
@@ -111,10 +112,6 @@ int main()
 	GLFWEW::Window& FwewWindow = GLFWEW::Window::Instance();
 
 
-	
-
-
-
 	/**
 	*memo
 	*メインループ
@@ -125,9 +122,86 @@ int main()
 	*/
 	while (!glfwWindowShouldClose(window) && glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
 	{
+		scene = CMS::getInstance()->getScene();
+
 		FwewWindow.UpdateGamePad();
 		
-		
+		//input
+		const GamePad gamepad = game.GetGamePad();
+		if (gamepad.buttons & GamePad::DPAD_RIGHT)
+		{
+			input->setOnKey(Input::Key::DPAD_LEFT, false);
+			input->setOnKey(Input::Key::DPAD_RIGHT, true);
+			//pPlayerChara->m_pMove->m_accele.x = 0.7f;
+		}
+		else if (gamepad.buttons & GamePad::DPAD_LEFT)
+		{
+			input->setOnKey(Input::Key::DPAD_RIGHT, false);
+			input->setOnKey(Input::Key::DPAD_LEFT, true);
+		}
+		else
+		{
+			input->setOnKey(Input::Key::DPAD_RIGHT, false);
+			input->setOnKey(Input::Key::DPAD_LEFT, false);
+		}
+		if (gamepad.buttons & GamePad::DPAD_UP)
+		{
+			input->setOnKey(Input::Key::DPAD_UP, true);
+			input->setOnKey(Input::Key::DPAD_DOWN, false);
+
+		}
+		else if (gamepad.buttons & GamePad::DPAD_DOWN)
+		{
+			input->setOnKey(Input::Key::DPAD_UP, false);
+			input->setOnKey(Input::Key::DPAD_DOWN, true);
+
+		}
+		else
+		{
+			input->setOnKey(Input::Key::DPAD_UP, false);
+			input->setOnKey(Input::Key::DPAD_DOWN, false);
+
+		}
+		if (gamepad.buttons & GamePad::L_SHIFT)
+		{
+			input->setOnKey(Input::Key::L_SHIFT, true);
+		}
+		else
+		{
+			input->setOnKey(Input::Key::L_SHIFT, false);
+		}
+		if (gamepad.buttons & GamePad::SPACE)
+		{
+
+
+			input->setOnKey(Input::Key::SPACE, true);
+		}
+		else
+		{
+			input->setOnKey(Input::Key::SPACE, false);
+		}
+
+		if (gamepad.buttons & GamePad::GameEnd)
+		{
+			input->setOnKey(Input::Key::GameEnd, true);
+		}
+		if (gamepad.buttons & GamePad::Z)
+		{
+			input->setOnKey(Input::Key::Z, true);
+		}
+		else
+		{
+			input->setOnKey(Input::Key::Z, false);
+		}
+
+		if (gamepad.buttons & GamePad::X)
+		{
+			input->setOnKey(Input::Key::X, true);
+		}
+		else
+		{
+			input->setOnKey(Input::Key::X, false);
+		}
 
 		game.update();
 		fps->GetFPS();//FPSを得る
@@ -141,7 +215,8 @@ int main()
 		glfwSwapBuffers(window);
 	}
 
-
+	SAFE_DELETE(fps);
+	SAFE_DELETE(scene);
 	return 0;
 }
 

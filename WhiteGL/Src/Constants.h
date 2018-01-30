@@ -74,6 +74,10 @@
 #define MAP_PASS PASS"mapData/"
 #define MAP_DATA_1 PASS"mapData/1_MapData.tmx"
 #define MAP_DATA_2 PASS"mapData/MapData2.tmx"
+
+//îwåi
+#define TITLE_BG PASS"Images/launchGimmickMapChip.png"
+
 //É^ÉO
 #define TAG_PLAYER_1 1001
 

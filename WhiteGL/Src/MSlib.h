@@ -1,7 +1,6 @@
 #pragma once
 #include "GameEngine.h"
 #include "gameInput.h"
-#include "public/Scene.h"
 
 enum class ID_TYPE : int
 {
@@ -10,7 +9,7 @@ enum class ID_TYPE : int
 	ENEMY_ATTACK	=	2,
 	GIMMICK	=	3,
 };
-
+class CScene;
 namespace MS
 {
 	class CMS

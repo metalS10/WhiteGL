@@ -289,7 +289,7 @@ CRendTexture* CGameEngine::getRendTexture()
 	return rendTex;
 }
 
-
+//BBˆÈŠO‚ªÁ‚¦‚é
 void CGameEngine::allTextureDelete()
 {
 	rendTex->allTextureDelete();

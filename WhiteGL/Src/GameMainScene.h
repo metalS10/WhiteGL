@@ -2,7 +2,6 @@
 #include "public/Scene.h"
 #include "PlayerFactory.h"
 #include "LaunchTrigger.h"
-#include "MSlib.h"
 
 class CGameMain : public CScene
 {
@@ -14,9 +13,7 @@ private:
 	std::vector<CCharacter*>* m_pCharacters;
 	CPlayerCharacter* pPlayerChara;
 
-	//‘½•ª‘S•”‚É•K—v
-	CGameEngine& m_game = MS::CMS::getInstance()->getGame();
-	Input::CGameInput* input = MS::CMS::getInstance()->getInput();
+	
 public:
 	CGameMain();
 	~CGameMain();

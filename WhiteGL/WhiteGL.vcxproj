@@ -178,6 +178,7 @@
     <ClCompile Include="Src\RendTexture.cpp" />
     <ClCompile Include="Src\Sprite.cpp" />
     <ClCompile Include="Src\Texture.cpp" />
+    <ClCompile Include="Src\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -223,6 +224,7 @@
     <ClInclude Include="Src\RendTexture.h" />
     <ClInclude Include="Src\Sprite.h" />
     <ClInclude Include="Src\Texture.h" />
+    <ClInclude Include="Src\TitleScene.h" />
     <ClInclude Include="Src\Vec2.h" />
     <ClInclude Include="Src\Vec3.h" />
     <ClInclude Include="Src\Vec4.h" />

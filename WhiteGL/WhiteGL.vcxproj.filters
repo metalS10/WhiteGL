@@ -16,6 +16,9 @@
     <Filter Include="ヘッダー ファイル\interpreter">
       <UniqueIdentifier>{5d5f9f7a-3f7d-4fce-9d1d-252f5a1f8439}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Scene">
+      <UniqueIdentifier>{e7cf7511-b8ed-4a4f-be88-e9852b2f873c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\main.cpp">
@@ -99,8 +102,11 @@
     <ClCompile Include="Src\interpreter\xmlparser.cpp">
       <Filter>ヘッダー ファイル\interpreter</Filter>
     </ClCompile>
+    <ClCompile Include="Src\TitleScene.cpp">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="Src\GameMainScene.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -231,10 +237,13 @@
       <Filter>ヘッダー ファイル\interpreter</Filter>
     </ClInclude>
     <ClInclude Include="Src\public\Scene.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Src\GameMainScene.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\TitleScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
