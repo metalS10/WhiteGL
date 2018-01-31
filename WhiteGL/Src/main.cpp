@@ -75,9 +75,9 @@ int main()
 	game.setupTexture("", TEX_TYPE::QUAD, MAX_TEXTURE_NUMBER-1, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH,  WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f));
 
 	//ゲームメインシーンを生成
-	CMS::getInstance()->setScene(new CTitle());
+	CMS::getInstance()->setScene(new CTitle(false));
 	//現在のシーンに反映
-	//scene = CMS::getInstance()->getScene();
+	scene = CMS::getInstance()->getScene();
 	
 	Input::CGameInput* input = MS::CMS::getInstance()->getInput();
 
@@ -122,7 +122,11 @@ int main()
 	*/
 	while (!glfwWindowShouldClose(window) && glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
 	{
-		scene = CMS::getInstance()->getScene();
+		if (scene != CMS::getInstance()->getScene())
+		{
+			SAFE_DELETE(scene);
+			scene = CMS::getInstance()->getScene();
+		}
 
 		FwewWindow.UpdateGamePad();
 		

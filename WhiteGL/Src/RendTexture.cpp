@@ -453,7 +453,7 @@ void CRendTexture::allTextureDelete()
 		if (i != MAX_TEXTURE_NUMBER - 1)
 		{
 			deleteTexture(i);
-			SAFE_DELETE(tex[i]);
+			//SAFE_DELETE(tex[i]);
 		}
 	}
 }

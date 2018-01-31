@@ -7,7 +7,7 @@ class CTitle : public CScene
 private:
 
 public:
-	CTitle();
+	CTitle(bool end);
 	~CTitle();
 	bool init()override;
 	void update()override;

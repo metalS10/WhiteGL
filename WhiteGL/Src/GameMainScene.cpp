@@ -13,19 +13,26 @@ CGameMain::~CGameMain()
 
 bool CGameMain::init()
 {
+	if (CScene::init() == false)
+	{
+		printf("シーン初期化に失敗");
+		return false;
+	}
 	CMapManager::getInstance()->setMap(MAP_DATA_1);
 
 	//出撃スケジュールの生成
 	m_pLaunchSchedule = new std::vector<CLaunchTrigger*>();
 
 	//これで削除していないとステージを二度遊んだ時にバグが出る(最強の敵)
-	//CLaunchScheduler::getInstance()->removeInstance();
+	CLaunchScheduler::getInstance()->removeInstance();
 
 	//出撃スケジュールを出撃スケジューラーに取り付ける
 	CLaunchScheduler::getInstance()->createLauncher(m_pLaunchSchedule);
 
 	//キャラクターの集まりの生成
+	SAFE_DELETE(m_pCharacters);
 	m_pCharacters = new std::vector<CCharacter*>();
+	CCharacterAggregate::removeInstance();
 	CCharacterAggregate::getInstance()->set(m_pCharacters);
 
 
@@ -105,11 +112,11 @@ void CGameMain::gameMain()
 
 	if (pPlayerChara->m_stageClear)
 	{
-		//this->StageEnd(pPlayerChara->m_stageClear);
+		this->StageEnd(pPlayerChara->m_stageClear);
 	}
 	if (pPlayerChara->m_gameOver)
 	{
-		//this->StageEnd(pPlayerChara->m_stageClear);
+		this->StageEnd(pPlayerChara->m_stageClear);
 	}
 
 	
@@ -200,41 +207,29 @@ void CGameMain::StageEnd(bool clear)
 		m_stageEnd = true;
 		stageSelectinterval = 0;
 	}
-	if (stageSelectinterval >= 60 && stageSelectinterval <= 61)
+	if (stageSelectinterval >= 60)
 	{
 		//フェードイン開始
-		//m_blackBord->runAction(FadeIn::create(2));
 		if (!movingstage)
 		{
 			if (m_game.ActionStage(MAX_TEXTURE_NUMBER - 1, 1.0f, false) == true)
 			{
 				movingstage = true;
-				//openMap(MAP_DATA_2, m_pCharacters);
 				gluLookAt(
 					-cameraPosX, 0.0f, 0.0f,
 					-cameraPosX, 0.0f, -10.0f,
 					0.0f, 1.0f, 0.0f
 				);
 				cameraPosX = 0.0f;
-				//pPlayerChara->setPosition(CVec2(320.0f, 200.0f), PLAYER_ID);
 			}
 		}
+		//フェードイン終了
 		if (movingstage == true)
 		{
-			if (m_game.ActionStage(MAX_TEXTURE_NUMBER - 1, 1.0f, true))
-			{
-				movingstage = false;
-				//pPlayerChara->m_nextStage = false;
-			}
+			stageSelectinterval = 0;
+			//タイトルシーンを生成
+			MS::CMS::getInstance()->setScene(new CTitle(true));		//ステージセレクト画面に戻る
 		}
-	}
-	//時間が経ったら
-	if (stageSelectinterval >= 200)
-	{
-
-
-		//ステージセレクト画面に戻る
-		//this->runAction(CallFunc::create(this, callfunc_selector(CGameMain::ReturnGameSelect)));
 	}
 
 

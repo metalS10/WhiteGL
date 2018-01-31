@@ -2,6 +2,7 @@
 #include "public/Scene.h"
 #include "PlayerFactory.h"
 #include "LaunchTrigger.h"
+#include "TitleScene.h"
 
 class CGameMain : public CScene
 {

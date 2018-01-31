@@ -19,7 +19,15 @@ public:
 	//デストラクタ
 	virtual ~CScene() {};
 	//初期化処理
-	virtual bool init() {return true; };
+	virtual bool init() {
+
+		m_game.allTextureDelete();
+		return true; };
 	//更新処理
 	virtual void update() {};
+
+	void moveScene(CScene* scene)
+	{
+
+	}
 };
