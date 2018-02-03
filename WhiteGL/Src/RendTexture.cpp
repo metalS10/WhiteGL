@@ -17,6 +17,10 @@ void CRendTexture::update(std::vector<CAnimation*>* anim)
 		CVec4 changerect4 = CVec4(texRect.x / tex[texID]->m_width, (texRect.x + texRect.z) / tex[texID]->m_width, texRect.y / tex[texID]->m_height, (texRect.y + texRect.w) / tex[texID]->m_height);
 		rect[texID] = CVec4(changerect4);
 	}
+	this->fadeSearch();
+}
+void CRendTexture::fadeSearch()
+{
 	for (int i = 0;i <= MAX_TEXTURE_NUMBER;i++)
 	{
 		//フェードインアウト
@@ -407,6 +411,8 @@ void CRendTexture::TextureFade(const GLuint texID, const bool out,const float fa
 	actionFade[texID] = true;
 	actionFadeInterval[texID] = fadeInterval;
 	fadeOut[texID] = out;
+	this->fadeSearch();
+
 }
 
 void CRendTexture::setScale(const CVec2 Size, const GLuint texID)
@@ -453,7 +459,7 @@ void CRendTexture::allTextureDelete()
 		if (i != MAX_TEXTURE_NUMBER - 1)
 		{
 			deleteTexture(i);
-			//SAFE_DELETE(tex[i]);
+			SAFE_DELETE(tex[i]);
 		}
 	}
 }

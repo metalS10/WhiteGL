@@ -136,6 +136,7 @@ void CGameEngine::update()
 	glfwPollEvents();
 
 	rendTex->render();
+	rendTex->update(m_pAnim);
 
 	//rendTex->update(m_pAnim);
 	/*
@@ -152,7 +153,6 @@ void CGameEngine::update()
 
 void CGameEngine::update60()
 {
-	rendTex->update(m_pAnim);
 }
 
 

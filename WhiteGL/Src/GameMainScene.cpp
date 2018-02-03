@@ -56,32 +56,36 @@ void CGameMain::update()
 	//ゲーム全体を制御する場所
 	gameMain();
 
-
 	CLaunchScheduler::getInstance()->launchCharacters(m_game);
 
 
 	//出撃の完了したトリガーをすべて取り外す
 	checkAndDelete(m_pLaunchSchedule);
 	checkAndRemove(m_pCharacters);
-	for (CCharacter* pChara : (*m_pCharacters))
+	//ステージ終了していなければ
+	if (!m_stageClear)
 	{
-		pChara->update();
-		m_game.setTextureRect((*pChara->m_pAnimations)[pChara->m_state]->getCurrentChip(), pChara->m_texID);
-		m_game.setScale(pChara->m_scale, pChara->m_texID);
-		m_game.setPosition(pChara->m_pMove->m_pos, pChara->m_texID);
+		for (CCharacter* pChara : (*m_pCharacters))
+		{
+			pChara->update();
+			m_game.setTextureRect((*pChara->m_pAnimations)[pChara->m_state]->getCurrentChip(), pChara->m_texID);
+			m_game.setScale(pChara->m_scale, pChara->m_texID);
+			m_game.setPosition(pChara->m_pMove->m_pos, pChara->m_texID);
+		}
 	}
 	//背景のポジションセット
 	m_game.setPosition(CVec2(WINDOW_RIGHT * 0.5 + cameraPosX, WINDOW_TOP * 0.5), MAX_TEXTURE_NUMBER - 1);
 
 	scroll();
 
-	
+
 
 }
 
 //ゲーム全体の動き
 void CGameMain::gameMain()
 {
+	//次のステージへ
 	if (pPlayerChara->m_nextStage)
 	{
 		//openMap(MAP_DATA_2, m_pCharacters);
@@ -228,7 +232,8 @@ void CGameMain::StageEnd(bool clear)
 		{
 			stageSelectinterval = 0;
 			//タイトルシーンを生成
-			MS::CMS::getInstance()->setScene(new CTitle(true));		//ステージセレクト画面に戻る
+			this->m_stageClear = true;
+			MS::CMS::getInstance()->setScene(new CTitle());		//ステージセレクト画面に戻る
 		}
 	}
 

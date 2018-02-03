@@ -75,7 +75,7 @@ int main()
 	game.setupTexture("", TEX_TYPE::QUAD, MAX_TEXTURE_NUMBER-1, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH,  WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f));
 
 	//ゲームメインシーンを生成
-	CMS::getInstance()->setScene(new CTitle(false));
+	CMS::getInstance()->setScene(new CTitle());
 	//現在のシーンに反映
 	scene = CMS::getInstance()->getScene();
 	

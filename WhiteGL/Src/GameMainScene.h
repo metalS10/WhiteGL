@@ -10,6 +10,7 @@ private:
 	bool movingstage = false;
 	int stageSelectinterval = 0;
 	bool m_stageEnd = false;
+	bool m_stageClear = false;
 	std::vector<CLaunchTrigger*>* m_pLaunchSchedule;
 	std::vector<CCharacter*>* m_pCharacters;
 	CPlayerCharacter* pPlayerChara;

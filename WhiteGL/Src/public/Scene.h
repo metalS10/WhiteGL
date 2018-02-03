@@ -21,6 +21,7 @@ public:
 	//‰Šú‰»ˆ—
 	virtual bool init() {
 
+		m_game.ActionStage(MAX_TEXTURE_NUMBER - 1, 1.0f, true);
 		m_game.allTextureDelete();
 		return true; };
 	//XVˆ—

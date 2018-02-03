@@ -164,6 +164,8 @@ public:
 
 	void setTextureRect(const CVec4 Rect, const GLuint texID);
 
+	void fadeSearch();
+
 	void allTextureDelete();
 	void allTextureDeletenotPlayer();
 };
