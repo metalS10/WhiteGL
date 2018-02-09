@@ -11,5 +11,6 @@ public:
 	~CTitle();
 	bool init()override;
 	void update()override;
+	void RendUpdate()override{};
 	
 };

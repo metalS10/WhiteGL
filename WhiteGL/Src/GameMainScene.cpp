@@ -71,6 +71,33 @@ bool CGameMain::init()
 	return true;
 }
 
+//描画用Update
+void CGameMain::RendUpdate()
+{
+	//ステージ終了していなければ
+	if (!m_stageEnd)
+	{
+		for (CCharacter* pChara : (*m_pCharacters))
+		{
+			m_game.setTextureRect((*pChara->m_pAnimations)[pChara->m_state]->getCurrentChip(), pChara->m_texID);
+			m_game.setScale(pChara->m_scale, pChara->m_texID);
+			m_game.setPosition(pChara->m_pMove->m_pos, pChara->m_texID);
+		}
+	}
+
+
+	m_game.setPosition(CVec2(WINDOW_RIGHT*0.125f + cameraPosX, WINDOW_TOP*0.94f), 2);
+	m_game.setPosition(CVec2(WINDOW_RIGHT*0.12f + cameraPosX, WINDOW_TOP*0.962f), 3);
+	//HP
+	m_game.setPosition(CVec2(WINDOW_RIGHT*0.12f + cameraPosX, WINDOW_TOP*0.92f), 4);
+	m_game.setPosition(CVec2(WINDOW_RIGHT*0.12f + cameraPosX, WINDOW_TOP*0.962f), 5);
+	//DP
+	m_game.setPosition(CVec2(WINDOW_RIGHT*0.12f + cameraPosX, WINDOW_TOP*0.92f), 6);
+	m_game.setPosition(CVec2(WINDOW_RIGHT*0.355f + cameraPosX, WINDOW_TOP*0.94f), 7);
+	m_game.setPosition(CVec2(WINDOW_RIGHT*0.35f + cameraPosX, WINDOW_TOP*0.92f), 8);
+	m_game.setPosition(CVec2(WINDOW_RIGHT*0.35f + cameraPosX, WINDOW_TOP*0.92f), 9);
+}
+
 void CGameMain::update()
 {
 	//ゲーム全体を制御する場所
@@ -78,37 +105,26 @@ void CGameMain::update()
 
 	CLaunchScheduler::getInstance()->launchCharacters(m_game);
 
-	if (pPlayerChara->m_isDamage)
-		m_game.setTextureRect(CVec4(0.0f, 0.0f, pPlayerChara->m_hitPoint, 10.0), 4);
+
 
 	//出撃の完了したトリガーをすべて取り外す
 	checkAndDelete(m_pLaunchSchedule);
 	checkAndRemove(m_pCharacters);
 	//ステージ終了していなければ
-	if (!m_stageClear)
+	if (!m_stageEnd)
 	{
 		for (CCharacter* pChara : (*m_pCharacters))
 		{
 			pChara->update();
-			m_game.setTextureRect((*pChara->m_pAnimations)[pChara->m_state]->getCurrentChip(), pChara->m_texID);
-			m_game.setScale(pChara->m_scale, pChara->m_texID);
-			m_game.setPosition(pChara->m_pMove->m_pos, pChara->m_texID);
+			
 		}
+		if (pPlayerChara->m_isDamage)
+			m_game.setTextureRect(CVec4(0.0f, 0.0f, pPlayerChara->m_hitPoint, 10.0), 4);
+
+		m_game.setTextureRect(CVec4(0.0f, 10.0f, pPlayerChara->m_denkiPoint, 10.0), 6);
 	}
 	//背景のポジションセット
 	m_game.setPosition(CVec2(WINDOW_RIGHT * 0.5 + cameraPosX, WINDOW_TOP * 0.5), MAX_TEXTURE_NUMBER - 1);
-
-
-	m_game.setPosition(CVec2(WINDOW_RIGHT*0.125f + cameraPosX, WINDOW_TOP*0.94f), 2);
-	m_game.setPosition(CVec2(WINDOW_RIGHT*0.12f	 + cameraPosX, WINDOW_TOP*0.962f), 3);
-	m_game.setPosition(CVec2(WINDOW_RIGHT*0.12f	 + cameraPosX, WINDOW_TOP*0.92f), 4);
-	m_game.setPosition(CVec2(WINDOW_RIGHT*0.12f	 + cameraPosX, WINDOW_TOP*0.962f), 5);
-	m_game.setPosition(CVec2(WINDOW_RIGHT*0.12f	 + cameraPosX, WINDOW_TOP*0.92f), 6);
-	m_game.setPosition(CVec2(WINDOW_RIGHT*0.355f + cameraPosX, WINDOW_TOP*0.94f), 7);
-	m_game.setPosition(CVec2(WINDOW_RIGHT*0.35f	 + cameraPosX, WINDOW_TOP*0.92f), 8);
-	m_game.setPosition(CVec2(WINDOW_RIGHT*0.35f	 + cameraPosX, WINDOW_TOP*0.92f), 9);
-
-
 
 	scroll();
 
@@ -269,7 +285,6 @@ void CGameMain::StageEnd(bool clear)
 		{
 			stageSelectinterval = 0;
 			//タイトルシーンを生成
-			this->m_stageClear = true;
 			MS::CMS::getInstance()->setScene(new CTitle());		//ステージセレクト画面に戻る
 		}
 	}

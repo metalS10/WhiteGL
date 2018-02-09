@@ -26,6 +26,8 @@ public:
 		return true; };
 	//XVˆ—
 	virtual void update() {};
+	//•`‰æ—pUpdate
+	virtual void RendUpdate() {};
 
 	void moveScene(CScene* scene)
 	{

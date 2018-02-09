@@ -21,6 +21,7 @@ public:
 	~CGameMain();
 	bool init()override;
 	void update()override;
+	void RendUpdate()override;
 
 	void gameMain();
 	void scroll();

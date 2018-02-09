@@ -211,7 +211,7 @@ void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuin
 			GLubyte* textureImage;		
 
 			int width, height;
-			bool hasAlpha;
+			bool hasAlpha = true;	//‚Æ‚è‚ ‚¦‚¸Png‚ÍAlpha‚ ‚é‚Å‚µ‚å
 			const char* filename = file;
 			bool success = loadPngImage(filename, width, height, hasAlpha, &textureImage);
 			if (!success) {
@@ -467,7 +467,7 @@ void CRendTexture::allTextureDeletenotPlayer()
 {
 	for (int i = 0;i < MAX_TEXTURE_NUMBER;i++)
 	{
-		if (i != PLAYER_ID && i != MAX_TEXTURE_NUMBER - 1)
+		if (i != PLAYER_ID && i != MAX_TEXTURE_NUMBER - 1 && i > 10)
 		{
 			deleteTexture(i);
 			SAFE_DELETE(tex[i]);

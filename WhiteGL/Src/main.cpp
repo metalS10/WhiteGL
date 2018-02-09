@@ -206,6 +206,8 @@ int main()
 		{
 			input->setOnKey(Input::Key::X, false);
 		}
+		//•`‰æ—pUpdate
+		scene->RendUpdate();
 
 		game.update();
 		fps->GetFPS();//FPS‚ð“¾‚é
