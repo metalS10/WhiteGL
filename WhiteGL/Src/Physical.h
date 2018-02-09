@@ -13,6 +13,7 @@ public:
 	virtual ~CPhysical() {}
 	virtual void update(CMove* pMove) = 0;
 	virtual void SetMaxSpeed(float maxspeed, float friction) = 0;
+	virtual void setGravity(float gravity) = 0;
 };
 
 //=========================================================
@@ -45,6 +46,10 @@ public:
 	void SetMaxSpeed(float maxspeed, float friction)override
 	{
 
+	}
+	void setGravity(float gravity) override
+	{
+		GRAVITY = gravity;
 	}
 };
 
@@ -113,5 +118,10 @@ public:
 	{
 		this->m_maxSpeed = maxspeed;
 		this->FRICTION = friction;
+	}
+
+	void setGravity(float gravity) override
+	{
+
 	}
 };

@@ -70,13 +70,17 @@
 #define IMAGE_NORMAL_FIRE PASS"Images/normalBullet.png"
 #define IMAGE_FIREBALL PASS""
 
+//UI
+#define IMAGE_GAMEUI	PASS"Images/UI/WhiteUI.png"
+#define IMAGE_STAGEEND	PASS"Images/UI/StageEnd.png"
+
 //マップ
 #define MAP_PASS PASS"mapData/"
 #define MAP_DATA_1 PASS"mapData/1_MapData.tmx"
 #define MAP_DATA_2 PASS"mapData/MapData2.tmx"
 
 //背景
-#define TITLE_BG PASS"Images/launchGimmickMapChip.png"
+#define TITLE_BG PASS"Images/UI/Title.png"
 
 //タグ
 #define TAG_PLAYER_1 1001

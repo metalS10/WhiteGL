@@ -179,12 +179,12 @@
     <ClCompile Include="Src\Sprite.cpp" />
     <ClCompile Include="Src\Texture.cpp" />
     <ClCompile Include="Src\TitleScene.cpp" />
+    <ClCompile Include="PolygonTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Src\ActionController.h" />
     <ClInclude Include="Src\Animation.h" />
     <ClInclude Include="Src\AttackCharacter.h" />

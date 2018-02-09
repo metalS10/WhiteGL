@@ -723,9 +723,6 @@ private:
 	//速度
 	float m_vel = 0.0f;
 
-	//トロイ状態か
-	bool m_troi = false;
-
 	CCharacter* m_pPlayer ;
 
 	int counter = 0;
@@ -734,6 +731,15 @@ private:
 
 	//プレイヤのポジション
 	CVec2 pos;
+
+	//アクションステップ
+	int step = 0;
+
+	float nowHeight = 0.0f;
+
+	bool up = false;
+
+	float upheight = 0.0f;
 public:
 	/**
 	*@desc	コンストラクタ
@@ -741,8 +747,8 @@ public:
 	*@param	半径
 	*@param	速度
 	*/
-	CActionTRoi(float vel, bool TRoi,int interval)
-		:m_vel(vel), m_troi(TRoi),m_intervalTime(interval){}
+	CActionTRoi(float vel, int interval)
+		:m_vel(vel), m_intervalTime(interval){}
 
 	/**
 	*@desc	アクション開始

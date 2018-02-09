@@ -810,50 +810,105 @@ void CActionShotEnemySphereBullet::update(CCharacter* pChara)
 }
 
 /**
-*‰~ó’e”­ŽËƒAƒNƒVƒ‡ƒ“
+*ƒ{ƒXƒAƒNƒVƒ‡ƒ“
 */
 void CActionTRoi::update(CCharacter* pChara)
 {
 	if (pChara->m_isAlive)
 	{
-		if (this->counter <= 0)
+		switch (step)
 		{
-			m_pPlayer = CCharacterAggregate::getInstance()->getAtTag(TAG_PLAYER_1);
-			if (pChara->m_pMove->m_pos.x < m_pPlayer->m_pMove->m_pos.x - 10)
+		case 0:
+			if (this->counter <= 0)
 			{
-				(*pChara->m_pActions)[2]->start();
-				pChara->setScale(1.0f, 1.0f);
-				pChara->m_moveVector = CVec2(20, 0);
-				pChara->m_pMove->m_vel = pChara->m_moveVector;
+				m_pPlayer = CCharacterAggregate::getInstance()->getAtTag(TAG_PLAYER_1);
+				if (pChara->m_pMove->m_pos.x < m_pPlayer->m_pMove->m_pos.x - 10)
+				{
+					(*pChara->m_pActions)[2]->start();
+					pChara->setScale(1.0f, 1.0f);
+					pChara->m_moveVector = CVec2(20, 0);
+					pChara->m_pMove->m_vel = pChara->m_moveVector;
+
+				}
+				else if (pChara->m_pMove->m_pos.x > m_pPlayer->m_pMove->m_pos.x + 10)
+				{
+					(*pChara->m_pActions)[2]->start();
+					pChara->setScale(-1.0f, 1.0f);
+					pChara->m_moveVector = CVec2(-20, 0);
+					pChara->m_pMove->m_vel = pChara->m_moveVector;
+				}
+				this->counter = this->m_intervalTime;
+
+				step++;
 			}
-			else if (pChara->m_pMove->m_pos.x > m_pPlayer->m_pMove->m_pos.x + 10)
-			{
-				(*pChara->m_pActions)[2]->start();
-				pChara->setScale(-1.0f, 1.0f);
-				pChara->m_moveVector = CVec2(-20, 0);
-				pChara->m_pMove->m_vel = pChara->m_moveVector;
-			}
-			this->counter = this->m_intervalTime;
-		}
-		//Ž~‚Ü‚éˆ—
-		else
-		{
+			break;
+
+		//”ò‚Ô
+		case 1:
 			if (pChara->m_pMove->m_pos.x < m_pPlayer->m_pMove->m_pos.x - 300 && pChara->m_pMove->m_vel.x < 0)
 			{
-				pChara->m_pMove->m_vel.x = 0;
+				(*pChara->m_pPhysicals)[0]->setGravity(0.0f);
 				pChara->setScale(1.0f, 1.0f);
-				this->counter--;
+
+				pChara->m_moveVector = CVec2(0, 0);
+				step++;
+
 			}
 			else if (pChara->m_pMove->m_pos.x > m_pPlayer->m_pMove->m_pos.x + 300 && pChara->m_pMove->m_vel.x > 0)
 			{
-				pChara->m_pMove->m_vel.x = 0;
+				(*pChara->m_pPhysicals)[0]->setGravity(0.0f);
 				pChara->setScale(-1.0f, 1.0f);
-				this->counter--;
+
+				pChara->m_moveVector = CVec2(0, 0);
+				step++;
+
+			}
+
+
+			pChara->m_pMove->m_vel = pChara->m_moveVector;
+			break;
+
+		case 2:
+			pChara->m_pMove->m_pos.y += 1;
+			//‹ó’†’âŽ~
+			if (pChara->m_pMove->m_pos.y >= 300.0f)
+			{
+				(*pChara->m_pActions)[2]->start();
+				this->nowHeight = pChara->m_pMove->m_pos.y;
+				step++;
+			}
+			break;
+		//•‚‚­
+		case 3:
+			if (up)
+			{
+				upheight += 0.1f;
+				if (upheight >= 2)
+				{
+					up = false;
+				}
 			}
 			else
 			{
-				this->counter--;
+				upheight -= 0.1f;
+				if (upheight <=  -2)
+				{
+					up = true;
+				}
 			}
+			pChara->m_pMove->m_pos.y += upheight;
+			this->counter--;
+			if (this->counter <= 0)
+			{
+				step = 0;
+				(*pChara->m_pPhysicals)[0]->setGravity(1.0f);
+
+			}
+
+			break;
+		default:
+			break;
 		}
+
 	}
 }

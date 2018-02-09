@@ -53,7 +53,7 @@ public:
 	CMove* m_pMove = NULL;
 
 	//適用させる物理演算群
-	std::vector<CPhysical*>*m_pPhysicals = NULL;
+	std::vector<CPhysical*>* m_pPhysicals = NULL;
 
 	//行えるアクション群
 	std::vector<CAction*>* m_pActions = NULL;

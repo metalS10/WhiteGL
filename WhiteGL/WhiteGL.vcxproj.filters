@@ -108,6 +108,9 @@
     <ClCompile Include="Src\GameMainScene.cpp">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="PolygonTest.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -174,9 +177,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Src\PlayerFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Src\gameInput.h">
