@@ -187,8 +187,9 @@ namespace GLFWEW
 			{
 				{ GLFWBUTTONID_A,GamePad::A },
 				{ GLFWBUTTONID_B,GamePad::B },
-				{ GLFWBUTTONID_X,GamePad::X },
-				{ GLFWBUTTONID_Y,GamePad::Y },
+				{ GLFWBUTTONID_Y,GamePad::X },
+				{ GLFWBUTTONID_X,GamePad::Z },
+				{ GLFWBUTTONID_R, GamePad::L_SHIFT },
 				{ GLFWBUTTONID_Start,GamePad::START },
 			};
 			for (const auto& e : keyMap)

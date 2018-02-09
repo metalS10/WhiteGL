@@ -26,7 +26,7 @@ bool CTitle::init()
 
 void CTitle::update()
 {
-	if (input->getOnKey(Input::Key::SPACE) == true)
+	if (input->getOnKey(Input::Key::START) == true)
 	{
 
 		//ゲームメインシーンを生成

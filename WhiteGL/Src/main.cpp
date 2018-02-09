@@ -174,15 +174,13 @@ int main()
 		{
 			input->setOnKey(Input::Key::L_SHIFT, false);
 		}
-		if (gamepad.buttons & GamePad::SPACE)
+		if (gamepad.buttons & GamePad::START)
 		{
-
-
-			input->setOnKey(Input::Key::SPACE, true);
+			input->setOnKey(Input::Key::START, true);
 		}
 		else
 		{
-			input->setOnKey(Input::Key::SPACE, false);
+			input->setOnKey(Input::Key::START, false);
 		}
 
 		if (gamepad.buttons & GamePad::GameEnd)
