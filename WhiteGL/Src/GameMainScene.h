@@ -14,14 +14,17 @@ private:
 	std::vector<CLaunchTrigger*>* m_pLaunchSchedule;
 	std::vector<CCharacter*>* m_pCharacters;
 	CPlayerCharacter* pPlayerChara;
-
+	int m_EnemyNameInterval = 0;
+	
 	
 public:
 	CGameMain();
 	~CGameMain();
 	bool init()override;
 	void update()override;
-	void RendUpdate()override;
+	void rendUpdate()override;
+	void sceneUpdate()override;
+
 
 	void gameMain();
 	void scroll();

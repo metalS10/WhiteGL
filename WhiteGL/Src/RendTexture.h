@@ -168,4 +168,6 @@ public:
 
 	void allTextureDelete();
 	void allTextureDeletenotPlayer();
+
+	void SetProgressBarWH(const GLuint texID, const CVec4 Rect,const CVec2 position);
 };

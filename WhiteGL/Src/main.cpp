@@ -205,14 +205,18 @@ int main()
 			input->setOnKey(Input::Key::X, false);
 		}
 		//描画用Update
-		scene->RendUpdate();
+		scene->rendUpdate();
 
 		game.update();
 		fps->GetFPS();//FPSを得る
 		if (fps->draw) {//秒間60フレーム
 			game.update60();
-			//シーンの更新
-			scene->update();
+			scene->sceneUpdate();
+			if (game.m_hitStop == 0)
+			{
+				//シーンの更新
+				scene->update();
+			}
 		}
 
 

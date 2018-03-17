@@ -307,39 +307,45 @@ void CEnemyCharacter::hitsBulletCharacter(CCharacter* pChara)
 		}
 		//敵の体力可視化
 		//CCLOG("%i", m_hitPoint);
-	}
+
 
 	//HPが0以下なら死
-	if (this->m_hitPoint <= 0)
-	{
-		//ダメージのフラグをtrueにする
-		this->m_isDamage = true;
-		
-		if (this->m_eneType == ENEMY_TYPE::TROI)
+		if (this->m_hitPoint <= 0)
 		{
-			this->m_pMove->m_vel = CVec2(0, 0);
+			//ダメージのフラグをtrueにする
+			this->m_isDamage = true;
 
-			/*
-			//黒くなる、消える、殺す
-			cocos2d::Sequence* sequence = cocos2d::Sequence::create(cocos2d::TintTo::create(0.5f, 255,0,0),cocos2d::FadeOut::create(0.3),cocos2d::CallFunc::create(this,callfunc_selector(CEnemyCharacter::isDeath)), NULL);
-			this->runAction(sequence);
-			*/
-			this->isDeath();
-			//ステージクリアをtrue
-			pPlayerChara->m_stageClear = true;
+			if (this->m_eneType == ENEMY_TYPE::TROI)
+			{
+				this->m_pMove->m_vel = CVec2(0, 0);
 
-			this->InvisibleFrame = 60;
+				/*
+				//黒くなる、消える、殺す
+				cocos2d::Sequence* sequence = cocos2d::Sequence::create(cocos2d::TintTo::create(0.5f, 255,0,0),cocos2d::FadeOut::create(0.3),cocos2d::CallFunc::create(this,callfunc_selector(CEnemyCharacter::isDeath)), NULL);
+				this->runAction(sequence);
+				*/
+				this->isDeath();
+				//ステージクリアをtrue
+				pPlayerChara->m_stageClear = true;
+
+				this->InvisibleFrame = 60;
+			}
+			else
+			{
+				//敵の死亡フラグを立てる
+				//つまり生きているか死んでいるかのフラグにfalseを入れる
+				this->m_isAlive = false;
+				(*this->m_pActions)[0]->start();
+			}
+			this->m_enemyDeadOneFrame++;
+
 		}
-		else
-		{
-			//敵の死亡フラグを立てる
-			//つまり生きているか死んでいるかのフラグにfalseを入れる
-			this->m_isAlive = false;
-			(*this->m_pActions)[0]->start();
-		}
-		this->m_enemyDeadOneFrame++;
-
+		CGameEngine& game = MS::CMS::getInstance()->getGame();
+		game.HitStop(10.0f);
+		CScene* scene = MS::CMS::getInstance()->getScene();
+		scene->SetCameraShake(10.0f,5,2);
 	}
+
 	//弾も死ぬ
 	//pChara->m_activeFlag = false;
 

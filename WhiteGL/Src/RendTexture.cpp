@@ -447,9 +447,31 @@ void CRendTexture::setTextureRect(const CVec4 Rect,const GLuint texID)
 	//‰æ‘œ‚Ì‹éŒ`”ÍˆÍ‚ðÝ’è
 	CVec4 changerect4 = CVec4(Rect.x / tex[texID]->m_width, (Rect.x + Rect.z) / tex[texID]->m_width, Rect.y / tex[texID]->m_height, (Rect.y + Rect.w) / tex[texID]->m_height);
 
-
-
 	rect[texID] = CVec4(changerect4);
+}
+
+void CRendTexture::SetProgressBarWH(const GLuint texID,const CVec4 Rect, const CVec2 position)
+{
+	CVec2 vec2;
+	glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
+	if (Rect.z >= 0)
+	{
+		texWH[texID] = CVec2(Rect.z, 5.0f);
+		vec2 = CVec2(position.x + Rect.z, position.y);
+	}
+	else
+	{
+		texWH[texID] = CVec2(0.0f, 5.0f);
+		vec2 = CVec2(position.x + 0.0f, position.y);
+	}
+	_position[texID] = vec2;
+	_rectPos[texID] = CVec4(
+		_position[texID].x - texWH[texID].x * texScale[texID].x,
+		_position[texID].x + texWH[texID].x * texScale[texID].x,
+		_position[texID].y - texWH[texID].y * texScale[texID].y,
+		_position[texID].y + texWH[texID].y * texScale[texID].y);
+	
+
 }
 
 void CRendTexture::allTextureDelete()

@@ -153,6 +153,9 @@ void CGameEngine::update()
 
 void CGameEngine::update60()
 {
+	m_hitStop--;
+	if (m_hitStop <= 0)
+		m_hitStop = 0;
 }
 
 
@@ -180,6 +183,11 @@ void CGameEngine::inputKeyX()
 void CGameEngine::setTextureRect(const CVec4 mrect,const GLuint texID)
 {	
 	rendTex->setTextureRect(mrect,texID);
+}
+
+void CGameEngine::SetProgressBarWH(const GLuint texID, const CVec4 Rect, const CVec2 position)
+{
+	rendTex->SetProgressBarWH(texID, Rect,position);
 }
 
 void CGameEngine::setPosition(CVec2 pos, GLuint texID)
@@ -301,4 +309,9 @@ void CGameEngine::allTextureDeletenotPlayer()
 	rendTex->allTextureDeletenotPlayer();
 }
 
+
+void CGameEngine::HitStop(float time)
+{
+	m_hitStop = time;
+}
 

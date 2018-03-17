@@ -23,8 +23,8 @@ private :
 	int EnemyTexID = START_ENEMY_TEXTURE_NUMBER;
 
 	bool actionone1 = false;
-
-
+public:
+	float m_hitStop = 0.0f;
 
 public:
 	CGameEngine() {}
@@ -46,6 +46,7 @@ public:
 	void deleteTexture(const GLuint texID);
 	void allTextureDelete();
 	void allTextureDeletenotPlayer();
+	void SetProgressBarWH(const GLuint texID, const CVec4 Rect, const CVec2 position);
 	//ƒAƒNƒVƒ‡ƒ“
 	bool ActionStage(const GLuint texID, const float fadeInterval, const bool fade);
 	void* TextureFade(const GLuint texID, const bool out ,const float fadeInterval);
@@ -67,7 +68,7 @@ public:
 	void TMXMapSetPos(float x,float y);
 	void layerSetPos(float x, float y,GLuint texID);
 
-	
+	void HitStop(float time);
 
 	
 

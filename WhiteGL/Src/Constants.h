@@ -6,7 +6,7 @@
 */
 
 //絶対パス
-#define PASS "../WhiteGL/Resources/"
+#define PASS "Resources/"
 #ifndef NULL
 #ifdef __cplusplus
 #define NULL 0
@@ -42,7 +42,7 @@
 //--------------------------------------------------------------------------------
 
 //テクスチャID
-#define PLAYER_ID 0
+#define PLAYER_ID 3
 
 //プレイヤー
 #define IMAGE_PLAYER PASS"player.png"
@@ -80,7 +80,9 @@
 #define MAP_DATA_2 PASS"mapData/MapData2.tmx"
 
 //背景
-#define TITLE_BG PASS"Images/UI/Title.png"
+#define TITLE_BG PASS"Images/BG/title.png"
+#define MAIN_BG PASS"Images/BG/black0087.png"
+#define MAIN_MOVEBG PASS"Images/BG/p1.png"
 
 //タグ
 #define TAG_PLAYER_1 1001
