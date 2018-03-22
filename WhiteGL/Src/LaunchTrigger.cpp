@@ -224,6 +224,7 @@ void CLaunchScheduler::launchCharacters(CGameEngine& game)
 			//キャラクターをメインレイヤーに取り付ける
 			//pLayer->addChild(pChara);
 			game.setupTexture(pChara->texPass, TEX_TYPE::PNG, pChara->m_texID, pChara->m_pMove->m_pos, (*pChara->m_pAnimations)[0]->getCurrentChip());
+			game.render();
 
 		}
 	}

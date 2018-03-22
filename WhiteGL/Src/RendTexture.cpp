@@ -246,6 +246,7 @@ void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuin
 	default:
 		break;
 	}
+	//‰Šú‰»
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	colorRGBA[texID] = (CVec4(100.0f, 100.0f, 100.0f, 100.0f));

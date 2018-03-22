@@ -32,4 +32,7 @@ struct GamePad
 	uint32_t buttons;
 	//‰Ÿ‚³‚ê‚½uŠÔ‚¾‚¯ƒtƒ‰ƒO‚ª—§‚Â
 	uint32_t buttonDown;
+
+	GLfloat rightX;
+	GLfloat rightY;
 };

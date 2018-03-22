@@ -36,6 +36,7 @@ public:
 	void setChipData(GLuint texID, CVec4 rectData);
 	void update();
 	void update60();
+	void render();		//@•`‰æˆ—
 	void charaUpdate(CCharacter* pCharas);
 	const GamePad& GetGamePad() const;
 	static CGameEngine& Instance();

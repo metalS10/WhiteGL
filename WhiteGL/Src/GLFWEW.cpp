@@ -178,6 +178,23 @@ namespace GLFWEW
 				gamepad.buttons |= GamePad::DPAD_LEFT;
 			}
 
+			if (axes[GLFWAXESID_RightY] >= threshould)
+			{
+				gamepad.rightY = axes[GLFWAXESID_RightY];
+			}
+			else if (axes[GLFWAXESID_RightY] <= -threshould)
+			{
+				gamepad.rightY = axes[GLFWAXESID_RightY];
+			}
+			if (axes[GLFWAXESID_RightX] >= threshould)
+			{
+				gamepad.rightX = axes[GLFWAXESID_RightX];
+			}
+			else if (axes[GLFWAXESID_RightX] <= -threshould)
+			{
+				gamepad.rightX = axes[GLFWAXESID_RightX];
+			}
+
 			static const struct
 			{
 				int glfwCode;

@@ -135,8 +135,8 @@ void CGameEngine::update()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glfwPollEvents();
 
-	rendTex->render();
 	rendTex->update(m_pAnim);
+	rendTex->render();
 
 	//rendTex->update(m_pAnim);
 	/*
@@ -149,6 +149,12 @@ void CGameEngine::update()
 	}
 	*/
 
+}
+void CGameEngine::render()
+{
+	glfwPollEvents();
+
+	rendTex->render();
 }
 
 void CGameEngine::update60()
