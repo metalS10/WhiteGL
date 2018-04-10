@@ -753,7 +753,7 @@ void CTRoiFactory::settingActions(CEnemyCharacter* pChara)
 	pChara->m_pActions->push_back(new CActionShotEnemySphereBullet((int)BULLET_TYPE::NORMAL, 120));
 
 	//TRoi専用アクションを設定
-	pChara->m_pActions->push_back(new CActionTRoi(3, 500));
+	pChara->m_pActions->push_back(new CActionTRoi(3, 350));
 
 }
 
@@ -824,7 +824,7 @@ void CTRoiFactory::settingState(CEnemyCharacter* pChara)
 {
 	//名前の設定
 	pChara->m_name = "トロくない木馬";
-	pChara->m_maxHitPoint = 10;
+	pChara->m_maxHitPoint = 100;
 
 	pChara->m_hitPoint = pChara->m_maxHitPoint;
 

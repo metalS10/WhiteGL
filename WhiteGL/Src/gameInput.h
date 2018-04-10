@@ -39,6 +39,10 @@ namespace Input
 		{
 			return m_keytype[(int)keytype];
 		}
+		float getRightAxis()
+		{
+
+		}
 
 	};
 }

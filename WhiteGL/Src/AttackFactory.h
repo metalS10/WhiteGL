@@ -29,7 +29,7 @@ public:
 	{
 		return new std::vector<CCollisionArea*>();
 	}
-
+	
 	int getState();
 };
 

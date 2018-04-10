@@ -11,6 +11,7 @@
 #include "GLFW/glfw3.h"
 #include "image.h"
 #include "Vec2.h"
+#include "Vec3.h"
 #include "Vec4.h"
 #include "Constants.h"
 #include "Animation.h"
@@ -161,13 +162,15 @@ public:
 
 	void setMapPosition(const CVec2 position, const GLuint texID);
 
+	void setRotate(const CVec3 rotate, const GLuint texID);
+
 
 	void setTextureRect(const CVec4 Rect, const GLuint texID);
 
 	void fadeSearch();
 
-	void allTextureDelete();
-	void allTextureDeletenotPlayer();
+	void allTextureDelete();			//ゲームの中のテクスチャをすべて削除
+	void allTextureDeletenotPlayer();	//ゲームに必要不可欠なテクスチャ以外のテクスチャを削除
 
 	void SetProgressBarWH(const GLuint texID, const CVec4 Rect,const CVec2 position);
 };

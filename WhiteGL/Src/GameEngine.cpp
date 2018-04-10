@@ -148,7 +148,6 @@ void CGameEngine::update()
 
 	}
 	*/
-
 }
 void CGameEngine::render()
 {

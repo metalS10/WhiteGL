@@ -869,7 +869,6 @@ void CActionTRoi::update(CCharacter* pChara)
 			break;
 
 		case 2:
-			pChara->m_pMove->m_pos.y += 1;
 			//‹ó’†’âŽ~
 			if (pChara->m_pMove->m_pos.y >= 300.0f)
 			{
@@ -877,13 +876,17 @@ void CActionTRoi::update(CCharacter* pChara)
 				this->nowHeight = pChara->m_pMove->m_pos.y;
 				step++;
 			}
+			else
+			{
+				pChara->m_pMove->m_pos.y += 1;
+			}
 			break;
 		//•‚‚­
 		case 3:
 			if (up)
 			{
 				upheight += 0.1f;
-				if (upheight >= 2)
+				if (upheight >= 1)
 				{
 					up = false;
 				}
@@ -891,7 +894,7 @@ void CActionTRoi::update(CCharacter* pChara)
 			else
 			{
 				upheight -= 0.1f;
-				if (upheight <=  -2)
+				if (upheight <=  -1)
 				{
 					up = true;
 				}
@@ -901,7 +904,7 @@ void CActionTRoi::update(CCharacter* pChara)
 			if (this->counter <= 0)
 			{
 				step = 0;
-				(*pChara->m_pPhysicals)[0]->setGravity(1.0f);
+				(*pChara->m_pPhysicals)[0]->setGravity(0.0f);
 
 			}
 

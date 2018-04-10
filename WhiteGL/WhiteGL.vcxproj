@@ -175,6 +175,7 @@
     <ClCompile Include="Src\Node.cpp" />
     <ClCompile Include="Src\PlayerCharacter.cpp" />
     <ClCompile Include="Src\PlayerFactory.cpp" />
+    <ClCompile Include="Src\public\Scene.cpp" />
     <ClCompile Include="Src\RendTexture.cpp" />
     <ClCompile Include="Src\Sprite.cpp" />
     <ClCompile Include="Src\Texture.cpp" />
@@ -219,6 +220,7 @@
     <ClInclude Include="Src\Physical.h" />
     <ClInclude Include="Src\PlayerCharacter.h" />
     <ClInclude Include="Src\PlayerFactory.h" />
+    <ClInclude Include="Src\public\primitive2d.h" />
     <ClInclude Include="Src\public\Scene.h" />
     <ClInclude Include="Src\Rect.h" />
     <ClInclude Include="Src\RendTexture.h" />

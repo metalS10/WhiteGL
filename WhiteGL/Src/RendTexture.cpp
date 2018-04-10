@@ -269,7 +269,7 @@ void CRendTexture::setupTextureSize(const CVec2 texPos,const CVec4 texRect,const
 	CVec4 changerect4 = CVec4(texRect.x / tex[texID]->m_width, (texRect.x + texRect.z) / tex[texID]->m_width, texRect.y / tex[texID]->m_height, (texRect.y + texRect.w) / tex[texID]->m_height);
 	rect[texID] = CVec4(changerect4);
 	
-	
+
 	
 
 	if (tex[texID] == NULL)
@@ -439,6 +439,11 @@ void CRendTexture::setMapPosition(const CVec2 position, const GLuint texID)
 	_rectPos[texID] = CVec4(_position[texID].x + defrect.x, _position[texID].x + defrect.y, _position[texID].y + defrect.z, _position[texID].y + defrect.w);
 }
 
+void CRendTexture::setRotate(const CVec3 rotate, const GLuint texID)
+{
+	glRotatef(30.f, 0.0f, 0.0f, 1.0f);
+}
+
 
 void CRendTexture::setTextureRect(const CVec4 Rect,const GLuint texID)
 {
@@ -490,7 +495,8 @@ void CRendTexture::allTextureDeletenotPlayer()
 {
 	for (int i = 0;i < MAX_TEXTURE_NUMBER;i++)
 	{
-		if (i != PLAYER_ID && i != MAX_TEXTURE_NUMBER - 1 && i > 10)
+		//BBとUI以下以外のテクスチャを削除
+		if (i != MAX_TEXTURE_NUMBER - 1 && i > BAR_ENEMYHP_ID)
 		{
 			deleteTexture(i);
 			SAFE_DELETE(tex[i]);

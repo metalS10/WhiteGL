@@ -42,7 +42,19 @@
 //--------------------------------------------------------------------------------
 
 //テクスチャID
-#define PLAYER_ID 3
+#define PLAYER_ID				3	//Player
+#define UI_BACK_ID				4	//UIBack
+#define OUTLINE_HP_ID			5	//HPWaku
+#define OUTLINE_DP_ID			6	//DPWaku
+#define BAR_HP_ID				7	//HPBar
+#define BAR_DP_ID				8	//DPBar
+#define ENEMY_STATS_ID			9	//ENEMYStats
+#define OUTLLINE_ENEMYHP_ID		10	//EHPBarWaku
+#define BAR_ENEMYHP_ID			11	//EHPBar
+
+#define UI_ID PLAYER_ID UI_BACK_ID OUTLINE_HP_ID OUTLINE_DP_ID BAR_HP_ID BAR_DP_ID ENEMY_STATS_ID OUTLLINE_ENEMYHP_ID BAR_ENEMYHP_ID
+
+
 
 //プレイヤー
 #define IMAGE_PLAYER PASS"player.png"

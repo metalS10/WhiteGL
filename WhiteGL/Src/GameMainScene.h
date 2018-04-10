@@ -38,9 +38,10 @@ public:
 	*	@tips	有効フラグが false のインスタンスをレイヤーから取り外す
 	*/
 	template <typename Ty>
-	void checkAndRemove(Ty* pChara) {
-
-		if (pChara->m_activeFlag == false) {
+	void checkAndRemove(Ty* pChara) 
+	{
+		if (pChara->m_activeFlag == false) 
+		{
 			pChara->removeFromParent();
 		}
 	}
