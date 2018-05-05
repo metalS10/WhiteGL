@@ -183,7 +183,7 @@ void CBasePlayerFactory::settingActions(CPlayerCharacter* pPlayerCharacter)
 
 void CBasePlayerFactory::settingBody(CPlayerCharacter* pPlayerCharacter)
 {
-	pPlayerCharacter->m_pBody->set(-32, 32, 32, -32);
+	pPlayerCharacter->m_pBody->set(-28, 32, 28, -32);
 }
 
 void CBasePlayerFactory::settingInitialize(CPlayerCharacter* pPlayerCharacter)

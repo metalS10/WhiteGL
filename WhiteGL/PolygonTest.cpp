@@ -124,7 +124,7 @@ void rokuyon(float x, float y, float z, float px, float py, float pz)
 
 //display関数をつくってそこから描写
 //ウィンドウサイズを変更したり、再描写される度にドラゴンが5度ずつ回転するようにしてみた笑゛
-void display()
+void display2()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
@@ -201,7 +201,7 @@ int main2(int argc, char *argv[])
 	glutInitWindowPosition(250, 250);
 	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE | GLUT_DEPTH);
 	glutCreateWindow("64");
-	glutDisplayFunc(display);
+	glutDisplayFunc(display2);
 	init();
 	glutTimerFunc(30, timer, 0);
 

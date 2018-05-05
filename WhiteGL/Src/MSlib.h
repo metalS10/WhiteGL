@@ -9,6 +9,7 @@ enum class ID_TYPE : int
 	ENEMY_ATTACK	=	2,
 	GIMMICK	=	3,
 };
+
 class CScene;
 namespace MS
 {

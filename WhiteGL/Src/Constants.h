@@ -7,6 +7,7 @@
 
 //絶対パス
 #define PASS "Resources/"
+#define LPASS L"Resources/"
 #ifndef NULL
 #ifdef __cplusplus
 #define NULL 0
@@ -52,7 +53,6 @@
 #define OUTLLINE_ENEMYHP_ID		10	//EHPBarWaku
 #define BAR_ENEMYHP_ID			11	//EHPBar
 
-#define UI_ID PLAYER_ID UI_BACK_ID OUTLINE_HP_ID OUTLINE_DP_ID BAR_HP_ID BAR_DP_ID ENEMY_STATS_ID OUTLLINE_ENEMYHP_ID BAR_ENEMYHP_ID
 
 
 
@@ -95,6 +95,9 @@
 #define TITLE_BG PASS"Images/BG/title.png"
 #define MAIN_BG PASS"Images/BG/black0087.png"
 #define MAIN_MOVEBG PASS"Images/BG/p1.png"
+
+//音楽
+#define SOUND_BGM PASS"sound/cyber_dungeon_001.wav"
 
 //タグ
 #define TAG_PLAYER_1 1001

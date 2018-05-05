@@ -2,12 +2,12 @@
 *	main.cpp
 *		2017/09/29	Mats
 */
+#include "Data/Sound/Sound.h"
 #include "MSlib.h"
 #include "PlayerFactory.h"
 #include "FPS.h"
 #include "LaunchTrigger.h"
 #include "TitleScene.h"
-
 
 using namespace MS;
 CScene* scene;
@@ -28,7 +28,7 @@ void ErrorCallback(int error, const char* desc)
 *	@file main.cpp
 */
 //エントリーポイント
-int main()
+int main(int argc, char *argv[])
 {
 	glfwSetErrorCallback(ErrorCallback);
 	
@@ -82,6 +82,12 @@ int main()
 	Input::CGameInput* input = MS::CMS::getInstance()->getInput();
 
 	
+	CSound* BGM = new CSound(SOUND_BGM,180);
+	BGM->Load();
+	BGM->Play();
+
+
+
 
 
 	//アニメーションテスト
@@ -110,6 +116,8 @@ int main()
 	FPS* fps = new FPS(60);
 
 	GLFWEW::Window& FwewWindow = GLFWEW::Window::Instance();
+
+
 
 
 	/**

@@ -19,78 +19,93 @@
     <Filter Include="ヘッダー ファイル\Scene">
       <UniqueIdentifier>{e7cf7511-b8ed-4a4f-be88-e9852b2f873c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ActionController">
+      <UniqueIdentifier>{384a66eb-e9cf-442b-b2e8-d805d43ee690}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Factory">
+      <UniqueIdentifier>{b555bd99-baae-4c8f-9683-6be805142738}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Factory\AttackFactory">
+      <UniqueIdentifier>{2b66d4c4-01a0-4135-8b35-47cb2b39f4c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Character">
+      <UniqueIdentifier>{e4c63605-2044-4640-9f03-a8b9e34453cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Collision">
+      <UniqueIdentifier>{5dfc2a19-40cf-4ff2-a1c6-8fed6eeecddd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Character\EnemyBulletCharacter">
+      <UniqueIdentifier>{b5f80d01-bdaa-41bc-a06e-2f6d4dda8039}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Character\AttackCharacter">
+      <UniqueIdentifier>{51db31ef-9263-42a3-b51e-8eba9084cc83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Factory\EnemyBulletFactory">
+      <UniqueIdentifier>{34b6c80e-9afd-41e5-aed0-5156d5d1e2de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Factory\EnemyFactory">
+      <UniqueIdentifier>{93736116-4f6f-45ad-947e-e744f4b4c548}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameEngine">
+      <UniqueIdentifier>{66797eeb-546b-4025-b33e-3aeaed40a0c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Render">
+      <UniqueIdentifier>{776de024-d7eb-429a-ab21-1b2d6eaba65a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Input">
+      <UniqueIdentifier>{1f9215bf-dcda-48a4-b2a4-3ebc3b6befc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Input\GLFWEW">
+      <UniqueIdentifier>{ae020cac-847e-4cf0-9c73-7e6f2f34acef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Render\Image">
+      <UniqueIdentifier>{fd0851ed-d544-49f2-8097-38bc2f4e6a9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\MSLib">
+      <UniqueIdentifier>{76e635b3-e7a4-4f95-8260-08e89660dfdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\LaunchTrigger">
+      <UniqueIdentifier>{82c6d89f-49ae-4ee1-adca-18f204c80431}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Map">
+      <UniqueIdentifier>{663e87d8-5a3d-4bf5-b240-4140106f00ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Factory\PlayerFactory">
+      <UniqueIdentifier>{2d9c3e72-cf78-49f8-b64c-6e0266247f86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Character\PlayerCharacter">
+      <UniqueIdentifier>{9b1980a6-1e58-4dec-9f55-4f017c2f2b65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Character\EnemyCharacter">
+      <UniqueIdentifier>{4ce1b476-0887-4089-842d-ca50e74b9ef6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Character\GimmickCharacter">
+      <UniqueIdentifier>{3f9176f9-db76-4c95-a760-9685cc727c5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Factory\GimmickFactory">
+      <UniqueIdentifier>{40ae094d-d058-40c0-98b9-30dd50ed6402}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Render\RendTexture">
+      <UniqueIdentifier>{554144c0-7a4e-4a9a-b821-ec3372b3e82c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Render\Texture">
+      <UniqueIdentifier>{11c2a6a2-4266-4c0a-aa77-4202d2ef4a3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Sprite">
+      <UniqueIdentifier>{08d25fd9-e59a-45d3-bbc9-13b50092fb0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Primitive">
+      <UniqueIdentifier>{077936b8-f3c3-49e8-b371-fb1c9d6c6afc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System">
+      <UniqueIdentifier>{70bdf9f6-da86-4a8c-9065-3ed9da7112b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Sound">
+      <UniqueIdentifier>{4c14ce53-a933-45fa-be5a-667e93c7f460}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\image.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Sprite.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Texture.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\RendTexture.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\GLFWEW.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\GameEngine.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Character.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Collision.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\CollisionArea.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\PlayerCharacter.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\PlayerFactory.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\LaunchTrigger.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\AttackCharacter.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\AttackFactory.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\EnemyCharacter.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\EnemyFactory.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\GimmickCharacter.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\GimmickFactory.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Map.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\EnemyBulletCharacter.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\EnemyBulletFactory.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\ActionController.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\MSlib.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Src\Node.cpp">
@@ -114,36 +129,84 @@
     <ClCompile Include="Src\public\Scene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Src\AttackCharacter.cpp">
+      <Filter>ソース ファイル\Character\AttackCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\AttackFactory.cpp">
+      <Filter>ソース ファイル\Factory\AttackFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Character.cpp">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Collision.cpp">
+      <Filter>ソース ファイル\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CollisionArea.cpp">
+      <Filter>ソース ファイル\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EnemyBulletCharacter.cpp">
+      <Filter>ソース ファイル\Character\EnemyBulletCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EnemyBulletFactory.cpp">
+      <Filter>ソース ファイル\Factory\EnemyBulletFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EnemyCharacter.cpp">
+      <Filter>ソース ファイル\Character\EnemyCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EnemyFactory.cpp">
+      <Filter>ソース ファイル\Factory\EnemyFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GameEngine.cpp">
+      <Filter>ソース ファイル\GameEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GimmickCharacter.cpp">
+      <Filter>ソース ファイル\Character\GimmickCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GLFWEW.cpp">
+      <Filter>ソース ファイル\Input\GLFWEW</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GimmickFactory.cpp">
+      <Filter>ソース ファイル\Factory\GimmickFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\image.cpp">
+      <Filter>ソース ファイル\Render\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MSlib.cpp">
+      <Filter>ソース ファイル\MSLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\LaunchTrigger.cpp">
+      <Filter>ソース ファイル\LaunchTrigger</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Map.cpp">
+      <Filter>ソース ファイル\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PlayerCharacter.cpp">
+      <Filter>ソース ファイル\Character\PlayerCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PlayerFactory.cpp">
+      <Filter>ソース ファイル\Factory\PlayerFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\RendTexture.cpp">
+      <Filter>ソース ファイル\Render\RendTexture</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Texture.cpp">
+      <Filter>ソース ファイル\Render\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Sprite.cpp">
+      <Filter>ソース ファイル\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ActionController\ActionController.cpp">
+      <Filter>ソース ファイル\ActionController</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Data\Sound\Sound.cpp">
+      <Filter>ソース ファイル\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Src\image.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Sprite.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Texture.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Vec2.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Vec3.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Rect.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Constants.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Vec4.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\RendTexture.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Src\Animation.h">
@@ -152,76 +215,13 @@
     <ClInclude Include="Src\FPS.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Src\GamePad.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\GLFWEW.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\GameEngine.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Move.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Character.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Src\Physical.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Collision.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\CollisionArea.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\PlayerCharacter.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\PlayerFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\gameInput.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Src\LaunchData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\LaunchTrigger.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\AttackCharacter.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\AttackFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\EnemyCharacter.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\EnemyFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\GimmickCharacter.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\GimmickFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Map.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\EnemyBulletCharacter.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\EnemyBulletFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\ActionController.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\MSlib.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Src\Node.h">
@@ -248,8 +248,98 @@
     <ClInclude Include="Src\TitleScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Src\AttackCharacter.h">
+      <Filter>ソース ファイル\Character\AttackCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\AttackFactory.h">
+      <Filter>ソース ファイル\Factory\AttackFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Character.h">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Collision.h">
+      <Filter>ソース ファイル\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\CollisionArea.h">
+      <Filter>ソース ファイル\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\EnemyBulletCharacter.h">
+      <Filter>ソース ファイル\Character\EnemyBulletCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\EnemyBulletFactory.h">
+      <Filter>ソース ファイル\Factory\EnemyBulletFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\EnemyCharacter.h">
+      <Filter>ソース ファイル\Character\EnemyCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\EnemyFactory.h">
+      <Filter>ソース ファイル\Factory\EnemyFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\GameEngine.h">
+      <Filter>ソース ファイル\GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\GimmickCharacter.h">
+      <Filter>ソース ファイル\Character\GimmickCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\GLFWEW.h">
+      <Filter>ソース ファイル\Input\GLFWEW</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\GimmickFactory.h">
+      <Filter>ソース ファイル\Factory\GimmickFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\image.h">
+      <Filter>ソース ファイル\Render\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MSlib.h">
+      <Filter>ソース ファイル\MSLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\LaunchTrigger.h">
+      <Filter>ソース ファイル\LaunchTrigger</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Map.h">
+      <Filter>ソース ファイル\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\gameInput.h">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\GamePad.h">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PlayerCharacter.h">
+      <Filter>ソース ファイル\Character\PlayerCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PlayerFactory.h">
+      <Filter>ソース ファイル\Factory\PlayerFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\RendTexture.h">
+      <Filter>ソース ファイル\Render\RendTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Texture.h">
+      <Filter>ソース ファイル\Render\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Sprite.h">
+      <Filter>ソース ファイル\Sprite</Filter>
+    </ClInclude>
     <ClInclude Include="Src\public\primitive2d.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Rect.h">
+      <Filter>ソース ファイル\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Vec2.h">
+      <Filter>ソース ファイル\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Vec3.h">
+      <Filter>ソース ファイル\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Vec4.h">
+      <Filter>ソース ファイル\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ActionController\ActionController.h">
+      <Filter>ソース ファイル\ActionController</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Data\Sound\Sound.h">
+      <Filter>ソース ファイル\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
