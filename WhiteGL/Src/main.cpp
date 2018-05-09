@@ -2,7 +2,6 @@
 *	main.cpp
 *		2017/09/29	Mats
 */
-#include "Data/Sound/Sound.h"
 #include "MSlib.h"
 #include "PlayerFactory.h"
 #include "FPS.h"
@@ -74,21 +73,7 @@ int main(int argc, char *argv[])
 	//ブラックボード
 	game.setupTexture("", TEX_TYPE::QUAD, MAX_TEXTURE_NUMBER-1, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH,  WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f));
 
-	//ゲームメインシーンを生成
-	CMS::getInstance()->setScene(new CTitle());
-	//現在のシーンに反映
-	scene = CMS::getInstance()->getScene();
 	
-	Input::CGameInput* input = MS::CMS::getInstance()->getInput();
-
-	
-	CSound* BGM = new CSound(SOUND_BGM,180);
-	BGM->Load();
-	BGM->Play();
-
-
-
-
 
 	//アニメーションテスト
 	/*
@@ -118,6 +103,13 @@ int main(int argc, char *argv[])
 	GLFWEW::Window& FwewWindow = GLFWEW::Window::Instance();
 
 
+
+	//ゲームメインシーンを生成
+	CMS::getInstance()->setScene(new CTitle());
+	//現在のシーンに反映
+	scene = CMS::getInstance()->getScene();
+
+	Input::CGameInput* input = MS::CMS::getInstance()->getInput();
 
 
 	/**

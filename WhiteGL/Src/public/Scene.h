@@ -1,5 +1,6 @@
 #pragma once
 #include "../MSlib.h"
+#include "../Data/Sound/Sound.h"
 
 //シーンの親となるクラス
 class CScene
@@ -30,6 +31,30 @@ protected:
 	CGameEngine& m_game = MS::CMS::getInstance()->getGame();
 	//入力
 	Input::CGameInput* input = MS::CMS::getInstance()->getInput();
+
+	//BGM
+	CSound* BGM = NULL;
+
+	//BGMのBPM
+	float m_bgmBpm = 0;
+	//BPMに合わせて動かすためのカウンター
+	int m_bpmCounter = 0;
+	//2分音符
+	int m_halfNotes = 0;		int m_halfCounter = 100;
+	//4
+	int m_quarterNotes = 0;		int m_quarterCounter = 100;
+	//8
+	int m_eighthNotes = 0;		int m_eighthCounter = 100;
+	//BGM開始遅延
+	int m_startDelay = 0;
+	int m_delayCount = 0;
+
+	CSound* se1 = NULL;
+	CSound* se2 = NULL;
+	CSound* se3 = NULL;
+
+	int Delay = 0;
+
 public:
 
 	//コンストラクタ
@@ -41,7 +66,7 @@ public:
 	virtual bool init();
 
 	//更新処理
-	virtual void update() {};
+	virtual void update();
 	//ゲーム本体更新
 	virtual void sceneUpdate() {};
 
@@ -56,4 +81,9 @@ public:
 
 
 	void moveScene(CScene* scene);
+
+	//分音符に合わせて呼ばれる関数
+	virtual void halfUpdate();
+	virtual void qauarterUpdate();
+	virtual void eighthUpdate();
 };

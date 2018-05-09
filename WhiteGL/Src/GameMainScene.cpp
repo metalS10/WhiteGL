@@ -13,6 +13,8 @@ CGameMain::~CGameMain()
 
 bool CGameMain::init()
 {
+	SAFE_DELETE(BGM);
+	BGM = new CSound(SOUND_BGM, 180,true);
 	if (CScene::init() == false)
 	{
 		printf("ƒV[ƒ“‰Šú‰»‚É¸”s");
@@ -72,7 +74,8 @@ bool CGameMain::init()
 
 
 	pPlayerChara->input = input;
-
+	BGM->Load();
+	BGM->Play();
 	return true;
 }
 

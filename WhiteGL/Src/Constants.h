@@ -96,8 +96,11 @@
 #define MAIN_BG PASS"Images/BG/black0087.png"
 #define MAIN_MOVEBG PASS"Images/BG/p1.png"
 
-//âπäy
-#define SOUND_BGM PASS"sound/cyber_dungeon_001.wav"
+//sound
+#define SOUND_BGM PASS"sound/cyber_dungeon_001.ogg"
+#define SOUND_TEST_HALF PASS"sound/select01.ogg"
+#define SOUND_TEST_QUARTER PASS"sound/button03a.ogg"
+#define SOUND_TEST_EIGHTH PASS"sound/button05.ogg"
 
 //É^ÉO
 #define TAG_PLAYER_1 1001

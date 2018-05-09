@@ -20,14 +20,19 @@ private:
 	Mix_Music* m_music = NULL;
 	//効果音
 	Mix_Chunk* m_chunk = NULL;
-
+	
+	//音楽か効果音化を判定する変数
 	bool m_musicBool = false;
+
+	//効果音が重なる事ができる最大数
+	int overlapChunkMax = 0;
+	int overlapChunkCount = 0;
 
 public:
 	//Music用コンストラクタ
-	CSound(char* sound,const int bpm);
+	CSound(char* sound,const int bpm,bool musicBool);
 	//Chunk用コンストラクタ
-	CSound(char* sound);
+	CSound(char* sound,const int overlapMax);
 	~CSound();
 
 	void Load();
@@ -46,5 +51,10 @@ public:
 	void fadeOut(int ms);
 
 	//音楽の停止
+	void stop(int channel);
 	void stop();
+
+	//bpmのgetset
+	void setBpm(int bpm);
+	int getBpm();
 };

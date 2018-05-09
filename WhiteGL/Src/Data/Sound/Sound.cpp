@@ -1,6 +1,6 @@
 #include "Sound.h"
 
-CSound::CSound(char* sound, const int bpm)
+CSound::CSound(char* sound, const int bpm,bool musicBool)
 {
 	// SDL初期化
 	SDL_Init(SDL_INIT_AUDIO);
@@ -8,16 +8,18 @@ CSound::CSound(char* sound, const int bpm)
 	// 曲ファイルをロード
 	m_soundName = sound;
 	m_bpm = bpm;
-	Mix_AllocateChannels(10);
+	Mix_AllocateChannels(5);
+	m_musicBool = musicBool;
 }
-CSound::CSound(char* sound)
+CSound::CSound(char* sound, const int overlapMax)
 {
 	// SDL初期化
 	SDL_Init(SDL_INIT_AUDIO);
 	Mix_OpenAudio(22050, AUDIO_S16, 2, 4096);
 	// 曲ファイルをロード
 	m_soundName = sound;
-	Mix_AllocateChannels(10);
+	Mix_AllocateChannels(overlapMax);
+	overlapChunkMax = overlapMax;
 }
 
 CSound::~CSound()
@@ -31,7 +33,7 @@ CSound::~CSound()
 void CSound::Load()
 {
 	//bpmが存在していれば曲判定
-	if (this->m_bpm)
+	if (this->m_musicBool)
 		LoadMusic();
 	//なければ効果音判定
 	else
@@ -41,7 +43,6 @@ void CSound::Load()
 void CSound::LoadMusic()
 {
 	m_music = Mix_LoadMUS(m_soundName);
-	m_musicBool = true;
 }
 
 void CSound::LoadChunk()
@@ -63,23 +64,41 @@ void CSound::Play()
 
 void CSound::playMusic()
 {
-	Mix_PlayMusic(m_music, -1);                // 曲の再生スタート(無限ループ)
+	Mix_PlayMusic(m_music, 1);                // 曲の再生スタート(無限ループ)
 }
 
 void CSound::playChunk()
 {
-	Mix_PlayChannel(-1, m_chunk, 0);            // 効果音1再生
+	Mix_PlayChannel(overlapChunkCount, m_chunk, 0);            // 効果音1再生
+	overlapChunkCount++;
+	if (overlapChunkCount >= overlapChunkMax)
+		overlapChunkCount = 0;
 }
 
 void CSound::fadeOut(int ms)
 {
-	Mix_FadeOutMusic(ms);
+	int i = Mix_FadeOutMusic(ms);
 }
 
+void CSound::stop(int channel)
+{
+	Mix_HaltChannel(channel);
+}
 void CSound::stop()
 {
 	Mix_HaltMusic();
 }
+
+void CSound::setBpm(int bpm)
+{
+	m_bpm = bpm;
+}
+int CSound::getBpm()
+{
+	return m_bpm;
+}
+
+
 /*lib使用なし試用
 #pragma comment(linker, "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
 #pragma comment(lib,"winmm.lib")

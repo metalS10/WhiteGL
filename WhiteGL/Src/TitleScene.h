@@ -13,5 +13,6 @@ public:
 	void update()override;
 	void rendUpdate()override {};
 	void sceneUpdate()override {};
+	void halfUpdate()override;
 
 };
