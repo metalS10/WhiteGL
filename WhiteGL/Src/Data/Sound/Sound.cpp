@@ -64,12 +64,14 @@ void CSound::Play()
 
 void CSound::playMusic()
 {
-	Mix_PlayMusic(m_music, 1);                // 曲の再生スタート(無限ループ)
+	Mix_PlayMusic(m_music, -1);                // 曲の再生スタート(無限ループ)
 }
 
 void CSound::playChunk()
 {
 	Mix_PlayChannel(overlapChunkCount, m_chunk, 0);            // 効果音1再生
+	//Load();
+	//std::cerr << Mix_GetError()<< std::endl;
 	overlapChunkCount++;
 	if (overlapChunkCount >= overlapChunkMax)
 		overlapChunkCount = 0;

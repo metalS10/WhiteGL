@@ -9,6 +9,7 @@ bool CScene::init()
 	m_game.ActionStage(MAX_TEXTURE_NUMBER - 1, 1.0f, true);
 	m_game.allTextureDelete();
 	m_bgmBpm = BGM->getBpm();
+	BGM->Load();
 	this->m_halfNotes = (60 / m_bgmBpm) *60 * 2;
 	this->m_quarterNotes = (60 / m_bgmBpm) * 60 ;
 	this->m_eighthNotes = (60 / m_bgmBpm) * 60 / 2;
@@ -73,6 +74,13 @@ void CScene::cameraShake()
 
 void CScene::update()
 {
+	//音符のタイミングと合わせるためここでBGM再生
+	if (!m_BGMStart)
+	{
+		m_BGMStart = true;
+		BGM->Play();
+	}
+
 	//開始遅延のタイミングになれば
 	if (m_delayCount >= m_startDelay)
 	{
@@ -112,8 +120,8 @@ void CScene::halfUpdate()
 }
 void CScene::qauarterUpdate()
 {
-	std::cerr << 4 << std::endl;
-	se2->Play();
+	//std::cerr << 4 << std::endl;
+	//se2->Play();
 }
 void CScene::eighthUpdate()
 {

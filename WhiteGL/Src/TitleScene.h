@@ -5,7 +5,8 @@
 class CTitle : public CScene
 {
 private:
-
+	bool flipfrop = false;
+	int counter = 0;
 public:
 	CTitle();
 	~CTitle();
@@ -13,6 +14,6 @@ public:
 	void update()override;
 	void rendUpdate()override {};
 	void sceneUpdate()override {};
-	void halfUpdate()override;
+	void qauarterUpdate()override;
 
 };

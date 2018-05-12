@@ -206,12 +206,15 @@ int main(int argc, char *argv[])
 		}
 		//描画用Update
 		scene->rendUpdate();
+		
+
 
 		game.update();
 		fps->GetFPS();//FPSを得る
 		if (fps->draw) {//秒間60フレーム
 			game.update60();
 			scene->sceneUpdate();
+
 			if (game.m_hitStop == 0)
 			{
 				//シーンの更新
@@ -222,6 +225,8 @@ int main(int argc, char *argv[])
 
 		glfwSwapBuffers(window);
 	}
+
+
 
 	SAFE_DELETE(fps);
 	SAFE_DELETE(scene);

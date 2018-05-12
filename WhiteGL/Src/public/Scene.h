@@ -55,6 +55,7 @@ protected:
 
 	int Delay = 0;
 
+	bool m_BGMStart = false;
 public:
 
 	//コンストラクタ
