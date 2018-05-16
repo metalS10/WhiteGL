@@ -103,6 +103,9 @@
     <Filter Include="ソース ファイル\Sound">
       <UniqueIdentifier>{4c14ce53-a933-45fa-be5a-667e93c7f460}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Stage">
+      <UniqueIdentifier>{32bd7369-00dd-4044-b4d2-e07a23e49d4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\main.cpp">
@@ -200,6 +203,9 @@
     </ClCompile>
     <ClCompile Include="Src\Data\Sound\Sound.cpp">
       <Filter>ソース ファイル\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Data\Stage\Stage.cpp">
+      <Filter>ソース ファイル\Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -340,6 +346,9 @@
     </ClInclude>
     <ClInclude Include="Src\Data\Sound\Sound.h">
       <Filter>ソース ファイル\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Data\Stage\Stage.h">
+      <Filter>ソース ファイル\Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

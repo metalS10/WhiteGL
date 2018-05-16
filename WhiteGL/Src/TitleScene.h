@@ -5,8 +5,6 @@
 class CTitle : public CScene
 {
 private:
-	bool flipfrop = false;
-	int counter = 0;
 public:
 	CTitle();
 	~CTitle();

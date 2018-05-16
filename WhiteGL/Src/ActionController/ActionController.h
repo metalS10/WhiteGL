@@ -107,6 +107,71 @@ public:
 	void restart(CCharacter* pChara)override;
 };
 
+//===========================================================
+//回避アクション
+//===========================================================
+class CActionAvoidance : public CAction
+{
+protected:
+	//回避加速度
+	float m_accele = 0.0f;
+
+
+	//ジャンプ中かどうかのフラグ	true...ジャンプ中
+	bool m_isAvoidance = false;
+	
+	//ジャンプ開始フラグ
+	bool m_isAvoidanceStart = false;
+
+	//カウンター
+	//回避行動インターバル
+	int m_intarval = 0;
+	//次発動可能インターバル
+	int m_avoidanceIntarval = 0;
+	int m_counter = 0;
+
+public:
+
+	CActionAvoidance(float accele ,int avoidanceIntarval, int intarval) :
+		m_accele(accele),m_avoidanceIntarval(avoidanceIntarval), m_intarval(intarval) {}
+
+	/**
+	*	@descジャンプ
+	*	@param 加速度
+	*	@param ジャンプブースト
+	*	@tips ジャンプボタンが押された際に値の設定とともに呼び出す
+	*/
+	void start() override
+	{
+		//ジャンプ開始
+		this->m_isAvoidanceStart = true;
+	}
+
+	/**
+	*	@desc 更新処理
+	*	@param ジャンプする対象のキャラクター
+	*	@tips 上キーが押されたらこの関数を呼び出す
+	*/
+	void update(CCharacter* pChara);
+
+	/**
+	*	@desc ジャンプ終了
+	*	@tips 着地した際にこの関数を呼び出す
+	*/
+	void stop() override
+	{
+		//ジャンプ中フラグを下ろす
+		this->m_isAvoidance = false;
+	}
+
+	/**
+	*@desc	アクションの再起動
+	*@param	再起動するキャラクター
+	*@tips	キャラクターのY成分のリセットも行なう
+	*/
+	void restart(CCharacter* pChara)override;
+};
+
 
 
 //====================================================

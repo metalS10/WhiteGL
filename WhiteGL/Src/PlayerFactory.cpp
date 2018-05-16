@@ -67,9 +67,7 @@ std::vector<CAction*>* CPlayerPartsFactory::getActions()
 	//弾発射アクションを設定
 	m_pActions->push_back(new CActionShotBullet((int)ATTACK_TYPE::NORMAL, 20));
 
-	m_pActions->push_back(new CActionShotBullet((int)ATTACK_TYPE::NOR, 20));
-
-	m_pActions->push_back(new CActionShotBullet((int)ATTACK_TYPE::FIREBALL, 20));
+	m_pActions->push_back(new CActionAvoidance(20.0f,9,10));
 	//SuperJump
 	m_pActions->push_back(new CActionJump(12.0f, 1));
 
@@ -150,9 +148,6 @@ void CBasePlayerFactory::settingAnimations(CPlayerCharacter* pPlayerCharacter)
 
 	(*pPlayerCharacter->m_pAnimations)[(int)CPlayerCharacter::STATE::ATTACK]->addChipData(new CChip(192, 0, 64, 64));
 	(*pPlayerCharacter->m_pAnimations)[(int)CPlayerCharacter::STATE::ATTACK]->addChipData(new CChip(256, 0, 64, 64));
-
-	(*pPlayerCharacter->m_pAnimations)[(int)CPlayerCharacter::STATE::NOR]->addChipData(new CChip(192, 0, 64, 64));
-	(*pPlayerCharacter->m_pAnimations)[(int)CPlayerCharacter::STATE::NOR]->addChipData(new CChip(256, 0, 64, 64));
 	
 	//回避中のチップデータ
 	(*pPlayerCharacter->m_pAnimations)[(int)CPlayerCharacter::STATE::AVOIDANCE]->addChipData(new CChip(0, 64, 64, 64));

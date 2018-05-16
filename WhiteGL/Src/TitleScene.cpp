@@ -38,36 +38,5 @@ void CTitle::update()
 
 void CTitle::qauarterUpdate()
 {
-	if (flipfrop)
-	{
-		flipfrop = false;
-		m_game.setScale(CVec2(1.1f, 1.1f), 0);
-	}
-	else
-	{
-		flipfrop = true;
-		m_game.setScale(CVec2(1.0f, 1.0f), 0);
-	}
-
-	switch (counter)
-	{
-	case 0:
-		se1->Play();
-
-		counter++;
-		break;
-	case 1:
-		se2->Play();
-
-		counter++;
-		break;
-	case 2:
-		se3->Play();
-
-		counter = 0;
-		break;
-	default:
-		break;
-	}
-	
+	printf("a");
 }

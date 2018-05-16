@@ -70,7 +70,6 @@ void CSound::playMusic()
 void CSound::playChunk()
 {
 	Mix_PlayChannel(overlapChunkCount, m_chunk, 0);            // Œø‰Ê‰¹1Ä¶
-	//Load();
 	//std::cerr << Mix_GetError()<< std::endl;
 	overlapChunkCount++;
 	if (overlapChunkCount >= overlapChunkMax)

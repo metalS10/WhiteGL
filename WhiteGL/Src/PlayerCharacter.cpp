@@ -96,45 +96,42 @@ void CPlayerCharacter::inputFunc()
 				this->Allfalse();
 			}
 		}
-		if (input->getOnKey(Input::Key::Z) == true)
+		if (this->m_denkiPoint >= 5)
 		{
-			//アニメーションの初期化
-			(*this->m_pAnimations)[(int)STATE::ATTACK]->start();
-			//弾発射(playerFactoryのgetActionsにも注意)
-			(*this->m_pActions)[(int)ACTION::ATTACK]->start();
-
-			this->Allfalse();
-			m_isAttack1 = true;
+			if (input->getOnKey(Input::Key::Z) == true)
+			{
+				//アニメーションの初期化
+				(*this->m_pAnimations)[(int)STATE::ATTACK]->start();
+				//弾発射(playerFactoryのgetActionsにも注意)
+				(*this->m_pActions)[(int)ACTION::ATTACK]->start();
+				this->m_denkiPoint -= 5.0f;
+				this->Allfalse();
+				m_isAttack1 = true;
+			}
 		}
 		if (input->getOnKey(Input::Key::X) == true)
 		{
-			//弾発射(playerFactoryのgetActionsにも注意)
-			(*this->m_pActions)[(int)ACTION::ATTACK_NOR]->start();
+			//ミスしていない&いいタイミングならゲージ回復
+			if (this->musicNotesCounter > 0 && musicNotesMiss <= 0)
+			{
+				this->DPHeal(10.0f);
+			}
+			//悪いタイミングならmiss判定
+			else if(!this->musicNotesCounter > 0)
+			{
+				//Miss!
+				musicNotesMiss = 20;
+				printf("Miss\n");
+			}
+			//回避開始
+			(*this->m_pActions)[(int)ACTION::AVOIDANCE]->start();
 
-			(*this->m_pAnimations)[(int)STATE::NOR]->start();
+			(*this->m_pAnimations)[(int)STATE::AVOIDANCE]->start();
 
-			m_denkiPoint -= 1;
-
-			this->Allfalse();
-			m_isAttack2 = true;
 		}
 		if (input->getOnKey(Input::Key::D) == true)
 		{
 
-		}
-		//DPがあれば(0より上なら)
-		if (this->m_denkiPoint > 0)
-		{
-			if (input->getOnKey(Input::Key::L_SHIFT) == true)
-			{
-				//ジャスト回避受付時間
-				this->m_DodgeTime = 30;
-				//回避状態にする
-				this->m_isAvoidance = true;
-				this->m_denkiPoint -= 5;
-				//最大速度の変更
-				(*m_pPhysicals)[1]->SetMaxSpeed(20, 5);
-			}
 		}
 		//デバッグ用
 		if (input->getOnKey(Input::Key::SPACE) == true)
@@ -143,74 +140,7 @@ void CPlayerCharacter::inputFunc()
 			this->m_hitPoint = 100;
 		}
 	}
-	//回避中なら
-	else if (m_isAvoidance)
-	{
-		if (input->getOnKey(Input::Key::DPAD_LEFT) == true)
-		{
-			//不思議な動きになるので空中での移動を制限
-			if (this->m_isGround)
-			{
-				(*m_pPhysicals)[1]->SetMaxSpeed(20, 5);
-			}
-			else
-			{
-				(*m_pPhysicals)[1]->SetMaxSpeed(10, 0.5f);
-			}
-			this->m_pMove->m_accele.x = -20;
-			this->Allfalse();
-		}
-
-		if (input->getOnKey(Input::Key::DPAD_RIGHT) == true)
-		{
-			//不思議な動きになるので空中での移動を制限
-			if (this->m_isGround)
-			{
-				(*m_pPhysicals)[1]->SetMaxSpeed(20, 5);
-			}
-			else
-			{
-				(*m_pPhysicals)[1]->SetMaxSpeed(10, 0.5f);
-			}
-			this->m_pMove->m_accele.x = 20;
-			this->Allfalse();
-		}
-		if (input->getOnKey(Input::Key::DPAD_UP) == true)
-		{
-			//地面についてたら
-			if (this->m_isGround)
-			{
-				//ジャンプを開始させる
-				(*this->m_pActions)[(int)ACTION::SUPERJUMP]->start();
-
-				this->Allfalse();
-			}
-		}
-		//DPがあれば(0より上なら)
-		if (this->m_denkiPoint > 0)
-		{
-			if (input->getOnKey(Input::Key::L_SHIFT) == true)
-			{
-				//徐々に減っていく
-				this->m_denkiPoint -= 0.1f;
-			}
-			else
-			{
-				//回避状態終わり
-				m_isAvoidance = false;
-				//最大速度の変更
-				(*m_pPhysicals)[1]->SetMaxSpeed(10, 0.5f);
-			}
-		}
-		else
-		{
-			//回避状態終わり
-			m_isAvoidance = false;
-			//最大速度の変更
-			(*m_pPhysicals)[1]->SetMaxSpeed(10, 0.5f);
-		}
-
-	}
+	
 	
 }
 
@@ -234,11 +164,10 @@ void CPlayerCharacter::moveFunc()
 	(*this->m_pActions)[(int)ACTION::ATTACK]->update(this);
 
 
-	(*this->m_pActions)[(int)ACTION::ATTACK_NOR]->update(this);
+	(*this->m_pActions)[(int)ACTION::AVOIDANCE]->update(this);
 
 	(*this->m_pActions)[(int)ACTION::DAMAGE]->update(this);
 
-	(*this->m_pActions)[(int)ACTION::SUPERJUMP]->update(this);
 
 
 	
@@ -383,11 +312,6 @@ void CPlayerCharacter::checkState()
 		{
 			//歩いている
 			m_state = (int)STATE::WALK;
-		}
-		
-		else if (this->m_isAttack2 == true)
-		{
-			m_state = (int)STATE::NOR;
 		}
 		else
 		{
@@ -565,8 +489,6 @@ void CPlayerCharacter::hits(CCharacter* pChara)
 void CPlayerCharacter::Allfalse()
 {
 	this->m_isAttack1 = false;
-	this->m_isAttack2 = false;
-	this->m_isAttack3 = false;
 }
 
 //多重ダメージ防止用(ダメージ判定)
@@ -592,8 +514,15 @@ void CPlayerCharacter::DamageInterval()
 //ジャスト回避
 void CPlayerCharacter::DodgeInterval()
 {
-	if (!this->m_DodgeTime <= 0)
+	//音に合わせるタイミングが来たら
+	if (!this->musicNotesCounter <= 0)
 	{
-		this->m_DodgeTime--;
+		//徐々に合わなくなる
+		this->musicNotesCounter--;
+	}
+	//ミスしたら
+	if(this->musicNotesMiss > 0)
+	{
+		this->musicNotesMiss--;
 	}
 }

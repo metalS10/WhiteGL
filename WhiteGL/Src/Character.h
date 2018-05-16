@@ -169,6 +169,9 @@ public:
 	//ノックバックの距離
 	CVec2 m_Nockback = CVec2(-this->m_CharaLaunchVector.x * 5, 5);
 
+	//タイミングカウンタ―
+	int musicNotesCounter = 0;
+	int musicNotesMiss = 0;
 
 protected:
 
@@ -232,8 +235,6 @@ public:
 	bool m_isDamage = false;
 
 	bool m_isAttack1 = false;
-	bool m_isAttack2 = false;
-	bool m_isAttack3 = false;
 
 	//地面に着地しているかどうか
 	bool m_isGround = false;

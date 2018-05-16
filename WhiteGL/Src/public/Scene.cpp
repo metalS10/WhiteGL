@@ -13,13 +13,12 @@ bool CScene::init()
 	this->m_halfNotes = (60 / m_bgmBpm) *60 * 2;
 	this->m_quarterNotes = (60 / m_bgmBpm) * 60 ;
 	this->m_eighthNotes = (60 / m_bgmBpm) * 60 / 2;
-	se1 = new CSound(SOUND_TEST_HALF,4);
-	se2 = new CSound(SOUND_TEST_QUARTER,8);
-	se3 = new CSound(SOUND_TEST_EIGHTH,16);
-	se1->Load();
-	se2->Load();
-	se3->Load();
-	m_startDelay = 0;
+	m_attackSE = new CSound(SOUND_TEST_HALF,4);
+	m_avoidanceSE = new CSound(SOUND_TEST_QUARTER,8);
+	m_enemyDestroySE = new CSound(SOUND_TEST_EIGHTH,16);
+	m_attackSE->Load();
+	m_avoidanceSE->Load();
+	m_enemyDestroySE->Load();
 	return true;
 }
 
@@ -74,13 +73,11 @@ void CScene::cameraShake()
 
 void CScene::update()
 {
-	//音符のタイミングと合わせるためここでBGM再生
 	if (!m_BGMStart)
 	{
 		m_BGMStart = true;
 		BGM->Play();
 	}
-
 	//開始遅延のタイミングになれば
 	if (m_delayCount >= m_startDelay)
 	{

@@ -169,6 +169,7 @@
     <ClCompile Include="Src\AttackCharacter.cpp" />
     <ClCompile Include="Src\AttackFactory.cpp" />
     <ClCompile Include="Src\Data\Sound\Sound.cpp" />
+    <ClCompile Include="Src\Data\Stage\Stage.cpp" />
     <ClCompile Include="Src\GameMainScene.cpp" />
     <ClCompile Include="Src\Character.cpp" />
     <ClCompile Include="Src\Collision.cpp" />
@@ -207,6 +208,7 @@
     <ClInclude Include="Src\AttackCharacter.h" />
     <ClInclude Include="Src\AttackFactory.h" />
     <ClInclude Include="Src\Data\Sound\Sound.h" />
+    <ClInclude Include="Src\Data\Stage\Stage.h" />
     <ClInclude Include="Src\GameMainScene.h" />
     <ClInclude Include="Src\Character.h" />
     <ClInclude Include="Src\Collision.h" />

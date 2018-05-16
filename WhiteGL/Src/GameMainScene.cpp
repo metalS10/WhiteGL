@@ -13,14 +13,18 @@ CGameMain::~CGameMain()
 
 bool CGameMain::init()
 {
-	SAFE_DELETE(BGM);
-	BGM = new CSound(SOUND_BGM, 180,true);
+	//ステージ1を開く
+	m_stage = new CStage1_1();
+	BGM = m_stage->getBGM(BGM);
 	if (CScene::init() == false)
 	{
 		printf("シーン初期化に失敗");
 		return false;
 	}
-	CMapManager::getInstance()->setMap(MAP_DATA_1);
+	//マップを開く(初期化)
+	m_stage->init();
+	//BGMを開始させる
+	m_BGMStart = false;
 
 	//出撃スケジュールの生成
 	m_pLaunchSchedule = new std::vector<CLaunchTrigger*>();
@@ -74,8 +78,6 @@ bool CGameMain::init()
 
 
 	pPlayerChara->input = input;
-	BGM->Load();
-	BGM->Play();
 	return true;
 }
 
@@ -184,6 +186,9 @@ void CGameMain::sceneUpdate()
 
 void CGameMain::update()
 {
+	//シーンの親更新
+	CScene::update();
+
 	//ゲーム全体を制御する場所
 	gameMain();
 
@@ -213,7 +218,7 @@ void CGameMain::gameMain()
 	//次のステージへ
 	if (pPlayerChara->m_nextStage)
 	{
-		//openMap(MAP_DATA_2, m_pCharacters);
+
 		if (!movingstage)
 		{
 			if (m_game.ActionStage(MAX_TEXTURE_NUMBER - 1, 1.0f, false) == true)
@@ -342,6 +347,8 @@ void CGameMain::StageEnd(bool clear)
 		//フェードイン開始
 		if (!movingstage)
 		{
+			//BGMのフェードアウト
+			BGM->fadeOut(100);
 			if (m_game.ActionStage(MAX_TEXTURE_NUMBER - 1, 1.0f, false) == true)
 			{
 				movingstage = true;
@@ -379,6 +386,14 @@ void CGameMain::openMap(std::string mapData)
 
 	m_game.allTextureDeletenotPlayer();
 
-	CMapManager::getInstance()->setMap(mapData);
+	m_stage = m_stage->changeStage();
+	m_stage->init();
 
+}
+
+void CGameMain::qauarterUpdate()
+{
+	//playerのカウンター
+	pPlayerChara->musicNotesCounter = m_quarterNotes * 0.5f;
+	pPlayerChara->DPHeal(1.0f);
 }

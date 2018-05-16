@@ -221,6 +221,7 @@ int main(int argc, char *argv[])
 				scene->update();
 			}
 		}
+		
 
 
 		glfwSwapBuffers(window);

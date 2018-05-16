@@ -49,9 +49,9 @@ protected:
 	int m_startDelay = 0;
 	int m_delayCount = 0;
 
-	CSound* se1 = NULL;
-	CSound* se2 = NULL;
-	CSound* se3 = NULL;
+	CSound* m_attackSE = NULL;
+	CSound* m_avoidanceSE = NULL;
+	CSound* m_enemyDestroySE = NULL;
 
 	int Delay = 0;
 
@@ -74,6 +74,9 @@ public:
 	//描画用Update
 	virtual void rendUpdate() {};
 
+	//bpm等の少し細かい更新処理
+	//virtual void bpmUpdate();
+
 	//カメラシェイクのセット
 	void SetCameraShake(float range, int count, int frame);
 
@@ -87,4 +90,5 @@ public:
 	virtual void halfUpdate();
 	virtual void qauarterUpdate();
 	virtual void eighthUpdate();
+
 };

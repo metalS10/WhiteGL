@@ -60,6 +60,76 @@ void CActionJump::restart(CCharacter* pChara)
 	this->start();
 }
 
+
+/*
+*	@desc 更新処理(回避移動計算)
+*	@param 回避する対象のキャラクター
+*	@tips 回避キーが押されたらこの関数を呼び出す
+*/
+void CActionAvoidance::update(CCharacter* pChara)
+{
+	if (this->m_isAvoidanceStart == true && m_isAvoidance == false)
+	{
+
+		//最大速度の変更
+		(*pChara->m_pPhysicals)[1]->SetMaxSpeed(m_accele, 5.0f);
+		//x軸の移動速度に値を設定
+		pChara->m_pMove->m_vel.x = this->m_accele * pChara->m_CharaLaunchVector.x;
+		pChara->m_pMove->m_vel.y = 0;
+		pChara->m_isAvoidance = true;
+		//回避フラグをtrueにする
+		this->m_isAvoidance = true;
+	}
+	else if(m_isAvoidance)
+	{
+		//カウンターがインターバルに到達したら
+		m_counter++;
+		//回避行動のインターバル
+		if (m_counter >= m_avoidanceIntarval)
+		{
+			pChara->m_pMove->m_vel.x = 0;
+			pChara->m_isAvoidance = false;
+			(*pChara->m_pPhysicals)[1]->SetMaxSpeed(10.0f, 0.5f);
+			//次発動可能インターバル
+			if (m_counter >= m_intarval)
+			{
+
+				m_counter = 0;
+				//アクション停止
+				m_isAvoidance = false;
+			}
+		}
+		else
+		{
+			//横に回避行動中
+			pChara->m_pMove->m_vel.x = this->m_accele * pChara->m_CharaLaunchVector.x;
+			pChara->m_pMove->m_vel.y = 0;
+
+		}
+	}
+	this->m_isAvoidanceStart = false;
+}
+
+/**
+*@desc	アクションの再起動
+*@param	再起動するキャラクター
+*@tips	キャラクターのY成分のリセットも行う
+*/
+void CActionAvoidance::restart(CCharacter* pChara)
+{
+	//Y成分の速度濾過速度のリセット
+	pChara->m_pMove->m_vel.x = 0.0f;
+	pChara->m_pMove->m_accele.x = 0.0f;
+
+	//アクションの停止
+	this->stop();
+
+	//アクションの開始
+	this->start();
+}
+
+
+
 //=====================================================
 //敵死亡アクション
 //=====================================================
@@ -421,8 +491,6 @@ void CActionShotBullet::update(CCharacter* pChara)
 			if (this->m_shotCount == 0)
 			{
 				pChara->m_isAttack1 = false;
-				pChara->m_isAttack2 = false;
-
 				this->m_inAction = false;
 			}
 		}
@@ -749,7 +817,6 @@ void CActionShotEnemyBullet::update(CCharacter* pChara)
 			if (this->m_shotCount == 0)
 			{
 				pChara->m_isAttack1 = false;
-				pChara->m_isAttack2 = false;
 
 			}
 		}

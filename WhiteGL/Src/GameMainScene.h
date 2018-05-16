@@ -3,6 +3,7 @@
 #include "PlayerFactory.h"
 #include "LaunchTrigger.h"
 #include "TitleScene.h"
+#include "Data\Stage\Stage.h"
 
 class CGameMain : public CScene
 {
@@ -15,6 +16,7 @@ private:
 	std::vector<CCharacter*>* m_pCharacters;
 	CPlayerCharacter* pPlayerChara;
 	int m_EnemyNameInterval = 0;
+	CStage* m_stage = NULL;
 	
 	
 public:
@@ -24,13 +26,20 @@ public:
 	void update()override;
 	void rendUpdate()override;
 	void sceneUpdate()override;
+	void qauarterUpdate()override;
 
-
+	//ゲームの主な動きの更新
 	void gameMain();
+	//横スクロール
 	void scroll();
-
+	
+	//ステージの終了処理
 	void StageEnd(bool clear);
+	//TiledMapの読み込み&開く
 	void openMap(std::string mapData);
+
+	void setBGM();
+
 
 
 	/**

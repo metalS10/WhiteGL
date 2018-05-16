@@ -42,11 +42,10 @@ public:
 		DAMAGE		=	2,
 		FALING		=	3,
 		ATTACK		=	4,
-		NOR			=	5,
-		AVOIDANCE	=	6,
-		DASH		=	7,
-		SUPERJUMP	=	8,
-		SUPERFALING	=	9,
+		AVOIDANCE	=	5,
+		DASH		=	6,
+		SUPERJUMP	=	7,
+		SUPERFALING	=	8,
 	};
 
 	//プレイヤーが行えるアクション
@@ -54,9 +53,8 @@ public:
 	{
 		JUMP			=	0,
 		ATTACK			=	1,
-		ATTACK_NOR		=	2,
-		DAMAGE			=	3,
-		SUPERJUMP		=	4,
+		AVOIDANCE		=	2,
+		DAMAGE			=	3
 	};
 
 	//==================================================================
@@ -115,7 +113,6 @@ public:
 	{
 		//ジャンプを停止させる
 		(*this->m_pActions)[(int)ACTION::JUMP]->stop();
-		(*this->m_pActions)[(int)ACTION::SUPERJUMP]->stop();
 	}
 	void collisionTopCallback(int event)override {}
 	void collisionRightCallback(int event)override {}
