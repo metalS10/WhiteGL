@@ -2,11 +2,11 @@
 *	main.cpp
 *		2017/09/29	Mats
 */
-#include "MSlib.h"
-#include "PlayerFactory.h"
-#include "FPS.h"
-#include "LaunchTrigger.h"
-#include "TitleScene.h"
+#include "AllController/AllController.h"
+#include "Factory/PlayerFactory/PlayerFactory.h"
+#include "Data/FPS.h"
+#include "Data/LaunchTrigger/LaunchTrigger.h"
+#include "Scene/TitleScene/TitleScene.h"
 
 using namespace MS;
 CScene* scene;

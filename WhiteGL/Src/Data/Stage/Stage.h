@@ -1,7 +1,7 @@
 #pragma once
 #include "../Sound/Sound.h"
 #include "../../Constants.h"
-#include "../../Map.h"
+#include "../Map/Map.h"
 
 //ステージ毎の動きを動かす
 
