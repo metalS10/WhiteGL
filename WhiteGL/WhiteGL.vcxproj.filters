@@ -28,9 +28,6 @@
     <Filter Include="ソース ファイル\Character">
       <UniqueIdentifier>{e4c63605-2044-4640-9f03-a8b9e34453cc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Collision">
-      <UniqueIdentifier>{5dfc2a19-40cf-4ff2-a1c6-8fed6eeecddd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Character\EnemyBulletCharacter">
       <UniqueIdentifier>{b5f80d01-bdaa-41bc-a06e-2f6d4dda8039}</UniqueIdentifier>
     </Filter>
@@ -100,9 +97,6 @@
     <Filter Include="ソース ファイル\Stage">
       <UniqueIdentifier>{32bd7369-00dd-4044-b4d2-e07a23e49d4d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Character\RideSoundCharacter">
-      <UniqueIdentifier>{5cd243e6-c6b9-4073-8d62-811fbb4e3416}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\AllController">
       <UniqueIdentifier>{76e635b3-e7a4-4f95-8260-08e89660dfdd}</UniqueIdentifier>
     </Filter>
@@ -114,6 +108,18 @@
     </Filter>
     <Filter Include="ソース ファイル\Scene\TitleScene">
       <UniqueIdentifier>{b7966a61-9811-412b-8f67-3708a2bf7fc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component">
+      <UniqueIdentifier>{aa49e07d-795a-4dad-b304-30475db662ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Collision">
+      <UniqueIdentifier>{5dfc2a19-40cf-4ff2-a1c6-8fed6eeecddd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Notes">
+      <UniqueIdentifier>{2c820135-48ca-4e30-aa89-c251e55ffd99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Character\NotesCharacter">
+      <UniqueIdentifier>{6d170e57-db16-4817-9914-7110e16b07b9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -141,9 +147,6 @@
     <ClCompile Include="Src\Data\Stage\Stage.cpp">
       <Filter>ソース ファイル\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Character\RideSoundCharacter\RideSoundCharacter.cpp">
-      <Filter>ソース ファイル\Character\RideSoundCharacter</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Data\ActionController\ActionController.cpp">
       <Filter>ソース ファイル\ActionController</Filter>
     </ClCompile>
@@ -166,10 +169,10 @@
       <Filter>ソース ファイル\Character\EnemyBulletCharacter</Filter>
     </ClCompile>
     <ClCompile Include="Src\Data\Collision\Collision.cpp">
-      <Filter>ソース ファイル\Collision</Filter>
+      <Filter>ソース ファイル\Component\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Src\Data\CollisionArea\CollisionArea.cpp">
-      <Filter>ソース ファイル\Collision</Filter>
+      <Filter>ソース ファイル\Component\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Src\Factory\AttackFactory\AttackFactory.cpp">
       <Filter>ソース ファイル\Factory\AttackFactory</Filter>
@@ -179,9 +182,6 @@
     </ClCompile>
     <ClCompile Include="Src\Factory\EnemyFactory\EnemyFactory.cpp">
       <Filter>ソース ファイル\Factory\EnemyFactory</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Factory\GimmickFactory\GimmickFactory.cpp">
-      <Filter>ソース ファイル\Factory\GimmickFactory</Filter>
     </ClCompile>
     <ClCompile Include="Src\Factory\PlayerFactory\PlayerFactory.cpp">
       <Filter>ソース ファイル\Factory\PlayerFactory</Filter>
@@ -218,6 +218,15 @@
     </ClCompile>
     <ClCompile Include="Src\Scene\TitleScene\TitleScene.cpp">
       <Filter>ソース ファイル\Scene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Factory\GimmickFactory\GimmickFactory.cpp">
+      <Filter>ソース ファイル\Factory\GimmickFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Data\Notes\Notes.cpp">
+      <Filter>ソース ファイル\Component\Notes</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Character\NotesCharacter\NotesCharacter.cpp">
+      <Filter>ソース ファイル\Character\NotesCharacter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -275,9 +284,6 @@
     <ClInclude Include="Src\Data\Stage\Stage.h">
       <Filter>ソース ファイル\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Character\RideSoundCharacter\RideSoundCharacter.h">
-      <Filter>ソース ファイル\Character\RideSoundCharacter</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Data\ActionController\ActionController.h">
       <Filter>ソース ファイル\ActionController</Filter>
     </ClInclude>
@@ -300,10 +306,10 @@
       <Filter>ソース ファイル\Character\EnemyBulletCharacter</Filter>
     </ClInclude>
     <ClInclude Include="Src\Data\Collision\Collision.h">
-      <Filter>ソース ファイル\Collision</Filter>
+      <Filter>ソース ファイル\Component\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Src\Data\CollisionArea\CollisionArea.h">
-      <Filter>ソース ファイル\Collision</Filter>
+      <Filter>ソース ファイル\Component\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Src\Factory\AttackFactory\AttackFactory.h">
       <Filter>ソース ファイル\Factory\AttackFactory</Filter>
@@ -313,9 +319,6 @@
     </ClInclude>
     <ClInclude Include="Src\Factory\EnemyFactory\EnemyFactory.h">
       <Filter>ソース ファイル\Factory\EnemyFactory</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Factory\GimmickFactory\GimmickFactory.h">
-      <Filter>ソース ファイル\Factory\GimmickFactory</Filter>
     </ClInclude>
     <ClInclude Include="Src\Factory\PlayerFactory\PlayerFactory.h">
       <Filter>ソース ファイル\Factory\PlayerFactory</Filter>
@@ -358,6 +361,15 @@
     </ClInclude>
     <ClInclude Include="Src\Data\FPS.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Factory\GimmickFactory\GimmickFactory.h">
+      <Filter>ソース ファイル\Factory\GimmickFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Data\Notes\Notes.h">
+      <Filter>ソース ファイル\Component\Notes</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Character\NotesCharacter\NotesCharacter.h">
+      <Filter>ソース ファイル\Character\NotesCharacter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

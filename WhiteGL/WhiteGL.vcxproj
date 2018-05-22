@@ -171,13 +171,14 @@
     <ClCompile Include="Src\Character\EnemyBulletCharacter\EnemyBulletCharacter.cpp" />
     <ClCompile Include="Src\Character\EnemyCharacter\EnemyCharacter.cpp" />
     <ClCompile Include="Src\Character\GimmickCharacter\GimmickCharacter.cpp" />
+    <ClCompile Include="Src\Character\NotesCharacter\NotesCharacter.cpp" />
     <ClCompile Include="Src\Character\PlayerCharacter\PlayerCharacter.cpp" />
-    <ClCompile Include="Src\Character\RideSoundCharacter\RideSoundCharacter.cpp" />
     <ClCompile Include="Src\Data\ActionController\ActionController.cpp" />
     <ClCompile Include="Src\Data\CollisionArea\CollisionArea.cpp" />
     <ClCompile Include="Src\Data\Collision\Collision.cpp" />
     <ClCompile Include="Src\Data\LaunchTrigger\LaunchTrigger.cpp" />
     <ClCompile Include="Src\Data\Map\Map.cpp" />
+    <ClCompile Include="Src\Data\Notes\Notes.cpp" />
     <ClCompile Include="Src\Data\Sound\Sound.cpp" />
     <ClCompile Include="Src\Data\Stage\Stage.cpp" />
     <ClCompile Include="Src\Factory\AttackFactory\AttackFactory.cpp" />
@@ -210,8 +211,8 @@
     <ClInclude Include="Src\Character\EnemyBulletCharacter\EnemyBulletCharacter.h" />
     <ClInclude Include="Src\Character\EnemyCharacter\EnemyCharacter.h" />
     <ClInclude Include="Src\Character\GimmickCharacter\GimmickCharacter.h" />
+    <ClInclude Include="Src\Character\NotesCharacter\NotesCharacter.h" />
     <ClInclude Include="Src\Character\PlayerCharacter\PlayerCharacter.h" />
-    <ClInclude Include="Src\Character\RideSoundCharacter\RideSoundCharacter.h" />
     <ClInclude Include="Src\Data\ActionController\ActionController.h" />
     <ClInclude Include="Src\Data\CollisionArea\CollisionArea.h" />
     <ClInclude Include="Src\Data\Collision\Collision.h" />
@@ -219,6 +220,7 @@
     <ClInclude Include="Src\Data\LaunchData\LaunchData.h" />
     <ClInclude Include="Src\Data\LaunchTrigger\LaunchTrigger.h" />
     <ClInclude Include="Src\Data\Map\Map.h" />
+    <ClInclude Include="Src\Data\Notes\Notes.h" />
     <ClInclude Include="Src\Data\Sound\Sound.h" />
     <ClInclude Include="Src\Data\Stage\Stage.h" />
     <ClInclude Include="Src\Factory\AttackFactory\AttackFactory.h" />

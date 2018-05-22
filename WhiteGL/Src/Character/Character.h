@@ -8,7 +8,8 @@
 #include "../Data/Collision/Collision.h"
 #include "../Data/CollisionArea/CollisionArea.h"
 #include "../gameInput.h"
-#include "../Data/Map/Map.h"
+#include "../Data/Map/Map.h"]
+#include "../Data/Notes/Notes.h"
 #include "../AllController/AllController.h"
 
 //===============================================
@@ -22,6 +23,7 @@ enum class CHARACTER_TYPE : int
 	ATTACK = 2,		//UŒ‚
 	GIMMICK = 3,		//ƒMƒ~ƒbƒN
 	ENEMYBULLET = 4,		//“G‚ÌUŒ‚
+	NOTES	=5		//‰¹‚Éæ‚é
 
 };
 
@@ -63,6 +65,9 @@ public:
 
 	//Õ“Ë”»’è‹óŠÔŒQ
 	std::vector<CCollisionArea*>* m_pCollisionAreas = NULL;
+
+	//‰¹‚É‡‚í‚¹‚Ä“®‚­‚à‚Ì‚ÌŒQ
+	std::vector<CNotes*>* m_pNotes = NULL;
 
 	int m_texID = 0;
 

@@ -28,6 +28,12 @@ CCharacter::~CCharacter()
 		SAFE_DELETE(pAnimation);
 	}
 	SAFE_DELETE(this->m_pAnimations);
+
+	for (CNotes* pNotes: (*m_pNotes))
+	{
+		SAFE_DELETE(pNotes);
+	}
+	SAFE_DELETE(this->m_pNotes);
 }
 
 //‰Šú‰»ˆ—

@@ -38,6 +38,8 @@
 #define START_ENEMY_BULLET_TEXTURE_NUMBER START_ENEMY_TEXTURE_NUMBER+1000
 //ギミック
 #define START_GIMMICK_TEXTURE_NUMBER START_ENEMY_BULLET_TEXTURE_NUMBER + 1000
+//音に合わせるやつ
+#define START_NOTES_TEXTURE_NUMBER START_GIMMICK_TEXTURE_NUMBER + 1000
 //マップ描画
 #define START_MAP_TEXTURE_NUMBER 500
 //--------------------------------------------------------------------------------
