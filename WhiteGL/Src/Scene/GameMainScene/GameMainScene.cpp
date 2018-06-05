@@ -29,7 +29,7 @@ bool CGameMain::init()
 	//出撃スケジュールの生成
 	m_pLaunchSchedule = new std::vector<CLaunchTrigger*>();
 
-	//これで削除していないとステージを二度遊んだ時にバグが出る(最強の敵)
+	//一度削除していないとステージを二度遊んだ時にバグが出る
 	CLaunchScheduler::getInstance()->removeInstance();
 
 	//出撃スケジュールを出撃スケジューラーに取り付ける
@@ -55,7 +55,14 @@ bool CGameMain::init()
 	//CCharacterAggregateにプレイヤーを追加
 	CCharacterAggregate::getInstance()->add(pPlayerChara);
 
+
+	notes = new CNotesUI();
+
+
 	m_game.setupTexture(pPlayerChara->texPass, TEX_TYPE::PNG, pPlayerChara->m_texID, pPlayerChara->m_pMove->m_pos, (*pPlayerChara->m_pAnimations)[0]->getCurrentChip());
+
+	m_game.setupTexture(notes->texPas, TEX_TYPE::PNG, 2, pPlayerChara->m_pMove->m_pos, (*notes->m_pAnimations)[0]->getCurrentChip());
+
 
 	//UIのバック
 	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, UI_BACK_ID, CVec2(WINDOW_RIGHT*0.125f, WINDOW_TOP*0.94f), CVec4(0.0f, 34.0f, 300.0f, 80.0f));
@@ -77,6 +84,7 @@ bool CGameMain::init()
 	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, BAR_ENEMYHP_ID, CVec2(WINDOW_RIGHT*0.35f, WINDOW_TOP*0.92f), CVec4(0.0f, 0.0f, 200.0f, 10.0f));
 
 
+
 	pPlayerChara->input = input;
 	return true;
 }
@@ -84,6 +92,7 @@ bool CGameMain::init()
 //描画用Update
 void CGameMain::rendUpdate()
 {
+	CScene::rendUpdate();
 	//ステージ終了していなければ
 	if (!m_stageEnd)
 	{
@@ -93,6 +102,8 @@ void CGameMain::rendUpdate()
 			m_game.setScale(pChara->m_scale, pChara->m_texID);
 			m_game.setPosition(pChara->m_pMove->m_pos, pChara->m_texID);
 		}
+		m_game.setTextureRect((*notes->m_pAnimations)[notes->m_state]->getCurrentChip(), 2);
+		m_game.setPosition(pPlayerChara->m_pMove->m_pos, pPlayerChara->m_texID);
 	}
 
 
@@ -176,6 +187,7 @@ void CGameMain::sceneUpdate()
 
 	scroll();
 	this->cameraShake();
+	notes->update();
 
 	cameraPosX += cameraMoveX;
 	cameraPosY += cameraMoveY;
@@ -190,7 +202,7 @@ void CGameMain::sceneUpdate()
 //ヒットストップが存在するので注意
 void CGameMain::update()
 {
-
+	printf("%d\n",pPlayerChara->musicNotesCounter );
 	//ゲーム全体を制御する場所
 	gameMain();
 
@@ -391,13 +403,17 @@ void CGameMain::openMap(std::string mapData)
 	m_game.allTextureDeletenotPlayer();
 
 	m_stage = m_stage->changeStage();
+	BGM = m_stage->getBGM(BGM);
 	m_stage->init();
+	m_BGMStart = false;
 
 }
 
 void CGameMain::qauarterUpdate()
 {
 	//playerのカウンター
-	pPlayerChara->musicNotesCounter = m_quarterNotes * 0.5f;
+	pPlayerChara->musicNotesCounter = 10;
 	pPlayerChara->DPHeal(1.0f);
+	if(notes != NULL)
+		notes->quarter();
 }

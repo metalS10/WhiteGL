@@ -29,6 +29,12 @@ std::vector<CAction*>* CAttackPartsFactory::getActions()
 	return new std::vector<CAction*>;
 }
 
+std::vector<CNotes*>* CAttackPartsFactory::getNotes()
+{
+	//s‚¦‚éƒAƒNƒVƒ‡ƒ“ŒQ‚ğì¬
+	return new std::vector<CNotes*>;
+}
+
 
 CBody* CAttackPartsFactory::getBody()
 {
@@ -57,6 +63,8 @@ CCharacter* CAttackFactory::create(float posX, float posY, CVec2 vec)
 	this->settingPhysicals(pChara);
 
 	this->settingActions(pChara, vec);
+
+	this->settingNotes(pChara);
 
 	this->settingBody(pChara);
 
@@ -124,6 +132,11 @@ void CNormalAttackFactory::settingActions(CAttackCharacter* pChara, CVec2 vec)
 	//“G€–SƒAƒNƒVƒ‡ƒ“‚ğ0”Ô‚Åİ’è
 	//pos‚ÉŒü‚«‚ğŒ“‚Ë”õ‚¦‚½player‚Ìæ‚ğ“n‚µ‚Ä‚¢‚é
 	pChara->m_pActions->push_back(new CActionMoveStraight(pChara->m_pMove->m_pos + (vec * 60.0f), velX));
+}
+
+void CNormalAttackFactory::settingNotes(CAttackCharacter* pChara)
+{
+
 }
 
 
@@ -284,6 +297,11 @@ void CNorAttackFactory::settingActions(CAttackCharacter* pChara, CVec2 vec)
 	//“G€–SƒAƒNƒVƒ‡ƒ“‚ğ0”Ô‚Åİ’è
 	//pos‚ÉŒü‚«‚ğŒ“‚Ë”õ‚¦‚½player‚Ìæ‚ğ“n‚µ‚Ä‚¢‚é
 	pChara->m_pActions->push_back(new CActionMoveStraight(pChara->m_pMove->m_pos + (vec * 30.0f), velX));
+
+}
+
+void CNorAttackFactory::settingNotes(CAttackCharacter* pChara)
+{
 
 }
 

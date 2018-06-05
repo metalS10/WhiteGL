@@ -1,7 +1,11 @@
 #pragma once
 #include "../Character.h"
 
-
+//動きタイプ
+enum class NOTES_TYPE : int
+{
+	ANIMATION = 0,
+};
 //=====================================================
 //
 //音に合わせて動くキャラクターの基底クラスとなるクラス

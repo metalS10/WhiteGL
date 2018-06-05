@@ -18,6 +18,9 @@ public:
 	//アクション取得
 	std::vector<CAction*>* getActions()override;
 
+	//音に合わせて動くアクション取得
+	std::vector<CNotes*>* getNotes() override;
+
 	//実体取得
 	CBody* getBody()override;
 
@@ -46,6 +49,7 @@ protected:
 	virtual void settingAnimations(CGimmickCharacter* pChara) = 0;
 	virtual void settingPhysicals(CGimmickCharacter* pChara) = 0;
 	virtual void settingActions(CGimmickCharacter* pChara) = 0;
+	virtual void settingNotes(CGimmickCharacter* pChara) = 0;
 	virtual void settingBody(CGimmickCharacter* pChara) = 0;
 	virtual void settingCollisionAreas(CGimmickCharacter* pChara) = 0;
 	virtual void settingInitialize(CGimmickCharacter* pChara) = 0;
@@ -69,6 +73,7 @@ public:
 		pChara->m_pMove = pFactory.getMove();
 		pChara->m_pPhysicals = pFactory.getPhysicals();
 		pChara->m_pActions = pFactory.getActions();
+		pChara->m_pNotes = pFactory.getNotes();
 		pChara->m_pBody = pFactory.getBody();
 		pChara->m_pCollisionAreas = pFactory.getCollisionAreas();
 
@@ -90,6 +95,7 @@ public:
 		pChara->m_pMove = pFactory.getMove();
 		pChara->m_pPhysicals = pFactory.getPhysicals();
 		pChara->m_pActions = pFactory.getActions();
+		pChara->m_pNotes = pFactory.getNotes();
 		pChara->m_pBody = pFactory.getBody();
 		pChara->m_pCollisionAreas = pFactory.getCollisionAreas();
 
@@ -111,6 +117,7 @@ public:
 		pChara->m_pMove = pFactory.getMove();
 		pChara->m_pPhysicals = pFactory.getPhysicals();
 		pChara->m_pActions = pFactory.getActions();
+		pChara->m_pNotes = pFactory.getNotes();
 		pChara->m_pBody = pFactory.getBody();
 		pChara->m_pCollisionAreas = pFactory.getCollisionAreas();
 
@@ -132,6 +139,7 @@ public:
 		pChara->m_pMove = pFactory.getMove();
 		pChara->m_pPhysicals = pFactory.getPhysicals();
 		pChara->m_pActions = pFactory.getActions();
+		pChara->m_pNotes = pFactory.getNotes();
 		pChara->m_pBody = pFactory.getBody();
 		pChara->m_pCollisionAreas = pFactory.getCollisionAreas();
 
@@ -152,6 +160,7 @@ public:
 		pChara->m_pMove = pFactory.getMove();
 		pChara->m_pPhysicals = pFactory.getPhysicals();
 		pChara->m_pActions = pFactory.getActions();
+		pChara->m_pNotes = pFactory.getNotes();
 		pChara->m_pBody = pFactory.getBody();
 		pChara->m_pCollisionAreas = pFactory.getCollisionAreas();
 
@@ -172,6 +181,7 @@ public:
 		pChara->m_pMove = pFactory.getMove();
 		pChara->m_pPhysicals = pFactory.getPhysicals();
 		pChara->m_pActions = pFactory.getActions();
+		pChara->m_pNotes = pFactory.getNotes();
 		pChara->m_pBody = pFactory.getBody();
 		pChara->m_pCollisionAreas = pFactory.getCollisionAreas();
 
@@ -194,6 +204,8 @@ protected:
 
 	void settingActions(CGimmickCharacter* pChara)override;
 
+	void settingNotes(CGimmickCharacter* pChara)override;
+
 	void settingBody(CGimmickCharacter* pChara)override;
 
 	//衝突判定空間の設定
@@ -214,6 +226,8 @@ protected:
 	void settingPhysicals(CGimmickCharacter* pChara)override;
 
 	void settingActions(CGimmickCharacter* pChara)override;
+
+	void settingNotes(CGimmickCharacter* pChara)override;
 
 	void settingBody(CGimmickCharacter* pChara)override;
 
@@ -236,6 +250,8 @@ protected:
 
 	void settingActions(CGimmickCharacter* pChara)override;
 
+	void settingNotes(CGimmickCharacter* pChara)override;
+
 	void settingBody(CGimmickCharacter* pChara)override;
 
 	//衝突判定空間の設定
@@ -257,6 +273,8 @@ protected:
 
 	void settingActions(CGimmickCharacter* pChara)override;
 
+	void settingNotes(CGimmickCharacter* pChara)override;
+
 	void settingBody(CGimmickCharacter* pChara)override;
 
 	//衝突判定空間の設定
@@ -274,6 +292,7 @@ protected:
 	void settingAnimations(CGimmickCharacter* pChara)override;
 	void settingPhysicals(CGimmickCharacter* pChara)override;
 	void settingActions(CGimmickCharacter* pChara)override;
+	void settingNotes(CGimmickCharacter* pChara)override;
 	void settingBody(CGimmickCharacter* pChara)override;
 	void settingCollisionAreas(CGimmickCharacter* pChara)override;
 	void settingInitialize(CGimmickCharacter* pChara)override;
@@ -288,6 +307,7 @@ protected:
 	void settingAnimations(CGimmickCharacter* pChara)override;
 	void settingPhysicals(CGimmickCharacter* pChara)override;
 	void settingActions(CGimmickCharacter* pChara)override;
+	void settingNotes(CGimmickCharacter* pChara)override;
 	void settingBody(CGimmickCharacter* pChara)override;
 	void settingCollisionAreas(CGimmickCharacter* pChara)override;
 	void settingInitialize(CGimmickCharacter* pChara)override;
@@ -302,6 +322,7 @@ protected:
 	void settingAnimations(CGimmickCharacter* pChara)override;
 	void settingPhysicals(CGimmickCharacter* pChara)override;
 	void settingActions(CGimmickCharacter* pChara)override;
+	void settingNotes(CGimmickCharacter* pChara)override;
 	void settingBody(CGimmickCharacter* pChara)override;
 	void settingCollisionAreas(CGimmickCharacter* pChara)override;
 	void settingInitialize(CGimmickCharacter* pChara)override;
@@ -316,6 +337,7 @@ protected:
 	void settingAnimations(CGimmickCharacter* pChara)override;
 	void settingPhysicals(CGimmickCharacter* pChara)override;
 	void settingActions(CGimmickCharacter* pChara)override;
+	void settingNotes(CGimmickCharacter* pChara)override;
 	void settingBody(CGimmickCharacter* pChara)override;
 	void settingCollisionAreas(CGimmickCharacter* pChara)override;
 	void settingInitialize(CGimmickCharacter* pChara)override;
@@ -330,6 +352,7 @@ protected:
 	void settingAnimations(CGimmickCharacter* pChara)override;
 	void settingPhysicals(CGimmickCharacter* pChara)override;
 	void settingActions(CGimmickCharacter* pChara)override;
+	void settingNotes(CGimmickCharacter* pChara)override;
 	void settingBody(CGimmickCharacter* pChara)override;
 	void settingCollisionAreas(CGimmickCharacter* pChara)override;
 	void settingInitialize(CGimmickCharacter* pChara)override;

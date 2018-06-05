@@ -18,6 +18,10 @@ public:
 	//アクション取得
 	std::vector<CAction*>* getActions()override;
 
+
+	//音に合わせて動くアクション取得
+	std::vector<CNotes*>* getNotes() override;
+
 	//実体取得
 	CBody* getBody()override;
 
@@ -53,6 +57,8 @@ protected:
 	virtual void settingPhysicals(CEnemyCharacter* pChara) = 0;
 
 	virtual void settingActions(CEnemyCharacter* pChara) = 0;
+
+	virtual void settingNotes(CEnemyCharacter* pChara) = 0;
 
 	virtual void settingBody(CEnemyCharacter* pChara) = 0;
 
@@ -113,6 +119,8 @@ protected:
 
 	void settingActions(CEnemyCharacter* pChara)override;
 
+	void settingNotes(CEnemyCharacter* pChara)override;
+
 	void settingBody(CEnemyCharacter* pChara)override;
 
 	//衝突判定空間の設定
@@ -136,6 +144,8 @@ protected:
 	void settingPhysicals(CEnemyCharacter* pChara)override;
 
 	void settingActions(CEnemyCharacter* pChara)override;
+
+	void settingNotes(CEnemyCharacter* pChara)override;
 
 	void settingBody(CEnemyCharacter* pChara)override;
 
@@ -161,6 +171,8 @@ protected:
 
 	void settingActions(CEnemyCharacter* pChara)override;
 
+	void settingNotes(CEnemyCharacter* pChara)override;
+
 	void settingBody(CEnemyCharacter* pChara)override;
 
 	//衝突判定空間の設定
@@ -184,6 +196,8 @@ protected:
 	void settingPhysicals(CEnemyCharacter* pChara)override;
 
 	void settingActions(CEnemyCharacter* pChara)override;
+
+	void settingNotes(CEnemyCharacter* pChara)override;
 
 	void settingBody(CEnemyCharacter* pChara)override;
 
@@ -210,6 +224,8 @@ protected:
 
 	void settingActions(CEnemyCharacter* pChara)override;
 
+	void settingNotes(CEnemyCharacter* pChara)override;
+
 	void settingBody(CEnemyCharacter* pChara)override;
 
 	//衝突判定空間の設定
@@ -233,6 +249,8 @@ protected:
 	void settingPhysicals(CEnemyCharacter* pChara)override;
 
 	void settingActions(CEnemyCharacter* pChara)override;
+
+	void settingNotes(CEnemyCharacter* pChara)override;
 
 	void settingBody(CEnemyCharacter* pChara)override;
 

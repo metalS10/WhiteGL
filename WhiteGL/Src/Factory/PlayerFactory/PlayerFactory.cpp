@@ -73,6 +73,11 @@ std::vector<CAction*>* CPlayerPartsFactory::getActions()
 
 	return m_pActions;
 }
+std::vector<CNotes*>* CPlayerPartsFactory::getNotes()
+{
+	return NULL;
+}
+
 
 CBody* CPlayerPartsFactory::getBody()
 {
@@ -97,6 +102,8 @@ CCharacter* CPlayerFactory::create(float posX,float posY)
 	this->settingPhysicals(pChara);
 
 	this->settingActions(pChara);
+
+	this->settingNotes(pChara);
 
 	this->settingBody(pChara);
 
@@ -176,10 +183,17 @@ void CBasePlayerFactory::settingActions(CPlayerCharacter* pPlayerCharacter)
 
 }
 
+
 void CBasePlayerFactory::settingBody(CPlayerCharacter* pPlayerCharacter)
 {
 	pPlayerCharacter->m_pBody->set(-28, 32, 28, -32);
 }
+
+void CBasePlayerFactory::settingNotes(CPlayerCharacter* pPlayerCharacter)
+{
+
+}
+
 
 void CBasePlayerFactory::settingInitialize(CPlayerCharacter* pPlayerCharacter)
 {

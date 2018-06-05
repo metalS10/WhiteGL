@@ -29,6 +29,12 @@ std::vector<CAction*>* CEnemyBulletPartsFactory::getActions()
 	return new std::vector<CAction*>;
 }
 
+std::vector<CNotes*>* CEnemyBulletPartsFactory::getNotes()
+{
+	//行えるアクション群を作成
+	return new std::vector<CNotes*>;
+}
+
 CBody* CEnemyBulletPartsFactory::getBody()
 {
 	return new CBody();
@@ -50,7 +56,9 @@ CCharacter* CEnemyBulletFactory::create(float posX, float posY, CVec2 vec)
 
 	this->settingPhysicals(pChara);
 
-	this->settingActions(pChara,vec);
+	this->settingActions(pChara, vec);
+
+	this->settingNotes(pChara);
 
 	this->settingBody(pChara);
 
@@ -110,6 +118,11 @@ void CNormalEnemyBulletFactory::settingActions(CEnemyBulletCharacter* pChara, CV
 {
 	//敵死亡アクションを0番で設定
 	pChara->m_pActions->push_back(new CActionMoveStraight(pChara->m_pMove->m_pos, vec.x,vec.y));
+
+}
+
+void CNormalEnemyBulletFactory::settingNotes(CEnemyBulletCharacter* pChara)
+{
 
 }
 
@@ -256,6 +269,11 @@ void CCustomEnemyBulletFactory::settingActions(CEnemyBulletCharacter* pChara, CV
 {
 	//敵死亡アクションを0番で設定
 	pChara->m_pActions->push_back(new CActionCurve(pChara->m_pMove->m_pos, vec.x,vec.y));
+
+}
+
+void CCustomEnemyBulletFactory::settingNotes(CEnemyBulletCharacter* pChara)
+{
 
 }
 
@@ -408,6 +426,11 @@ void CFireBallEnemyBulletFactory::settingActions(CEnemyBulletCharacter* pChara, 
 	pChara->m_pActions->push_back(new CActionJump(4.0f,3.0f));
 
 	pChara->m_pActions->push_back(new CActionMoveStraight(pChara->m_pMove->m_pos, velX));
+}
+
+void CFireBallEnemyBulletFactory::settingNotes(CEnemyBulletCharacter* pChara)
+{
+
 }
 
 //実体の設定

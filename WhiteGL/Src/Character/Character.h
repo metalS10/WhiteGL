@@ -8,9 +8,11 @@
 #include "../Data/Collision/Collision.h"
 #include "../Data/CollisionArea/CollisionArea.h"
 #include "../gameInput.h"
-#include "../Data/Map/Map.h"]
+#include "../Data/Map/Map.h"
 #include "../Data/Notes/Notes.h"
 #include "../AllController/AllController.h"
+#include "../Data/Sound/Sound.h"
+
 
 //===============================================
 //キャラクタータイプ
@@ -46,6 +48,11 @@ public:
 	//更新処理
 	virtual void update();
 
+	virtual void half();
+	virtual void quarter();
+	virtual void eighth();
+
+
 	void setTexture(const char* pass) { texPass = pass; }
 
 	//アニメーションデータ群
@@ -68,6 +75,9 @@ public:
 
 	//音に合わせて動くものの群
 	std::vector<CNotes*>* m_pNotes = NULL;
+
+	//Characterが出す音
+	std::vector<CSound*>* m_pSounds = NULL;
 
 	int m_texID = 0;
 
@@ -350,6 +360,9 @@ public:
 
 	//アクション取得
 	virtual std::vector<CAction*>* getActions() = 0;
+
+	//音に合わせて動くアクション取得
+	virtual std::vector<CNotes*>* getNotes() = 0;
 
 	//実体取得
 	virtual CBody* getBody() = 0;

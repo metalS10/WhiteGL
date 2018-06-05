@@ -16,6 +16,10 @@ public:
 	//アクション取得
 	 std::vector<CAction*>* getActions()override;
 
+
+	 //音に合わせて動くアクション取得
+	 std::vector<CNotes*>* getNotes() override;
+
 	//実体取得
 	 CBody* getBody()override;
 };
@@ -41,6 +45,8 @@ protected:
 	virtual void settingPhysicals(CPlayerCharacter* pPlayerCharacter) = 0;
 
 	virtual void settingActions(CPlayerCharacter* pPlayerCharacter) = 0;
+
+	virtual void settingNotes(CPlayerCharacter* pPlayerCharacter) = 0;
 
 	virtual void settingBody(CPlayerCharacter* pPlayerCharacter) = 0;
 
@@ -71,6 +77,8 @@ public:
 
 		pChara->m_pActions = pFactory.getActions();
 
+		pChara->m_pNotes = pFactory.getNotes();
+
 		pChara->m_pBody = pFactory.getBody();
 
 		return pChara;
@@ -90,6 +98,8 @@ protected:
 	void settingPhysicals(CPlayerCharacter* pPlayerCharacter)override;
 
 	void settingActions(CPlayerCharacter* pPlayerCharacter)override;
+
+	void settingNotes(CPlayerCharacter* pPlayerCharacter) override;
 
 	void settingBody(CPlayerCharacter* pPlayerCharacter)override;
 

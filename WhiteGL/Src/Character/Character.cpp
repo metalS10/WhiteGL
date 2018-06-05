@@ -29,11 +29,17 @@ CCharacter::~CCharacter()
 	}
 	SAFE_DELETE(this->m_pAnimations);
 
-	for (CNotes* pNotes: (*m_pNotes))
+	for (CNotes* pNotes : (*m_pNotes))
 	{
 		SAFE_DELETE(pNotes);
 	}
 	SAFE_DELETE(this->m_pNotes);
+
+	for (CSound* pSounds : (*m_pSounds))
+	{
+		SAFE_DELETE(pSounds);
+	}
+	SAFE_DELETE(this->m_pSounds);
 }
 
 //‰Šú‰»ˆ—
@@ -78,6 +84,20 @@ void CCharacter::update()
 	this->applyFunc();
 
 	
+}
+
+void CCharacter::half()
+{
+	(*m_pNotes)[0]->half(this);
+}
+void CCharacter::quarter()
+{
+
+	(*m_pNotes)[0]->quarter(this);
+}
+void CCharacter::eighth()
+{
+	(*m_pNotes)[0]->eighth(this);
 }
 
 void CCharacter::setScale(CVec2 scale)

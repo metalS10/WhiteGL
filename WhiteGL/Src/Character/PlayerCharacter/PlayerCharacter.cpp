@@ -28,6 +28,7 @@ CPlayerCharacter::CPlayerCharacter() {
 
 	this->init();
 
+
 }
 
 //デストラクタ
@@ -44,6 +45,14 @@ bool CPlayerCharacter::init()
 		return false;
 	}
 
+	this->m_pSounds = new std::vector<CSound*>();
+	this->m_pSounds->push_back(new CSound(SOUND_TEST_HALF, 3));
+	this->m_pSounds->push_back(new CSound(SOUND_TEST_QUARTER, 3));
+
+	for (CSound* sound : (*m_pSounds))
+	{
+		sound->LoadChunk();
+	}
 
 	return true;
 }
@@ -106,6 +115,10 @@ void CPlayerCharacter::inputFunc()
 			this->m_denkiPoint -= 5.0f;
 			this->Allfalse();
 			m_isAttack1 = true;
+
+
+			//回避音
+			(*this->m_pSounds)[(int)SOUND::ATTACK]->playChunk();
 		}
 		if (input->getOnKey(Input::Key::X) == true)
 		{
@@ -125,7 +138,8 @@ void CPlayerCharacter::inputFunc()
 			(*this->m_pActions)[(int)ACTION::AVOIDANCE]->start();
 
 			(*this->m_pAnimations)[(int)STATE::AVOIDANCE]->start();
-
+			//回避音
+			(*this->m_pSounds)[(int)SOUND::AVOIDANCE]->playChunk();
 		}
 		if (input->getOnKey(Input::Key::D) == true)
 		{

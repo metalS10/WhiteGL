@@ -121,6 +121,12 @@
     <Filter Include="ソース ファイル\Character\NotesCharacter">
       <UniqueIdentifier>{6d170e57-db16-4817-9914-7110e16b07b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Factory\NotesFactory">
+      <UniqueIdentifier>{2d83d253-6192-4bf1-b9c7-ad7b380beea3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\NotesUI">
+      <UniqueIdentifier>{83b63737-c539-429e-9616-11b0d1533350}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\main.cpp">
@@ -227,6 +233,12 @@
     </ClCompile>
     <ClCompile Include="Src\Character\NotesCharacter\NotesCharacter.cpp">
       <Filter>ソース ファイル\Character\NotesCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Factory\NotesFactory\NotesFactory.cpp">
+      <Filter>ソース ファイル\Factory\NotesFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\NotesUI\NotesUI.cpp">
+      <Filter>ソース ファイル\NotesUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -370,6 +382,12 @@
     </ClInclude>
     <ClInclude Include="Src\Character\NotesCharacter\NotesCharacter.h">
       <Filter>ソース ファイル\Character\NotesCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Factory\NotesFactory\NotesFactory.h">
+      <Filter>ソース ファイル\Factory\NotesFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\NotesUI\NotesUI.h">
+      <Filter>ソース ファイル\NotesUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

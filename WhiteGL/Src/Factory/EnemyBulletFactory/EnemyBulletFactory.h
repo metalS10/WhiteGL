@@ -21,6 +21,10 @@ public:
 	//アクション取得
 	std::vector<CAction*>* getActions()override;
 
+
+	//音に合わせて動くアクション取得
+	std::vector<CNotes*>* getNotes() override;
+
 	//実体取得
 	CBody* getBody()override;
 
@@ -53,6 +57,8 @@ protected:
 	virtual void settingPhysicals(CEnemyBulletCharacter* pChara) = 0;
 
 	virtual void settingActions(CEnemyBulletCharacter* pChara, CVec2) = 0;
+
+	virtual void settingNotes(CEnemyBulletCharacter* pChara) = 0;
 
 	virtual void settingBody(CEnemyBulletCharacter* pChara) = 0;
 
@@ -91,6 +97,8 @@ public:
 
 		pChara->m_pActions = pFactory.getActions();
 
+		pChara->m_pNotes = pFactory.getNotes();
+
 		pChara->m_pBody = pFactory.getBody();
 
 		//衝突判定空間の生成と取り付け
@@ -113,6 +121,8 @@ protected:
 	void settingPhysicals(CEnemyBulletCharacter* pChara)override;
 
 	void settingActions(CEnemyBulletCharacter* pChara ,CVec2)override;
+
+	void settingNotes(CEnemyBulletCharacter* pChara)override;
 
 	void settingBody(CEnemyBulletCharacter* pChara)override;
 
@@ -137,6 +147,8 @@ protected:
 	void settingPhysicals(CEnemyBulletCharacter* pChara)override;
 
 	void settingActions(CEnemyBulletCharacter* pChara, CVec2)override;
+
+	void settingNotes(CEnemyBulletCharacter* pChara)override;
 
 	void settingBody(CEnemyBulletCharacter* pChara)override;
 
@@ -170,6 +182,8 @@ public:
 
 		pChara->m_pActions = pFactory.getActions();
 
+		pChara->m_pNotes = pFactory.getNotes();
+
 		pChara->m_pBody = pFactory.getBody();
 
 		//衝突判定空間の生成と取り付け
@@ -192,6 +206,8 @@ protected:
 	void settingPhysicals(CEnemyBulletCharacter* pChara)override;
 
 	void settingActions(CEnemyBulletCharacter* pChara, CVec2)override;
+
+	void settingNotes(CEnemyBulletCharacter* pChara)override;
 
 	void settingBody(CEnemyBulletCharacter* pChara)override;
 

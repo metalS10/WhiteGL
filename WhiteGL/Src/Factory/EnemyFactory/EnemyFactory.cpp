@@ -39,6 +39,12 @@ std::vector<CAction*>* CEnemyPartsFactory::getActions()
 	return new std::vector<CAction*>;
 }
 
+std::vector<CNotes*>* CEnemyPartsFactory::getNotes()
+{
+	//行えるアクション群を作成
+	return new std::vector<CNotes*>;
+}
+
 CBody* CEnemyPartsFactory::getBody()
 {
 	return new CBody();
@@ -66,6 +72,8 @@ CCharacter* CEnemyFactory::create(float posX, float posY)
 	this->settingPhysicals(pChara);
 
 	this->settingActions(pChara);
+
+	this->settingNotes(pChara);
 
 	this->settingBody(pChara);
 
@@ -135,6 +143,12 @@ void CKuriboFactory::settingActions(CEnemyCharacter* pChara)
 	//弾発射アクションを設定
 	pChara->m_pActions->push_back(new CActionShotEnemyBullet((int)BULLET_TYPE::NORMAL, 60));
 	
+}
+
+//音に合わせるアクションの設定
+void CKuriboFactory::settingNotes(CEnemyCharacter* pChara)
+{
+
 }
 
 //実体の設定
@@ -275,6 +289,12 @@ void CGreenNokoNokoFactory::settingActions(CEnemyCharacter* pChara)
 
 }
 
+//音に合わせるアクションの設定
+void CGreenNokoNokoFactory::settingNotes(CEnemyCharacter* pChara)
+{
+
+}
+
 //実体の設定
 void CGreenNokoNokoFactory::settingBody(CEnemyCharacter* pChara)
 {
@@ -404,6 +424,12 @@ void CGreenPataPataFactory::settingActions(CEnemyCharacter* pChara)
 	
 }
 
+//音に合わせるアクションの設定
+void CGreenPataPataFactory::settingNotes(CEnemyCharacter* pChara)
+{
+
+}
+
 //実体の設定
 void CGreenPataPataFactory::settingBody(CEnemyCharacter* pChara)
 {
@@ -496,6 +522,12 @@ void CKillerHoudaiFactory::settingPhysicals(CEnemyCharacter* pChara)
 void CKillerHoudaiFactory::settingActions(CEnemyCharacter* pChara)
 {
 	pChara->m_pActions->push_back(new CActionCreateEnemy((int)ENEMY_TYPE::KILLER));
+}
+
+//音に合わせるアクションの設定
+void CKillerHoudaiFactory::settingNotes(CEnemyCharacter* pChara)
+{
+
 }
 
 //実体の設定
@@ -618,6 +650,12 @@ void CKillerFactory::settingActions(CEnemyCharacter* pChara)
 {
 
 	pChara->m_pActions->push_back(new CActionEnemyDead(1.0f, -6.0f));
+}
+
+//音に合わせるアクションの設定
+void CKillerFactory::settingNotes(CEnemyCharacter* pChara)
+{
+
 }
 
 //実体の設定
@@ -754,6 +792,12 @@ void CTRoiFactory::settingActions(CEnemyCharacter* pChara)
 
 	//TRoi専用アクションを設定
 	pChara->m_pActions->push_back(new CActionTRoi(3, 350));
+
+}
+
+//音に合わせるアクションの設定
+void CTRoiFactory::settingNotes(CEnemyCharacter* pChara)
+{
 
 }
 

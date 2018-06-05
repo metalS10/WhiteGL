@@ -1,6 +1,7 @@
 #pragma once
 #include "../AllController/AllController.h"
 #include "../Data/Sound/Sound.h"
+#include <Windows.h>
 
 //シーンの親となるクラス
 class CScene
@@ -40,18 +41,25 @@ protected:
 	//BPMに合わせて動かすためのカウンター
 	int m_bpmCounter = 0;
 	//2分音符
-	int m_halfNotes = 0;		int m_halfCounter = 100;
+	double m_halfNotes = 0;		
 	//4
-	int m_quarterNotes = 0;		int m_quarterCounter = 100;
+	double m_quarterNotes = 0;
 	//8
-	int m_eighthNotes = 0;		int m_eighthCounter = 100;
-	//BGM開始遅延
-	int m_startDelay = 0;
-	int m_delayCount = 0;
+	double m_eighthNotes = 0;
+
+	
+	//周波数,最初のms,updateのms
+	LARGE_INTEGER m_nFreq, m_nInit, m_nAfter;
+
+	//二分音符、四分音符、八分音符(ms)
+	double Time = 0, HalfTime = 0, QuarterTime = 0, EighthTime = 0;
 
 	CSound* m_attackSE = NULL;
 	CSound* m_avoidanceSE = NULL;
 	CSound* m_enemyDestroySE = NULL;
+
+	//高解像度カウンタ対応判別(Windows NT(/2000) 3.1 以降,Windows95(/98)以降)
+	bool m_queryPC = false;
 
 	int Delay = 0;
 
@@ -67,12 +75,12 @@ public:
 	virtual bool init();
 
 	//更新処理
-	virtual void update();
+	virtual void update() {};
 	//ゲーム本体更新
 	virtual void sceneUpdate() {};
 
 	//描画用Update
-	virtual void rendUpdate() {};
+	virtual void rendUpdate() ;
 
 	//bpm等の少し細かい更新処理
 	//virtual void bpmUpdate();

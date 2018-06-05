@@ -7,6 +7,8 @@
 #include "SDL_mixer.h"
 #include <iostream>
 
+
+
 //‰¹ŠÖŒW‚ğ§Œä‚·‚éƒNƒ‰ƒX
 class CSound
 {

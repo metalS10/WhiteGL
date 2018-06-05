@@ -19,7 +19,7 @@ CSound* CStage1_1::getBGM(CSound* bgm)
 	//一度現状を削除
 	SAFE_DELETE(bgm);
 	//このステージのBGMを設定
-	bgm = new CSound(SOUND_BGM, 139, true);
+	bgm = new CSound(SOUND_BGM, 140, true);
 	//設定したものを渡す
 	return bgm;
 }
@@ -43,7 +43,7 @@ CSound* CStage1_2::getBGM(CSound* bgm)
 	//一度現状を削除
 	SAFE_DELETE(bgm);
 	//このステージのBGMを設定
-	bgm = new CSound(SOUND_BGM, 139, true);
+	bgm = new CSound(SOUND_BGM, 140, true);
 	//設定したものを渡す
 	return bgm;
 }

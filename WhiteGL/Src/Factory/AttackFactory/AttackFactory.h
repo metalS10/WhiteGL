@@ -21,6 +21,9 @@ public:
 	//アクション取得
 	std::vector<CAction*>* getActions()override;
 
+	//音に合わせて動くアクション取得
+	std::vector<CNotes*>* getNotes() override;
+
 	//実体取得
 	CBody* getBody()override;
 
@@ -58,6 +61,8 @@ protected:
 
 	virtual void settingBody(CAttackCharacter* pChara) = 0;
 
+	virtual void settingNotes(CAttackCharacter* pCara) = 0;
+
 	//衝突判定空間の設定
 	virtual void settingCollisionAreas(CAttackCharacter* pChara) = 0;
 
@@ -93,6 +98,8 @@ public:
 
 		pChara->m_pActions = pFactory.getActions();
 
+		pChara->m_pNotes = pFactory.getNotes();
+
 		pChara->m_pBody = pFactory.getBody();
 
 		//衝突判定空間の生成と取り付け
@@ -118,6 +125,8 @@ protected:
 
 	void settingActions(CAttackCharacter* pChara, CVec2)override;
 
+	void settingNotes(CAttackCharacter* pChara) override;
+
 	void settingBody(CAttackCharacter* pChara)override;
 
 	//衝突判定空間の設定
@@ -141,6 +150,8 @@ protected:
 	void settingPhysicals(CAttackCharacter* pChara)override;
 
 	void settingActions(CAttackCharacter* pChara, CVec2)override;
+
+	void settingNotes(CAttackCharacter* pChara) override;
 
 	void settingBody(CAttackCharacter* pChara)override;
 

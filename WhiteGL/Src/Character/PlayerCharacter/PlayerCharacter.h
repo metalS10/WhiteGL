@@ -5,7 +5,6 @@
 #include "../Character.h"
 #include "../AttackCharacter/AttackCharacter.h"
 
-
 //==================================================
 //プレイヤーキャラクター
 //	今回は更新処理が内部で行われているので
@@ -55,6 +54,12 @@ public:
 		ATTACK			=	1,
 		AVOIDANCE		=	2,
 		DAMAGE			=	3
+	};
+
+	enum class SOUND : int
+	{
+		ATTACK		=	0,
+		AVOIDANCE	=	1,
 	};
 
 	//==================================================================
@@ -140,6 +145,7 @@ public:
 		get(ControllerType::Keybord)->get(0);
 
 	*/
+
 
 
 	void Allfalse();

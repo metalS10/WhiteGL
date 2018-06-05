@@ -10,7 +10,7 @@ public:
 	~CTitle();
 	bool init()override;
 	void update()override;
-	void rendUpdate()override {};
+	void rendUpdate()override ;
 	void sceneUpdate()override {};
 	void qauarterUpdate()override;
 

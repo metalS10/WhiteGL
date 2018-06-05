@@ -4,6 +4,7 @@
 #include "../../Data/LaunchTrigger/LaunchTrigger.h"
 #include "../TitleScene/TitleScene.h"
 #include "../../Data/Stage/Stage.h"
+#include "../../NotesUI/NotesUI.h"
 
 class CGameMain : public CScene
 {
@@ -17,7 +18,7 @@ private:
 	CPlayerCharacter* pPlayerChara;
 	int m_EnemyNameInterval = 0;
 	CStage* m_stage = NULL;
-	
+	CNotesUI* notes = NULL;
 	
 public:
 	CGameMain();

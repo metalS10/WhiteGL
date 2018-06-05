@@ -24,9 +24,13 @@ bool CTitle::init()
 	return true;
 }
 
+void CTitle::rendUpdate()
+{
+	CScene::rendUpdate();
+}
+
 void CTitle::update()
 {
-	CScene::update();
 	if (input->getOnKey(Input::Key::START) == true)
 	{
 		BGM->fadeOut(1000);

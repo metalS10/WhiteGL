@@ -33,6 +33,12 @@ std::vector<CAction*>* CGimmickPartsFactory::getActions()
 	return new std::vector<CAction*>;
 }
 
+std::vector<CNotes*>* CGimmickPartsFactory::getNotes()
+{
+	//行える音アクション群を作成
+	return new std::vector<CNotes*>;
+}
+
 CBody* CGimmickPartsFactory::getBody()
 {
 	return new CBody();
@@ -108,6 +114,12 @@ void CDamageBlockLeftFactory::settingPhysicals(CGimmickCharacter* pChara)
 
 //アクションの設定
 void CDamageBlockLeftFactory::settingActions(CGimmickCharacter* pChara)
+{
+
+}
+
+//音アクションの設定
+void CDamageBlockLeftFactory::settingNotes(CGimmickCharacter* pChara)
 {
 
 }
@@ -216,6 +228,12 @@ void CDamageBlockTopFactory::settingActions(CGimmickCharacter* pChara)
 
 }
 
+//音アクションの設定
+void CDamageBlockTopFactory::settingNotes(CGimmickCharacter* pChara)
+{
+
+}
+
 //実体の設定
 void CDamageBlockTopFactory::settingBody(CGimmickCharacter* pChara)
 {
@@ -316,6 +334,12 @@ void CDamageBlockRightFactory::settingPhysicals(CGimmickCharacter* pChara)
 
 //アクションの設定
 void CDamageBlockRightFactory::settingActions(CGimmickCharacter* pChara)
+{
+
+}
+
+//音アクションの設定
+void CDamageBlockRightFactory::settingNotes(CGimmickCharacter* pChara)
 {
 
 }
@@ -424,6 +448,12 @@ void CDamageBlockBottomFactory::settingActions(CGimmickCharacter* pChara)
 
 }
 
+//音アクションの設定
+void CDamageBlockBottomFactory::settingNotes(CGimmickCharacter* pChara)
+{
+
+}
+
 //実体の設定
 void CDamageBlockBottomFactory::settingBody(CGimmickCharacter* pChara)
 {
@@ -527,6 +557,12 @@ void CRollBlockFactory::settingActions(CGimmickCharacter* pChara)
 	pChara->m_pActions->push_back(new CActionRoll());
 }
 
+//音アクションの設定
+void CRollBlockFactory::settingNotes(CGimmickCharacter* pChara)
+{
+
+}
+
 //実体の設定
 void CRollBlockFactory::settingBody(CGimmickCharacter* pChara)
 {
@@ -617,6 +653,12 @@ void CTikuwaBlockFactory::settingPhysicals(CGimmickCharacter* pChara)
 void CTikuwaBlockFactory::settingActions(CGimmickCharacter* pChara)
 {
 	pChara->m_pActions->push_back(new CActionDown());
+}
+
+//音アクションの設定
+void CTikuwaBlockFactory::settingNotes(CGimmickCharacter* pChara)
+{
+
 }
 
 //実体の設定
@@ -711,6 +753,12 @@ void CNoteBlockFactory::settingPhysicals(CGimmickCharacter* pChara)
 
 //アクションの設定
 void CNoteBlockFactory::settingActions(CGimmickCharacter* pChara)
+{
+
+}
+
+//音アクションの設定
+void CNoteBlockFactory::settingNotes(CGimmickCharacter* pChara)
 {
 
 }
@@ -833,6 +881,13 @@ void CHatenaBlockFactory::settingActions(CGimmickCharacter* pChara)
 	pChara->m_pActions->push_back(new CActionCreateCharacter(enemy));
 }
 
+//音アクションの設定
+void CHatenaBlockFactory::settingNotes(CGimmickCharacter* pChara)
+{
+
+}
+
+
 //実体の設定
 void CHatenaBlockFactory::settingBody(CGimmickCharacter* pChara)
 {
@@ -927,6 +982,12 @@ void CWorpFactory::settingPhysicals(CGimmickCharacter* pChara)
 void CWorpFactory::settingActions(CGimmickCharacter* pChara)
 {
 	
+}
+
+//音アクションの設定
+void CWorpFactory::settingNotes(CGimmickCharacter* pChara)
+{
+
 }
 
 //実体の設定

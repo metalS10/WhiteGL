@@ -8,17 +8,25 @@ bool CScene::init()
 {
 	m_game.ActionStage(MAX_TEXTURE_NUMBER - 1, 1.0f, true);
 	m_game.allTextureDelete();
-	m_bgmBpm = BGM->getBpm();
+
+	//BGMをロード
 	BGM->Load();
-	this->m_halfNotes = (60 / m_bgmBpm) *60 * 2;
-	this->m_quarterNotes = (60 / m_bgmBpm) * 60 ;
-	this->m_eighthNotes = (60 / m_bgmBpm) * 60 / 2;
+	//BGMにセットされているBPMを取得
+	m_bgmBpm = BGM->getBpm();
+	//BPMから秒を計算(ms)
+	this->m_halfNotes = (60 / m_bgmBpm)  * 2 * 1000;
+	this->m_quarterNotes = (60 / m_bgmBpm)  * 1000;
+	this->m_eighthNotes = (60 / m_bgmBpm) * 0.5 * 1000;
+
 	m_attackSE = new CSound(SOUND_TEST_HALF,4);
 	m_avoidanceSE = new CSound(SOUND_TEST_QUARTER,8);
 	m_enemyDestroySE = new CSound(SOUND_TEST_EIGHTH,16);
 	m_attackSE->Load();
 	m_avoidanceSE->Load();
 	m_enemyDestroySE->Load();
+
+
+
 	return true;
 }
 
@@ -71,43 +79,76 @@ void CScene::cameraShake()
 	}
 }
 
-void CScene::update()
+void CScene::rendUpdate()
 {
+
+	//BGM開始
 	if (!m_BGMStart)
 	{
 		m_BGMStart = true;
 		BGM->Play();
+
+		//LARGE_INDEGER変数の初期化
+		memset(&m_nFreq, 0x00, sizeof m_nFreq);
+		memset(&m_nInit, 0x00, sizeof m_nInit);
+		memset(&m_nAfter, 0x00, sizeof m_nAfter);
+
+		m_nInit.QuadPart = 0;
+		m_nAfter.QuadPart = 0;
+
+
+		//高解像度カウンタ対応判別 & PCの周波数get
+		if (QueryPerformanceFrequency(&m_nFreq))
+		{
+			//高解像度カウンタに対応しています！
+			m_queryPC = true;
+			//ゲーム開始ms取得
+			QueryPerformanceCounter(&m_nInit);
+		}
+		else
+		{
+			//対応していなければ1ms感覚のtimeGetTime()を使用(少しずつずれます)
+			m_nInit.QuadPart = timeGetTime();
+		}
+
 	}
-	//開始遅延のタイミングになれば
-	if (m_delayCount >= m_startDelay)
+
+	//時間を受け取る
+	if (m_queryPC)
 	{
-		this->m_halfCounter++;
-		this->m_quarterCounter++;
-		this->m_eighthCounter++;
-		if (m_halfCounter > m_halfNotes)
-		{
-			m_halfCounter = 0;
-			//2分音符
-			this->halfUpdate();
-		}
-		if (m_quarterCounter > m_quarterNotes)
-		{
-			m_quarterCounter = 0;
-			//4分音符
-			this->qauarterUpdate();
-		}
-		if (m_eighthCounter > m_eighthNotes)
-		{
-			m_eighthCounter = 0;
-			//8分音符
-			this->eighthUpdate();
-		}
+		//高解像度カウンタ
+		QueryPerformanceCounter(&m_nAfter);
 	}
 	else
 	{
-		//Delay
-		m_delayCount++;
+		//Windows起動からのカウンタ
+		m_nAfter.QuadPart = timeGetTime();
 	}
+
+	Time = ((double)(m_nAfter.QuadPart - m_nInit.QuadPart) * 1000 / (double)m_nFreq.QuadPart);	//周波数で割る
+	//printf("%f ミリ秒\n", Time);
+
+	//二分のタイミング(ms)
+	if (Time - HalfTime >= m_halfNotes)
+	{
+		HalfTime += m_halfNotes;
+		halfUpdate();
+	}
+
+	//四分のタイミング
+	if (Time - QuarterTime >= m_quarterNotes)
+	{
+		QuarterTime += m_quarterNotes;
+		qauarterUpdate();
+	}
+
+	//八分のタイミング
+	if (Time - EighthTime >= m_eighthNotes)
+	{
+		EighthTime += m_eighthNotes;
+		eighthUpdate();
+	}
+	
 }
 
 void CScene::halfUpdate()
