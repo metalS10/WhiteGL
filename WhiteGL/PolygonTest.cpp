@@ -1,8 +1,6 @@
 //‚½‚¾‚Ìƒ|ƒŠƒSƒ“•\Ž¦‚Ì•×‹­
 
 #include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
 
 #include <GL/glut.h>
 #include "Src\Constants.h"

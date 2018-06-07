@@ -1,11 +1,11 @@
 #include "Sound.h"
 
-CSound::CSound(char* sound, const int bpm,bool musicBool)
+CSound::CSound(char* sound, const int bpm, const int channels,bool musicBool)
 {
 	// SDL初期化
 	SDL_Init(SDL_INIT_AUDIO);
 	//周波数、フォーマット、チャンネル、バッファサイズ(大きいと遅延で死ぬ)
-	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 1024);
+	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, channels, 1024);
 	// 曲ファイルをロード
 	m_soundName = sound;
 	m_bpm = bpm;
@@ -19,7 +19,7 @@ CSound::CSound(char* sound, const int overlapMax)
 	// SDL初期化
 	SDL_Init(SDL_INIT_AUDIO);
 	//周波数、フォーマット、チャンネル、バッファサイズ(大きいと遅延で死ぬ)
-	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 1024);
+	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 1, 1024);
 	// 曲ファイルをロード
 	m_soundName = sound;
 	Mix_AllocateChannels(overlapMax);
@@ -70,7 +70,7 @@ void CSound::Play()
 
 void CSound::playMusic()
 {
-	Mix_AllocateChannels(-1);
+	//Mix_AllocateChannels(-1);
 	Mix_PlayMusic(m_music, -1);                // 曲の再生スタート(無限ループ)
 }
 

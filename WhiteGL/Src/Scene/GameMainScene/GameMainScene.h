@@ -19,7 +19,8 @@ private:
 	int m_EnemyNameInterval = 0;
 	CStage* m_stage = NULL;
 	CNotesUI* notes = NULL;
-	
+
+
 public:
 	CGameMain();
 	~CGameMain();
@@ -37,7 +38,7 @@ public:
 	//ステージの終了処理
 	void StageEnd(bool clear);
 	//TiledMapの読み込み&開く
-	void openMap(std::string mapData);
+	void openMap();
 
 	void setBGM();
 

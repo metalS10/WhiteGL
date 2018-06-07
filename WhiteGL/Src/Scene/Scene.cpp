@@ -3,12 +3,17 @@
 CScene::CScene()
 {
 }
+CScene::~CScene()
+{
+}
 
 bool CScene::init()
 {
 	m_game.ActionStage(MAX_TEXTURE_NUMBER - 1, 1.0f, true);
-	m_game.allTextureDelete();
 
+
+	//BGM開始初期化
+	m_BGMStart = false;
 	//BGMをロード
 	BGM->Load();
 	//BGMにセットされているBPMを取得
@@ -95,7 +100,9 @@ void CScene::rendUpdate()
 
 		m_nInit.QuadPart = 0;
 		m_nAfter.QuadPart = 0;
-
+		HalfTime = 0;
+		QuarterTime = 0;
+		EighthTime = 0;
 
 		//高解像度カウンタ対応判別 & PCの周波数get
 		if (QueryPerformanceFrequency(&m_nFreq))
@@ -110,7 +117,6 @@ void CScene::rendUpdate()
 			//対応していなければ1ms感覚のtimeGetTime()を使用(少しずつずれます)
 			m_nInit.QuadPart = timeGetTime();
 		}
-
 	}
 
 	//時間を受け取る

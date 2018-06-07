@@ -70,7 +70,7 @@ public:
 	CScene();
 
 	//デストラクタ
-	virtual ~CScene() {};
+	virtual ~CScene() ;
 	//初期化処理
 	virtual bool init();
 

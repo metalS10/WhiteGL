@@ -32,7 +32,7 @@ private:
 
 public:
 	//Music用コンストラクタ
-	CSound(char* sound,const int bpm,bool musicBool);
+	CSound(char* sound,const int bpm, const int channels,bool musicBool);
 	//Chunk用コンストラクタ
 	CSound(char* sound,const int overlapMax);
 	~CSound();

@@ -8,9 +8,10 @@
 //各ステージのもととなるクラス
 class CStage
 {
-private:
+protected:
 	bool Boss = false;
 
+	CSound* bgm;
 public:
 	CStage(){}
 	~CStage(){}
@@ -19,7 +20,7 @@ public:
 	//次のステージを返す。クリアならNULL。
 	virtual CStage* changeStage() { return NULL; }
 	//ステージ指定のBGMを返す。
-	virtual CSound* getBGM(CSound* bgm) { return NULL; }
+	virtual CSound* getBGM() { return NULL; }
 
 };
 
@@ -34,7 +35,7 @@ public:
 	//次のステージを返す。クリアならNULL。
 	virtual CStage* changeStage() override;
 	//ステージ指定のBGMを返す。
-	virtual CSound* getBGM(CSound* bgm) override;
+	virtual CSound* getBGM() override;
 };
 //ステージ1-2
 class CStage1_2 : public CStage
@@ -47,5 +48,5 @@ public:
 	//次のステージを返す。クリアならNULL。
 	virtual CStage* changeStage() override;
 	//ステージ指定のBGMを返す
-	virtual CSound* getBGM(CSound* bgm) override;
+	virtual CSound* getBGM() override;
 };

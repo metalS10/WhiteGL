@@ -29,6 +29,10 @@
 #define MAX_TEXTURE_NUMBER 10000
 //レイヤー最大数(使わない場合は0)
 #define MAX_LAYER_NUMBER 3
+
+//背景ポリゴンの最大数
+#define MAX_BACKGROUND_NUMBER 10
+
 //テクスチャIDの設定---------------------------------------------------------------
 //弾
 #define START_BULLET_TEXTURE_NUMBER 1000
@@ -54,6 +58,8 @@
 #define ENEMY_STATS_ID			9	//ENEMYStats
 #define OUTLLINE_ENEMYHP_ID		10	//EHPBarWaku
 #define BAR_ENEMYHP_ID			11	//EHPBar
+#define BLACKBORD_ID			MAX_TEXTURE_NUMBER - 1
+#define NOTES_ID				MAX_TEXTURE_NUMBER - 2
 
 
 
@@ -62,8 +68,8 @@
 #define IMAGE_PLAYER PASS"player.png"
 
 //攻撃
-#define IMAGE_NORMALATTACK PASS"Attack/attack_sword.png"
-#define IMAGE_GETSUGATENSHO PASS"Attack/getsugatenshou.png"
+#define IMAGE_NORMALATTACK PASS"Images/Attack/attack_sword.png"
+#define IMAGE_GETSUGATENSHO PASS"Images/Attack/getsugatenshou.png"
 
 //敵
 #define IMAGE_ENEMY PASS"Images/Enemy/Enemy.png"

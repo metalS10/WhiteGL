@@ -8,19 +8,24 @@ CGameMain::CGameMain()
 
 CGameMain::~CGameMain()
 {
-
+	SAFE_DELETE(m_pCharacters);
 }
 
 bool CGameMain::init()
 {
+
+	//全テクスチャ削除
+	m_game.allTextureDelete();
 	//ステージ1を開く
 	m_stage = new CStage1_1();
-	BGM = m_stage->getBGM(BGM);
+	BGM = m_stage->getBGM();
 	if (CScene::init() == false)
 	{
 		printf("シーン初期化に失敗");
 		return false;
-	}
+	}	
+	m_game.allTextureDelete();
+
 	//マップを開く(初期化)
 	m_stage->init();
 	//BGMを開始させる
@@ -46,7 +51,6 @@ bool CGameMain::init()
 	m_game.setupTexture(MAIN_MOVEBG, TEX_TYPE::PNG, 1, CVec2(WINDOW_RIGHT * 3, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, 6400.0f, 720.0f));
 
 
-
 	pPlayerChara = (CPlayerCharacter*)CPlayerFactoryManager::getInstance()->create(320.0f, 200.0f);
 
 	//プレイヤー1のタグを設定
@@ -55,13 +59,13 @@ bool CGameMain::init()
 	//CCharacterAggregateにプレイヤーを追加
 	CCharacterAggregate::getInstance()->add(pPlayerChara);
 
-
+	SAFE_DELETE(notes);
 	notes = new CNotesUI();
 
-
+	//Player
 	m_game.setupTexture(pPlayerChara->texPass, TEX_TYPE::PNG, pPlayerChara->m_texID, pPlayerChara->m_pMove->m_pos, (*pPlayerChara->m_pAnimations)[0]->getCurrentChip());
-
-	m_game.setupTexture(notes->texPas, TEX_TYPE::PNG, 2, pPlayerChara->m_pMove->m_pos, (*notes->m_pAnimations)[0]->getCurrentChip());
+	//音合わせUI
+	m_game.setupTexture(notes->texPas, TEX_TYPE::PNG, NOTES_ID, CVec2(WINDOW_RIGHT - (*notes->m_pAnimations)[0]->getCurrentChip().z * 0.5f,WINDOW_BOTTOM + (*notes->m_pAnimations)[0]->getCurrentChip().w * 0.5), (*notes->m_pAnimations)[0]->getCurrentChip());
 
 
 	//UIのバック
@@ -92,7 +96,9 @@ bool CGameMain::init()
 //描画用Update
 void CGameMain::rendUpdate()
 {
+
 	CScene::rendUpdate();
+
 	//ステージ終了していなければ
 	if (!m_stageEnd)
 	{
@@ -102,7 +108,7 @@ void CGameMain::rendUpdate()
 			m_game.setScale(pChara->m_scale, pChara->m_texID);
 			m_game.setPosition(pChara->m_pMove->m_pos, pChara->m_texID);
 		}
-		m_game.setTextureRect((*notes->m_pAnimations)[notes->m_state]->getCurrentChip(), 2);
+		m_game.setTextureRect((*notes->m_pAnimations)[notes->m_state]->getCurrentChip(), NOTES_ID);
 		m_game.setPosition(pPlayerChara->m_pMove->m_pos, pPlayerChara->m_texID);
 	}
 
@@ -202,7 +208,7 @@ void CGameMain::sceneUpdate()
 //ヒットストップが存在するので注意
 void CGameMain::update()
 {
-	printf("%d\n",pPlayerChara->musicNotesCounter );
+	//printf("%d\n",pPlayerChara->musicNotesCounter );
 	//ゲーム全体を制御する場所
 	gameMain();
 
@@ -226,7 +232,7 @@ void CGameMain::update()
 	m_game.setPosition(CVec2(WINDOW_RIGHT * 0.5 + cameraPosX, WINDOW_TOP * 0.5 + cameraPosY), MAX_TEXTURE_NUMBER - 1);
 }
 
-//ゲーム全体の動き
+//ゲーム全体の動き(ステージ移動)
 void CGameMain::gameMain()
 {
 	//次のステージへ
@@ -235,10 +241,13 @@ void CGameMain::gameMain()
 
 		if (!movingstage)
 		{
+			//フェードアウト
 			if (m_game.ActionStage(MAX_TEXTURE_NUMBER - 1, 1.0f, false) == true)
 			{
+				//フェードアウトが終了した
 				movingstage = true;
-				openMap(MAP_DATA_2);
+				//次のステージへの関数
+				openMap();
 				gluLookAt(
 					-cameraPosX, 0.0f, 0.0f,
 					-cameraPosX, 0.0f, -10.0f,
@@ -247,14 +256,15 @@ void CGameMain::gameMain()
 				cameraPosX = 0.0f;
 
 				pPlayerChara->setPosition(CVec2(320.0f, 200.0f), PLAYER_ID);
-				//BGMのフェードアウト
-				BGM->fadeOut(300);
 			}
 		}
+		//フェードアウトが終了したら
 		if (movingstage == true)
 		{
+			//フェードイン開始
 			if (m_game.ActionStage(MAX_TEXTURE_NUMBER - 1, 1.0f, true))
 			{
+				//フェードインが終了
 				movingstage = false;
 				pPlayerChara->m_nextStage = false;
 			}
@@ -331,7 +341,7 @@ void CGameMain::scroll()
 
 
 
-
+//現在のゲーム終了判定、セレクト画面へ移行
 void CGameMain::StageEnd(bool clear)
 {
 	stageSelectinterval++;
@@ -389,7 +399,7 @@ void CGameMain::StageEnd(bool clear)
 
 }
 
-void CGameMain::openMap(std::string mapData)
+void CGameMain::openMap()
 {
 
 	for (CCharacter* pChara : (*m_pCharacters))
@@ -400,12 +410,20 @@ void CGameMain::openMap(std::string mapData)
 		}
 	}
 
+	//BGMのフェードアウト
+	BGM->fadeOut(300);
+
 	m_game.allTextureDeletenotPlayer();
 
 	m_stage = m_stage->changeStage();
-	BGM = m_stage->getBGM(BGM);
+	BGM = m_stage->getBGM();
+
+	if (CScene::init() == false)
+	{
+		printf("ステージ遷移に失敗");
+	}
+
 	m_stage->init();
-	m_BGMStart = false;
 
 }
 

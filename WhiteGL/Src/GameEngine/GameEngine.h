@@ -30,17 +30,15 @@ public:
 	CGameEngine() {}
 	~CGameEngine(){}
 	GLFWwindow* init(int w, int h, const char* file);
-	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color);
-	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect);
-	void setChipAnim(CAnimation *&&_val);
-	void setChipData(GLuint texID, CVec4 rectData);
+	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color);	//テクスチャ設定
+	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect);				//色変更なしoverload
+	void setChipAnim(CAnimation *&&_val);		//Chipアニメーション設定
+	void setChipData(GLuint texID, CVec4 rectData);	
 	void update();
 	void update60();
 	void render();		//　描画処理
-	void charaUpdate(CCharacter* pCharas);
 	const GamePad& GetGamePad() const;
 	static CGameEngine& Instance();
-	void Run();
 	void setTextureRect(const CVec4 mrect,const GLuint texID);
 	void setPosition(CVec2 pos, GLuint texID);
 	void setScale(CVec2 scale,GLuint texID);
@@ -53,15 +51,6 @@ public:
 	void* TextureFade(const GLuint texID, const bool out ,const float fadeInterval);
 	bool getFadeEnd(const GLuint texID);
 
-	void inputKeyA();
-	void inputKeyS();
-	void inputKeyZ();
-	void inputKeyX();
-	void inputKeyRight();
-	void inputKeyLeft();
-	void inputKeyUp();
-	void inputKeyDown();
-	void exitArrowKey();
 	CRendTexture* getRendTexture();
 
 

@@ -169,21 +169,6 @@ void CGameEngine::setScale(CVec2 scale, GLuint texID)
 	rendTex->setScale(scale, texID);
 }
 
-void CGameEngine::inputKeyA()
-{
-	//rendTex->deleteTexture(2);
-}
-void CGameEngine::inputKeyS()
-{
-}
-void CGameEngine::inputKeyZ()
-{
-	rendTex->setScale(CVec2(1, 1), 4);
-}
-void CGameEngine::inputKeyX()
-{
-	rendTex->setScale(CVec2(2, 2), 4);
-}
 
 void CGameEngine::setTextureRect(const CVec4 mrect,const GLuint texID)
 {	

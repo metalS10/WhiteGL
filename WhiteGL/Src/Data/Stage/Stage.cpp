@@ -6,20 +6,20 @@ void CStage1_1::init()
 	//ステージに定められたマップを開く
 	CMapManager::getInstance()->setMap(MAP_DATA_1);
 }
+
 //次のステージを返す。クリアならNULL。
 CStage* CStage1_1::changeStage()
 {
+	SAFE_DELETE(bgm);
 	//次のステージを返す
-	return new CStage1_2;
+	return new CStage1_2();
 }
 
 //ステージ指定のBGMを返す。
-CSound* CStage1_1::getBGM(CSound* bgm)
+CSound* CStage1_1::getBGM()
 {
-	//一度現状を削除
-	SAFE_DELETE(bgm);
 	//このステージのBGMを設定
-	bgm = new CSound(SOUND_BGM, 140, true);
+	bgm = new CSound(SOUND_BGM, 140,1, true);
 	//設定したものを渡す
 	return bgm;
 }
@@ -38,12 +38,10 @@ CStage* CStage1_2::changeStage()
 }
 
 //ステージ指定のBGMを返す。
-CSound* CStage1_2::getBGM(CSound* bgm)
+CSound* CStage1_2::getBGM()
 {
-	//一度現状を削除
-	SAFE_DELETE(bgm);
 	//このステージのBGMを設定
-	bgm = new CSound(SOUND_BGM, 140, true);
+	bgm = new CSound(SOUND_BGM, 140,1, true);
 	//設定したものを渡す
 	return bgm;
 }

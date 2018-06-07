@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
 
 	
 	//ブラックボード
-	game.setupTexture("", TEX_TYPE::QUAD, MAX_TEXTURE_NUMBER-1, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH,  WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f));
+	game.setupTexture("", TEX_TYPE::QUAD, BLACKBORD_ID, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH,  WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f));
 
 	
 
@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
 
 	Input::CGameInput* input = MS::CMS::getInstance()->getInput();
 
-
+	
 	/**
 	*memo
 	*メインループ
@@ -170,14 +170,12 @@ int main(int argc, char *argv[])
 		if (fps->draw) {//秒間60フレーム
 			game.update60();
 			scene->sceneUpdate();
-
 			if (game.m_hitStop == 0)
 			{
 				//シーンの更新
 				scene->update();
 			}
 		}
-		
 
 
 		glfwSwapBuffers(window);

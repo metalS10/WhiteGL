@@ -156,7 +156,7 @@ void CRendTexture::render()
 
 			//テクスチャの画像指定
 			glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
-			//四角ポリゴン表示
+			//板ポリゴン表示
 			glDrawArrays(GL_QUADS, 0, 4);
 
 
@@ -479,7 +479,7 @@ void CRendTexture::SetProgressBarWH(const GLuint texID,const CVec4 Rect, const C
 	
 
 }
-
+//全テクスチャ削除
 void CRendTexture::allTextureDelete()
 {
 	for (int i = 0;i < MAX_TEXTURE_NUMBER;i++)
@@ -491,12 +491,13 @@ void CRendTexture::allTextureDelete()
 		}
 	}
 }
+//ステージ移動全テクスチャ削除
 void CRendTexture::allTextureDeletenotPlayer()
 {
 	for (int i = 0;i < MAX_TEXTURE_NUMBER;i++)
 	{
 		//BBとUI以下以外のテクスチャを削除
-		if (i != MAX_TEXTURE_NUMBER - 1 && i > BAR_ENEMYHP_ID)
+		if (i != BLACKBORD_ID && i != NOTES_ID && i > BAR_ENEMYHP_ID)
 		{
 			deleteTexture(i);
 			SAFE_DELETE(tex[i]);
