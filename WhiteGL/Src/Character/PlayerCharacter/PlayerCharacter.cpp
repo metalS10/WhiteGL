@@ -45,6 +45,7 @@ bool CPlayerCharacter::init()
 		return false;
 	}
 
+	//UŒ‚‰¹“Ç‚Ýž‚Ý
 	this->m_pSounds = new std::vector<CSound*>();
 	this->m_pSounds->push_back(new CSound(SOUND_TEST_HALF, 3));
 	this->m_pSounds->push_back(new CSound(SOUND_TEST_QUARTER, 3));
@@ -117,8 +118,6 @@ void CPlayerCharacter::inputFunc()
 			m_isAttack1 = true;
 
 
-			//‰ñ”ð‰¹
-			(*this->m_pSounds)[(int)SOUND::ATTACK]->playChunk();
 		}
 		if (input->getOnKey(Input::Key::X) == true)
 		{

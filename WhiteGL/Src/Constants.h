@@ -49,6 +49,8 @@
 //--------------------------------------------------------------------------------
 
 //テクスチャID
+#define BG_ID					0	//BackGround
+#define SCROLLBG_ID				1	//ScrollBackGround
 #define PLAYER_ID				3	//Player
 #define UI_BACK_ID				4	//UIBack
 #define OUTLINE_HP_ID			5	//HPWaku

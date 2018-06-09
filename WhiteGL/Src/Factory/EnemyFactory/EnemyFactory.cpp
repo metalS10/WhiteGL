@@ -820,7 +820,7 @@ void CTRoiFactory::settingCollisionAreas(CEnemyCharacter* pChara)
 	//画面下端の領域を設定
 	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenBottom());
 	//画面左端の領域を設定
-	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenLeft());
+	//pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenLeft());
 	//画面端の衝突空間を取り付ける
 	pChara->m_pCollisionAreas->push_back(pEndOfScreenArea);
 

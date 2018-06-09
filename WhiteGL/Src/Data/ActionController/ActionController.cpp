@@ -468,6 +468,9 @@ void CActionShotBullet::update(CCharacter* pChara)
 			//CBulletLaunchData* pLaunchData = new CBulletLaunchData(BULLET_TYPE::NORMAL, pChara->m_pMove->m_pos, pChara->m_shotLaunchVector);
 
 
+			//‰ñ”ð‰¹
+			(*pChara->m_pSounds)[0]->playChunk();
+
 			CAttackLaunchData* pLaunchData = new CAttackLaunchData(
 				(ATTACK_TYPE)this->m_bulletType,
 				pChara->m_pMove->m_pos,
