@@ -1,12 +1,10 @@
 #pragma once
-#include "GLFW/glfw3.h"
 #include "../Constants.h"
 #include "../Vec2.h"
 #include "../Vec3.h"
 #include "../Vec4.h"
 #include <stdio.h>
 
-class CGameEngine;
 
 #define scanf scanf_s
 
@@ -14,7 +12,7 @@ class CPolygon
 {
 private:
 
-	GLenum mode = GL_POLYGON;
+	//GLenum mode = GL_POLYGON;
 
 	int _maxNumber = MAX_BACKGROUND_NUMBER;
 	int _number = 0;
@@ -24,10 +22,10 @@ private:
 	CVec4 _colorRGBA[MAX_BACKGROUND_NUMBER] = {};
 	CVec4 _scale[MAX_BACKGROUND_NUMBER] = {};
 
-	CGameEngine& m_game;
+	//CGameEngine& m_game;
 
 public :
-	CPolygon(CGameEngine& allcon);
+	CPolygon();
 	~CPolygon();
 
 

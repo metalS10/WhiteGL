@@ -31,7 +31,7 @@
 #define MAX_LAYER_NUMBER 3
 
 //背景ポリゴンの最大数
-#define MAX_BACKGROUND_NUMBER 10
+#define MAX_BACKGROUND_NUMBER 300
 
 //テクスチャIDの設定---------------------------------------------------------------
 //弾
@@ -95,6 +95,7 @@
 //UI
 #define IMAGE_GAMEUI	PASS"Images/UI/WhiteUI.png"
 #define IMAGE_STAGEEND	PASS"Images/UI/StageEnd.png"
+#define IMAGE_NOTES_UI	PASS"Images/UI/NotesUI.png"
 
 //マップ
 #define MAP_PASS PASS"mapData/"
@@ -108,6 +109,7 @@
 
 //sound
 #define SOUND_BGM PASS"sound/cyber_dungeon_001.ogg"
+#define SOUND_BGM2 PASS"sound/ENEMY.mp3"
 #define SOUND_TEST_HALF PASS"sound/select01.ogg"
 #define SOUND_TEST_QUARTER PASS"sound/button03a.ogg"
 #define SOUND_TEST_EIGHTH PASS"sound/button05.ogg"

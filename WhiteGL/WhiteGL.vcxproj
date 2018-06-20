@@ -195,6 +195,7 @@
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Node.cpp" />
     <ClCompile Include="Src\NotesUI\NotesUI.cpp" />
+    <ClCompile Include="Src\Polygon\Polygon.cpp" />
     <ClCompile Include="Src\RendTexture\RendTexture.cpp" />
     <ClCompile Include="Src\Scene\GameMainScene\GameMainScene.cpp" />
     <ClCompile Include="Src\Scene\Scene.cpp" />
@@ -243,6 +244,7 @@
     <ClInclude Include="Src\Node.h" />
     <ClInclude Include="Src\NotesUI\NotesUI.h" />
     <ClInclude Include="Src\Physical.h" />
+    <ClInclude Include="Src\Polygon\Polygon.h" />
     <ClInclude Include="Src\public\primitive2d.h" />
     <ClInclude Include="Src\Rect.h" />
     <ClInclude Include="Src\RendTexture\RendTexture.h" />

@@ -1,5 +1,6 @@
 #include "RendTexture.h"
 
+
 void CRendTexture::update(std::vector<CAnimation*>* anim)
 {
 	for (int i = 1 ; i <= anim->size();i++)
@@ -56,23 +57,77 @@ void CRendTexture::render()
 {
 	// The following two lines enable semi transparent
 	glEnable(GL_BLEND);
+
+
+	//背景用ポリゴン描画
+	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
+	{
+
+		//空であれば飛ばす
+		if (!_polyVert[i].x && !_polyVert[i].y && !_polyVert[i].z)
+			continue;
+
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		glEnableClientState(GL_VERTEX_ARRAY);
+
+
+		//場所指定
+		const GLfloat vtx2[] = {
+			_polyVert[i].x,			_polyVert[i].y,_polyVert[i].w,
+			_polyVert[i].x + 90.0f,	_polyVert[i].y,_polyVert[i].w,
+			_polyVert[i].x + 45.0f,	_polyVert[i].z,_polyVert[i].w,
+		};
+		//3次元
+		glVertexPointer(3, GL_FLOAT, 0, vtx2);
+
+		//色設定
+		const GLfloat color[] = {
+			_polyColor[i].x*0.01f,_polyColor[i].y*0.01f,_polyColor[i].z*0.01f,_polyColor[i].w*0.01f,
+			_polyColor[i].x*0.01f,_polyColor[i].y*0.01f,_polyColor[i].z*0.01f,_polyColor[i].w*0.01f,
+			_polyColor[i].x*0.01f,_polyColor[i].y*0.01f,_polyColor[i].z*0.01f,_polyColor[i].w*0.01f,
+			_polyColor[i].x*0.01f,_polyColor[i].y*0.01f,_polyColor[i].z*0.01f,_polyColor[i].w*0.01f,
+		};
+		//色反映
+		glColorPointer(4, GL_FLOAT, 0, color);
+
+		//板ポリゴン表示
+		glDrawArrays(GL_TRIANGLES, 0, 4);
+
+		//色設定
+		const GLfloat colorLine[] = {
+			0,0,0,100,
+			0,0,0,100,
+			0,0,0,100,
+			0,0,0,100,
+		};
+		glColorPointer(4, GL_FLOAT, 0, colorLine);
+		//3次元
+		glVertexPointer(3, GL_FLOAT, 0, vtx2);
+		glDrawArrays(GL_LINE_LOOP, 0, 3);
+
+		glDisableClientState(GL_VERTEX_ARRAY);
+	}
+	
 	for (int texID = 0;texID < MAX_TEXTURE_NUMBER;texID++)
 	{
 		if (g_texID[texID] != 0)
 		{
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+			//使用許可
+			glEnable(GL_TEXTURE_2D);
 
 			if (texType[texID] == TEX_TYPE::BMP)
 			{
 				//場所指定
 				const GLfloat vtx2[] = {
-					_rectPos[texID].x, _rectPos[texID].z,
-					_rectPos[texID].y, _rectPos[texID].z,
-					_rectPos[texID].y, _rectPos[texID].w,
-					_rectPos[texID].x, _rectPos[texID].w,
+					_rectPos[texID].x, _rectPos[texID].z,0,
+					_rectPos[texID].y, _rectPos[texID].z,0,
+					_rectPos[texID].y, _rectPos[texID].w,0,
+					_rectPos[texID].x, _rectPos[texID].w,0,
 				};
-				glVertexPointer(2, GL_FLOAT, 0, vtx2);
+				glVertexPointer(3, GL_FLOAT, 0, vtx2);
 
 				const GLfloat color[] = {
 					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
@@ -97,12 +152,12 @@ void CRendTexture::render()
 			{
 				//場所指定
 				const GLfloat vtx2[] = {
-					_rectPos[texID].x, _rectPos[texID].z,
-					_rectPos[texID].y, _rectPos[texID].z,
-					_rectPos[texID].y, _rectPos[texID].w,
-					_rectPos[texID].x, _rectPos[texID].w,
+					_rectPos[texID].x, _rectPos[texID].z,0,
+					_rectPos[texID].y, _rectPos[texID].z,0,
+					_rectPos[texID].y, _rectPos[texID].w,0,
+					_rectPos[texID].x, _rectPos[texID].w,0,
 				};
-				glVertexPointer(2, GL_FLOAT, 0, vtx2);
+				glVertexPointer(3, GL_FLOAT, 0, vtx2);
 
 				const GLfloat color[] = {
 					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
@@ -128,12 +183,12 @@ void CRendTexture::render()
 			{
 				//場所指定
 				const GLfloat vtx2[] = {
-					_rectPos[texID].x, _rectPos[texID].z,
-					_rectPos[texID].y, _rectPos[texID].z,
-					_rectPos[texID].y, _rectPos[texID].w,
-					_rectPos[texID].x, _rectPos[texID].w,
+					_rectPos[texID].x, _rectPos[texID].z,0,
+					_rectPos[texID].y, _rectPos[texID].z,0,
+					_rectPos[texID].y, _rectPos[texID].w,0,
+					_rectPos[texID].x, _rectPos[texID].w,0,
 				};
-				glVertexPointer(2, GL_FLOAT, 0, vtx2);
+				glVertexPointer(3, GL_FLOAT, 0, vtx2);
 
 				const GLfloat color[] = {
 					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
@@ -154,21 +209,27 @@ void CRendTexture::render()
 				glTexCoordPointer(2, GL_FLOAT, 0, texuv);
 			}
 
+			glEnableClientState(GL_VERTEX_ARRAY);
 			//テクスチャの画像指定
 			glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
 			//板ポリゴン表示
 			glDrawArrays(GL_QUADS, 0, 4);
 
+			glDisableClientState(GL_VERTEX_ARRAY);
 
+			//使用許可
+			glDisable(GL_TEXTURE_2D);
 
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		}
 	}
+	
+	
 }
 
 void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID)
 {
+	//使用許可
+	glEnable(GL_TEXTURE_2D);
 	//texIDを空いているところへ
 	glGenTextures(1, &g_texID[texID]);
 
@@ -187,6 +248,14 @@ void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuin
 		}
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tex[texID]->m_width, tex[texID]->m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, tex[texID]->m_bits);
 
+		//テクスチャの拡大・縮小方法の設定
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+		//テクスチャの繰り返しの指定
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
 		break;
 
 	case TEX_TYPE::PNG:
@@ -200,11 +269,29 @@ void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuin
 		{
 			//テクスチャにPNGファイルから読み込んだピクセルを書き込む
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex[texID]->m_width, tex[texID]->m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex[texID]->m_bits);
+
+			//テクスチャの拡大・縮小方法の設定
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+			//テクスチャの繰り返しの指定
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
 		}
 		else if (tex[texID]->m_format == PNG_COLOR_TYPE_RGB)
 		{
 			//テクスチャにPNGファイルから読み込んだピクセルを書き込む
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tex[texID]->m_width, tex[texID]->m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, tex[texID]->m_bits);
+
+			//テクスチャの拡大・縮小方法の設定
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+			//テクスチャの繰り返しの指定
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
 		}
 		else if (tex[texID]->m_format == PNG_COLOR_TYPE_PALETTE)
 		{
@@ -224,6 +311,14 @@ void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuin
 				height, 0, hasAlpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE,
 				textureImage);
 
+			//テクスチャの拡大・縮小方法の設定
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+			//テクスチャの繰り返しの指定
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
 			SAFE_DELETE(textureImage);
 		}
 		else if (tex[texID]->m_format == PNG_COLOR_TYPE_GRAY)
@@ -231,6 +326,7 @@ void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuin
 			//テクスチャにPNGファイルから読み込んだピクセルを書き込む
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, tex[texID]->m_width, tex[texID]->m_height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, tex[texID]->m_bits);
 			//grayってどう描画するんだろう
+			std::cout << "PNG_COLOR_TYPE_GRAY用描画システム未完成" << std::endl;
 		}
 
 		break;
@@ -240,6 +336,15 @@ void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuin
 
 		tex[texID]->m_width = 1;tex[texID]->m_height = 1;
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_ONE, 1, 1, 0, GL_ONE, GL_UNSIGNED_BYTE, 0);
+
+		//テクスチャの拡大・縮小方法の設定
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+		//テクスチャの繰り返しの指定
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
 		break;
 
 
@@ -249,9 +354,26 @@ void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuin
 	//初期化
 	glBindTexture(GL_TEXTURE_2D, 0);
 
+	//使用許可
+	glDisable(GL_TEXTURE_2D);
 	colorRGBA[texID] = (CVec4(100.0f, 100.0f, 100.0f, 100.0f));
 	texType[texID] = (tex_type);
 }
+//三角ポリゴンのセットアップ
+void CRendTexture::setupTrianglesPoly(const CVec4 vertex,const CVec4 color)
+{
+	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
+	{
+		if (!_polyVert[i].x && !_polyVert[i].y && !_polyVert[i].z && !_polyVert[i].w)
+		{
+			//ポリゴン設定を追加
+			_polyVert[i] = vertex;
+			_polyColor[i] = color;
+			break;
+		}
+	}
+}
+
 
 void CRendTexture::setupTextureSize(const CVec2 texPos,const CVec4 texRect,const GLuint texID)
 {
@@ -280,11 +402,16 @@ void CRendTexture::setupTextureSize(const CVec2 texPos,const CVec4 texRect,const
 
 void CRendTexture::deleteTexture(const GLuint texID)
 {
+	//使用許可
+	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDeleteTextures(1, &g_texID[texID]);
 	g_texID[texID] = 0;
 	rect[texID] = {};
 	_rectPos[texID] = {};
+
+	//使用許可
+	glDisable(GL_TEXTURE_2D);
 }
 
 bool CRendTexture::loadPngImage(const char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData) {
@@ -447,6 +574,8 @@ void CRendTexture::setRotate(const CVec3 rotate, const GLuint texID)
 
 void CRendTexture::setTextureRect(const CVec4 Rect,const GLuint texID)
 {
+	//使用許可
+	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
 
 
@@ -454,10 +583,15 @@ void CRendTexture::setTextureRect(const CVec4 Rect,const GLuint texID)
 	CVec4 changerect4 = CVec4(Rect.x / tex[texID]->m_width, (Rect.x + Rect.z) / tex[texID]->m_width, Rect.y / tex[texID]->m_height, (Rect.y + Rect.w) / tex[texID]->m_height);
 
 	rect[texID] = CVec4(changerect4);
+
+	//使用許可
+	glDisable(GL_TEXTURE_2D);
 }
 
 void CRendTexture::SetProgressBarWH(const GLuint texID,const CVec4 Rect, const CVec2 position)
 {
+	//使用許可
+	glEnable(GL_TEXTURE_2D);
 	CVec2 vec2;
 	glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
 	if (Rect.z >= 0)
@@ -476,7 +610,9 @@ void CRendTexture::SetProgressBarWH(const GLuint texID,const CVec4 Rect, const C
 		_position[texID].x + texWH[texID].x * texScale[texID].x,
 		_position[texID].y - texWH[texID].y * texScale[texID].y,
 		_position[texID].y + texWH[texID].y * texScale[texID].y);
-	
+
+	//使用許可
+	glDisable(GL_TEXTURE_2D);
 
 }
 //全テクスチャ削除
@@ -502,5 +638,22 @@ void CRendTexture::allTextureDeletenotPlayer()
 			deleteTexture(i);
 			SAFE_DELETE(tex[i]);
 		}
+	}
+}
+void CRendTexture::notesFadeBackground()
+{
+	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
+	{
+		if (_polyColor[i].w <= 20.0f)
+			continue;
+		_polyColor[i].w--;
+	}
+}
+void CRendTexture::notesFadeInit()
+{
+	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
+	{
+		if(rand()%3 == 1)
+			_polyColor[i].w = 70.0f;
 	}
 }

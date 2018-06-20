@@ -6,7 +6,6 @@
 *		テクスチャの読み込み、描画
 */
 
-#include <vector>
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 #include "../Image/image.h"
@@ -15,6 +14,7 @@
 #include "../Vec4.h"
 #include "../Constants.h"
 #include "../Data/Animation/Animation.h"
+#include <vector>
 #pragma warning(disable:4996)
 
 
@@ -44,6 +44,10 @@ public:
 	float actionFadeInterval[MAX_TEXTURE_NUMBER] = {};
 	bool fadeOut[MAX_TEXTURE_NUMBER] = {};
 
+	//板の三角ポリゴン用
+	CVec4 _polyVert[MAX_BACKGROUND_NUMBER] = {};
+	CVec4 _polyColor[MAX_BACKGROUND_NUMBER] = {};
+
 	CRendTexture()
 	{
 
@@ -59,7 +63,6 @@ public:
 	}
 
 public:
-
 
 	void update(std::vector<CAnimation*>* anim);
 
@@ -77,6 +80,9 @@ public:
 	*@param	rect		矩形
 	*/
 	void setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID);
+
+	//三角ポリゴン設定
+	void setupTrianglesPoly(const CVec4 vertex,const CVec4 color);
 
 	void setupTextureSize(const CVec2 texPos, const CVec4 texRect, GLuint texID);
 
@@ -96,7 +102,6 @@ public:
 
 	void setRotate(const CVec3 rotate, const GLuint texID);
 
-
 	void setTextureRect(const CVec4 Rect, const GLuint texID);
 
 	void fadeSearch();
@@ -105,4 +110,8 @@ public:
 	void allTextureDeletenotPlayer();	//ゲームに必要不可欠なテクスチャ以外のテクスチャを削除(ステージ移動)
 
 	void SetProgressBarWH(const GLuint texID, const CVec4 Rect,const CVec2 position);
+
+	void notesFadeBackground();	//背景用の更新処理
+
+	void notesFadeInit();		//背景用の初期化
 };

@@ -32,6 +32,7 @@ public:
 	GLFWwindow* init(int w, int h, const char* file);
 	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color);	//テクスチャ設定
 	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect);				//色変更なしoverload
+	void setupPoly(const CVec4 vertex, const CVec4 color);		//背景三角ポリゴンの設定
 	void setChipAnim(CAnimation *&&_val);		//Chipアニメーション設定
 	void setChipData(GLuint texID, CVec4 rectData);	
 	void update();
@@ -59,7 +60,7 @@ public:
 	void layerSetPos(float x, float y,GLuint texID);
 
 	void HitStop(float time);
-
+	void notesAction();
 	
 
 

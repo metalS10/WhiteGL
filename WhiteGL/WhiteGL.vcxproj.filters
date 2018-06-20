@@ -127,6 +127,9 @@
     <Filter Include="ソース ファイル\NotesUI">
       <UniqueIdentifier>{83b63737-c539-429e-9616-11b0d1533350}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Polygon">
+      <UniqueIdentifier>{adb3f76e-6c99-43e4-a6e0-f7be8cbb0814}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\main.cpp">
@@ -236,6 +239,9 @@
     </ClCompile>
     <ClCompile Include="Src\NotesUI\NotesUI.cpp">
       <Filter>ソース ファイル\NotesUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Polygon\Polygon.cpp">
+      <Filter>ソース ファイル\Polygon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -385,6 +391,9 @@
     </ClInclude>
     <ClInclude Include="Src\NotesUI\NotesUI.h">
       <Filter>ソース ファイル\NotesUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Polygon\Polygon.h">
+      <Filter>ソース ファイル\Polygon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

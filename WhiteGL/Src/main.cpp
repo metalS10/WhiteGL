@@ -110,7 +110,6 @@ int main(int argc, char *argv[])
 {
 	glfwSetErrorCallback(ErrorCallback);
 	
-	
 
 	
 	CGameEngine& game = CMS::getInstance()->getGame();

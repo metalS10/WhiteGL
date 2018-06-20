@@ -8,19 +8,15 @@ void CGameEngine::setupTexture(const char* file,TEX_TYPE texType,GLuint texID,CV
 	//================================
 	//テクスチャの描画
 	//================================
-	//使用許可
-	glEnable(GL_TEXTURE_2D);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	//色データをメモリに登録するための許可を得る
 	glEnableClientState(GL_COLOR_ARRAY);
 
-	if (rendTex == NULL)
-		rendTex = new CRendTexture();
-
 	rendTex->setupTexture(file, texType, texID);
 	rendTex->setupTextureSize(texPos, texRect , texID);
 	rendTex->setupTextureColor(color, texID);
+
 }
 
 void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect)
@@ -28,19 +24,19 @@ void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID,
 	//================================
 	//テクスチャの描画
 	//================================
-	//使用許可
-	glEnable(GL_TEXTURE_2D);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	//色データをメモリに登録するための許可を得る
 	glEnableClientState(GL_COLOR_ARRAY);
 
-	if (rendTex == NULL)
-		rendTex = new CRendTexture();
-
 	rendTex->setupTexture(file, texType, texID);
 	rendTex->setupTextureSize(texPos, texRect, texID);
 	rendTex->setupTextureColor(CVec4(100.0f,100.0f,100.0f,100.0f), texID);
+}
+
+void CGameEngine::setupPoly(const CVec4 vertex, const CVec4 color)
+{
+	rendTex->setupTrianglesPoly(vertex, color);
 }
 
 void CGameEngine::setChipAnim(CAnimation *&&_val)
@@ -56,6 +52,9 @@ void CGameEngine::setChipData(GLuint texID,CVec4 rectData)
 
 GLFWwindow* CGameEngine::init(int w,int h,const char* file)
 {
+
+	rendTex = new CRendTexture();
+
 	if (isInitialized)
 	{
 		return m_Window;
@@ -102,8 +101,6 @@ GLFWwindow* CGameEngine::init(int w,int h,const char* file)
 	}
 	glOrtho(0.0f, WINDOW_WIDTH, 0.0f, WINDOW_HEIGHT, -1.0f, 1.0f);
 
-	
-
 	isInitialized = true;
 
 	return m_Window;
@@ -131,7 +128,7 @@ const GamePad& CGameEngine::GetGamePad() const
 
 void CGameEngine::update()
 {
-	glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
+	glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glfwPollEvents();
 
@@ -158,6 +155,7 @@ void CGameEngine::render()
 
 void CGameEngine::update60()
 {
+	rendTex->notesFadeBackground();
 	m_hitStop--;
 	if (m_hitStop <= 0)
 		m_hitStop = 0;
@@ -305,3 +303,7 @@ void CGameEngine::HitStop(float time)
 	m_hitStop = time;
 }
 
+void CGameEngine::notesAction()
+{
+	rendTex->notesFadeInit();
+}
