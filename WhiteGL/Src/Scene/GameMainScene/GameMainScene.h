@@ -19,9 +19,11 @@ private:
 	int m_EnemyNameInterval = 0;
 	CStage* m_stage = NULL;
 	CNotesUI* notes = NULL;
+	//”wŒiƒ|ƒŠƒSƒ“‚Ì•~‚«‹l‚ßŠÔŠu
+	float m_polyRange = 0.0f;
 	//”wŒi‚Ìƒ|ƒWƒVƒ‡ƒ“ŒQ
-	std::vector<float>* m_trianglesLeft;
-	std::vector<float>* m_trianglesRight;
+	std::vector<float> m_trianglesLeft;
+	std::vector<float> m_trianglesRight;
 
 
 

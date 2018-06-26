@@ -384,6 +384,13 @@ void CRenderer::setupTrianglesPoly(const CVec4 vertex,const CVec4 color,const GL
 	}
 }
 
+void CRenderer::setPosTrianglesPoly(const float vertexX, const CVec4 color, const GLuint number)
+{
+	_polyVert[number].x = vertexX;
+	_polyColor[number] = color;
+}
+
+
 
 void CRenderer::setupTextureSize(const CVec2 texPos,const CVec4 texRect,const GLuint texID)
 {

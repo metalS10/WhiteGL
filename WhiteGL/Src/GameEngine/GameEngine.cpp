@@ -29,6 +29,11 @@ void CGameEngine::setupPoly(const CVec4 vertex, const CVec4 color,const GLuint l
 	renderer->setupTrianglesPoly(vertex, color, line);
 }
 
+void CGameEngine::setPosTrianglesPoly(const float vertexX, const CVec4 color, const GLuint number)
+{
+	renderer->setPosTrianglesPoly(vertexX, color, number);
+}
+
 void CGameEngine::setChipAnim(CAnimation *&&_val)
 {
 	m_pAnim->push_back(_val);

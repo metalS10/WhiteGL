@@ -31,7 +31,7 @@
 #define MAX_LAYER_NUMBER 3
 
 //背景ポリゴンの最大数
-#define MAX_BACKGROUND_NUMBER 300
+#define MAX_BACKGROUND_NUMBER 140
 
 //テクスチャIDの設定---------------------------------------------------------------
 //弾

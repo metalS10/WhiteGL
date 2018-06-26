@@ -33,6 +33,7 @@ public:
 	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color);	//テクスチャ設定
 	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect);				//色変更なしoverload
 	void setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line);		//背景三角ポリゴンの設定(vertex(横、高さ、全体の大きさ))
+	void setPosTrianglesPoly(const float vertexX, const CVec4 color, const GLuint number);	//背景三角ポリゴンの位置再設定(X座標のみ)
 	void setChipAnim(CAnimation *&&_val);		//Chipアニメーション設定
 	void setChipData(GLuint texID, CVec4 rectData);	
 	void update();

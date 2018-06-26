@@ -85,7 +85,8 @@ public:
 	void setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID);
 
 	//OŠpƒ|ƒŠƒSƒ“İ’è
-	void setupTrianglesPoly(const CVec4 vertex,const CVec4 color,const GLuint line);
+	void setupTrianglesPoly(const CVec4 vertex, const CVec4 color, const GLuint line);
+	void setPosTrianglesPoly(const float vertexX, const CVec4 color, const GLuint number);
 
 	void setupTextureSize(const CVec2 texPos, const CVec4 texRect, GLuint texID);
 

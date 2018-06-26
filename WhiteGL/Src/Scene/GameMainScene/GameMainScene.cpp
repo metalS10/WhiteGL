@@ -9,8 +9,6 @@ CGameMain::CGameMain()
 CGameMain::~CGameMain()
 {
 	SAFE_DELETE(m_pCharacters);
-	SAFE_DELETE(m_trianglesLeft);
-	SAFE_DELETE(m_trianglesRight);
 }
 
 bool CGameMain::init()
@@ -53,25 +51,26 @@ bool CGameMain::init()
 	//m_game.setupTexture(MAIN_MOVEBG, TEX_TYPE::PNG, SCROLLBG_ID, CVec2(WINDOW_RIGHT * 3, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, 6400.0f, 720.0f));
 
 	//背景ポリゴン軍の初期化
-	m_trianglesLeft = new std::vector<float>();
-	m_trianglesRight = new std::vector<float>();
+	m_trianglesLeft = std::vector<float>();
+	m_trianglesRight = std::vector<float>();
 
 	//背景の設定
 	//高さ
-	for (int i = 0; i <= 7; i++)
+	for (int i = 0; i <= 5; i++)
 	{
 		//幅
-		for (int j = 0; j <= 13; j++)
+		for (int j = 0; j <= 10; j++)
 		{
-			float a = rand()%100;
-			float range = 100.0f;		//間隔幅
-			float size = range-90.0f;	//大きさ
-			m_trianglesLeft->push_back(range*j- range * 0.5f);	//このポリゴンのx軸座標左を設定
-			m_trianglesRight->push_back((range*j- range * 0.5f) + range );	//このポリゴンのx軸座標右を設定
-			m_game.setupPoly(CVec4(range*j - range * 0.5f		, range * i	, size + (range * i), size	), CVec4(100.0f, a,a, 100.0f),i * 2.0f);	//背景に反映
-			m_trianglesLeft->push_back(range*j);		//このポリゴンのx軸座標左を設定
-			m_trianglesRight->push_back(range*j + range);		//このポリゴンのx軸座標右を設定
-			m_game.setupPoly(CVec4(range*j , size + (range * i)	, range * i , size						), CVec4(a, a, 100.0f, 100.0f),(i + 0.5f) * 2.0f);		//背景に反映
+			float r = rand()%100;
+			m_polyRange = 128.0f;		//間隔幅
+			float size = m_polyRange -64.0f;	//大きさ
+
+			m_trianglesLeft.push_back(m_polyRange*j- m_polyRange * 0.5f);	//このポリゴンのx軸座標左を設定
+			m_trianglesRight.push_back((m_polyRange*j- m_polyRange * 0.5f) + m_polyRange);	//このポリゴンのx軸座標右を設定
+			m_game.setupPoly(CVec4(m_polyRange*j - m_polyRange * 0.5f		, m_polyRange * i	, size + (m_polyRange * i), size	), CVec4(100.0f, r,r, 100.0f),i * 2.0f);	//背景に反映
+			m_trianglesLeft.push_back(m_polyRange*j);		//このポリゴンのx軸座標左を設定
+			m_trianglesRight.push_back(m_polyRange*j + m_polyRange);		//このポリゴンのx軸座標右を設定
+			m_game.setupPoly(CVec4(m_polyRange*j , size + (m_polyRange * i)	, m_polyRange * i	, size								), CVec4(r, r, 100.0f, 100.0f),(i + 0.5f) * 2.0f);		//背景に反映
 		}
 	}
 
@@ -216,11 +215,7 @@ void CGameMain::sceneUpdate()
 
 	//シーンの親更新
 	CScene::update();
-
-	scroll();
-	this->cameraShake();
-	notes->update();
-
+	//カメラの設定
 	cameraPosX += cameraMoveX;
 	cameraPosY += cameraMoveY;
 
@@ -229,6 +224,12 @@ void CGameMain::sceneUpdate()
 		cameraMoveX, cameraMoveY, -10.0f,
 		0.0f, 1.0f, 0.0f
 	);
+
+	scroll();
+	this->cameraShake();
+	notes->update();
+
+	
 }
 
 //ヒットストップが存在するので注意
@@ -341,7 +342,7 @@ void CGameMain::scroll()
 		//ギミックの出撃判定も行う
 		map->checkGimmickLaunch(pt.x, pt.y);
 
-		scrollBackGroundTrianglesRight(cameraPosX+WINDOW_RIGHT);
+		scrollBackGroundTrianglesRight(cameraPosX);
 
 	}
 	//プレイヤーの位置が後ろの値超えたら
@@ -355,7 +356,7 @@ void CGameMain::scroll()
 
 		cameraMoveX = pPlayerChara->m_pMove->m_vel.x;
 
-		scrollBackGroundTrianglesLeft(cameraPosX);
+		scrollBackGroundTrianglesLeft(cameraPosX + WINDOW_RIGHT);
 
 
 	}
@@ -454,19 +455,73 @@ void CGameMain::openMap()
 	m_stage->init();
 
 }
-
+//背景スクロール用の関数
+//左へスクロール中
 void CGameMain::scrollBackGroundTrianglesLeft(float posX)
 {
-	for (int i = 0; i < m_trianglesLeft->size();i++)
+	for (int i = 0; i < m_trianglesLeft.size();i++)
 	{
+		//ポリゴンの左が画面右端に来たら
+		if (m_trianglesLeft[i] >= posX)
+		{
+			float pos = m_trianglesLeft[i];
 
+			//左を画面左端+ポリゴン間隔に再設置
+			m_trianglesLeft[i] = pos - WINDOW_RIGHT - m_polyRange;
+			//右を画面左端へ
+			m_trianglesRight[i] = pos - WINDOW_RIGHT;
+			//色を再設定
+			int r = rand() % 100;
+			int l = i;
+			while (l >= 0)
+			{
+				l -= 2;
+				if (l <= -1)
+				{
+					m_game.setPosTrianglesPoly(m_trianglesLeft[i], CVec4(r, r, 100.0f, 100.0f), i);	//背景に反映
+					break;
+				}
+				else if(l <= 0)
+				{
+					m_game.setPosTrianglesPoly(m_trianglesLeft[i], CVec4(100.0f, r, r, 100.0f), i);	//背景に反映
+					break;
+				}
+			}
+		}
 	}
 }
+//右へスクロール中
 void CGameMain::scrollBackGroundTrianglesRight(float posX)
 {
-	for (int i = 0; i < m_trianglesRight->size(); i++)
+	for (int i = 0; i < m_trianglesRight.size(); i++)
 	{
+		float pos = m_trianglesRight[i];
 
+		//ポリゴンの右が画面左端に来たら
+		if (m_trianglesRight[i] <= posX)
+		{
+			//左を画面右端へ
+			m_trianglesLeft[i] = pos + WINDOW_RIGHT ;
+			//右を画面右端+ポリゴン間隔へ
+			m_trianglesRight[i] = pos + WINDOW_RIGHT + m_polyRange;
+			//色を再設定
+			int r = rand() % 100;
+			int l = i;
+			while (l >= 0)
+			{
+				l -= 2;
+				if (l <= -1)
+				{
+					m_game.setPosTrianglesPoly(m_trianglesLeft[i], CVec4(r, r, 100.0f, 100.0f), i);	//背景に反映
+					break;
+				}
+				else if (l <= 0)
+				{
+					m_game.setPosTrianglesPoly(m_trianglesLeft[i], CVec4(100.0f, r, r, 100.0f), i);	//背景に反映
+					break;
+				}
+			}
+		}
 	}
 }
 
