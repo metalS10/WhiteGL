@@ -1,6 +1,6 @@
 #pragma once
 /**
-*RendTexture.h
+*Render.h
 *
 *	2017/10/10	Mat
 *		テクスチャの読み込み、描画
@@ -25,7 +25,7 @@ enum class TEX_TYPE : int
 	JPEG = 2,
 	QUAD = 3,
 };
-class CRendTexture
+class CRenderer
 {
 public:
 	CVec4 _rectPos[MAX_TEXTURE_NUMBER] = {};
@@ -47,13 +47,16 @@ public:
 	//板の三角ポリゴン用
 	CVec4 _polyVert[MAX_BACKGROUND_NUMBER] = {};
 	CVec4 _polyColor[MAX_BACKGROUND_NUMBER] = {};
+	GLuint _polyLine[MAX_BACKGROUND_NUMBER] = {};
+	GLuint _polyMaxLine = 0;
+	GLint upfadeCount = 0;
 
-	CRendTexture()
+	CRenderer()
 	{
 
 	}
 
-	~CRendTexture()
+	~CRenderer()
 	{
 		for (int i = 0;i < MAX_TEXTURE_NUMBER;i++)
 		{
@@ -82,7 +85,7 @@ public:
 	void setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID);
 
 	//三角ポリゴン設定
-	void setupTrianglesPoly(const CVec4 vertex,const CVec4 color);
+	void setupTrianglesPoly(const CVec4 vertex,const CVec4 color,const GLuint line);
 
 	void setupTextureSize(const CVec2 texPos, const CVec4 texRect, GLuint texID);
 
@@ -113,5 +116,6 @@ public:
 
 	void notesFadeBackground();	//背景用の更新処理
 
-	void notesFadeInit();		//背景用の初期化
+	void notesRandomFadeInit();		//背景用のランダム初期化
+	void notesUpFadeInit(GLuint mode);			//背景用の上に上がっていく初期化(mode)
 };

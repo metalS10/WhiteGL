@@ -76,15 +76,6 @@
     <Filter Include="ソース ファイル\Factory\GimmickFactory">
       <UniqueIdentifier>{40ae094d-d058-40c0-98b9-30dd50ed6402}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Render\RendTexture">
-      <UniqueIdentifier>{554144c0-7a4e-4a9a-b821-ec3372b3e82c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Render\Texture">
-      <UniqueIdentifier>{11c2a6a2-4266-4c0a-aa77-4202d2ef4a3b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Sprite">
-      <UniqueIdentifier>{08d25fd9-e59a-45d3-bbc9-13b50092fb0b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Primitive">
       <UniqueIdentifier>{077936b8-f3c3-49e8-b371-fb1c9d6c6afc}</UniqueIdentifier>
     </Filter>
@@ -130,12 +121,12 @@
     <Filter Include="ソース ファイル\Polygon">
       <UniqueIdentifier>{adb3f76e-6c99-43e4-a6e0-f7be8cbb0814}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Render\Render">
+      <UniqueIdentifier>{554144c0-7a4e-4a9a-b821-ec3372b3e82c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Node.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Src\interpreter\interpreter2.cpp">
@@ -143,9 +134,6 @@
     </ClCompile>
     <ClCompile Include="Src\interpreter\xmlparser.cpp">
       <Filter>ヘッダー ファイル\interpreter</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Sprite.cpp">
-      <Filter>ソース ファイル\Sprite</Filter>
     </ClCompile>
     <ClCompile Include="Src\Data\Sound\Sound.cpp">
       <Filter>ソース ファイル\Sound</Filter>
@@ -210,12 +198,6 @@
     <ClCompile Include="Src\Image\image.cpp">
       <Filter>ソース ファイル\Render\Image</Filter>
     </ClCompile>
-    <ClCompile Include="Src\RendTexture\RendTexture.cpp">
-      <Filter>ソース ファイル\Render\RendTexture</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Texture\Texture.cpp">
-      <Filter>ソース ファイル\Render\Texture</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Scene\Scene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
@@ -243,6 +225,9 @@
     <ClCompile Include="Src\Polygon\Polygon.cpp">
       <Filter>ソース ファイル\Polygon</Filter>
     </ClCompile>
+    <ClCompile Include="Src\RendTexture\Render.cpp">
+      <Filter>ソース ファイル\Render\Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -252,9 +237,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Src\Physical.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Node.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Src\interpreter\xmlparser.h">
@@ -274,9 +256,6 @@
     </ClInclude>
     <ClInclude Include="Src\GamePad.h">
       <Filter>ソース ファイル\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Sprite.h">
-      <Filter>ソース ファイル\Sprite</Filter>
     </ClInclude>
     <ClInclude Include="Src\public\primitive2d.h">
       <Filter>ソース ファイル\Primitive</Filter>
@@ -356,12 +335,6 @@
     <ClInclude Include="Src\Image\image.h">
       <Filter>ソース ファイル\Render\Image</Filter>
     </ClInclude>
-    <ClInclude Include="Src\RendTexture\RendTexture.h">
-      <Filter>ソース ファイル\Render\RendTexture</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Texture\Texture.h">
-      <Filter>ソース ファイル\Render\Texture</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Scene\Scene.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
@@ -394,6 +367,9 @@
     </ClInclude>
     <ClInclude Include="Src\Polygon\Polygon.h">
       <Filter>ソース ファイル\Polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\RendTexture\Render.h">
+      <Filter>ソース ファイル\Render\Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

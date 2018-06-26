@@ -9,6 +9,8 @@ CGameMain::CGameMain()
 CGameMain::~CGameMain()
 {
 	SAFE_DELETE(m_pCharacters);
+	SAFE_DELETE(m_trianglesLeft);
+	SAFE_DELETE(m_trianglesRight);
 }
 
 bool CGameMain::init()
@@ -45,21 +47,31 @@ bool CGameMain::init()
 	CCharacterAggregate::removeInstance();
 	CCharacterAggregate::getInstance()->set(m_pCharacters);
 
+
 	//背景
 	//m_game.setupTexture(MAIN_BG, TEX_TYPE::PNG, BG_ID, CVec2(WINDOW_RIGHT*0.5f, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, WINDOW_RIGHT, WINDOW_TOP));
 	//m_game.setupTexture(MAIN_MOVEBG, TEX_TYPE::PNG, SCROLLBG_ID, CVec2(WINDOW_RIGHT * 3, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, 6400.0f, 720.0f));
 
+	//背景ポリゴン軍の初期化
+	m_trianglesLeft = new std::vector<float>();
+	m_trianglesRight = new std::vector<float>();
+
 	//背景の設定
 	//高さ
-	for (int i = 0; i <= 10; i++)
+	for (int i = 0; i <= 7; i++)
 	{
 		//幅
-		for (int j = 0; j <= 12; j++)
+		for (int j = 0; j <= 13; j++)
 		{
-			rand() % 100;
-			m_game.setupPoly(CVec4(100.0f*j - 50.0f, 100.0f*i, 90.0f + (100.0f * i), 1.0f), CVec4(rand() % 200, rand() % 200, rand() % 200, 100.0f));
-
-			m_game.setupPoly(CVec4(100.0f*j , 90.0f + (100.0f * i), 100.0f*i , 1.0f), CVec4(rand() % 200, rand() % 200, rand() % 200, 100.0f));
+			float a = rand()%100;
+			float range = 100.0f;		//間隔幅
+			float size = range-90.0f;	//大きさ
+			m_trianglesLeft->push_back(range*j- range * 0.5f);	//このポリゴンのx軸座標左を設定
+			m_trianglesRight->push_back((range*j- range * 0.5f) + range );	//このポリゴンのx軸座標右を設定
+			m_game.setupPoly(CVec4(range*j - range * 0.5f		, range * i	, size + (range * i), size	), CVec4(100.0f, a,a, 100.0f),i * 2.0f);	//背景に反映
+			m_trianglesLeft->push_back(range*j);		//このポリゴンのx軸座標左を設定
+			m_trianglesRight->push_back(range*j + range);		//このポリゴンのx軸座標右を設定
+			m_game.setupPoly(CVec4(range*j , size + (range * i)	, range * i , size						), CVec4(a, a, 100.0f, 100.0f),(i + 0.5f) * 2.0f);		//背景に反映
 		}
 	}
 
@@ -124,7 +136,6 @@ void CGameMain::rendUpdate()
 		m_game.setTextureRect((*notes->m_pAnimations)[notes->m_state]->getCurrentChip(), NOTES_ID);
 		m_game.setPosition(pPlayerChara->m_pMove->m_pos, pPlayerChara->m_texID);
 	}
-		
 		
 		
 		
@@ -330,6 +341,8 @@ void CGameMain::scroll()
 		//ギミックの出撃判定も行う
 		map->checkGimmickLaunch(pt.x, pt.y);
 
+		scrollBackGroundTrianglesRight(cameraPosX+WINDOW_RIGHT);
+
 	}
 	//プレイヤーの位置が後ろの値超えたら
 	else if (pt.x < WINDOW_RIGHT*0.2f - pPlayerChara->m_pMove->m_pos.x)
@@ -342,7 +355,7 @@ void CGameMain::scroll()
 
 		cameraMoveX = pPlayerChara->m_pMove->m_vel.x;
 
-
+		scrollBackGroundTrianglesLeft(cameraPosX);
 
 
 	}
@@ -442,12 +455,32 @@ void CGameMain::openMap()
 
 }
 
+void CGameMain::scrollBackGroundTrianglesLeft(float posX)
+{
+	for (int i = 0; i < m_trianglesLeft->size();i++)
+	{
+
+	}
+}
+void CGameMain::scrollBackGroundTrianglesRight(float posX)
+{
+	for (int i = 0; i < m_trianglesRight->size(); i++)
+	{
+
+	}
+}
+
 void CGameMain::qauarterUpdate()
 {
-	m_game.notesAction();
+	m_game.notesAction(1);
 	//playerのカウンター
-	pPlayerChara->musicNotesCounter = 10;
+	pPlayerChara->musicNotesCounter = 8;
 	pPlayerChara->DPHeal(1.0f);
 	if(notes != NULL)
 		notes->quarter();
+}
+
+void CGameMain::eighthUpdate()
+{
+
 }

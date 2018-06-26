@@ -2,6 +2,7 @@
 #include "../AllController/AllController.h"
 #include "../Data/Sound/Sound.h"
 #include <Windows.h>
+#include <vector>
 
 //シーンの親となるクラス
 class CScene

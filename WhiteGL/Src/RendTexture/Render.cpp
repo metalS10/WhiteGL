@@ -1,7 +1,7 @@
-#include "RendTexture.h"
+#include "Render.h"
 
 
-void CRendTexture::update(std::vector<CAnimation*>* anim)
+void CRenderer::update(std::vector<CAnimation*>* anim)
 {
 	for (int i = 1 ; i <= anim->size();i++)
 	{
@@ -20,7 +20,7 @@ void CRendTexture::update(std::vector<CAnimation*>* anim)
 	}
 	this->fadeSearch();
 }
-void CRendTexture::fadeSearch()
+void CRenderer::fadeSearch()
 {
 	for (int i = 0;i <= MAX_TEXTURE_NUMBER;i++)
 	{
@@ -53,11 +53,14 @@ void CRendTexture::fadeSearch()
 	}
 }
 
-void CRendTexture::render()
+void CRenderer::render()
 {
 	// The following two lines enable semi transparent
 	glEnable(GL_BLEND);
-
+	//色データをメモリに登録するための許可
+	glEnableClientState(GL_COLOR_ARRAY);
+	//テクスチャ情報も同様
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	//背景用ポリゴン描画
 	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
@@ -73,10 +76,10 @@ void CRendTexture::render()
 
 
 		//場所指定
-		const GLfloat vtx2[] = {
-			_polyVert[i].x,			_polyVert[i].y,_polyVert[i].w,
-			_polyVert[i].x + 90.0f,	_polyVert[i].y,_polyVert[i].w,
-			_polyVert[i].x + 45.0f,	_polyVert[i].z,_polyVert[i].w,
+		const GLfloat vtx2[] = {	//x左下となる点の位置,底辺となる点の位置y,z上の点の位置,w三角形の大きさ
+			_polyVert[i].x							,	_polyVert[i].y,1.0f,	//左
+			_polyVert[i].x + _polyVert[i].w			,	_polyVert[i].y,1.0f,	//右
+			_polyVert[i].x + _polyVert[i].w * 0.5f	,	_polyVert[i].z,1.0f,	//上
 		};
 		//3次元
 		glVertexPointer(3, GL_FLOAT, 0, vtx2);
@@ -101,6 +104,8 @@ void CRendTexture::render()
 			0,0,0,100,
 			0,0,0,100,
 		};
+
+
 		glColorPointer(4, GL_FLOAT, 0, colorLine);
 		//3次元
 		glVertexPointer(3, GL_FLOAT, 0, vtx2);
@@ -222,11 +227,14 @@ void CRendTexture::render()
 
 		}
 	}
-	
+	//許可を外す
+	glDisable(GL_BLEND);
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	
 }
 
-void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID)
+void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID)
 {
 	//使用許可
 	glEnable(GL_TEXTURE_2D);
@@ -360,7 +368,7 @@ void CRendTexture::setupTexture(const char *file, const TEX_TYPE tex_type, GLuin
 	texType[texID] = (tex_type);
 }
 //三角ポリゴンのセットアップ
-void CRendTexture::setupTrianglesPoly(const CVec4 vertex,const CVec4 color)
+void CRenderer::setupTrianglesPoly(const CVec4 vertex,const CVec4 color,const GLuint line)
 {
 	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
 	{
@@ -369,13 +377,15 @@ void CRendTexture::setupTrianglesPoly(const CVec4 vertex,const CVec4 color)
 			//ポリゴン設定を追加
 			_polyVert[i] = vertex;
 			_polyColor[i] = color;
+			_polyLine[i] = line;
+			_polyMaxLine = line;
 			break;
 		}
 	}
 }
 
 
-void CRendTexture::setupTextureSize(const CVec2 texPos,const CVec4 texRect,const GLuint texID)
+void CRenderer::setupTextureSize(const CVec2 texPos,const CVec4 texRect,const GLuint texID)
 {
 	//glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
 
@@ -400,7 +410,7 @@ void CRendTexture::setupTextureSize(const CVec2 texPos,const CVec4 texRect,const
 	}
 }
 
-void CRendTexture::deleteTexture(const GLuint texID)
+void CRenderer::deleteTexture(const GLuint texID)
 {
 	//使用許可
 	glEnable(GL_TEXTURE_2D);
@@ -414,7 +424,7 @@ void CRendTexture::deleteTexture(const GLuint texID)
 	glDisable(GL_TEXTURE_2D);
 }
 
-bool CRendTexture::loadPngImage(const char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData) {
+bool CRenderer::loadPngImage(const char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData) {
 	png_structp png_ptr;
 	png_infop info_ptr;
 	unsigned int sig_read = 0;
@@ -529,12 +539,12 @@ bool CRendTexture::loadPngImage(const char *name, int &outWidth, int &outHeight,
 	return true;
 }
 
-void CRendTexture::setupTextureColor(const CVec4 color, const GLuint texID)
+void CRenderer::setupTextureColor(const CVec4 color, const GLuint texID)
 {
 	colorRGBA[texID] = color;
 }
 
-void CRendTexture::TextureFade(const GLuint texID, const bool out,const float fadeInterval)
+void CRenderer::TextureFade(const GLuint texID, const bool out,const float fadeInterval)
 {
 	actionFade[texID] = true;
 	actionFadeInterval[texID] = fadeInterval;
@@ -543,13 +553,13 @@ void CRendTexture::TextureFade(const GLuint texID, const bool out,const float fa
 
 }
 
-void CRendTexture::setScale(const CVec2 Size, const GLuint texID)
+void CRenderer::setScale(const CVec2 Size, const GLuint texID)
 {
 	texScale[texID] = Size;
 	_rectPos[texID] = CVec4(_position[texID].x - texWH[texID].x * Size.x, _position[texID].x + texWH[texID].x * Size.x, _position[texID].y - texWH[texID].y * Size.y, _position[texID].y + texWH[texID].y * Size.y);
 }
 
-void CRendTexture::setPosition(const CVec2 position, const GLuint texID)
+void CRenderer::setPosition(const CVec2 position, const GLuint texID)
 {
 	_position[texID] = position;
 	_rectPos[texID] = CVec4(
@@ -559,20 +569,20 @@ void CRendTexture::setPosition(const CVec2 position, const GLuint texID)
 		_position[texID].y + texWH[texID].y * texScale[texID].y);
 }
 
-void CRendTexture::setMapPosition(const CVec2 position, const GLuint texID)
+void CRenderer::setMapPosition(const CVec2 position, const GLuint texID)
 {
 	_position[texID] = position;
 	CVec4 defrect = _rectPos[texID];
 	_rectPos[texID] = CVec4(_position[texID].x + defrect.x, _position[texID].x + defrect.y, _position[texID].y + defrect.z, _position[texID].y + defrect.w);
 }
 
-void CRendTexture::setRotate(const CVec3 rotate, const GLuint texID)
+void CRenderer::setRotate(const CVec3 rotate, const GLuint texID)
 {
-	glRotatef(30.f, 0.0f, 0.0f, 1.0f);
+	glRotatef(rotate.x,rotate.y,rotate.z, texID);
 }
 
 
-void CRendTexture::setTextureRect(const CVec4 Rect,const GLuint texID)
+void CRenderer::setTextureRect(const CVec4 Rect,const GLuint texID)
 {
 	//使用許可
 	glEnable(GL_TEXTURE_2D);
@@ -588,7 +598,7 @@ void CRendTexture::setTextureRect(const CVec4 Rect,const GLuint texID)
 	glDisable(GL_TEXTURE_2D);
 }
 
-void CRendTexture::SetProgressBarWH(const GLuint texID,const CVec4 Rect, const CVec2 position)
+void CRenderer::SetProgressBarWH(const GLuint texID,const CVec4 Rect, const CVec2 position)
 {
 	//使用許可
 	glEnable(GL_TEXTURE_2D);
@@ -616,7 +626,7 @@ void CRendTexture::SetProgressBarWH(const GLuint texID,const CVec4 Rect, const C
 
 }
 //全テクスチャ削除
-void CRendTexture::allTextureDelete()
+void CRenderer::allTextureDelete()
 {
 	for (int i = 0;i < MAX_TEXTURE_NUMBER;i++)
 	{
@@ -628,7 +638,7 @@ void CRendTexture::allTextureDelete()
 	}
 }
 //ステージ移動全テクスチャ削除
-void CRendTexture::allTextureDeletenotPlayer()
+void CRenderer::allTextureDeletenotPlayer()
 {
 	for (int i = 0;i < MAX_TEXTURE_NUMBER;i++)
 	{
@@ -640,20 +650,58 @@ void CRendTexture::allTextureDeletenotPlayer()
 		}
 	}
 }
-void CRendTexture::notesFadeBackground()
+void CRenderer::notesFadeBackground()
 {
 	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
 	{
-		if (_polyColor[i].w <= 20.0f)
+		if (_polyColor[i].w <= 1.0f)
 			continue;
 		_polyColor[i].w--;
 	}
 }
-void CRendTexture::notesFadeInit()
+void CRenderer::notesRandomFadeInit()
 {
 	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
 	{
 		if(rand()%3 == 1)
 			_polyColor[i].w = 70.0f;
 	}
+}
+
+void CRenderer::notesUpFadeInit(GLuint mode)
+{
+	switch (mode)
+	{
+	case 0:
+		for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
+		{
+			if (_polyLine[i] == upfadeCount)
+			{
+				_polyColor[i].w = 100.0f;
+			}
+		}
+		upfadeCount++;
+		if (upfadeCount > _polyMaxLine)
+		{
+			upfadeCount = 0;
+		}
+		break;
+	case 1:
+		for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
+		{
+			if (_polyLine[i] == upfadeCount || _polyLine[i] == upfadeCount + 1)
+			{
+				_polyColor[i].w = 100.0f;
+			}
+		}
+		upfadeCount += 2;
+		if (upfadeCount > _polyMaxLine)
+		{
+			upfadeCount = 0;
+		}
+		break;
+	default:
+		break;
+	}
+	
 }

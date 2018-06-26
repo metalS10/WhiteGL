@@ -8,14 +8,9 @@ void CGameEngine::setupTexture(const char* file,TEX_TYPE texType,GLuint texID,CV
 	//================================
 	//テクスチャの描画
 	//================================
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	//色データをメモリに登録するための許可を得る
-	glEnableClientState(GL_COLOR_ARRAY);
-
-	rendTex->setupTexture(file, texType, texID);
-	rendTex->setupTextureSize(texPos, texRect , texID);
-	rendTex->setupTextureColor(color, texID);
+	renderer->setupTexture(file, texType, texID);
+	renderer->setupTextureSize(texPos, texRect , texID);
+	renderer->setupTextureColor(color, texID);
 
 }
 
@@ -24,19 +19,14 @@ void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID,
 	//================================
 	//テクスチャの描画
 	//================================
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	//色データをメモリに登録するための許可を得る
-	glEnableClientState(GL_COLOR_ARRAY);
-
-	rendTex->setupTexture(file, texType, texID);
-	rendTex->setupTextureSize(texPos, texRect, texID);
-	rendTex->setupTextureColor(CVec4(100.0f,100.0f,100.0f,100.0f), texID);
+	renderer->setupTexture(file, texType, texID);
+	renderer->setupTextureSize(texPos, texRect, texID);
+	renderer->setupTextureColor(CVec4(100.0f,100.0f,100.0f,100.0f), texID);
 }
 
-void CGameEngine::setupPoly(const CVec4 vertex, const CVec4 color)
+void CGameEngine::setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line)
 {
-	rendTex->setupTrianglesPoly(vertex, color);
+	renderer->setupTrianglesPoly(vertex, color, line);
 }
 
 void CGameEngine::setChipAnim(CAnimation *&&_val)
@@ -53,7 +43,7 @@ void CGameEngine::setChipData(GLuint texID,CVec4 rectData)
 GLFWwindow* CGameEngine::init(int w,int h,const char* file)
 {
 
-	rendTex = new CRendTexture();
+	renderer = new CRenderer();
 
 	if (isInitialized)
 	{
@@ -132,10 +122,10 @@ void CGameEngine::update()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glfwPollEvents();
 
-	rendTex->update(m_pAnim);
-	rendTex->render();
+	renderer->update(m_pAnim);
+	renderer->render();
 
-	//rendTex->update(m_pAnim);
+	//renderer->update(m_pAnim);
 	/*
 	GameEngine& game = GameEngine::Instance();
 	const GamePad gamepad = game.GetGamePad();
@@ -150,12 +140,12 @@ void CGameEngine::render()
 {
 	glfwPollEvents();
 
-	rendTex->render();
+	renderer->render();
 }
 
 void CGameEngine::update60()
 {
-	rendTex->notesFadeBackground();
+	renderer->notesFadeBackground();
 	m_hitStop--;
 	if (m_hitStop <= 0)
 		m_hitStop = 0;
@@ -164,28 +154,28 @@ void CGameEngine::update60()
 
 void CGameEngine::setScale(CVec2 scale, GLuint texID)
 {
-	rendTex->setScale(scale, texID);
+	renderer->setScale(scale, texID);
 }
 
 
 void CGameEngine::setTextureRect(const CVec4 mrect,const GLuint texID)
 {	
-	rendTex->setTextureRect(mrect,texID);
+	renderer->setTextureRect(mrect,texID);
 }
 
 void CGameEngine::SetProgressBarWH(const GLuint texID, const CVec4 Rect, const CVec2 position)
 {
-	rendTex->SetProgressBarWH(texID, Rect,position);
+	renderer->SetProgressBarWH(texID, Rect,position);
 }
 
 void CGameEngine::setPosition(CVec2 pos, GLuint texID)
 {
-	rendTex->setPosition(pos, texID);
+	renderer->setPosition(pos, texID);
 }
 
 void CGameEngine::deleteTexture(const GLuint texID)
 {
-	rendTex->deleteTexture(texID);
+	renderer->deleteTexture(texID);
 }
 
 void CGameEngine::loadTMXMap(CLayerData layerData[MAX_LAYER_NUMBER],int width,int height)
@@ -226,12 +216,12 @@ void CGameEngine::TMXMapSetPos(float x, float y)
 {
 	for (int i = 0;i < countMap;i++)
 	{
-		rendTex->setMapPosition(CVec2(x, y), START_MAP_TEXTURE_NUMBER + i);
+		renderer->setMapPosition(CVec2(x, y), START_MAP_TEXTURE_NUMBER + i);
 	}
 }
 void CGameEngine::layerSetPos(float x, float y,GLuint texID)
 {
-	rendTex->setMapPosition(CVec2(x, y), texID);
+	renderer->setMapPosition(CVec2(x, y), texID);
 }
 
 /**
@@ -259,7 +249,7 @@ bool CGameEngine::ActionStage(GLuint texID, const float fadeInterval, const bool
 {
 	if (!actionone1)
 	{
-		rendTex->TextureFade(texID, fade, fadeInterval);
+		renderer->TextureFade(texID, fade, fadeInterval);
 		actionone1 = true;
 	}
 	if (getFadeEnd(texID))
@@ -272,29 +262,29 @@ bool CGameEngine::ActionStage(GLuint texID, const float fadeInterval, const bool
 void* CGameEngine::TextureFade(const GLuint texID, const bool out, const float fadeInterval)
 {
 
-	rendTex->TextureFade(texID, out, fadeInterval);
+	renderer->TextureFade(texID, out, fadeInterval);
 	return this;
 }
 bool CGameEngine::getFadeEnd(const GLuint texID)
 {
-	return !rendTex->actionFade[texID];
+	return !renderer->actionFade[texID];
 }
 
-CRendTexture* CGameEngine::getRendTexture()
+CRenderer* CGameEngine::getRenderer()
 {
-	return rendTex;
+	return renderer;
 }
 
 //BB以外が消える
 void CGameEngine::allTextureDelete()
 {
-	rendTex->allTextureDelete();
-	//rendTex->g_texID;
+	renderer->allTextureDelete();
+	//renderer->g_texID;
 }
 
 void CGameEngine::allTextureDeletenotPlayer()
 {
-	rendTex->allTextureDeletenotPlayer();
+	renderer->allTextureDeletenotPlayer();
 }
 
 
@@ -303,7 +293,27 @@ void CGameEngine::HitStop(float time)
 	m_hitStop = time;
 }
 
-void CGameEngine::notesAction()
+/**
+*	mode
+*0.Random
+*1.Up
+*2.doubleUp
+*/
+void CGameEngine::notesAction(int mode)
 {
-	rendTex->notesFadeInit();
+	switch (mode)
+	{
+	case 0:
+		renderer->notesRandomFadeInit();
+		break;
+	case 1:
+		renderer->notesUpFadeInit(mode - 1);
+		break;
+	case 2:
+		renderer->notesUpFadeInit(mode - 1);
+		break;
+	default:
+		break;
+	}
+	//renderer->setRotate(CVec3(1.0f, 0.0f, 0.0f), 1.0f);
 }

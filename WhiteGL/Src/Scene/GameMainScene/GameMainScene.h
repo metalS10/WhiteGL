@@ -19,6 +19,10 @@ private:
 	int m_EnemyNameInterval = 0;
 	CStage* m_stage = NULL;
 	CNotesUI* notes = NULL;
+	//背景のポジション群
+	std::vector<float>* m_trianglesLeft;
+	std::vector<float>* m_trianglesRight;
+
 
 
 public:
@@ -29,6 +33,7 @@ public:
 	void rendUpdate()override;	//描画更新
 	void sceneUpdate()override;	//システムの更新
 	void qauarterUpdate()override;	//4分音符の更新
+	void eighthUpdate()override;	//4分音符の更新
 
 	//ゲームの主な動きの更新
 	void gameMain();
@@ -41,6 +46,9 @@ public:
 	void openMap();
 
 	void setBGM();
+
+	void scrollBackGroundTrianglesLeft(float posX);
+	void scrollBackGroundTrianglesRight(float posX);
 
 
 

@@ -3,7 +3,7 @@
 */
 #pragma once
 #include "../Constants.h"
-#include "../RendTexture/RendTexture.h"
+#include "../RendTexture/Render.h"
 #include "../Data/Animation/Animation.h"
 #include "../GamePad.h"
 #include "../GLFWEW/GLFWEW.h"
@@ -13,7 +13,7 @@ class CCharacter;
 class CGameEngine
 {
 private :
-	CRendTexture* rendTex = NULL;
+	CRenderer* renderer = NULL;
 	std::vector<CAnimation*>* m_pAnim = NULL;
 	GLFWwindow* m_Window = NULL;
 	bool isInitialized = false;
@@ -32,7 +32,7 @@ public:
 	GLFWwindow* init(int w, int h, const char* file);
 	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color);	//テクスチャ設定
 	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect);				//色変更なしoverload
-	void setupPoly(const CVec4 vertex, const CVec4 color);		//背景三角ポリゴンの設定
+	void setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line);		//背景三角ポリゴンの設定(vertex(横、高さ、全体の大きさ))
 	void setChipAnim(CAnimation *&&_val);		//Chipアニメーション設定
 	void setChipData(GLuint texID, CVec4 rectData);	
 	void update();
@@ -52,7 +52,7 @@ public:
 	void* TextureFade(const GLuint texID, const bool out ,const float fadeInterval);
 	bool getFadeEnd(const GLuint texID);
 
-	CRendTexture* getRendTexture();
+	CRenderer* getRenderer();
 
 
 	void loadTMXMap(CLayerData layerData[MAX_LAYER_NUMBER],int width,int height);
@@ -60,7 +60,14 @@ public:
 	void layerSetPos(float x, float y,GLuint texID);
 
 	void HitStop(float time);
-	void notesAction();
+
+	/**
+	*	mode
+	*0.Random
+	*1.Up
+	*2.doubleUp
+	*/
+	void notesAction(int mode);
 	
 
 

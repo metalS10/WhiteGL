@@ -193,15 +193,12 @@
     <ClCompile Include="Src\interpreter\interpreter2.cpp" />
     <ClCompile Include="Src\interpreter\xmlparser.cpp" />
     <ClCompile Include="Src\main.cpp" />
-    <ClCompile Include="Src\Node.cpp" />
     <ClCompile Include="Src\NotesUI\NotesUI.cpp" />
     <ClCompile Include="Src\Polygon\Polygon.cpp" />
-    <ClCompile Include="Src\RendTexture\RendTexture.cpp" />
+    <ClCompile Include="Src\RendTexture\Render.cpp" />
     <ClCompile Include="Src\Scene\GameMainScene\GameMainScene.cpp" />
     <ClCompile Include="Src\Scene\Scene.cpp" />
     <ClCompile Include="Src\Scene\TitleScene\TitleScene.cpp" />
-    <ClCompile Include="Src\Sprite.cpp" />
-    <ClCompile Include="Src\Texture\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -241,18 +238,15 @@
     <ClInclude Include="Src\interpreter\Element.h" />
     <ClInclude Include="Src\interpreter\interpreter.h" />
     <ClInclude Include="Src\interpreter\xmlparser.h" />
-    <ClInclude Include="Src\Node.h" />
     <ClInclude Include="Src\NotesUI\NotesUI.h" />
     <ClInclude Include="Src\Physical.h" />
     <ClInclude Include="Src\Polygon\Polygon.h" />
     <ClInclude Include="Src\public\primitive2d.h" />
     <ClInclude Include="Src\Rect.h" />
-    <ClInclude Include="Src\RendTexture\RendTexture.h" />
+    <ClInclude Include="Src\RendTexture\Render.h" />
     <ClInclude Include="Src\Scene\GameMainScene\GameMainScene.h" />
     <ClInclude Include="Src\Scene\Scene.h" />
     <ClInclude Include="Src\Scene\TitleScene\TitleScene.h" />
-    <ClInclude Include="Src\Sprite.h" />
-    <ClInclude Include="Src\Texture\Texture.h" />
     <ClInclude Include="Src\Vec2.h" />
     <ClInclude Include="Src\Vec3.h" />
     <ClInclude Include="Src\Vec4.h" />
