@@ -9,6 +9,7 @@ CScene::~CScene()
 
 bool CScene::init()
 {
+
 	m_game.ActionStage(MAX_TEXTURE_NUMBER - 1, 1.0f, true);
 
 
@@ -23,12 +24,6 @@ bool CScene::init()
 	this->m_quarterNotes = (60 / m_bgmBpm)  * 1000;
 	this->m_eighthNotes = (60 / m_bgmBpm) * 0.5 * 1000;
 
-	m_attackSE = new CSound(SOUND_TEST_HALF,4);
-	m_avoidanceSE = new CSound(SOUND_TEST_QUARTER,8);
-	m_enemyDestroySE = new CSound(SOUND_TEST_EIGHTH,16);
-	m_attackSE->Load();
-	m_avoidanceSE->Load();
-	m_enemyDestroySE->Load();
 
 
 
@@ -104,6 +99,7 @@ void CScene::rendUpdate()
 		QuarterTime = 0;
 		EighthTime = 0;
 
+
 		//高解像度カウンタ対応判別 & PCの周波数get
 		if (QueryPerformanceFrequency(&m_nFreq))
 		{
@@ -146,6 +142,7 @@ void CScene::rendUpdate()
 	{
 		QuarterTime += m_quarterNotes;
 		qauarterUpdate();
+		
 	}
 
 	//八分のタイミング

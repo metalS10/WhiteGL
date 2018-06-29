@@ -379,6 +379,7 @@ void CRenderer::setupTrianglesPoly(const CVec4 vertex,const CVec4 color,const GL
 			_polyColor[i] = color;
 			_polyLine[i] = line;
 			_polyMaxLine = line;
+			_polyDefaultVert = vertex.w;
 			break;
 		}
 	}
@@ -643,6 +644,13 @@ void CRenderer::allTextureDelete()
 			SAFE_DELETE(tex[i]);
 		}
 	}
+	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
+	{
+		_polyVert[i] = {};
+		_polyColor[i] = {};
+		_polyLine[i] = {};
+		_polyMaxLine = {};
+	}
 }
 //ステージ移動全テクスチャ削除
 void CRenderer::allTextureDeletenotPlayer()
@@ -656,14 +664,27 @@ void CRenderer::allTextureDeletenotPlayer()
 			SAFE_DELETE(tex[i]);
 		}
 	}
+	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
+	{
+		_polyVert[i] = {};
+		_polyColor[i] = {};
+		_polyLine[i] = {};
+		_polyMaxLine = {};
+	}
 }
 void CRenderer::notesFadeBackground()
 {
 	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
 	{
-		if (_polyColor[i].w <= 1.0f)
-			continue;
-		_polyColor[i].w--;
+		if (_polyColor[i].w > 1.0f)
+			_polyColor[i].w--;
+
+		if (_polyVert[i].w > _polyDefaultVert)
+		{
+			_polyVert[i].x += 1.0f;
+			_polyVert[i].z -= 1.0f;
+			_polyVert[i].w -= 1.0f;
+		}
 	}
 }
 void CRenderer::notesRandomFadeInit()
@@ -672,6 +693,8 @@ void CRenderer::notesRandomFadeInit()
 	{
 		if(rand()%3 == 1)
 			_polyColor[i].w = 70.0f;
+			_polyVert[i].z += 10.0f;
+			_polyVert[i].w += 10.0f;
 	}
 }
 
@@ -685,6 +708,9 @@ void CRenderer::notesUpFadeInit(GLuint mode)
 			if (_polyLine[i] == upfadeCount)
 			{
 				_polyColor[i].w = 100.0f;
+				_polyVert[i].x -= 10.0f;
+				_polyVert[i].z += 10.0f;
+				_polyVert[i].w += 10.0f;
 			}
 		}
 		upfadeCount++;
@@ -699,6 +725,9 @@ void CRenderer::notesUpFadeInit(GLuint mode)
 			if (_polyLine[i] == upfadeCount || _polyLine[i] == upfadeCount + 1)
 			{
 				_polyColor[i].w = 100.0f;
+				_polyVert[i].x -= 10.0f;
+				_polyVert[i].z += 10.0f;
+				_polyVert[i].w += 10.0f;
 			}
 		}
 		upfadeCount += 2;

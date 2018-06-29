@@ -29,6 +29,15 @@ enum class CHARACTER_TYPE : int
 
 };
 
+//音集
+enum class SOUND : int
+{
+	PLAYER_AVOIDANCE_MISS = 0,
+	PLAYER_AVOIDANCE = 1,
+	PLAYER_ATTACK_MISS = 2,
+	PLAYER_ATTACK = 3,
+};
+
 //===============================================
 //	キャラクタークラス
 //		すべてのキャラクターの雛形となる抽象クラス
@@ -187,6 +196,10 @@ public:
 	//タイミングカウンタ―
 	int musicNotesCounter = 0;
 	int musicNotesMiss = 0;
+
+	//拍子間隔
+	int m_beatCounter = 0;
+	int m_beatInterval = 0;
 
 protected:
 

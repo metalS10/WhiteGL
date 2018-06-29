@@ -47,8 +47,10 @@ bool CPlayerCharacter::init()
 
 	//攻撃音読み込み
 	this->m_pSounds = new std::vector<CSound*>();
-	this->m_pSounds->push_back(new CSound(SOUND_TEST_HALF, 3));
-	this->m_pSounds->push_back(new CSound(SOUND_TEST_QUARTER, 3));
+	this->m_pSounds->push_back(new CSound(SOUND_DRUM_AVOIDANCE_MISS, 3,100));
+	this->m_pSounds->push_back(new CSound(SOUND_DRUM_AVOIDANCE, 3,100));
+	this->m_pSounds->push_back(new CSound(SOUND_DRUM_ATTACK_MISS, 3,100));
+	this->m_pSounds->push_back(new CSound(SOUND_DRUM_ATTACK, 3,100));
 
 	for (CSound* sound : (*m_pSounds))
 	{
@@ -109,10 +111,10 @@ void CPlayerCharacter::inputFunc()
 		}
 		if (input->getOnKey(Input::Key::Z) == true)
 		{
-			//アニメーションの初期化
-			(*this->m_pAnimations)[(int)STATE::ATTACK]->start();
 			//弾発射(playerFactoryのgetActionsにも注意)
 			(*this->m_pActions)[(int)ACTION::ATTACK]->start();
+			//アニメーションの初期化
+			(*this->m_pAnimations)[(int)STATE::ATTACK]->start();
 			this->m_denkiPoint -= 5.0f;
 			this->Allfalse();
 			m_isAttack1 = true;
@@ -121,24 +123,11 @@ void CPlayerCharacter::inputFunc()
 		}
 		if (input->getOnKey(Input::Key::X) == true)
 		{
-			//ミスしていない&いいタイミングならゲージ回復
-			if (this->musicNotesCounter > 0 && musicNotesMiss <= 0)
-			{
-				this->DPHeal(10.0f);
-			}
-			//悪いタイミングならmiss判定
-			else if(!this->musicNotesCounter > 0)
-			{
-				//Miss!
-				musicNotesMiss = 20;
-				printf("Miss\n");
-			}
+
 			//回避開始
 			(*this->m_pActions)[(int)ACTION::AVOIDANCE]->start();
 
 			(*this->m_pAnimations)[(int)STATE::AVOIDANCE]->start();
-			//回避音
-			(*this->m_pSounds)[(int)SOUND::AVOIDANCE]->playChunk();
 		}
 		if (input->getOnKey(Input::Key::D) == true)
 		{
@@ -174,7 +163,7 @@ void CPlayerCharacter::moveFunc()
 	//弾発射update
 	(*this->m_pActions)[(int)ACTION::ATTACK]->update(this);
 
-
+	//回避アクション更新処理
 	(*this->m_pActions)[(int)ACTION::AVOIDANCE]->update(this);
 
 	(*this->m_pActions)[(int)ACTION::DAMAGE]->update(this);
@@ -522,9 +511,18 @@ void CPlayerCharacter::DamageInterval()
 	}
 }
 
+//拍子間隔セット
+void CPlayerCharacter::setBeat(int beat)
+{
+	m_beatInterval = beat;
+	m_beatInterval -= BEAT_INTERVAL;
+}
+
 //ジャスト回避
 void CPlayerCharacter::DodgeInterval()
 {
+	m_beatCounter++;
+
 	//音に合わせるタイミングが来たら
 	if (!this->musicNotesCounter <= 0)
 	{
@@ -536,4 +534,16 @@ void CPlayerCharacter::DodgeInterval()
 	{
 		this->musicNotesMiss--;
 	}
+}
+
+void CPlayerCharacter::beatUpdate()
+{
+	if (m_beatInterval == 0)
+	{
+		setBeat(m_beatCounter);
+	}
+	m_beatCounter = 0;
+	//playerのカウンター
+	musicNotesCounter = BEAT_INTERVAL;
+	DPHeal(1.0f);
 }

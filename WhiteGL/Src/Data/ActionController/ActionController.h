@@ -114,7 +114,8 @@ class CActionAvoidance : public CAction
 {
 protected:
 	//回避加速度
-	float m_accele = 0.0f;
+	float m_missAccele = 0.0f;
+	float m_successAccele = 0.0f;
 
 
 	//ジャンプ中かどうかのフラグ	true...ジャンプ中
@@ -132,8 +133,8 @@ protected:
 
 public:
 
-	CActionAvoidance(float accele ,int avoidanceIntarval, int intarval) :
-		m_accele(accele),m_avoidanceIntarval(avoidanceIntarval), m_intarval(intarval) {}
+	CActionAvoidance(float missaccele,float successaccele ,int avoidanceIntarval, int intarval) :
+		m_missAccele(missaccele), m_successAccele(successaccele),m_avoidanceIntarval(avoidanceIntarval), m_intarval(intarval){}
 
 	/**
 	*	@descジャンプ
@@ -402,7 +403,8 @@ public:
 class CActionShotBullet : public CAction
 {
 protected:
-	int m_bulletType;
+	int m_missBulletType;
+	int m_successBulletType;
 
 	//発射間隔
 	float m_interval = 0.0f;
@@ -415,8 +417,8 @@ protected:
 
 public:
 
-	CActionShotBullet(int type, float interval)
-		:m_bulletType(type), m_interval(interval) {}
+	CActionShotBullet(int misstype, int successtype, float interval)
+		:m_missBulletType(misstype),m_successBulletType(successtype), m_interval(interval) {}
 
 	/**
 	*	@descアクション

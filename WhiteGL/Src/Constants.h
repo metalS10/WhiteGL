@@ -33,6 +33,9 @@
 //背景ポリゴンの最大数
 #define MAX_BACKGROUND_NUMBER 140
 
+//拍子セーフ間隔
+#define BEAT_INTERVAL	4;
+
 //テクスチャIDの設定---------------------------------------------------------------
 //弾
 #define START_BULLET_TEXTURE_NUMBER 1000
@@ -108,11 +111,13 @@
 #define MAIN_MOVEBG PASS"Images/BG/p1.png"
 
 //sound
-#define SOUND_BGM PASS"sound/cyber_dungeon_001.ogg"
-#define SOUND_BGM2 PASS"sound/ENEMY.mp3"
-#define SOUND_TEST_HALF PASS"sound/select01.ogg"
-#define SOUND_TEST_QUARTER PASS"sound/button03a.ogg"
-#define SOUND_TEST_EIGHTH PASS"sound/button05.ogg"
+#define SOUND_BGM					PASS"sound/cyber_dungeon_001.ogg"
+#define SOUND_BGM2					PASS"sound/ENEMY.mp3"
+#define SOUND_DRUM_AVOIDANCE_MISS	PASS"sound/Drum/se_maoudamashii_instruments_drum1_hat.ogg"
+#define SOUND_DRUM_AVOIDANCE		PASS"sound/Drum/se_maoudamashii_instruments_drum2_hat.ogg"
+#define SOUND_DRUM_ATTACK_MISS		PASS"sound/Drum/se_maoudamashii_instruments_drum1_bassdrum1.ogg"
+#define SOUND_DRUM_ATTACK			PASS"sound/Drum/se_maoudamashii_instruments_drum2_bassdrum.ogg"
+#define SOUND_QUARTER_NOTES			PASS"sound/Drum/se_maoudamashii_instruments_drum1_hat.ogg"
 
 
 //タグ

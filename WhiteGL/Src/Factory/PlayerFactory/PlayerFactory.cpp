@@ -64,10 +64,10 @@ std::vector<CAction*>* CPlayerPartsFactory::getActions()
 	m_pActions = new std::vector<CAction*>();
 	//ジャンプアクションを設定
 	m_pActions->push_back(new CActionJump(4.0f, 3));
-	//弾発射アクションを設定
-	m_pActions->push_back(new CActionShotBullet((int)ATTACK_TYPE::NORMAL, 20));
-
-	m_pActions->push_back(new CActionAvoidance(20.0f,9,10));
+	//攻撃アクションを設定
+	m_pActions->push_back(new CActionShotBullet((int)ATTACK_TYPE::NORMAL, (int)ATTACK_TYPE::NOR, 20));
+	//回避アクションを設定
+	m_pActions->push_back(new CActionAvoidance(5.0f, 20.0f, 9, 10));
 	//SuperJump
 	m_pActions->push_back(new CActionJump(12.0f, 1));
 

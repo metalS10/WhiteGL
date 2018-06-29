@@ -11,21 +11,46 @@ CSound::CSound(char* sound, const int bpm, const int channels,bool musicBool)
 	m_bpm = bpm;
 	Mix_AllocateChannels(5);
 	m_musicBool = musicBool;
-
-
 }
+CSound::CSound(char* sound, const int bpm, const int channels, const int volume, bool musicBool)
+{
+	// SDL初期化
+	SDL_Init(SDL_INIT_AUDIO);
+	//周波数、フォーマット、チャンネル、バッファサイズ(大きいと遅延で死ぬ)
+	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, channels, 1024);
+	// 曲ファイルをロード
+	m_soundName = sound;
+	m_bpm = bpm;
+	Mix_AllocateChannels(5);
+	m_musicBool = musicBool;
+	m_volume = volume;
+}
+
+
 CSound::CSound(char* sound, const int overlapMax)
 {
 	// SDL初期化
 	SDL_Init(SDL_INIT_AUDIO);
 	//周波数、フォーマット、チャンネル、バッファサイズ(大きいと遅延で死ぬ)
-	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 1, 1024);
+	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 1, 512);
 	// 曲ファイルをロード
 	m_soundName = sound;
 	Mix_AllocateChannels(overlapMax);
 	overlapChunkMax = overlapMax;
-
 }
+CSound::CSound(char* sound, const int overlapMax, const int volume)
+{
+	// SDL初期化
+	SDL_Init(SDL_INIT_AUDIO);
+	//周波数、フォーマット、チャンネル、バッファサイズ(大きいと遅延で死ぬ)
+	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 1, 512);
+	// 曲ファイルをロード
+	m_soundName = sound;
+	Mix_AllocateChannels(overlapMax);
+	overlapChunkMax = overlapMax;
+	m_volume = volume;
+}
+
 
 CSound::~CSound()
 {
@@ -58,6 +83,9 @@ void CSound::LoadChunk()
 	}
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 	m_chunk = Mix_LoadWAV(m_soundName);
+
+	setChunkVolume(m_volume);
+
 }
 
 void CSound::Play()
@@ -72,6 +100,8 @@ void CSound::playMusic()
 {
 	//Mix_AllocateChannels(-1);
 	Mix_PlayMusic(m_music, -1);                // 曲の再生スタート(無限ループ)
+
+	setMusicVolume(m_volume);
 }
 
 void CSound::playChunk()
@@ -81,6 +111,17 @@ void CSound::playChunk()
 	overlapChunkCount++;
 	if (overlapChunkCount >= overlapChunkMax)
 		overlapChunkCount = 0;
+
+}
+
+void CSound::setMusicVolume(int value)
+{
+	Mix_VolumeMusic(value);
+}
+
+void CSound::setChunkVolume(int value)
+{
+	Mix_VolumeChunk(m_chunk, value);
 }
 
 void CSound::fadeOut(int ms)

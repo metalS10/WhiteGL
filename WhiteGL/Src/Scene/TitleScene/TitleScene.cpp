@@ -12,7 +12,7 @@ CTitle::~CTitle()
 
 bool CTitle::init()
 {
-	BGM = new CSound(SOUND_BGM, 140,1,true);
+	BGM = new CSound(SOUND_BGM, 140,1,20,true);
 	if (CScene::init() == false)
 	{
 		printf("ƒV[ƒ“‰Šú‰»‚É¸”s");

@@ -70,15 +70,38 @@ void CActionAvoidance::update(CCharacter* pChara)
 {
 	if (this->m_isAvoidanceStart == true && m_isAvoidance == false)
 	{
-
-		//最大速度の変更
-		(*pChara->m_pPhysicals)[1]->SetMaxSpeed(m_accele, 5.0f);
-		//x軸の移動速度に値を設定
-		pChara->m_pMove->m_vel.x = this->m_accele * pChara->m_CharaLaunchVector.x;
-		pChara->m_pMove->m_vel.y = 0;
-		pChara->m_isAvoidance = true;
-		//回避フラグをtrueにする
-		this->m_isAvoidance = true;
+		//ナイスタイミング
+		if (pChara->musicNotesCounter > 0 && pChara->musicNotesMiss <= 0 || pChara->m_beatCounter >= pChara->m_beatInterval && pChara->musicNotesMiss <= 0)
+		{
+			//回避音
+			(*pChara->m_pSounds)[(int)SOUND::PLAYER_AVOIDANCE]->playChunk();
+			//最大速度の変更
+			(*pChara->m_pPhysicals)[1]->SetMaxSpeed(m_successAccele, 0.1f);
+			//x軸の移動速度に値を設定
+			pChara->m_pMove->m_vel.x = this->m_successAccele * pChara->m_CharaLaunchVector.x;
+			pChara->m_pMove->m_vel.y = 0;
+			pChara->m_isAvoidance = true;
+			//回避フラグをtrueにする
+			this->m_isAvoidance = true;
+			pChara->DPHeal(10.0f);
+		}
+		//バッドタイミング
+		else if (!pChara->musicNotesCounter > 0)
+		{
+			//回避音
+			(*pChara->m_pSounds)[(int)SOUND::PLAYER_AVOIDANCE_MISS]->playChunk();
+			//最大速度の変更
+			(*pChara->m_pPhysicals)[1]->SetMaxSpeed(m_missAccele, 0.1f);
+			//x軸の移動速度に値を設定
+			pChara->m_pMove->m_vel.x = this->m_missAccele * pChara->m_CharaLaunchVector.x;
+			pChara->m_pMove->m_vel.y = 0;
+			pChara->m_isAvoidance = true;
+			//回避フラグをtrueにする
+			this->m_isAvoidance = true;
+			//Miss!
+			pChara->musicNotesMiss = 20;
+			printf("AvoidanceMiss\n");
+		}
 	}
 	else if(m_isAvoidance)
 	{
@@ -93,7 +116,6 @@ void CActionAvoidance::update(CCharacter* pChara)
 			//次発動可能インターバル
 			if (m_counter >= m_intarval)
 			{
-
 				m_counter = 0;
 				//アクション停止
 				m_isAvoidance = false;
@@ -102,7 +124,7 @@ void CActionAvoidance::update(CCharacter* pChara)
 		else
 		{
 			//横に回避行動中
-			pChara->m_pMove->m_vel.x = this->m_accele * pChara->m_CharaLaunchVector.x;
+			//pChara->m_pMove->m_vel.x = this->m_accele * pChara->m_CharaLaunchVector.x;
 			pChara->m_pMove->m_vel.y = 0;
 
 		}
@@ -467,20 +489,37 @@ void CActionShotBullet::update(CCharacter* pChara)
 			//敵出撃データを作成
 			//CBulletLaunchData* pLaunchData = new CBulletLaunchData(BULLET_TYPE::NORMAL, pChara->m_pMove->m_pos, pChara->m_shotLaunchVector);
 
+			if (pChara->musicNotesCounter > 0 && pChara->musicNotesMiss <= 0 || pChara->m_beatCounter >= pChara->m_beatInterval && pChara->musicNotesMiss <= 0)
+			{
+				//攻撃音
+				(*pChara->m_pSounds)[(int)SOUND::PLAYER_ATTACK]->playChunk();
+				//成功用攻撃
+				CAttackLaunchData* pLaunchData = new CAttackLaunchData(
+					(ATTACK_TYPE)this->m_successBulletType,
+					pChara->m_pMove->m_pos,
+					pChara->m_CharaLaunchVector
+				);
 
-			//回避音
-			(*pChara->m_pSounds)[0]->playChunk();
+				CAttackLaunchTrigger* pTrigger = new CAttackLaunchTrigger(pLaunchData);
 
-			CAttackLaunchData* pLaunchData = new CAttackLaunchData(
-				(ATTACK_TYPE)this->m_bulletType,
-				pChara->m_pMove->m_pos,
-				pChara->m_CharaLaunchVector
-			);
+				CLaunchScheduler::getInstance()->m_pLauncher->add(pTrigger);
+			}
+			else if (!pChara->musicNotesCounter > 0)
+			{
+				//攻撃音
+				(*pChara->m_pSounds)[(int)SOUND::PLAYER_ATTACK_MISS]->playChunk();
+				//ミス用攻撃
+				CAttackLaunchData* pLaunchData = new CAttackLaunchData(
+					(ATTACK_TYPE)this->m_missBulletType,
+					pChara->m_pMove->m_pos,
+					pChara->m_CharaLaunchVector
+				);
+				printf("AttackMiss\n");
 
+				CAttackLaunchTrigger* pTrigger = new CAttackLaunchTrigger(pLaunchData);
 
-			CAttackLaunchTrigger* pTrigger = new CAttackLaunchTrigger(pLaunchData);
-
-			CLaunchScheduler::getInstance()->m_pLauncher->add(pTrigger);
+				CLaunchScheduler::getInstance()->m_pLauncher->add(pTrigger);
+			}
 
 			this->m_shotCount = this->m_interval;
 

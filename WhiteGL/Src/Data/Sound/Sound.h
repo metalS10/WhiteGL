@@ -30,11 +30,15 @@ private:
 	int overlapChunkMax = 0;
 	int overlapChunkCount = 0;
 
+	int m_volume = 50;
+
 public:
 	//Music用コンストラクタ
 	CSound(char* sound,const int bpm, const int channels,bool musicBool);
+	CSound(char* sound,const int bpm, const int channels, const int volume,bool musicBool);
 	//Chunk用コンストラクタ
 	CSound(char* sound,const int overlapMax);
+	CSound(char* sound,const int overlapMax,const int volume);
 	~CSound();
 
 	void Load();
@@ -48,6 +52,10 @@ public:
 	void playMusic();
 	//効果音
 	void playChunk();
+	//BGMの音量
+	void setMusicVolume(int value);
+	//効果音の音量
+	void setChunkVolume(int value);
 
 	//音楽のフェードアウト
 	void fadeOut(int ms);

@@ -53,6 +53,10 @@ bool CGameMain::init()
 	//”wŒiƒ|ƒŠƒSƒ“ŒR‚Ì‰Šú‰»
 	m_trianglesLeft = std::vector<float>();
 	m_trianglesRight = std::vector<float>();
+	
+	//ŠÔŠuŒø‰Ê‰¹‚ğİ’è
+	m_notesSound = new CSound(SOUND_QUARTER_NOTES, 1, 100);
+	m_notesSound->LoadChunk();
 
 	//”wŒi‚Ìİ’è
 	//‚‚³
@@ -65,12 +69,14 @@ bool CGameMain::init()
 			m_polyRange = 128.0f;		//ŠÔŠu•
 			float size = m_polyRange -64.0f;	//‘å‚«‚³
 
-			m_trianglesLeft.push_back(m_polyRange*j- m_polyRange * 0.5f);	//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W¶‚ğİ’è
-			m_trianglesRight.push_back((m_polyRange*j- m_polyRange * 0.5f) + m_polyRange);	//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W‰E‚ğİ’è
-			m_game.setupPoly(CVec4(m_polyRange*j - m_polyRange * 0.5f		, m_polyRange * i	, size + (m_polyRange * i), size	), CVec4(100.0f, r,r, 100.0f),i * 2.0f);	//”wŒi‚É”½‰f
-			m_trianglesLeft.push_back(m_polyRange*j);		//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W¶‚ğİ’è
-			m_trianglesRight.push_back(m_polyRange*j + m_polyRange);		//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W‰E‚ğİ’è
-			m_game.setupPoly(CVec4(m_polyRange*j , size + (m_polyRange * i)	, m_polyRange * i	, size								), CVec4(r, r, 100.0f, 100.0f),(i + 0.5f) * 2.0f);		//”wŒi‚É”½‰f
+			m_trianglesLeft.push_back(m_polyRange*j);	//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W¶‚ğİ’è
+			m_trianglesRight.push_back((m_polyRange*j) + m_polyRange);	//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W‰E‚ğİ’è
+			m_game.setupPoly(CVec4(m_polyRange*j					, m_polyRange * i	, size + (m_polyRange * i), size	), CVec4(100.0f, r,r, 100.0f),i * 2.0f);	//”wŒi‚É”½‰f
+			
+			
+			m_trianglesLeft.push_back(m_polyRange*j + m_polyRange * 0.5f);		//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W¶‚ğİ’è
+			m_trianglesRight.push_back((m_polyRange*j + m_polyRange * 0.5f) + m_polyRange);		//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W‰E‚ğİ’è
+			m_game.setupPoly(CVec4(m_polyRange*j + m_polyRange * 0.5f, size + (m_polyRange * i)	, m_polyRange * i	, size								), CVec4(r, r, 100.0f, 100.0f),(i + 0.5f) * 2.0f);		//”wŒi‚É”½‰f
 		}
 	}
 
@@ -262,6 +268,7 @@ void CGameMain::update()
 //ƒQ[ƒ€‘S‘Ì‚Ì“®‚«(ƒXƒe[ƒWˆÚ“®)
 void CGameMain::gameMain()
 {
+
 	//Ÿ‚ÌƒXƒe[ƒW‚Ö
 	if (pPlayerChara->m_nextStage)
 	{
@@ -453,6 +460,8 @@ void CGameMain::openMap()
 	}
 
 	m_stage->init();
+	//‰Šú‰»
+	pPlayerChara->m_beatInterval = 0;
 
 }
 //”wŒiƒXƒNƒ[ƒ‹—p‚ÌŠÖ”
@@ -512,12 +521,12 @@ void CGameMain::scrollBackGroundTrianglesRight(float posX)
 				l -= 2;
 				if (l <= -1)
 				{
-					m_game.setPosTrianglesPoly(m_trianglesLeft[i], CVec4(r, r, 100.0f, 100.0f), i);	//”wŒi‚É”½‰f
+					m_game.setPosTrianglesPoly(m_trianglesLeft[i], CVec4(r, r, 100.0f, 0.0f), i);	//”wŒi‚É”½‰f
 					break;
 				}
 				else if (l <= 0)
 				{
-					m_game.setPosTrianglesPoly(m_trianglesLeft[i], CVec4(100.0f, r, r, 100.0f), i);	//”wŒi‚É”½‰f
+					m_game.setPosTrianglesPoly(m_trianglesLeft[i], CVec4(100.0f, r, r, 0.0f), i);	//”wŒi‚É”½‰f
 					break;
 				}
 			}
@@ -527,10 +536,11 @@ void CGameMain::scrollBackGroundTrianglesRight(float posX)
 
 void CGameMain::qauarterUpdate()
 {
+	//m_notesSound->playChunk();
 	m_game.notesAction(1);
-	//player‚ÌƒJƒEƒ“ƒ^[
-	pPlayerChara->musicNotesCounter = 8;
-	pPlayerChara->DPHeal(1.0f);
+	//”qŠÔŠu‚ÌXVˆ—
+	pPlayerChara->beatUpdate();
+	
 	if(notes != NULL)
 		notes->quarter();
 }

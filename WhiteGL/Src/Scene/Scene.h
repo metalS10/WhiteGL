@@ -48,6 +48,7 @@ protected:
 	//8
 	double m_eighthNotes = 0;
 
+
 	
 	//周波数,最初のms,updateのms
 	LARGE_INTEGER m_nFreq, m_nInit, m_nAfter;
@@ -55,9 +56,6 @@ protected:
 	//二分音符、四分音符、八分音符(ms)
 	double Time = 0, HalfTime = 0, QuarterTime = 0, EighthTime = 0;
 
-	CSound* m_attackSE = NULL;
-	CSound* m_avoidanceSE = NULL;
-	CSound* m_enemyDestroySE = NULL;
 
 	//高解像度カウンタ対応判別(Windows NT(/2000) 3.1 以降,Windows95(/98)以降)
 	bool m_queryPC = false;

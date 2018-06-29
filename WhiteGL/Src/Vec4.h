@@ -38,4 +38,59 @@ public:
 		else
 			return true;
 	}
+
+	inline CVec4& CVec4::operator-=(const CVec4& v)
+	{
+		minus(v);
+		return *this;
+	}
+	inline CVec4& CVec4::operator-=(const float& v)
+	{
+		minus(v);
+		return *this;
+	}
+	inline CVec4 CVec4::operator*(const float& v) const
+	{
+		CVec4 result(*this);
+		result.multi(v);
+		return result;
+	}
+	inline CVec4& CVec4::operator*=(const float& v)
+	{
+		multi(v);
+		return *this;
+	}
+
+	inline void CVec4::add(const CVec4& v)
+	{
+		x += v.x;
+		y += v.y;
+		z += v.z;
+		w += v.w;
+	}
+	inline void CVec4::minus(const CVec4& v)
+	{
+		x -= v.x;
+		y -= v.y;
+		z -= v.x;
+		y -= v.z;
+		w -= v.w;
+	}
+	inline void CVec4::minus(const float& v)
+	{
+		x -= v;
+		y -= v;
+		z -= v;
+		y -= v;
+		w -= v;
+	}
+
+	inline void CVec4::multi(const float& v)
+	{
+		x *= v;
+		y *= v;
+		z *= v;
+		w *= v;
+	}
+
 };

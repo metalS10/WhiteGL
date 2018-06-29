@@ -56,11 +56,7 @@ public:
 		DAMAGE			=	3
 	};
 
-	enum class SOUND : int
-	{
-		ATTACK		=	0,
-		AVOIDANCE	=	1,
-	};
+	
 
 	//==================================================================
 	//
@@ -108,6 +104,9 @@ public:
 	//ジャスト回避(減らすだけ
 	void DodgeInterval();
 
+	//拍子間隔の更新処理
+	void beatUpdate();
+
 
 	/**
 	*@desc	下領域と衝突した際のイベントコールバック
@@ -149,4 +148,6 @@ public:
 
 
 	void Allfalse();
+	//拍子間隔設定
+	void setBeat(int beat);
 };

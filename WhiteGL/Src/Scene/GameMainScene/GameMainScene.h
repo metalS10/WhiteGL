@@ -24,6 +24,8 @@ private:
 	//”wŒi‚Ìƒ|ƒWƒVƒ‡ƒ“ŒQ
 	std::vector<float> m_trianglesLeft;
 	std::vector<float> m_trianglesRight;
+	//ŠÔŠuŒø‰Ê‰¹
+	CSound* m_notesSound;
 
 
 

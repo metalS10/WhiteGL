@@ -19,7 +19,7 @@ CStage* CStage1_1::changeStage()
 CSound* CStage1_1::getBGM()
 {
 	//このステージのBGMを設定
-	bgm = new CSound(SOUND_BGM, 140,1, true);
+	bgm = new CSound(SOUND_BGM, 140,1, 20, true);
 	//設定したものを渡す
 	return bgm;
 }
@@ -41,7 +41,7 @@ CStage* CStage1_2::changeStage()
 CSound* CStage1_2::getBGM()
 {
 	//このステージのBGMを設定
-	bgm = new CSound(SOUND_BGM2, 212,1, true);
+	bgm = new CSound(SOUND_BGM2, 212,1, 20, true);
 	//設定したものを渡す
 	return bgm;
 }

@@ -49,6 +49,7 @@ public:
 	CVec4 _polyColor[MAX_BACKGROUND_NUMBER] = {};
 	GLuint _polyLine[MAX_BACKGROUND_NUMBER] = {};
 	GLuint _polyMaxLine = 0;
+	GLuint _polyDefaultVert = 0;
 	GLint upfadeCount = 0;
 
 	CRenderer()
