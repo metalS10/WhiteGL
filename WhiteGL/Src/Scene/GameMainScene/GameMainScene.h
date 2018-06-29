@@ -24,8 +24,6 @@ private:
 	//背景のポジション群
 	std::vector<float> m_trianglesLeft;
 	std::vector<float> m_trianglesRight;
-	//間隔効果音
-	CSound* m_notesSound;
 
 
 
@@ -39,6 +37,9 @@ public:
 	void qauarterUpdate()override;	//4分音符の更新
 	void eighthUpdate()override;	//4分音符の更新
 
+	//ステージ遷移初期化
+	bool stageChangeInit();
+
 	//ゲームの主な動きの更新
 	void gameMain();
 	//横スクロール
@@ -49,7 +50,6 @@ public:
 	//TiledMapの読み込み&開く
 	void openMap();
 
-	void setBGM();
 
 	void scrollBackGroundTrianglesLeft(float posX);
 	void scrollBackGroundTrianglesRight(float posX);

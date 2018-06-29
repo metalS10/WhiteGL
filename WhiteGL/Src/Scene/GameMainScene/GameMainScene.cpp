@@ -49,36 +49,7 @@ bool CGameMain::init()
 	//”wŒi
 	//m_game.setupTexture(MAIN_BG, TEX_TYPE::PNG, BG_ID, CVec2(WINDOW_RIGHT*0.5f, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, WINDOW_RIGHT, WINDOW_TOP));
 	//m_game.setupTexture(MAIN_MOVEBG, TEX_TYPE::PNG, SCROLLBG_ID, CVec2(WINDOW_RIGHT * 3, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, 6400.0f, 720.0f));
-
-	//”wŒiƒ|ƒŠƒSƒ“ŒR‚Ì‰Šú‰»
-	m_trianglesLeft = std::vector<float>();
-	m_trianglesRight = std::vector<float>();
 	
-	//ŠÔŠuŒø‰Ê‰¹‚ğİ’è
-	m_notesSound = new CSound(SOUND_QUARTER_NOTES, 1, 100);
-	m_notesSound->LoadChunk();
-
-	//”wŒi‚Ìİ’è
-	//‚‚³
-	for (int i = 0; i <= 5; i++)
-	{
-		//•
-		for (int j = 0; j <= 10; j++)
-		{
-			float r = rand()%100;
-			m_polyRange = 128.0f;		//ŠÔŠu•
-			float size = m_polyRange -64.0f;	//‘å‚«‚³
-
-			m_trianglesLeft.push_back(m_polyRange*j);	//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W¶‚ğİ’è
-			m_trianglesRight.push_back((m_polyRange*j) + m_polyRange);	//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W‰E‚ğİ’è
-			m_game.setupPoly(CVec4(m_polyRange*j					, m_polyRange * i	, size + (m_polyRange * i), size	), CVec4(100.0f, r,r, 100.0f),i * 2.0f);	//”wŒi‚É”½‰f
-			
-			
-			m_trianglesLeft.push_back(m_polyRange*j + m_polyRange * 0.5f);		//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W¶‚ğİ’è
-			m_trianglesRight.push_back((m_polyRange*j + m_polyRange * 0.5f) + m_polyRange);		//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W‰E‚ğİ’è
-			m_game.setupPoly(CVec4(m_polyRange*j + m_polyRange * 0.5f, size + (m_polyRange * i)	, m_polyRange * i	, size								), CVec4(r, r, 100.0f, 100.0f),(i + 0.5f) * 2.0f);		//”wŒi‚É”½‰f
-		}
-	}
 
 	pPlayerChara = (CPlayerCharacter*)CPlayerFactoryManager::getInstance()->create(320.0f, 200.0f);
 
@@ -120,6 +91,45 @@ bool CGameMain::init()
 
 
 	pPlayerChara->input = input;
+
+
+	//ƒXƒe[ƒWØ‚è‘Ö‚í‚è—p‚Ì‰Šú‰»
+	if (this->stageChangeInit() == false)
+		printf("ƒXƒe[ƒW‘JˆÚ—p‰Šú‰»‚É¸”s");
+
+
+	return true;
+}
+bool CGameMain::stageChangeInit()
+{
+	//”wŒiƒ|ƒŠƒSƒ“ŒR‚Ì‰Šú‰»
+	m_trianglesLeft = std::vector<float>();
+	m_trianglesRight = std::vector<float>();
+
+	//‰Šú‰»
+	pPlayerChara->m_beatInterval = 0;
+
+	//”wŒi‚Ìİ’è
+	//‚‚³
+	for (int i = 0; i <= 5; i++)
+	{
+		//•
+		for (int j = 0; j <= 10; j++)
+		{
+			float r = rand() % 100;
+			m_polyRange = 128.0f;		//ŠÔŠu•
+			float range = m_polyRange - 64.0f;	//‘å‚«‚³
+
+			m_trianglesLeft.push_back(m_polyRange*j);	//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W¶‚ğİ’è
+			m_trianglesRight.push_back((m_polyRange*j) + m_polyRange);	//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W‰E‚ğİ’è
+			m_game.setupPoly(CVec4(m_polyRange*j, m_polyRange * i, range, range), CVec4(100.0f, r, r, 100.0f), i * 2.0f);	//”wŒi‚É”½‰f
+
+
+			m_trianglesLeft.push_back(m_polyRange*j + m_polyRange * 0.5f);		//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W¶‚ğİ’è
+			m_trianglesRight.push_back((m_polyRange*j + m_polyRange * 0.5f) + m_polyRange);		//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W‰E‚ğİ’è
+			m_game.setupPoly(CVec4(m_polyRange*j + m_polyRange * 0.5f, range * 0.5f + (m_polyRange * i), range, -range), CVec4(r, r, 100.0f, 100.0f), (i + 0.5f) * 2.0f);		//”wŒi‚É”½‰f
+		}
+	}
 	return true;
 }
 
@@ -460,9 +470,8 @@ void CGameMain::openMap()
 	}
 
 	m_stage->init();
-	//‰Šú‰»
-	pPlayerChara->m_beatInterval = 0;
-
+	if (this->stageChangeInit() == false)
+		printf("ƒXƒe[ƒW‘JˆÚ—p‰Šú‰»‚É¸”s");
 }
 //”wŒiƒXƒNƒ[ƒ‹—p‚ÌŠÖ”
 //¶‚ÖƒXƒNƒ[ƒ‹’†

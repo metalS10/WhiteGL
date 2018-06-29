@@ -77,9 +77,9 @@ void CRenderer::render()
 
 		//場所指定
 		const GLfloat vtx2[] = {	//x左下となる点の位置,底辺となる点の位置y,z上の点の位置,w三角形の大きさ
-			_polyVert[i].x							,	_polyVert[i].y,1.0f,	//左
-			_polyVert[i].x + _polyVert[i].w			,	_polyVert[i].y,1.0f,	//右
-			_polyVert[i].x + _polyVert[i].w * 0.5f	,	_polyVert[i].z,1.0f,	//上
+			_polyVert[i].x - _polyVert[i].z * 0.5f			,	_polyVert[i].y - _polyVert[i].w * 0.5f,1.0f,	//左
+			_polyVert[i].x + _polyVert[i].z * 0.5f			,	_polyVert[i].y - _polyVert[i].w * 0.5f,1.0f,	//右
+			_polyVert[i].x									,	_polyVert[i].y + _polyVert[i].w * 0.5f,1.0f,	//上
 		};
 		//3次元
 		glVertexPointer(3, GL_FLOAT, 0, vtx2);
@@ -379,7 +379,7 @@ void CRenderer::setupTrianglesPoly(const CVec4 vertex,const CVec4 color,const GL
 			_polyColor[i] = color;
 			_polyLine[i] = line;
 			_polyMaxLine = line;
-			_polyDefaultVert = vertex.w;
+			_polyDefaultVert = vertex.z;
 			break;
 		}
 	}
@@ -679,11 +679,14 @@ void CRenderer::notesFadeBackground()
 		if (_polyColor[i].w > 1.0f)
 			_polyColor[i].w--;
 
-		if (_polyVert[i].w > _polyDefaultVert)
+		if (_polyVert[i].z > _polyDefaultVert)
 		{
-			_polyVert[i].x += 1.0f;
-			_polyVert[i].z -= 1.0f;
-			_polyVert[i].w -= 1.0f;
+			_polyVert[i].z -= 3.0f;
+			//下向き三角
+			if(_polyVert[i].w < 0)
+				_polyVert[i].w += 3.0f;
+			else
+				_polyVert[i].w -= 3.0f;
 		}
 	}
 }
@@ -693,8 +696,13 @@ void CRenderer::notesRandomFadeInit()
 	{
 		if(rand()%3 == 1)
 			_polyColor[i].w = 70.0f;
-			_polyVert[i].z += 10.0f;
-			_polyVert[i].w += 10.0f;
+			_polyVert[i].z += 30.0f;
+			//下向き三角
+			if (_polyVert[i].w < 0)
+				_polyVert[i].w -= 30.0f;
+			else	
+				_polyVert[i].w += 30.0f;
+
 	}
 }
 
@@ -708,9 +716,12 @@ void CRenderer::notesUpFadeInit(GLuint mode)
 			if (_polyLine[i] == upfadeCount)
 			{
 				_polyColor[i].w = 100.0f;
-				_polyVert[i].x -= 10.0f;
-				_polyVert[i].z += 10.0f;
-				_polyVert[i].w += 10.0f;
+				_polyVert[i].z += 30.0f;
+				//下向き三角
+				if (_polyVert[i].w < 0)
+					_polyVert[i].w -= 30.0f;
+				else
+					_polyVert[i].w += 30.0f;
 			}
 		}
 		upfadeCount++;
@@ -725,9 +736,12 @@ void CRenderer::notesUpFadeInit(GLuint mode)
 			if (_polyLine[i] == upfadeCount || _polyLine[i] == upfadeCount + 1)
 			{
 				_polyColor[i].w = 100.0f;
-				_polyVert[i].x -= 10.0f;
-				_polyVert[i].z += 10.0f;
-				_polyVert[i].w += 10.0f;
+				_polyVert[i].z += 30.0f;
+				//下向き三角
+				if (_polyVert[i].w < 0)
+					_polyVert[i].w -= 30.0f;
+				else
+					_polyVert[i].w += 30.0f;
 			}
 		}
 		upfadeCount += 2;

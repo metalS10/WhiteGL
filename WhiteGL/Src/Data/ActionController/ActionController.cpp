@@ -99,7 +99,7 @@ void CActionAvoidance::update(CCharacter* pChara)
 			//‰ñ”ðƒtƒ‰ƒO‚ðtrue‚É‚·‚é
 			this->m_isAvoidance = true;
 			//Miss!
-			pChara->musicNotesMiss = 20;
+			pChara->musicNotesMiss = 10;
 			printf("AvoidanceMiss\n");
 		}
 	}
