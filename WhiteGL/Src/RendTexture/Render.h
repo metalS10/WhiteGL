@@ -51,6 +51,7 @@ public:
 	GLuint _polyMaxLine = 0;
 	GLuint _polyDefaultVert = 0;
 	GLint upfadeCount = 0;
+	GLint _beatUpSize = BEAT_BIGSIZE;
 
 	CRenderer()
 	{

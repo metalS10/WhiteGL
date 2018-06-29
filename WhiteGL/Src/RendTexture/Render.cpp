@@ -676,17 +676,17 @@ void CRenderer::notesFadeBackground()
 {
 	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
 	{
-		if (_polyColor[i].w > 1.0f)
-			_polyColor[i].w--;
+		if (_polyColor[i].w > 10.0f)
+			_polyColor[i].w -= 5.0f;
 
 		if (_polyVert[i].z > _polyDefaultVert)
 		{
-			_polyVert[i].z -= 3.0f;
+			_polyVert[i].z -= _beatUpSize * 0.1f;
 			//‰ºŒü‚«ŽOŠp
 			if(_polyVert[i].w < 0)
-				_polyVert[i].w += 3.0f;
+				_polyVert[i].w += _beatUpSize * 0.1f;
 			else
-				_polyVert[i].w -= 3.0f;
+				_polyVert[i].w -= _beatUpSize * 0.1f;
 		}
 	}
 }
@@ -694,15 +694,16 @@ void CRenderer::notesRandomFadeInit()
 {
 	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
 	{
-		if(rand()%3 == 1)
-			_polyColor[i].w = 70.0f;
-			_polyVert[i].z += 30.0f;
+		if (rand() % 3 == 1)
+		{
+			_polyColor[i].w = 100.0f;
+			_polyVert[i].z += _beatUpSize;
 			//‰ºŒü‚«ŽOŠp
 			if (_polyVert[i].w < 0)
-				_polyVert[i].w -= 30.0f;
-			else	
-				_polyVert[i].w += 30.0f;
-
+				_polyVert[i].w -= _beatUpSize;
+			else
+				_polyVert[i].w += _beatUpSize;
+		}
 	}
 }
 
@@ -716,12 +717,12 @@ void CRenderer::notesUpFadeInit(GLuint mode)
 			if (_polyLine[i] == upfadeCount)
 			{
 				_polyColor[i].w = 100.0f;
-				_polyVert[i].z += 30.0f;
+				_polyVert[i].z += _beatUpSize;
 				//‰ºŒü‚«ŽOŠp
 				if (_polyVert[i].w < 0)
-					_polyVert[i].w -= 30.0f;
+					_polyVert[i].w -= _beatUpSize;
 				else
-					_polyVert[i].w += 30.0f;
+					_polyVert[i].w += _beatUpSize;
 			}
 		}
 		upfadeCount++;
@@ -736,12 +737,12 @@ void CRenderer::notesUpFadeInit(GLuint mode)
 			if (_polyLine[i] == upfadeCount || _polyLine[i] == upfadeCount + 1)
 			{
 				_polyColor[i].w = 100.0f;
-				_polyVert[i].z += 30.0f;
+				_polyVert[i].z += _beatUpSize;
 				//‰ºŒü‚«ŽOŠp
 				if (_polyVert[i].w < 0)
-					_polyVert[i].w -= 30.0f;
+					_polyVert[i].w -= _beatUpSize;
 				else
-					_polyVert[i].w += 30.0f;
+					_polyVert[i].w += _beatUpSize;
 			}
 		}
 		upfadeCount += 2;
