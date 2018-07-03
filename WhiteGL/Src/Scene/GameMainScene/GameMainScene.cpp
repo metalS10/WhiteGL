@@ -47,8 +47,8 @@ bool CGameMain::init()
 
 
 	//”wŒi
-	//m_game.setupTexture(MAIN_BG, TEX_TYPE::PNG, BG_ID, CVec2(WINDOW_RIGHT*0.5f, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, WINDOW_RIGHT, WINDOW_TOP));
-	//m_game.setupTexture(MAIN_MOVEBG, TEX_TYPE::PNG, SCROLLBG_ID, CVec2(WINDOW_RIGHT * 3, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, 6400.0f, 720.0f));
+	m_game.setupTexture(MAIN_BG, TEX_TYPE::PNG, BG_ID, CVec2(WINDOW_RIGHT*0.5f, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, WINDOW_RIGHT, WINDOW_TOP),0);
+	m_game.setupTexture(MAIN_MOVEBG, TEX_TYPE::PNG, SCROLLBG_ID, CVec2(WINDOW_RIGHT * 3, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, 6400.0f, 720.0f),0);
 	
 
 	pPlayerChara = (CPlayerCharacter*)CPlayerFactoryManager::getInstance()->create(320.0f, 200.0f);

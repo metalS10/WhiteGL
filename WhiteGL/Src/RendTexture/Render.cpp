@@ -62,179 +62,189 @@ void CRenderer::render()
 	//テクスチャ情報も同様
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	//背景用ポリゴン描画
-	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
+	//レイヤー情報Findから
+	for (GLuint i = 0; i <= (GLuint)LAYER::MAX; i++)
 	{
-
-		//空であれば飛ばす
-		if (!_polyVert[i].x && !_polyVert[i].y && !_polyVert[i].z)
-			continue;
-
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-		glEnableClientState(GL_VERTEX_ARRAY);
-
-
-		//場所指定
-		const GLfloat vtx2[] = {	//x左下となる点の位置,底辺となる点の位置y,z上の点の位置,w三角形の大きさ
-			_polyVert[i].x - _polyVert[i].z * 0.5f			,	_polyVert[i].y - _polyVert[i].w * 0.5f,1.0f,	//左
-			_polyVert[i].x + _polyVert[i].z * 0.5f			,	_polyVert[i].y - _polyVert[i].w * 0.5f,1.0f,	//右
-			_polyVert[i].x									,	_polyVert[i].y + _polyVert[i].w * 0.5f,1.0f,	//上
-		};
-		//3次元
-		glVertexPointer(3, GL_FLOAT, 0, vtx2);
-
-		//色設定
-		const GLfloat color[] = {
-			_polyColor[i].x*0.01f,_polyColor[i].y*0.01f,_polyColor[i].z*0.01f,_polyColor[i].w*0.01f,
-			_polyColor[i].x*0.01f,_polyColor[i].y*0.01f,_polyColor[i].z*0.01f,_polyColor[i].w*0.01f,
-			_polyColor[i].x*0.01f,_polyColor[i].y*0.01f,_polyColor[i].z*0.01f,_polyColor[i].w*0.01f,
-			_polyColor[i].x*0.01f,_polyColor[i].y*0.01f,_polyColor[i].z*0.01f,_polyColor[i].w*0.01f,
-		};
-		//色反映
-		glColorPointer(4, GL_FLOAT, 0, color);
-
-		//板ポリゴン表示
-		glDrawArrays(GL_TRIANGLES, 0, 4);
-
-		//色設定
-		const GLfloat colorLine[] = {
-			0,0,0,100,
-			0,0,0,100,
-			0,0,0,100,
-			0,0,0,100,
-		};
-
-
-		glColorPointer(4, GL_FLOAT, 0, colorLine);
-		//3次元
-		glVertexPointer(3, GL_FLOAT, 0, vtx2);
-		glDrawArrays(GL_LINE_LOOP, 0, 3);
-
-		glDisableClientState(GL_VERTEX_ARRAY);
-	}
-	
-	for (int texID = 0;texID < MAX_TEXTURE_NUMBER;texID++)
-	{
-		if (g_texID[texID] != 0)
+		//背景用ポリゴン描画
+		for (int j = 0; j < MAX_BACKGROUND_NUMBER; j++)
 		{
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-			//使用許可
-			glEnable(GL_TEXTURE_2D);
-
-			if (texType[texID] == TEX_TYPE::BMP)
+			if ((GLuint)m_polyLayer[j] == i)
 			{
+				//空であれば飛ばす
+				if (!_polyVert[j].x && !_polyVert[j].y && !_polyVert[j].z)
+					continue;
+
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+				glEnableClientState(GL_VERTEX_ARRAY);
+
+
 				//場所指定
-				const GLfloat vtx2[] = {
-					_rectPos[texID].x, _rectPos[texID].z,0,
-					_rectPos[texID].y, _rectPos[texID].z,0,
-					_rectPos[texID].y, _rectPos[texID].w,0,
-					_rectPos[texID].x, _rectPos[texID].w,0,
+				const GLfloat vtx2[] = {	//x左下となる点の位置,底辺となる点の位置y,z上の点の位置,w三角形の大きさ
+					_polyVert[j].x - _polyVert[j].z * 0.5f			,	_polyVert[j].y - _polyVert[j].w * 0.5f,1.0f,	//左
+					_polyVert[j].x + _polyVert[j].z * 0.5f			,	_polyVert[j].y - _polyVert[j].w * 0.5f,1.0f,	//右
+					_polyVert[j].x									,	_polyVert[j].y + _polyVert[j].w * 0.5f,1.0f,	//上
 				};
+				//3次元
 				glVertexPointer(3, GL_FLOAT, 0, vtx2);
 
+				//色設定
 				const GLfloat color[] = {
-					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+					_polyColor[j].x*0.01f,_polyColor[j].y*0.01f,_polyColor[j].z*0.01f,_polyColor[j].w*0.01f,
+					_polyColor[j].x*0.01f,_polyColor[j].y*0.01f,_polyColor[j].z*0.01f,_polyColor[j].w*0.01f,
+					_polyColor[j].x*0.01f,_polyColor[j].y*0.01f,_polyColor[j].z*0.01f,_polyColor[j].w*0.01f,
+					_polyColor[j].x*0.01f,_polyColor[j].y*0.01f,_polyColor[j].z*0.01f,_polyColor[j].w*0.01f,
 				};
+				//色反映
 				glColorPointer(4, GL_FLOAT, 0, color);
 
-				//テクスチャの領域指定
-				const GLfloat texuv[] = {
-					rect[texID].x, rect[texID].z,
-					rect[texID].y, rect[texID].z,
-					rect[texID].y, rect[texID].w,
-					rect[texID].x, rect[texID].w,
-				};
-				//頂点の設定
-				glTexCoordPointer(2, GL_FLOAT, 0, texuv);
+				//板ポリゴン表示
+				glDrawArrays(GL_TRIANGLES, 0, 4);
 
-			}
-			else if (texType[texID] == TEX_TYPE::PNG)
-			{
-				//場所指定
-				const GLfloat vtx2[] = {
-					_rectPos[texID].x, _rectPos[texID].z,0,
-					_rectPos[texID].y, _rectPos[texID].z,0,
-					_rectPos[texID].y, _rectPos[texID].w,0,
-					_rectPos[texID].x, _rectPos[texID].w,0,
+				//色設定
+				const GLfloat colorLine[] = {
+					0,0,0,100,
+					0,0,0,100,
+					0,0,0,100,
+					0,0,0,100,
 				};
+
+
+				glColorPointer(4, GL_FLOAT, 0, colorLine);
+				//3次元
 				glVertexPointer(3, GL_FLOAT, 0, vtx2);
+				glDrawArrays(GL_LINE_LOOP, 0, 3);
 
-				const GLfloat color[] = {
-					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-
-				};
-				glColorPointer(4, GL_FLOAT, 0, color);
-
-				//テクスチャの領域指定
-				const GLfloat texuv[] = {
-					rect[texID].x, rect[texID].w,
-					rect[texID].y, rect[texID].w,
-					rect[texID].y, rect[texID].z,
-					rect[texID].x, rect[texID].z,
-				};
-				//頂点の設定
-				glTexCoordPointer(2, GL_FLOAT, 0, texuv);
-
+				glDisableClientState(GL_VERTEX_ARRAY);
 			}
-			else if (texType[texID] == TEX_TYPE::QUAD)
+		}
+
+		for (int texID = 0; texID < MAX_TEXTURE_NUMBER; texID++)
+		{
+			if (g_texID[texID] != 0)
 			{
-				//場所指定
-				const GLfloat vtx2[] = {
-					_rectPos[texID].x, _rectPos[texID].z,0,
-					_rectPos[texID].y, _rectPos[texID].z,0,
-					_rectPos[texID].y, _rectPos[texID].w,0,
-					_rectPos[texID].x, _rectPos[texID].w,0,
-				};
-				glVertexPointer(3, GL_FLOAT, 0, vtx2);
 
-				const GLfloat color[] = {
-					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-					colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-				};
-				glColorPointer(4, GL_FLOAT, 0, color);
+				if ((GLuint)m_texLayer[texID] == i)
+				{
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-				//テクスチャの領域指定
-				const GLfloat texuv[] = {
-					rect[texID].x, rect[texID].w,
-					rect[texID].y, rect[texID].w,
-					rect[texID].y, rect[texID].z,
-					rect[texID].x, rect[texID].z,
-				};
-				//頂点の設定
-				glTexCoordPointer(2, GL_FLOAT, 0, texuv);
+					//使用許可
+					glEnable(GL_TEXTURE_2D);
+
+					if (texType[texID] == TEX_TYPE::BMP)
+					{
+						//場所指定
+						const GLfloat vtx2[] = {
+							_rectPos[texID].x, _rectPos[texID].z,0,
+							_rectPos[texID].y, _rectPos[texID].z,0,
+							_rectPos[texID].y, _rectPos[texID].w,0,
+							_rectPos[texID].x, _rectPos[texID].w,0,
+						};
+						glVertexPointer(3, GL_FLOAT, 0, vtx2);
+
+						const GLfloat color[] = {
+							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+						};
+						glColorPointer(4, GL_FLOAT, 0, color);
+
+						//テクスチャの領域指定
+						const GLfloat texuv[] = {
+							rect[texID].x, rect[texID].z,
+							rect[texID].y, rect[texID].z,
+							rect[texID].y, rect[texID].w,
+							rect[texID].x, rect[texID].w,
+						};
+						//頂点の設定
+						glTexCoordPointer(2, GL_FLOAT, 0, texuv);
+
+					}
+					else if (texType[texID] == TEX_TYPE::PNG)
+					{
+						//場所指定
+						const GLfloat vtx2[] = {
+							_rectPos[texID].x, _rectPos[texID].z,0,
+							_rectPos[texID].y, _rectPos[texID].z,0,
+							_rectPos[texID].y, _rectPos[texID].w,0,
+							_rectPos[texID].x, _rectPos[texID].w,0,
+						};
+						glVertexPointer(3, GL_FLOAT, 0, vtx2);
+
+						const GLfloat color[] = {
+							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+
+						};
+						glColorPointer(4, GL_FLOAT, 0, color);
+
+						//テクスチャの領域指定
+						const GLfloat texuv[] = {
+							rect[texID].x, rect[texID].w,
+							rect[texID].y, rect[texID].w,
+							rect[texID].y, rect[texID].z,
+							rect[texID].x, rect[texID].z,
+						};
+						//頂点の設定
+						glTexCoordPointer(2, GL_FLOAT, 0, texuv);
+
+					}
+					else if (texType[texID] == TEX_TYPE::QUAD)
+					{
+						//場所指定
+						const GLfloat vtx2[] = {
+							_rectPos[texID].x, _rectPos[texID].z,0,
+							_rectPos[texID].y, _rectPos[texID].z,0,
+							_rectPos[texID].y, _rectPos[texID].w,0,
+							_rectPos[texID].x, _rectPos[texID].w,0,
+						};
+						glVertexPointer(3, GL_FLOAT, 0, vtx2);
+
+						const GLfloat color[] = {
+							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+						};
+						glColorPointer(4, GL_FLOAT, 0, color);
+
+						//テクスチャの領域指定
+						const GLfloat texuv[] = {
+							rect[texID].x, rect[texID].w,
+							rect[texID].y, rect[texID].w,
+							rect[texID].y, rect[texID].z,
+							rect[texID].x, rect[texID].z,
+						};
+						//頂点の設定
+						glTexCoordPointer(2, GL_FLOAT, 0, texuv);
+					}
+
+					glEnableClientState(GL_VERTEX_ARRAY);
+					//テクスチャの画像指定
+					glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
+					//板ポリゴン表示
+					glDrawArrays(GL_QUADS, 0, 4);
+
+					glDisableClientState(GL_VERTEX_ARRAY);
+
+					//使用許可
+					glDisable(GL_TEXTURE_2D);
+
+				}
 			}
-
-			glEnableClientState(GL_VERTEX_ARRAY);
-			//テクスチャの画像指定
-			glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
-			//板ポリゴン表示
-			glDrawArrays(GL_QUADS, 0, 4);
-
-			glDisableClientState(GL_VERTEX_ARRAY);
-
-			//使用許可
-			glDisable(GL_TEXTURE_2D);
-
 		}
 	}
+
 	//許可を外す
 	glDisable(GL_BLEND);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	
 }
 
-void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID)
+void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID, const GLuint layer)
 {
 	//使用許可
 	glEnable(GL_TEXTURE_2D);
@@ -362,13 +372,15 @@ void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint t
 	//初期化
 	glBindTexture(GL_TEXTURE_2D, 0);
 
+	m_texLayer[texID] = (LAYER)layer;
+
 	//使用許可
 	glDisable(GL_TEXTURE_2D);
 	colorRGBA[texID] = (CVec4(100.0f, 100.0f, 100.0f, 100.0f));
 	texType[texID] = (tex_type);
 }
 //三角ポリゴンのセットアップ
-void CRenderer::setupTrianglesPoly(const CVec4 vertex,const CVec4 color,const GLuint line)
+void CRenderer::setupTrianglesPoly(const CVec4 vertex,const CVec4 color,const GLuint line,const GLuint layer)
 {
 	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
 	{
@@ -380,6 +392,7 @@ void CRenderer::setupTrianglesPoly(const CVec4 vertex,const CVec4 color,const GL
 			_polyLine[i] = line;
 			_polyMaxLine = line;
 			_polyDefaultVert = vertex.z;
+			m_polyLayer[i] = (LAYER)layer;
 			break;
 		}
 	}

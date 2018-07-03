@@ -25,6 +25,13 @@ enum class TEX_TYPE : int
 	JPEG = 2,
 	QUAD = 3,
 };
+enum class LAYER : GLuint
+{
+	BG = 0,
+	MAIN = 1,
+	MAX = 1,
+};
+
 class CRenderer
 {
 public:
@@ -52,6 +59,10 @@ public:
 	GLuint _polyDefaultVert = 0;
 	GLint upfadeCount = 0;
 	GLint _beatUpSize = BEAT_BIGSIZE;
+	 
+	LAYER m_texLayer[MAX_TEXTURE_NUMBER] = {};
+	LAYER m_polyLayer[MAX_BACKGROUND_NUMBER] = {};
+
 
 	CRenderer()
 	{
@@ -84,10 +95,10 @@ public:
 	*@param	posTop		画像の上の位置
 	*@param	rect		矩形
 	*/
-	void setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID);
+	void setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID,const GLuint layer);
 
 	//三角ポリゴン設定
-	void setupTrianglesPoly(const CVec4 vertex, const CVec4 color, const GLuint line);
+	void setupTrianglesPoly(const CVec4 vertex, const CVec4 color, const GLuint line,const GLuint layer);
 	void setPosTrianglesPoly(const float vertexX, const CVec4 color, const GLuint number);
 
 	void setupTextureSize(const CVec2 texPos, const CVec4 texRect, GLuint texID);

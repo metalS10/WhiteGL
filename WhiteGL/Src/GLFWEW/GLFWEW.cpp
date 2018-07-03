@@ -78,6 +78,8 @@ namespace GLFWEW
 		if (!window)
 		{
 			window = glfwCreateWindow(w, h, title, nullptr, nullptr);
+			//フルスクリーン
+			//window = glfwCreateWindow(w, h, title, glfwGetPrimaryMonitor(), nullptr);
 			if (!window)
 			{
 				return NULL;

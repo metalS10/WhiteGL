@@ -27,16 +27,9 @@
 #define WINDOW_BOTTOM 0
 //テクスチャ最大数
 #define MAX_TEXTURE_NUMBER 10000
-//レイヤー最大数(使わない場合は0)
-#define MAX_LAYER_NUMBER 3
-
 //背景ポリゴンの最大数
 #define MAX_BACKGROUND_NUMBER 140
 
-//拍子セーフ間隔
-#define BEAT_INTERVAL	4;
-//拍子のサイズ変更値
-#define BEAT_BIGSIZE	30.0f;
 
 //テクスチャIDの設定---------------------------------------------------------------
 //弾
@@ -52,6 +45,12 @@
 //マップ描画
 #define START_MAP_TEXTURE_NUMBER 500
 //--------------------------------------------------------------------------------
+
+
+//拍子セーフ間隔
+#define BEAT_INTERVAL	5;
+//拍子のサイズ変更値
+#define BEAT_BIGSIZE	30.0f;
 
 //テクスチャID
 #define BG_ID					0	//BackGround

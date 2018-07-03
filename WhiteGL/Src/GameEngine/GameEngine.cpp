@@ -8,25 +8,45 @@ void CGameEngine::setupTexture(const char* file,TEX_TYPE texType,GLuint texID,CV
 	//================================
 	//テクスチャの描画
 	//================================
-	renderer->setupTexture(file, texType, texID);
+	renderer->setupTexture(file, texType, texID, 1);
 	renderer->setupTextureSize(texPos, texRect , texID);
 	renderer->setupTextureColor(color, texID);
-
 }
-
 void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect)
 {
 	//================================
 	//テクスチャの描画
 	//================================
-	renderer->setupTexture(file, texType, texID);
+	renderer->setupTexture(file, texType, texID, 1);
 	renderer->setupTextureSize(texPos, texRect, texID);
 	renderer->setupTextureColor(CVec4(100.0f,100.0f,100.0f,100.0f), texID);
+}
+void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color,GLuint layer)
+{
+	//================================
+	//テクスチャの描画
+	//================================
+	renderer->setupTexture(file, texType, texID, layer);
+	renderer->setupTextureSize(texPos, texRect, texID);
+	renderer->setupTextureColor(color, texID);
+}
+void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect,GLuint layer)
+{
+	//================================
+	//テクスチャの描画
+	//================================
+	renderer->setupTexture(file, texType, texID, layer);
+	renderer->setupTextureSize(texPos, texRect, texID);
+	renderer->setupTextureColor(CVec4(100.0f, 100.0f, 100.0f, 100.0f), texID);
 }
 
 void CGameEngine::setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line)
 {
-	renderer->setupTrianglesPoly(vertex, color, line);
+	renderer->setupTrianglesPoly(vertex, color, line,1);
+}
+void CGameEngine::setupPoly(const CVec4 vertex, const CVec4 color, const GLuint line,const GLuint layer)
+{
+	renderer->setupTrianglesPoly(vertex, color, line, layer);
 }
 
 void CGameEngine::setPosTrianglesPoly(const float vertexX, const CVec4 color, const GLuint number)
