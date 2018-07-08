@@ -47,9 +47,15 @@ bool CGameMain::init()
 
 
 	//îwåi
-	m_game.setupTexture(MAIN_BG, TEX_TYPE::PNG, BG_ID, CVec2(WINDOW_RIGHT*0.5f, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, WINDOW_RIGHT, WINDOW_TOP),0);
-	m_game.setupTexture(MAIN_MOVEBG, TEX_TYPE::PNG, SCROLLBG_ID, CVec2(WINDOW_RIGHT * 3, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, 6400.0f, 720.0f),0);
+	m_game.setupTexture(MAIN_BG, TEX_TYPE::PNG, BG_ID, CVec2(WINDOW_RIGHT*0.5f, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, WINDOW_RIGHT, WINDOW_TOP),LAYER::BG);
+	m_game.setupTexture(MAIN_MOVEBG, TEX_TYPE::PNG, SCROLLBG_ID, CVec2(WINDOW_RIGHT * 3, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, 6400.0f, 720.0f),LAYER::BG);
 	
+	//âÊñ ëSëÃUI
+	m_game.setupPoly(CVec4(WINDOW_RIGHT * 0.01f, WINDOW_TOP * 0.5f, WINDOW_TOP * 0.01, WINDOW_TOP * 0.9f), CVec4(0.0f, 0.0f, 100.0f, 100.0f), NULL, POLY_TYPE::QUAD, LAYER::UI);
+	m_game.setupPoly(CVec4(WINDOW_RIGHT * 0.99f, WINDOW_TOP * 0.5f, WINDOW_TOP * 0.01, WINDOW_TOP * 0.9f), CVec4(0.0f, 0.0f, 100.0f, 100.0f), NULL, POLY_TYPE::QUAD, LAYER::UI);
+	m_game.setupPoly(CVec4(WINDOW_RIGHT * 0.5f, WINDOW_TOP * 0.05f, WINDOW_RIGHT * 0.98, WINDOW_TOP * 0.01f), CVec4(0.0f, 0.0f, 100.0f, 100.0f), NULL, POLY_TYPE::QUAD, LAYER::UI);
+	m_game.setupPoly(CVec4(WINDOW_RIGHT * 0.5f, WINDOW_TOP * 0.95f, WINDOW_RIGHT * 0.98, WINDOW_TOP * 0.01f), CVec4(0.0f, 0.0f, 100.0f, 100.0f), NULL, POLY_TYPE::QUAD, LAYER::UI);
+
 
 	pPlayerChara = (CPlayerCharacter*)CPlayerFactoryManager::getInstance()->create(320.0f, 200.0f);
 
@@ -65,27 +71,27 @@ bool CGameMain::init()
 	//Player
 	m_game.setupTexture(pPlayerChara->texPass, TEX_TYPE::PNG, pPlayerChara->m_texID, pPlayerChara->m_pMove->m_pos, (*pPlayerChara->m_pAnimations)[0]->getCurrentChip());
 	//âπçáÇÌÇπUI
-	m_game.setupTexture(notes->texPas, TEX_TYPE::PNG, NOTES_ID, CVec2(WINDOW_RIGHT - (*notes->m_pAnimations)[0]->getCurrentChip().z * 0.5f,WINDOW_BOTTOM + (*notes->m_pAnimations)[0]->getCurrentChip().w * 0.5), (*notes->m_pAnimations)[0]->getCurrentChip());
+	m_game.setupTexture(notes->texPas, TEX_TYPE::PNG, NOTES_ID, CVec2(WINDOW_RIGHT - (*notes->m_pAnimations)[0]->getCurrentChip().z * 0.5f,WINDOW_BOTTOM + (*notes->m_pAnimations)[0]->getCurrentChip().w * 0.5), (*notes->m_pAnimations)[0]->getCurrentChip(), LAYER::UI);
 
 
 	//UIÇÃÉoÉbÉN
-	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, UI_BACK_ID, CVec2(WINDOW_RIGHT*0.125f, WINDOW_TOP*0.94f), CVec4(0.0f, 34.0f, 300.0f, 80.0f));
+	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, UI_BACK_ID, CVec2(WINDOW_RIGHT*0.120f, WINDOW_TOP*0.94f), CVec4(0.0f, 34.0f, 300.0f, 80.0f), LAYER::UI);
 
 	//HPÇÃòg
-	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, OUTLINE_HP_ID, CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.962f), CVec4(0.0f, 20.0f, 210.0f, 14.0f));
+	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, OUTLINE_HP_ID, CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.962f), CVec4(0.0f, 20.0f, 210.0f, 14.0f), LAYER::UI);
 	//DPÇÃòg
-	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, OUTLINE_DP_ID, CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.92f), CVec4(0.0f, 20.0f, 210.0f, 14.0f));
+	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, OUTLINE_DP_ID, CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.92f), CVec4(0.0f, 20.0f, 210.0f, 14.0f), LAYER::UI);
 
 	//HP
-	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, BAR_HP_ID , CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.962f), CVec4(0.0f, 0.0f, 200.0f, 10.0f));
+	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, BAR_HP_ID , CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.962f), CVec4(0.0f, 0.0f, 200.0f, 10.0f), LAYER::UI);
 	//DP
-	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, BAR_DP_ID, CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.92f), CVec4(0.0f, 10.0f, 200.0f, 10.0f));
+	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, BAR_DP_ID, CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.92f), CVec4(0.0f, 10.0f, 200.0f, 10.0f), LAYER::UI);
 	//EnemyStats
-	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, ENEMY_STATS_ID, CVec2(WINDOW_RIGHT*0.355f, WINDOW_TOP*0.94f), CVec4(0.0f, 34.0f, 300.0f, 80.0f));
+	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, ENEMY_STATS_ID, CVec2(WINDOW_RIGHT*0.355f, WINDOW_TOP*0.94f), CVec4(0.0f, 34.0f, 300.0f, 80.0f), LAYER::UI);
 	//EnemyHPwaku
-	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, OUTLLINE_ENEMYHP_ID, CVec2(WINDOW_RIGHT*0.35f, WINDOW_TOP*0.92f), CVec4(0.0f, 20.0f, 210.0f, 14.0f));
+	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, OUTLLINE_ENEMYHP_ID, CVec2(WINDOW_RIGHT*0.35f, WINDOW_TOP*0.92f), CVec4(0.0f, 20.0f, 210.0f, 14.0f), LAYER::UI);
 	//EnemyHP
-	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, BAR_ENEMYHP_ID, CVec2(WINDOW_RIGHT*0.35f, WINDOW_TOP*0.92f), CVec4(0.0f, 0.0f, 200.0f, 10.0f));
+	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, BAR_ENEMYHP_ID, CVec2(WINDOW_RIGHT*0.35f, WINDOW_TOP*0.92f), CVec4(0.0f, 0.0f, 200.0f, 10.0f), LAYER::UI);
 
 
 
@@ -137,7 +143,7 @@ void CGameMain::rendUpdate()
 		
 		
 	//ÉJÉÅÉâí«è]UIån
-	m_game.setPosition(CVec2(WINDOW_RIGHT*0.125f + cameraPosX, WINDOW_TOP*0.94f + cameraPosY), UI_BACK_ID);
+	m_game.setPosition(CVec2(WINDOW_RIGHT*0.120f + cameraPosX, WINDOW_TOP*0.94f + cameraPosY), UI_BACK_ID);
 	m_game.setPosition(CVec2(WINDOW_RIGHT*0.12f + cameraPosX, WINDOW_TOP*0.962f + cameraPosY), OUTLINE_HP_ID);
 	m_game.setPosition(CVec2(WINDOW_RIGHT*0.12f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY), OUTLINE_DP_ID);
 	m_game.setPosition(CVec2(WINDOW_RIGHT*0.355f + cameraPosX, WINDOW_TOP*0.94f + cameraPosY), ENEMY_STATS_ID);

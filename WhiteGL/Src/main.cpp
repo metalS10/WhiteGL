@@ -22,6 +22,7 @@ void ErrorCallback(int error, const char* desc)
 	std::cerr << "ERROR : " << desc << std::endl;
 }
 
+
 //“ü—Í‚ðŠ´’m‚·‚é
 void InputFunc(CGameEngine game,Input::CGameInput* input)
 {

@@ -9,6 +9,13 @@
 #include "../GLFWEW/GLFWEW.h"
 #include "../interpreter/interpreter.h"
 
+//ポリゴン設定に使うポリゴン判別
+enum POLY_TYPE :GLuint
+{
+	TRIANGLE	= 0,
+	QUAD		= 1,
+};
+
 class CCharacter;
 class CGameEngine
 {
@@ -32,10 +39,10 @@ public:
 	GLFWwindow* init(int w, int h, const char* file);
 	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color);	//テクスチャ設定
 	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect);				//色変更なしoverload
-	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color,GLuint layer);	//テクスチャ設定(レイヤー設定あり)
-	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, GLuint layer);				//色変更なしoverload(レイヤー設定あり)
-	void setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line);		//背景三角ポリゴンの設定(vertex(中央X,中央Y,Width,Height))
-	void setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line,const GLuint layer);		//layer設定あり背景三角ポリゴンの設定(vertex(中央X,中央Y,Width,Height))
+	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color, LAYER layer);	//テクスチャ設定(レイヤー設定あり)
+	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, LAYER layer);				//色変更なしoverload(レイヤー設定あり)
+	void setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line, const POLY_TYPE polytype);		//背景三角ポリゴンの設定(vertex(中央X,中央Y,Width,Height))
+	void setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line, const POLY_TYPE polytype,const LAYER layer);		//layer設定あり背景三角ポリゴンの設定(vertex(中央X,中央Y,Width,Height))
 	void setPosTrianglesPoly(const float vertexX, const CVec4 color, const GLuint number);	//背景三角ポリゴンの位置再設定(X座標のみ)
 	void setChipAnim(CAnimation *&&_val);		//Chipアニメーション設定
 	void setChipData(GLuint texID, CVec4 rectData);	

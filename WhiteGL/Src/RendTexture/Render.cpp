@@ -62,38 +62,41 @@ void CRenderer::render()
 	//テクスチャ情報も同様
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	//レイヤー情報Findから
+	//レイヤー情報Findできた順番
 	for (GLuint i = 0; i <= (GLuint)LAYER::MAX; i++)
 	{
 		//背景用ポリゴン描画
 		for (int j = 0; j < MAX_BACKGROUND_NUMBER; j++)
 		{
-			if ((GLuint)m_polyLayer[j] == i)
+			if ((GLuint)m_bgPolyLayer[j] == i)
 			{
+
+
+
 				//空であれば飛ばす
-				if (!_polyVert[j].x && !_polyVert[j].y && !_polyVert[j].z)
+				if (!_bgPolyVert[j].x && !_bgPolyVert[j].y && !_bgPolyVert[j].z)
 					continue;
 
+				glPushMatrix();
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 				glEnableClientState(GL_VERTEX_ARRAY);
-
-
+				
 				//場所指定
 				const GLfloat vtx2[] = {	//x左下となる点の位置,底辺となる点の位置y,z上の点の位置,w三角形の大きさ
-					_polyVert[j].x - _polyVert[j].z * 0.5f			,	_polyVert[j].y - _polyVert[j].w * 0.5f,1.0f,	//左
-					_polyVert[j].x + _polyVert[j].z * 0.5f			,	_polyVert[j].y - _polyVert[j].w * 0.5f,1.0f,	//右
-					_polyVert[j].x									,	_polyVert[j].y + _polyVert[j].w * 0.5f,1.0f,	//上
+					_bgPolyVert[j].x  - _bgPolyVert[j].z * 0.5f 	,	_bgPolyVert[j].y - _bgPolyVert[j].w * 0.5f,1.0f,	//左
+					_bgPolyVert[j].x  + _bgPolyVert[j].z * 0.5f	,	_bgPolyVert[j].y - _bgPolyVert[j].w * 0.5f,1.0f,	//右
+					_bgPolyVert[j].x								,	_bgPolyVert[j].y + _bgPolyVert[j].w * 0.5f,1.0f,	//上
 				};
 				//3次元
 				glVertexPointer(3, GL_FLOAT, 0, vtx2);
 
 				//色設定
 				const GLfloat color[] = {
-					_polyColor[j].x*0.01f,_polyColor[j].y*0.01f,_polyColor[j].z*0.01f,_polyColor[j].w*0.01f,
-					_polyColor[j].x*0.01f,_polyColor[j].y*0.01f,_polyColor[j].z*0.01f,_polyColor[j].w*0.01f,
-					_polyColor[j].x*0.01f,_polyColor[j].y*0.01f,_polyColor[j].z*0.01f,_polyColor[j].w*0.01f,
-					_polyColor[j].x*0.01f,_polyColor[j].y*0.01f,_polyColor[j].z*0.01f,_polyColor[j].w*0.01f,
+					_bgPolyColor[j].x*0.01f,_bgPolyColor[j].y*0.01f,_bgPolyColor[j].z*0.01f,_bgPolyColor[j].w*0.01f,
+					_bgPolyColor[j].x*0.01f,_bgPolyColor[j].y*0.01f,_bgPolyColor[j].z*0.01f,_bgPolyColor[j].w*0.01f,
+					_bgPolyColor[j].x*0.01f,_bgPolyColor[j].y*0.01f,_bgPolyColor[j].z*0.01f,_bgPolyColor[j].w*0.01f,
+					_bgPolyColor[j].x*0.01f,_bgPolyColor[j].y*0.01f,_bgPolyColor[j].z*0.01f,_bgPolyColor[j].w*0.01f,
 				};
 				//色反映
 				glColorPointer(4, GL_FLOAT, 0, color);
@@ -116,9 +119,66 @@ void CRenderer::render()
 				glDrawArrays(GL_LINE_LOOP, 0, 3);
 
 				glDisableClientState(GL_VERTEX_ARRAY);
+				
+				glPopMatrix();
 			}
 		}
+		//ポリゴン描画
+		for (int j = 0; j < MAX_POLYGON_NUMBER; j++)
+		{
+			if ((GLuint)m_polyLayer[j] == i)
+			{
+				//空であれば飛ばす
+				if (!_polyVert[j].x && !_polyVert[j].y && !_polyVert[j].z && !_polyVert[j].w)
+					continue;
 
+				glPushMatrix();
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+				glEnableClientState(GL_VERTEX_ARRAY);
+
+				//場所指定
+				const GLfloat vtx2[] = {	//x左下となる点の位置,底辺となる点の位置y,z上の点の位置,w三角形の大きさ
+					_polyVert[j].x - _polyVert[j].z * 0.5f 	,	_polyVert[j].y - _polyVert[j].w * 0.5f,1.0f,	//左下
+					_polyVert[j].x + _polyVert[j].z * 0.5f	,	_polyVert[j].y - _polyVert[j].w * 0.5f,1.0f,	//右下
+					_polyVert[j].x + _polyVert[j].z * 0.5f	,	_polyVert[j].y + _polyVert[j].w * 0.5f,1.0f,	//右上
+					_polyVert[j].x - _polyVert[j].z * 0.5f	,	_polyVert[j].y + _polyVert[j].w * 0.5f,1.0f,	//左上
+				};
+				//3次元
+				glVertexPointer(3, GL_FLOAT, 0, vtx2);
+
+				//色設定
+				const GLfloat color[] = {
+					_polyColor[j].x*0.01f,_polyColor[j].y*0.01f,_polyColor[j].z*0.01f,_polyColor[j].w*0.01f,
+					_polyColor[j].x*0.01f,_polyColor[j].y*0.01f,_polyColor[j].z*0.01f,_polyColor[j].w*0.01f,
+					_polyColor[j].x*0.01f,_polyColor[j].y*0.01f,_polyColor[j].z*0.01f,_polyColor[j].w*0.01f,
+					_polyColor[j].x*0.01f,_polyColor[j].y*0.01f,_polyColor[j].z*0.01f,_polyColor[j].w*0.01f,
+				};
+				//色反映
+				glColorPointer(4, GL_FLOAT, 0, color);
+
+				//板ポリゴン表示
+				glDrawArrays(GL_QUADS, 0, 4);
+
+				//色設定
+				const GLfloat colorLine[] = {
+					0,0,0,100,
+					0,0,0,100,
+					0,0,0,100,
+					0,0,0,100,
+				};
+
+
+				glColorPointer(4, GL_FLOAT, 0, colorLine);
+				//3次元
+				glVertexPointer(3, GL_FLOAT, 0, vtx2);
+				glDrawArrays(GL_LINE_LOOP, 0, 4);
+
+				glDisableClientState(GL_VERTEX_ARRAY);
+
+				glPopMatrix();
+			}
+		}
 		for (int texID = 0; texID < MAX_TEXTURE_NUMBER; texID++)
 		{
 			if (g_texID[texID] != 0)
@@ -244,7 +304,7 @@ void CRenderer::render()
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
-void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID, const GLuint layer)
+void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID, const LAYER layer)
 {
 	//使用許可
 	glEnable(GL_TEXTURE_2D);
@@ -372,7 +432,7 @@ void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint t
 	//初期化
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	m_texLayer[texID] = (LAYER)layer;
+	m_texLayer[texID] = layer;
 
 	//使用許可
 	glDisable(GL_TEXTURE_2D);
@@ -380,7 +440,31 @@ void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint t
 	texType[texID] = (tex_type);
 }
 //三角ポリゴンのセットアップ
-void CRenderer::setupTrianglesPoly(const CVec4 vertex,const CVec4 color,const GLuint line,const GLuint layer)
+void CRenderer::setupTrianglesPoly(const CVec4 vertex,const CVec4 color,const GLuint line,const LAYER layer)
+{
+	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
+	{
+		if (!_bgPolyVert[i].x && !_bgPolyVert[i].y && !_bgPolyVert[i].z && !_bgPolyVert[i].w)
+		{
+			//ポリゴン設定を追加
+			_bgPolyVert[i] = vertex;
+			_bgPolyColor[i] = color;
+			_bgPolyLine[i] = line;
+			_bgPolyMaxLine = line;
+			_bgPolyDefaultVert = vertex.z;
+			m_bgPolyLayer[i] = layer;
+			break;
+		}
+	}
+}
+void CRenderer::setPosTrianglesPoly(const float vertexX, const CVec4 color, const GLuint number)
+{
+	_bgPolyVert[number].x = vertexX;
+	_bgPolyColor[number] = color;
+}
+
+//ポリゴンのセットアップ
+void CRenderer::setupPoly(const CVec4 vertex, const CVec4 color,const LAYER layer)
 {
 	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
 	{
@@ -389,20 +473,18 @@ void CRenderer::setupTrianglesPoly(const CVec4 vertex,const CVec4 color,const GL
 			//ポリゴン設定を追加
 			_polyVert[i] = vertex;
 			_polyColor[i] = color;
-			_polyLine[i] = line;
-			_polyMaxLine = line;
-			_polyDefaultVert = vertex.z;
-			m_polyLayer[i] = (LAYER)layer;
+			_polyDefaultVert[i] = vertex.z;
+			m_polyLayer[i] = layer;
 			break;
 		}
 	}
 }
-
-void CRenderer::setPosTrianglesPoly(const float vertexX, const CVec4 color, const GLuint number)
+void CRenderer::setPosPoly(const float vertexX, const CVec4 color, const GLuint number)
 {
 	_polyVert[number].x = vertexX;
 	_polyColor[number] = color;
 }
+
 
 
 
@@ -659,10 +741,10 @@ void CRenderer::allTextureDelete()
 	}
 	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
 	{
-		_polyVert[i] = {};
-		_polyColor[i] = {};
-		_polyLine[i] = {};
-		_polyMaxLine = {};
+		_bgPolyVert[i] = {};
+		_bgPolyColor[i] = {};
+		_bgPolyLine[i] = {};
+		_bgPolyMaxLine = {};
 	}
 }
 //ステージ移動全テクスチャ削除
@@ -679,27 +761,27 @@ void CRenderer::allTextureDeletenotPlayer()
 	}
 	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
 	{
-		_polyVert[i] = {};
-		_polyColor[i] = {};
-		_polyLine[i] = {};
-		_polyMaxLine = {};
+		_bgPolyVert[i] = {};
+		_bgPolyColor[i] = {};
+		_bgPolyLine[i] = {};
+		_bgPolyMaxLine = {};
 	}
 }
 void CRenderer::notesFadeBackground()
 {
 	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
 	{
-		if (_polyColor[i].w > 10.0f)
-			_polyColor[i].w -= 5.0f;
+		if (_bgPolyColor[i].w > 10.0f)
+			_bgPolyColor[i].w -= 5.0f;
 
-		if (_polyVert[i].z > _polyDefaultVert)
+		if (_bgPolyVert[i].z > _bgPolyDefaultVert)
 		{
-			_polyVert[i].z -= _beatUpSize * 0.1f;
+			_bgPolyVert[i].z -= _beatUpSize * 0.1f;
 			//下向き三角
-			if(_polyVert[i].w < 0)
-				_polyVert[i].w += _beatUpSize * 0.1f;
+			if(_bgPolyVert[i].w < 0)
+				_bgPolyVert[i].w += _beatUpSize * 0.1f;
 			else
-				_polyVert[i].w -= _beatUpSize * 0.1f;
+				_bgPolyVert[i].w -= _beatUpSize * 0.1f;
 		}
 	}
 }
@@ -709,14 +791,16 @@ void CRenderer::notesRandomFadeInit()
 	{
 		if (rand() % 3 == 1)
 		{
-			_polyColor[i].w = 100.0f;
-			_polyVert[i].z += _beatUpSize;
+			_bgPolyColor[i].w = 100.0f;
+			_bgPolyVert[i].z += _beatUpSize;
 			//下向き三角
-			if (_polyVert[i].w < 0)
-				_polyVert[i].w -= _beatUpSize;
+			if (_bgPolyVert[i].w < 0)
+				_bgPolyVert[i].w -= _beatUpSize;
 			else
-				_polyVert[i].w += _beatUpSize;
+				_bgPolyVert[i].w += _beatUpSize;
 		}
+
+		angle+=0.1f;
 	}
 }
 
@@ -727,19 +811,19 @@ void CRenderer::notesUpFadeInit(GLuint mode)
 	case 0:
 		for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
 		{
-			if (_polyLine[i] == upfadeCount)
+			if (_bgPolyLine[i] == upfadeCount)
 			{
-				_polyColor[i].w = 100.0f;
-				_polyVert[i].z += _beatUpSize;
+				_bgPolyColor[i].w = 100.0f;
+				_bgPolyVert[i].z += _beatUpSize;
 				//下向き三角
-				if (_polyVert[i].w < 0)
-					_polyVert[i].w -= _beatUpSize;
+				if (_bgPolyVert[i].w < 0)
+					_bgPolyVert[i].w -= _beatUpSize;
 				else
-					_polyVert[i].w += _beatUpSize;
+					_bgPolyVert[i].w += _beatUpSize;
 			}
 		}
 		upfadeCount++;
-		if (upfadeCount > _polyMaxLine)
+		if (upfadeCount > _bgPolyMaxLine)
 		{
 			upfadeCount = 0;
 		}
@@ -747,19 +831,19 @@ void CRenderer::notesUpFadeInit(GLuint mode)
 	case 1:
 		for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
 		{
-			if (_polyLine[i] == upfadeCount || _polyLine[i] == upfadeCount + 1)
+			if (_bgPolyLine[i] == upfadeCount || _bgPolyLine[i] == upfadeCount + 1)
 			{
-				_polyColor[i].w = 100.0f;
-				_polyVert[i].z += _beatUpSize;
+				_bgPolyColor[i].w = 100.0f;
+				_bgPolyVert[i].z += _beatUpSize;
 				//下向き三角
-				if (_polyVert[i].w < 0)
-					_polyVert[i].w -= _beatUpSize;
+				if (_bgPolyVert[i].w < 0)
+					_bgPolyVert[i].w -= _beatUpSize;
 				else
-					_polyVert[i].w += _beatUpSize;
+					_bgPolyVert[i].w += _beatUpSize;
 			}
 		}
 		upfadeCount += 2;
-		if (upfadeCount > _polyMaxLine)
+		if (upfadeCount > _bgPolyMaxLine)
 		{
 			upfadeCount = 0;
 		}

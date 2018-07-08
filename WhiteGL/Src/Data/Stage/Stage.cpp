@@ -28,12 +28,12 @@ void CStage1_1::init(CGameEngine& game)
 
 			m_trianglesLeft.push_back(m_polyRange*j);	//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W¶‚ğİ’è
 			m_trianglesRight.push_back((m_polyRange*j) + m_polyRange);	//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W‰E‚ğİ’è
-			game.setupPoly(CVec4(m_polyRange*j, m_polyRange * i, range, range), CVec4(100.0f, r, r, 100.0f), i * 2.0f);	//”wŒi‚É”½‰f
+			game.setupPoly(CVec4(m_polyRange*j, m_polyRange * i, range, range), CVec4(100.0f, r, r, 100.0f), i * 2.0f,POLY_TYPE::TRIANGLE);	//”wŒi‚É”½‰f
 
 
 			m_trianglesLeft.push_back(m_polyRange*j + m_polyRange * 0.5f);		//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W¶‚ğİ’è
 			m_trianglesRight.push_back((m_polyRange*j + m_polyRange * 0.5f) + m_polyRange);		//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W‰E‚ğİ’è
-			game.setupPoly(CVec4(m_polyRange*j + m_polyRange * 0.5f, range * 0.5f + (m_polyRange * i), range, -range), CVec4(r, r, 100.0f, 100.0f), (i + 0.5f) * 2.0f);
+			game.setupPoly(CVec4(m_polyRange*j + m_polyRange * 0.5f, range * 0.5f + (m_polyRange * i), range, -range), CVec4(r, r, 100.0f, 100.0f), (i + 0.5f) * 2.0f, POLY_TYPE::TRIANGLE);
 		}
 	}
 }
@@ -91,12 +91,12 @@ void CStage1_2::init(CGameEngine& game)
 
 			m_trianglesLeft.push_back(m_polyRange*j);	//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W¶‚ğİ’è
 			m_trianglesRight.push_back((m_polyRange*j) + m_polyRange);	//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W‰E‚ğİ’è
-			game.setupPoly(CVec4(m_polyRange*j, m_polyRange * i, range, range), CVec4(r, r, r, 100.0f), i * 2.0f);	//”wŒi‚É”½‰f
+			game.setupPoly(CVec4(m_polyRange*j, m_polyRange * i, range, range), CVec4(r, r, r, 100.0f), i * 2.0f, POLY_TYPE::TRIANGLE);	//”wŒi‚É”½‰f
 
 
 			m_trianglesLeft.push_back(m_polyRange*j + m_polyRange * 0.5f);		//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W¶‚ğİ’è
 			m_trianglesRight.push_back((m_polyRange*j + m_polyRange * 0.5f) + m_polyRange);		//‚±‚Ìƒ|ƒŠƒSƒ“‚Ìx²À•W‰E‚ğİ’è
-			game.setupPoly(CVec4(m_polyRange*j + m_polyRange * 0.5f, range * 0.5f + (m_polyRange * i), range, -range), CVec4(r, r, r, 100.0f), (i + 0.5f) * 2.0f);
+			game.setupPoly(CVec4(m_polyRange*j + m_polyRange * 0.5f, range * 0.5f + (m_polyRange * i), range, -range), CVec4(r, r, r, 100.0f), (i + 0.5f) * 2.0f, POLY_TYPE::TRIANGLE);
 		}
 	}
 }

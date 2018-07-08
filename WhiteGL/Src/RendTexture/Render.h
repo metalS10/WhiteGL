@@ -15,6 +15,7 @@
 #include "../Constants.h"
 #include "../Data/Animation/Animation.h"
 #include <vector>
+
 #pragma warning(disable:4996)
 
 
@@ -29,7 +30,8 @@ enum class LAYER : GLuint
 {
 	BG = 0,
 	MAIN = 1,
-	MAX = 1,
+	UI = 2,
+	MAX = 2,
 };
 
 class CRenderer
@@ -52,16 +54,28 @@ public:
 	bool fadeOut[MAX_TEXTURE_NUMBER] = {};
 
 	//板の三角ポリゴン用
-	CVec4 _polyVert[MAX_BACKGROUND_NUMBER] = {};
-	CVec4 _polyColor[MAX_BACKGROUND_NUMBER] = {};
-	GLuint _polyLine[MAX_BACKGROUND_NUMBER] = {};
-	GLuint _polyMaxLine = 0;
-	GLuint _polyDefaultVert = 0;
-	GLint upfadeCount = 0;
-	GLint _beatUpSize = BEAT_BIGSIZE;
+	CVec4 _bgPolyVert[MAX_BACKGROUND_NUMBER] = {};
+	CVec4 _bgPolyColor[MAX_BACKGROUND_NUMBER] = {};
+	GLuint _bgPolyLine[MAX_BACKGROUND_NUMBER] = {};
+	GLuint _bgPolyMaxLine = 0;
+	GLuint _bgPolyDefaultVert = 0;
+
+	//板のポリゴン用
+	CVec4 _polyVert[MAX_POLYGON_NUMBER] = {};
+	CVec4 _polyColor[MAX_POLYGON_NUMBER] = {};
+	GLuint _polyDefaultVert[MAX_POLYGON_NUMBER] = {};
+	bool _polyCanRotate[MAX_POLYGON_NUMBER] = {};
+	float _polyRotate[MAX_POLYGON_NUMBER] = {};
+
+	//ポリゴン達のアニメーション用
+	GLuint upfadeCount = 0;
+	GLuint _beatUpSize = BEAT_BIGSIZE;
 	 
+	//レイヤ設定用
 	LAYER m_texLayer[MAX_TEXTURE_NUMBER] = {};
-	LAYER m_polyLayer[MAX_BACKGROUND_NUMBER] = {};
+	LAYER m_bgPolyLayer[MAX_BACKGROUND_NUMBER] = {};
+	LAYER m_polyLayer[MAX_POLYGON_NUMBER] = {};
+
 
 
 	CRenderer()
@@ -80,6 +94,7 @@ public:
 
 public:
 
+	GLfloat angle = 0.0f;
 	void update(std::vector<CAnimation*>* anim);
 
 	void render();
@@ -95,11 +110,14 @@ public:
 	*@param	posTop		画像の上の位置
 	*@param	rect		矩形
 	*/
-	void setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID,const GLuint layer);
+	void setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID,const LAYER layer);
 
 	//三角ポリゴン設定
-	void setupTrianglesPoly(const CVec4 vertex, const CVec4 color, const GLuint line,const GLuint layer);
+	void setupTrianglesPoly(const CVec4 vertex, const CVec4 color, const GLuint line,const LAYER layer);
 	void setPosTrianglesPoly(const float vertexX, const CVec4 color, const GLuint number);
+	//板ポリゴン設定
+	void setupPoly(const CVec4 vertex, const CVec4 color, const LAYER layer);
+	void setPosPoly(const float vertexX, const CVec4 color, const GLuint number);
 
 	void setupTextureSize(const CVec2 texPos, const CVec4 texRect, GLuint texID);
 

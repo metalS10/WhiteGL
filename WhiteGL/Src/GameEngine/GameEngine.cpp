@@ -8,7 +8,7 @@ void CGameEngine::setupTexture(const char* file,TEX_TYPE texType,GLuint texID,CV
 	//================================
 	//テクスチャの描画
 	//================================
-	renderer->setupTexture(file, texType, texID, 1);
+	renderer->setupTexture(file, texType, texID, LAYER::MAIN);
 	renderer->setupTextureSize(texPos, texRect , texID);
 	renderer->setupTextureColor(color, texID);
 }
@@ -17,11 +17,11 @@ void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID,
 	//================================
 	//テクスチャの描画
 	//================================
-	renderer->setupTexture(file, texType, texID, 1);
+	renderer->setupTexture(file, texType, texID, LAYER::MAIN);
 	renderer->setupTextureSize(texPos, texRect, texID);
 	renderer->setupTextureColor(CVec4(100.0f,100.0f,100.0f,100.0f), texID);
 }
-void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color,GLuint layer)
+void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color, LAYER layer)
 {
 	//================================
 	//テクスチャの描画
@@ -30,7 +30,7 @@ void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID,
 	renderer->setupTextureSize(texPos, texRect, texID);
 	renderer->setupTextureColor(color, texID);
 }
-void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect,GLuint layer)
+void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, LAYER layer)
 {
 	//================================
 	//テクスチャの描画
@@ -40,13 +40,19 @@ void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID,
 	renderer->setupTextureColor(CVec4(100.0f, 100.0f, 100.0f, 100.0f), texID);
 }
 
-void CGameEngine::setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line)
+void CGameEngine::setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line, const POLY_TYPE polytype)
 {
-	renderer->setupTrianglesPoly(vertex, color, line,1);
+	if (polytype == POLY_TYPE::TRIANGLE)
+		renderer->setupTrianglesPoly(vertex, color, line, LAYER::MAIN);
+	else if (polytype == POLY_TYPE::QUAD)
+		renderer->setupPoly(vertex, color, LAYER::MAIN);
 }
-void CGameEngine::setupPoly(const CVec4 vertex, const CVec4 color, const GLuint line,const GLuint layer)
+void CGameEngine::setupPoly(const CVec4 vertex, const CVec4 color, const GLuint line, const POLY_TYPE polytype,const LAYER layer)
 {
-	renderer->setupTrianglesPoly(vertex, color, line, layer);
+	if (polytype == POLY_TYPE::TRIANGLE)
+		renderer->setupTrianglesPoly(vertex, color, line, layer);
+	else if (polytype == POLY_TYPE::QUAD)
+		renderer->setupPoly(vertex, color, layer);
 }
 
 void CGameEngine::setPosTrianglesPoly(const float vertexX, const CVec4 color, const GLuint number)

@@ -25,11 +25,14 @@
 #define WINDOW_LEFT 0
 #define WINDOW_TOP WINDOW_HEIGHT
 #define WINDOW_BOTTOM 0
+
 //テクスチャ最大数
 #define MAX_TEXTURE_NUMBER 10000
+#define MAX_POLYGON_NUMBER 500
+//MapChipのレイヤー最大数
+#define MAX_LAYER_NUMBER 3
 //背景ポリゴンの最大数
 #define MAX_BACKGROUND_NUMBER 140
-
 
 //テクスチャIDの設定---------------------------------------------------------------
 //弾
@@ -48,7 +51,7 @@
 
 
 //拍子セーフ間隔
-#define BEAT_INTERVAL	5;
+#define BEAT_INTERVAL 5;
 //拍子のサイズ変更値
 #define BEAT_BIGSIZE	30.0f;
 
