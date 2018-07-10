@@ -520,7 +520,8 @@ void CActionShotBullet::update(CCharacter* pChara)
 
 				CLaunchScheduler::getInstance()->m_pLauncher->add(pTrigger);
 			}
-
+			//ƒQ[ƒW‚ğÁ”ï
+			pChara->DPHeal(-5.0f);
 			this->m_shotCount = this->m_interval;
 
 		}

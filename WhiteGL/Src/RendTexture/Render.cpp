@@ -85,7 +85,7 @@ void CRenderer::render()
 				//場所指定
 				const GLfloat vtx2[] = {	//x左下となる点の位置,底辺となる点の位置y,z上の点の位置,w三角形の大きさ
 					_bgPolyVert[j].x  - _bgPolyVert[j].z * 0.5f 	,	_bgPolyVert[j].y - _bgPolyVert[j].w * 0.5f,1.0f,	//左
-					_bgPolyVert[j].x  + _bgPolyVert[j].z * 0.5f	,	_bgPolyVert[j].y - _bgPolyVert[j].w * 0.5f,1.0f,	//右
+					_bgPolyVert[j].x  + _bgPolyVert[j].z * 0.5f		,	_bgPolyVert[j].y - _bgPolyVert[j].w * 0.5f,1.0f,	//右
 					_bgPolyVert[j].x								,	_bgPolyVert[j].y + _bgPolyVert[j].w * 0.5f,1.0f,	//上
 				};
 				//3次元
@@ -138,11 +138,11 @@ void CRenderer::render()
 				glEnableClientState(GL_VERTEX_ARRAY);
 
 				//場所指定
-				const GLfloat vtx2[] = {	//x左下となる点の位置,底辺となる点の位置y,z上の点の位置,w三角形の大きさ
-					_polyVert[j].x - _polyVert[j].z * 0.5f 	,	_polyVert[j].y - _polyVert[j].w * 0.5f,1.0f,	//左下
-					_polyVert[j].x + _polyVert[j].z * 0.5f	,	_polyVert[j].y - _polyVert[j].w * 0.5f,1.0f,	//右下
-					_polyVert[j].x + _polyVert[j].z * 0.5f	,	_polyVert[j].y + _polyVert[j].w * 0.5f,1.0f,	//右上
-					_polyVert[j].x - _polyVert[j].z * 0.5f	,	_polyVert[j].y + _polyVert[j].w * 0.5f,1.0f,	//左上
+				const GLfloat vtx2[] = {	//x:X座標中央,y:Y座標中央,z:X座標Scale,w:y座標Scale
+					_polyVert[j].x + cos(_polyAngle[j] / 180.0f)*((_polyVert[j].x - _polyVert[j].z * 0.5f) - _polyVert[j].x) - sin(_polyAngle[j] / 180.0f)*((_polyVert[j].y - _polyVert[j].w * 0.5f) - _polyVert[j].y) 	, _polyVert[j].y + sin(_polyAngle[j] / 180.0f) * ((_polyVert[j].x - _polyVert[j].z * 0.5f) - _polyVert[j].x) + cos(_polyAngle[j] / 180.0f)*((_polyVert[j].y - _polyVert[j].w * 0.5f) - _polyVert[j].y) ,1.0f,	//左下
+					_polyVert[j].x + cos(_polyAngle[j] / 180.0f)*((_polyVert[j].x + _polyVert[j].z * 0.5f) - _polyVert[j].x) - sin(_polyAngle[j] / 180.0f)*((_polyVert[j].y - _polyVert[j].w * 0.5f) - _polyVert[j].y) 	, _polyVert[j].y + sin(_polyAngle[j] / 180.0f) * ((_polyVert[j].x + _polyVert[j].z * 0.5f) - _polyVert[j].x) + cos(_polyAngle[j] / 180.0f)*((_polyVert[j].y - _polyVert[j].w * 0.5f) - _polyVert[j].y) ,1.0f,	//右下
+					_polyVert[j].x + cos(_polyAngle[j] / 180.0f)*((_polyVert[j].x + _polyVert[j].z * 0.5f) - _polyVert[j].x) - sin(_polyAngle[j] / 180.0f)*((_polyVert[j].y + _polyVert[j].w * 0.5f) - _polyVert[j].y) 	, _polyVert[j].y + sin(_polyAngle[j] / 180.0f) * ((_polyVert[j].x + _polyVert[j].z * 0.5f) - _polyVert[j].x) + cos(_polyAngle[j] / 180.0f)*((_polyVert[j].y + _polyVert[j].w * 0.5f) - _polyVert[j].y) ,1.0f,	//右上
+					_polyVert[j].x + cos(_polyAngle[j] / 180.0f)*((_polyVert[j].x - _polyVert[j].z * 0.5f) - _polyVert[j].x) - sin(_polyAngle[j] / 180.0f)*((_polyVert[j].y + _polyVert[j].w * 0.5f) - _polyVert[j].y) 	, _polyVert[j].y + sin(_polyAngle[j] / 180.0f) * ((_polyVert[j].x - _polyVert[j].z * 0.5f) - _polyVert[j].x) + cos(_polyAngle[j] / 180.0f)*((_polyVert[j].y + _polyVert[j].w * 0.5f) - _polyVert[j].y) ,1.0f,	//左上
 				};
 				//3次元
 				glVertexPointer(3, GL_FLOAT, 0, vtx2);
@@ -457,14 +457,14 @@ void CRenderer::setupTrianglesPoly(const CVec4 vertex,const CVec4 color,const GL
 		}
 	}
 }
-void CRenderer::setPosTrianglesPoly(const float vertexX, const CVec4 color, const GLuint number)
+void CRenderer::setTrianglesPolyPos(const float vertexX, const CVec4 color, const GLuint number)
 {
 	_bgPolyVert[number].x = vertexX;
 	_bgPolyColor[number] = color;
 }
 
 //ポリゴンのセットアップ
-void CRenderer::setupPoly(const CVec4 vertex, const CVec4 color,const LAYER layer)
+void CRenderer::setupPoly(const CVec4 vertex, const CVec4 color,const LAYER layer, const GLuint tag)
 {
 	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
 	{
@@ -473,16 +473,49 @@ void CRenderer::setupPoly(const CVec4 vertex, const CVec4 color,const LAYER laye
 			//ポリゴン設定を追加
 			_polyVert[i] = vertex;
 			_polyColor[i] = color;
-			_polyDefaultVert[i] = vertex.z;
+			_polyDefaultVert[i] = CVec2(vertex.z,vertex.w);
 			m_polyLayer[i] = layer;
+			_polyTag[i] = tag;
 			break;
 		}
 	}
 }
-void CRenderer::setPosPoly(const float vertexX, const CVec4 color, const GLuint number)
+void CRenderer::setPolyPos(const CVec2 vertex, const GLuint tag)
 {
-	_polyVert[number].x = vertexX;
-	_polyColor[number] = color;
+	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
+	{
+		if (_polyTag[i] == tag)
+		{
+			_polyVert[i].x = vertex.x;
+			_polyVert[i].y = vertex.y;
+		}
+	}
+}
+void CRenderer::setPolyPosX(const float vertex, const GLuint tag)
+{
+	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
+	{
+		if (_polyTag[i] == tag)
+		{
+			_polyVert[i].x = vertex;
+		}
+	}
+}
+void CRenderer::setPolyAngle(const float angle, GLuint tag)
+{
+	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
+	{
+		if (_polyTag[i] == tag)
+			_polyAngle[i] = angle;
+	}
+}
+void CRenderer::addPolyAngle(const float angle, GLuint tag)
+{
+	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
+	{
+		if (_polyTag[i] == tag)
+			_polyAngle[i] += angle;
+	}
 }
 
 
@@ -746,6 +779,12 @@ void CRenderer::allTextureDelete()
 		_bgPolyLine[i] = {};
 		_bgPolyMaxLine = {};
 	}
+	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
+	{
+		_polyVert[i] = {};
+		_polyColor[i] = {};
+		_polyTag[i] = {};
+	}
 }
 //ステージ移動全テクスチャ削除
 void CRenderer::allTextureDeletenotPlayer()
@@ -785,6 +824,26 @@ void CRenderer::notesFadeBackground()
 		}
 	}
 }
+
+void CRenderer::polygonNotesAction()
+{
+	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
+	{
+		//初期より小さければ
+		if (_polyVert[i].z < _polyDefaultVert[i].x)
+		{
+			//Scaleを徐々に戻す
+			_polyVert[i].z += _polyDefaultVert[i].x*0.1f;
+			_polyVert[i].w += _polyDefaultVert[i].y*0.1f;
+		}
+		if (_polyColor[i].w > 10.0f)
+		{
+			if(_polyTag[i] == TAG_BEATSACTION1 || _polyTag[i] == TAG_BEATSACTION2 || _polyTag[i] == TAG_BEATSACTION3 || _polyTag[i] == TAG_BEATSACTION4)
+				_polyColor[i].w -= 10.0f;
+		}
+	}
+}
+
 void CRenderer::notesRandomFadeInit()
 {
 	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
@@ -800,7 +859,6 @@ void CRenderer::notesRandomFadeInit()
 				_bgPolyVert[i].w += _beatUpSize;
 		}
 
-		angle+=0.1f;
 	}
 }
 
@@ -852,4 +910,31 @@ void CRenderer::notesUpFadeInit(GLuint mode)
 		break;
 	}
 	
+}
+
+
+void CRenderer::polygonNotesActionInit(const GLuint tag,const GLuint mode)
+{
+	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
+	{
+	
+		if (_polyTag[i] == tag)
+		{
+			switch (mode)
+			{
+			case 0:
+				_polyVert[i].z = _polyDefaultVert[i].x * 0.6f;
+				_polyVert[i].w = _polyDefaultVert[i].y * 0.6f;
+				break;
+			case 1:
+				_polyColor[i].w = 100.0f;
+				break;
+			default:
+				break;
+			}
+		}
+
+	
+	
+	}
 }

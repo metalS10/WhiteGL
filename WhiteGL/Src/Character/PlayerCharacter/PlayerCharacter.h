@@ -1,7 +1,4 @@
 #pragma once
-//============================================
-//追加のインクルードはここから
-//============================================
 #include "../Character.h"
 #include "../AttackCharacter/AttackCharacter.h"
 

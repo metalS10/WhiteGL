@@ -1,7 +1,6 @@
 #pragma once
-//==============================================
-//追加のインクルードはここから
-//==============================================
+
+
 #include "../Map/Map.h"
 #include "../../Factory/AttackFactory/AttackFactory.h"
 #include "../../Factory/EnemyBulletFactory/EnemyBulletFactory.h"

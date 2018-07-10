@@ -45,20 +45,52 @@ void CGameEngine::setupPoly(const CVec4 vertex, const CVec4 color,const GLuint l
 	if (polytype == POLY_TYPE::TRIANGLE)
 		renderer->setupTrianglesPoly(vertex, color, line, LAYER::MAIN);
 	else if (polytype == POLY_TYPE::QUAD)
-		renderer->setupPoly(vertex, color, LAYER::MAIN);
+		renderer->setupPoly(vertex, color, LAYER::MAIN,0);
 }
-void CGameEngine::setupPoly(const CVec4 vertex, const CVec4 color, const GLuint line, const POLY_TYPE polytype,const LAYER layer)
+void CGameEngine::setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line, const POLY_TYPE polytype, const GLuint tag)
+{
+	if (polytype == POLY_TYPE::TRIANGLE)
+		renderer->setupTrianglesPoly(vertex, color, line, LAYER::MAIN);
+	else if (polytype == POLY_TYPE::QUAD)
+		renderer->setupPoly(vertex, color, LAYER::MAIN,tag);
+}
+void CGameEngine::setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line, const POLY_TYPE polytype, const LAYER layer)
 {
 	if (polytype == POLY_TYPE::TRIANGLE)
 		renderer->setupTrianglesPoly(vertex, color, line, layer);
 	else if (polytype == POLY_TYPE::QUAD)
-		renderer->setupPoly(vertex, color, layer);
+		renderer->setupPoly(vertex, color,layer,0);
+}
+void CGameEngine::setupPoly(const CVec4 vertex, const CVec4 color, const GLuint line, const POLY_TYPE polytype,const LAYER layer, const GLuint tag)
+{
+	if (polytype == POLY_TYPE::TRIANGLE)
+		renderer->setupTrianglesPoly(vertex, color, line, layer);
+	else if (polytype == POLY_TYPE::QUAD)
+		renderer->setupPoly(vertex, color, layer,tag);
 }
 
-void CGameEngine::setPosTrianglesPoly(const float vertexX, const CVec4 color, const GLuint number)
+void CGameEngine::setTrianglesPolyPos(const float vertexX, const CVec4 color, const GLuint number)
 {
-	renderer->setPosTrianglesPoly(vertexX, color, number);
+	renderer->setTrianglesPolyPos(vertexX, color, number);
 }
+
+void CGameEngine::setPolyPos(const CVec2 vertex,const GLuint tag)
+{
+	renderer->setPolyPos(vertex,tag);
+}
+void CGameEngine::setPolyPosX(const float vertex,const GLuint tag)
+{
+	renderer->setPolyPosX(vertex,tag);
+}
+void CGameEngine::setPolyAngle(const float angle, const GLuint tag)
+{
+	renderer->setPolyAngle(angle, tag);
+}
+void CGameEngine::addPolyAngle(const float angle, const GLuint tag)
+{
+	renderer->addPolyAngle(angle, tag);
+}
+
 
 void CGameEngine::setChipAnim(CAnimation *&&_val)
 {
@@ -177,6 +209,7 @@ void CGameEngine::render()
 void CGameEngine::update60()
 {
 	renderer->notesFadeBackground();
+	renderer->polygonNotesAction();
 	m_hitStop--;
 	if (m_hitStop <= 0)
 		m_hitStop = 0;
@@ -224,7 +257,7 @@ void CGameEngine::loadTMXMap(CLayerData layerData[MAX_LAYER_NUMBER],int width,in
 				int gidone = (layerData[j].m_gid[i] - layerData[j].m_firstgid + 1) % (layerData[j].m_columns);
 				float rectL = layerData[j].m_tileWidth * gidone - layerData[j].m_tileWidth;
 				float rectB = layerData[j].m_tileHeight * gidten;
-				setupTexture(layerData[j].m_imageSource.c_str(), TEX_TYPE::PNG, START_MAP_TEXTURE_NUMBER + tileID + countMap, CVec2(layerData[j].m_tileWidth * 0.5 + (layerData[j].m_tileWidth * countW), layerData[j].m_tileHeight * 0.5 + (layerData[j].m_tileHeight * countH)), CVec4(rectL, rectB, layerData[j].m_tileWidth, layerData[j].m_tileHeight));
+				setupTexture(layerData[j].m_imageSource.c_str(), TEX_TYPE::PNG, START_MAP_TEXTURE_NUMBER + tileID + countMap, CVec2(layerData[j].m_tileWidth * 0.5 + (layerData[j].m_tileWidth * countW), layerData[j].m_tileHeight * 0.5 + (layerData[j].m_tileHeight * countH)), CVec4(rectL, rectB, layerData[j].m_tileWidth, layerData[j].m_tileHeight),LAYER::MAIN);
 				tileID++;
 			}
 			if (countW >= width - 1)
@@ -347,4 +380,9 @@ void CGameEngine::notesAction(int mode)
 		break;
 	}
 	//renderer->setRotate(CVec3(1.0f, 0.0f, 0.0f), 1.0f);
+}
+//beats‚É‡‚í‚¹‚éƒAƒNƒVƒ‡ƒ“
+void CGameEngine::polygonAction(const GLuint tag,const GLuint mode)
+{
+	renderer->polygonNotesActionInit(tag,mode);
 }

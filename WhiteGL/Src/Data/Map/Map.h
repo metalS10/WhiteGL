@@ -1,7 +1,4 @@
 #pragma once
-//=========================================================
-//追加のインクルードはここから
-//=========================================================
 #include <stdio.h>
 #include "../../Constants.h"
 #include "../../interpreter/CCTMXTiledMap.h"
@@ -10,7 +7,7 @@
 #include "../../AllController/AllController.h"
 
 //=====================================================
-//前方宣言に関するコードはここから書く
+//前方宣言
 //=====================================================
 class CEnemyLaunchData;
 class CGimmickLaunchData;

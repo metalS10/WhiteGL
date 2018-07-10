@@ -121,14 +121,14 @@ bool CTgaImage::load(const std::string& fileName)
 	unsigned long h = 0;			//高さ
 	unsigned char* pData = NULL;	//取得するデータ
 
-	/*
+	
 	//ファイルを開く
 	if ((fp = fopen(fileName.c_str(), "rb")) == NULL)
 	{
 		printf("ファイルを開けませんでした\n");
 		return false;
 	}
-	*/
+	
 
 	//ヘッダー情報の読み込み
 	fread(header, 1, sizeof(header), fp);
@@ -274,7 +274,7 @@ bool CPngImage::load(const std::string& fileName)
 	this->m_internalFormat = interlaceType;
 
 
-	//2つめのやり方
+	//もう一つのやり方
 	/*
 	png_structp pPng = NULL;
 	png_infop pInfo = NULL;

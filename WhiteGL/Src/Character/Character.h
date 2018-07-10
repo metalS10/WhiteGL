@@ -1,7 +1,4 @@
 #pragma once
-//===============================================
-//追加のインクルードはここから
-//===============================================
 #include "../Data/Animation/Animation.h"
 #include "../Physical.h"
 #include "../Data/ActionController/ActionController.h"

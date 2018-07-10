@@ -51,10 +51,10 @@ bool CGameMain::init()
 	m_game.setupTexture(MAIN_MOVEBG, TEX_TYPE::PNG, SCROLLBG_ID, CVec2(WINDOW_RIGHT * 3, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, 6400.0f, 720.0f),LAYER::BG);
 	
 	//‰æ–Ê‘S‘ÌUI
-	m_game.setupPoly(CVec4(WINDOW_RIGHT * 0.01f, WINDOW_TOP * 0.5f, WINDOW_TOP * 0.01, WINDOW_TOP * 0.9f), CVec4(0.0f, 0.0f, 100.0f, 100.0f), NULL, POLY_TYPE::QUAD, LAYER::UI);
-	m_game.setupPoly(CVec4(WINDOW_RIGHT * 0.99f, WINDOW_TOP * 0.5f, WINDOW_TOP * 0.01, WINDOW_TOP * 0.9f), CVec4(0.0f, 0.0f, 100.0f, 100.0f), NULL, POLY_TYPE::QUAD, LAYER::UI);
-	m_game.setupPoly(CVec4(WINDOW_RIGHT * 0.5f, WINDOW_TOP * 0.05f, WINDOW_RIGHT * 0.98, WINDOW_TOP * 0.01f), CVec4(0.0f, 0.0f, 100.0f, 100.0f), NULL, POLY_TYPE::QUAD, LAYER::UI);
-	m_game.setupPoly(CVec4(WINDOW_RIGHT * 0.5f, WINDOW_TOP * 0.95f, WINDOW_RIGHT * 0.98, WINDOW_TOP * 0.01f), CVec4(0.0f, 0.0f, 100.0f, 100.0f), NULL, POLY_TYPE::QUAD, LAYER::UI);
+	m_game.setupPoly(CVec4(WINDOW_RIGHT * 0.01f, WINDOW_TOP * 0.5f, WINDOW_TOP * 0.01, WINDOW_TOP * 0.99f), CVec4(100.0f, 100.0f, 100.0f, 100.0f), NULL, POLY_TYPE::QUAD, LAYER::UI, TAG_BEATSACTION1);
+	m_game.setupPoly(CVec4(WINDOW_RIGHT * 0.99f, WINDOW_TOP * 0.5f, WINDOW_TOP * 0.01, WINDOW_TOP * 0.99f), CVec4(100.0f, 100.0f, 100.0f, 100.0f), NULL, POLY_TYPE::QUAD, LAYER::UI, TAG_BEATSACTION2);
+	m_game.setupPoly(CVec4(WINDOW_RIGHT * 0.5f, WINDOW_TOP * 0.01f, WINDOW_RIGHT * 0.985, WINDOW_TOP * 0.01f), CVec4(100.0f, 100.0f, 100.0f, 100.0f), NULL, POLY_TYPE::QUAD, LAYER::UI, TAG_BEATSACTION3);
+	m_game.setupPoly(CVec4(WINDOW_RIGHT * 0.5f, WINDOW_TOP * 0.99f, WINDOW_RIGHT * 0.985, WINDOW_TOP * 0.01f), CVec4(100.0f, 100.0f, 100.0f, 100.0f), NULL, POLY_TYPE::QUAD, LAYER::UI, TAG_BEATSACTION4);
 
 
 	pPlayerChara = (CPlayerCharacter*)CPlayerFactoryManager::getInstance()->create(320.0f, 200.0f);
@@ -70,6 +70,7 @@ bool CGameMain::init()
 
 	//Player
 	m_game.setupTexture(pPlayerChara->texPass, TEX_TYPE::PNG, pPlayerChara->m_texID, pPlayerChara->m_pMove->m_pos, (*pPlayerChara->m_pAnimations)[0]->getCurrentChip());
+	m_game.setupPoly(CVec4(pPlayerChara->m_pMove->m_pos.x, pPlayerChara->m_pMove->m_pos.y, 64.0f,64.0f),CVec4(100.0f,100.0f,100.0f,100.0f),0,POLY_TYPE::QUAD, TAG_PLAYER_1);
 	//‰¹‡‚í‚¹UI
 	m_game.setupTexture(notes->texPas, TEX_TYPE::PNG, NOTES_ID, CVec2(WINDOW_RIGHT - (*notes->m_pAnimations)[0]->getCurrentChip().z * 0.5f,WINDOW_BOTTOM + (*notes->m_pAnimations)[0]->getCurrentChip().w * 0.5), (*notes->m_pAnimations)[0]->getCurrentChip(), LAYER::UI);
 
@@ -136,6 +137,7 @@ void CGameMain::rendUpdate()
 		}
 		m_game.setTextureRect((*notes->m_pAnimations)[notes->m_state]->getCurrentChip(), NOTES_ID);
 		m_game.setPosition(pPlayerChara->m_pMove->m_pos, pPlayerChara->m_texID);
+		m_game.setPolyPos(CVec2(pPlayerChara->m_pMove->m_pos.x, pPlayerChara->m_pMove->m_pos.y), TAG_PLAYER_1);
 	}
 		
 		
@@ -151,7 +153,11 @@ void CGameMain::rendUpdate()
 	//m_game.setPosition(CVec2(WINDOW_RIGHT*0.35f + cameraPosX, WINDOW_TOP*0.92f), 11);
 	m_game.setPosition(CVec2(WINDOW_RIGHT*0.5f + cameraPosX, WINDOW_TOP*0.5f + cameraPosY), BG_ID);
 	m_game.setPosition(CVec2( (WINDOW_RIGHT - (*notes->m_pAnimations)[0]->getCurrentChip().z * 0.5f) + cameraPosX , (WINDOW_BOTTOM + (*notes->m_pAnimations)[0]->getCurrentChip().w * 0.5 ) + cameraPosY) , NOTES_ID);
-
+	m_game.setPolyPosX(WINDOW_RIGHT * 0.01f +cameraPosX, TAG_BEATSACTION1);
+	m_game.setPolyPosX(WINDOW_RIGHT * 0.99f +cameraPosX, TAG_BEATSACTION2);
+	m_game.setPolyPosX(WINDOW_RIGHT * 0.5f	+cameraPosX, TAG_BEATSACTION3);
+	m_game.setPolyPosX(WINDOW_RIGHT * 0.5f	+cameraPosX, TAG_BEATSACTION4);
+	
 	//HP‚ğHPCar‚É”½‰f
 	m_game.SetProgressBarWH(BAR_HP_ID, CVec4(0.0f, 0.0f, pPlayerChara->m_hitPoint, 10.0f), CVec2(WINDOW_RIGHT*0.042f + cameraPosX, WINDOW_TOP*0.962f + cameraPosY));
 	//DP‚à“¯—l
@@ -243,7 +249,7 @@ void CGameMain::update()
 
 	CLaunchScheduler::getInstance()->launchCharacters(m_game);
 
-
+	m_game.addPolyAngle(10.0f, TAG_PLAYER_1);
 
 	//oŒ‚‚ÌŠ®—¹‚µ‚½ƒgƒŠƒK[‚ğ‚·‚×‚Äæ‚èŠO‚·
 	checkAndDelete(m_pLaunchSchedule);
@@ -482,12 +488,12 @@ void CGameMain::scrollBackGroundTrianglesLeft(float posX)
 				l -= 2;
 				if (l <= -1)
 				{
-					m_game.setPosTrianglesPoly(m_trianglesLeft[i], m_stage->getChangePositionColor(false), i);	//”wŒi‚É”½‰f
+					m_game.setTrianglesPolyPos(m_trianglesLeft[i], m_stage->getChangePositionColor(false), i);	//”wŒi‚É”½‰f
 					break;
 				}
 				else if(l <= 0)
 				{
-					m_game.setPosTrianglesPoly(m_trianglesLeft[i], m_stage->getChangePositionColor(true), i);	//”wŒi‚É”½‰f
+					m_game.setTrianglesPolyPos(m_trianglesLeft[i], m_stage->getChangePositionColor(true), i);	//”wŒi‚É”½‰f
 					break;
 				}
 			}
@@ -516,12 +522,12 @@ void CGameMain::scrollBackGroundTrianglesRight(float posX)
 				l -= 2;
 				if (l <= -1)
 				{
-					m_game.setPosTrianglesPoly(m_trianglesLeft[i], m_stage->getChangePositionColor(false), i);	//”wŒi‚É”½‰f
+					m_game.setTrianglesPolyPos(m_trianglesLeft[i], m_stage->getChangePositionColor(false), i);	//”wŒi‚É”½‰f
 					break;
 				}
 				else if (l <= 0)
 				{
-					m_game.setPosTrianglesPoly(m_trianglesLeft[i], m_stage->getChangePositionColor(true), i);	//”wŒi‚É”½‰f
+					m_game.setTrianglesPolyPos(m_trianglesLeft[i], m_stage->getChangePositionColor(true), i);	//”wŒi‚É”½‰f
 					break;
 				}
 			}
@@ -529,10 +535,20 @@ void CGameMain::scrollBackGroundTrianglesRight(float posX)
 	}
 }
 
+void CGameMain::halfUpdate()
+{
+	m_game.notesAction(m_stage->backgroundType);
+}
+
 void CGameMain::qauarterUpdate()
 {
 	//m_notesSound->playChunk();
-	m_game.notesAction(m_stage->backgroundType);
+	
+	m_game.polygonAction(TAG_PLAYER_1,0);
+	m_game.polygonAction(TAG_BEATSACTION1,1);
+	m_game.polygonAction(TAG_BEATSACTION2,1);
+	m_game.polygonAction(TAG_BEATSACTION3,1);
+	m_game.polygonAction(TAG_BEATSACTION4,1);
 	//”qŠÔŠu‚ÌXVˆ—
 	pPlayerChara->beatUpdate();
 	

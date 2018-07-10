@@ -43,7 +43,13 @@ public:
 	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, LAYER layer);				//F•ÏX‚È‚µoverload(ƒŒƒCƒ„[İ’è‚ ‚è)
 	void setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line, const POLY_TYPE polytype);		//”wŒiOŠpƒ|ƒŠƒSƒ“‚Ìİ’è(vertex(’†‰›X,’†‰›Y,Width,Height))
 	void setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line, const POLY_TYPE polytype,const LAYER layer);		//layerİ’è‚ ‚è”wŒiOŠpƒ|ƒŠƒSƒ“‚Ìİ’è(vertex(’†‰›X,’†‰›Y,Width,Height))
-	void setPosTrianglesPoly(const float vertexX, const CVec4 color, const GLuint number);	//”wŒiOŠpƒ|ƒŠƒSƒ“‚ÌˆÊ’uÄİ’è(XÀ•W‚Ì‚İ)
+	void setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line, const POLY_TYPE polytype,const GLuint tag);		//layerİ’è‚ ‚è”wŒiOŠpƒ|ƒŠƒSƒ“‚Ìİ’è(vertex(’†‰›X,’†‰›Y,Width,Height))Œã‚É•ÒW‚·‚éê‡‚Ì‚½‚ß‚Ìtagw’è
+	void setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line, const POLY_TYPE polytype,const LAYER layer, const GLuint tag);		//layerİ’è‚ ‚è”wŒiOŠpƒ|ƒŠƒSƒ“‚Ìİ’è(vertex(’†‰›X,’†‰›Y,Width,Height))Œã‚É•ÒW‚·‚éê‡‚Ì‚½‚ß‚Ìtagw’è
+	void setTrianglesPolyPos(const float vertexX, const CVec4 color, const GLuint number);	//”wŒiOŠpƒ|ƒŠƒSƒ“‚ÌˆÊ’uÄİ’è(XÀ•W‚Ì‚İ)
+	void setPolyPos(const CVec2 vertex, const GLuint tag);	//ƒ|ƒŠƒSƒ“‚ÌˆÊ’uÄİ’è
+	void setPolyPosX(const float vertex, const GLuint tag);	//ƒ|ƒŠƒSƒ“‚ÌXˆÊ’uÄİ’è
+	void setPolyAngle(const float angle, const GLuint tag);	//ƒ|ƒŠƒSƒ“‚Ì‰ñ“]İ’è
+	void addPolyAngle(const float angle, const GLuint tag);	//ƒ|ƒŠƒSƒ“‚Ì‰ñ“]İ’è
 	void setChipAnim(CAnimation *&&_val);		//ChipƒAƒjƒ[ƒVƒ‡ƒ“İ’è
 	void setChipData(GLuint texID, CVec4 rectData);	
 	void update();
@@ -58,17 +64,17 @@ public:
 	void allTextureDelete();
 	void allTextureDeletenotPlayer();
 	void SetProgressBarWH(const GLuint texID, const CVec4 Rect, const CVec2 position);
+
+	void loadTMXMap(CLayerData layerData[MAX_LAYER_NUMBER], int width, int height);
+	void TMXMapSetPos(float x, float y);
+	void layerSetPos(float x, float y, GLuint texID);
+
 	//ƒAƒNƒVƒ‡ƒ“
 	bool ActionStage(const GLuint texID, const float fadeInterval, const bool fade);
 	void* TextureFade(const GLuint texID, const bool out ,const float fadeInterval);
 	bool getFadeEnd(const GLuint texID);
 
 	CRenderer* getRenderer();
-
-
-	void loadTMXMap(CLayerData layerData[MAX_LAYER_NUMBER],int width,int height);
-	void TMXMapSetPos(float x,float y);
-	void layerSetPos(float x, float y,GLuint texID);
 
 	void HitStop(float time);
 
@@ -79,7 +85,8 @@ public:
 	*2.doubleUp
 	*/
 	void notesAction(int mode);
-	
+	//beats‚É‡‚í‚¹‚éƒAƒNƒVƒ‡ƒ“(0:Vert,1:Color)
+	void polygonAction(const GLuint tag,const GLuint mode);
 
 
 

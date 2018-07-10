@@ -1,6 +1,4 @@
-//================================================
-//追加のインクルードはここから
-//================================================
+
 #include "PlayerCharacter.h"
 //#include "Model/Map/Map.h"
 //#include "Data/LaunchData/LaunchData.h"
@@ -33,6 +31,7 @@ CPlayerCharacter::CPlayerCharacter() {
 
 //デストラクタ
 CPlayerCharacter::~CPlayerCharacter() {
+	SAFE_DELETE(m_pSounds);
 }
 
 //初期化処理
@@ -115,7 +114,6 @@ void CPlayerCharacter::inputFunc()
 			(*this->m_pActions)[(int)ACTION::ATTACK]->start();
 			//アニメーションの初期化
 			(*this->m_pAnimations)[(int)STATE::ATTACK]->start();
-			this->m_denkiPoint -= 5.0f;
 			this->Allfalse();
 			m_isAttack1 = true;
 

@@ -63,9 +63,9 @@ public:
 	//板のポリゴン用
 	CVec4 _polyVert[MAX_POLYGON_NUMBER] = {};
 	CVec4 _polyColor[MAX_POLYGON_NUMBER] = {};
-	GLuint _polyDefaultVert[MAX_POLYGON_NUMBER] = {};
-	bool _polyCanRotate[MAX_POLYGON_NUMBER] = {};
-	float _polyRotate[MAX_POLYGON_NUMBER] = {};
+	CVec2 _polyDefaultVert[MAX_POLYGON_NUMBER] = {};
+	float _polyAngle[MAX_POLYGON_NUMBER] = {};
+	GLuint _polyTag[MAX_POLYGON_NUMBER] = {};
 
 	//ポリゴン達のアニメーション用
 	GLuint upfadeCount = 0;
@@ -94,7 +94,6 @@ public:
 
 public:
 
-	GLfloat angle = 0.0f;
 	void update(std::vector<CAnimation*>* anim);
 
 	void render();
@@ -114,10 +113,13 @@ public:
 
 	//三角ポリゴン設定
 	void setupTrianglesPoly(const CVec4 vertex, const CVec4 color, const GLuint line,const LAYER layer);
-	void setPosTrianglesPoly(const float vertexX, const CVec4 color, const GLuint number);
+	void setTrianglesPolyPos(const float vertexX, const CVec4 color, const GLuint number);
 	//板ポリゴン設定
-	void setupPoly(const CVec4 vertex, const CVec4 color, const LAYER layer);
-	void setPosPoly(const float vertexX, const CVec4 color, const GLuint number);
+	void setupPoly(const CVec4 vertex, const CVec4 color, const LAYER layer, const GLuint tag);
+	void setPolyPos(const CVec2 vertex, const GLuint tag);	//ポリゴンの座標再設定
+	void setPolyPosX(const float vertex, const GLuint tag);	//ポリゴンの座標再設定
+	void setPolyAngle(const float angle,const GLuint tag);	//ポリゴンの回転設定
+	void addPolyAngle(const float angle,const GLuint tag);	//ポリゴンの回転増
 
 	void setupTextureSize(const CVec2 texPos, const CVec4 texRect, GLuint texID);
 
@@ -147,7 +149,9 @@ public:
 	void SetProgressBarWH(const GLuint texID, const CVec4 Rect,const CVec2 position);
 
 	void notesFadeBackground();	//背景用の更新処理
+	void polygonNotesAction();		//beatsに合わせるアクションの更新処理
 
 	void notesRandomFadeInit();		//背景用のランダム初期化
-	void notesUpFadeInit(GLuint mode);			//背景用の上に上がっていく初期化(mode)
+	void notesUpFadeInit(const GLuint mode);			//背景用の上に上がっていく初期化(mode)
+	void polygonNotesActionInit(const GLuint tag,const GLuint mode );		//beatsに合わせるアクション(mode(0:サイズ,1色))
 };

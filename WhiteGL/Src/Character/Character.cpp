@@ -133,9 +133,13 @@ void CCharacter::setColor(float opacity)
 void CCharacter::DPHeal(float dp_value)
 {
 	this->m_denkiPoint += dp_value;
-	if (this->m_denkiPoint >= 100)
+	if (this->m_denkiPoint >= 100.0f)
 	{
-		this->m_denkiPoint = 100;
+		this->m_denkiPoint = 100.0f;
+	}
+	else if (this->m_denkiPoint <= 0.0f)
+	{
+		this->m_denkiPoint = 0.0f;
 	}
 }
 

@@ -1,8 +1,5 @@
 #pragma once
 
-//============================================
-//追加のインクルードはここから
-//============================================
 #include "../../Constants.h"
 #include "../Collision/Collision.h"
 #include <vector>

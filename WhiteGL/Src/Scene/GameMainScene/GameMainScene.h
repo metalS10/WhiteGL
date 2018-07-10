@@ -34,8 +34,9 @@ public:
 	void update()override;		//遊びの動き更新
 	void rendUpdate()override;	//描画更新
 	void sceneUpdate()override;	//システムの更新
+	void halfUpdate()override;	//2分音符の更新
 	void qauarterUpdate()override;	//4分音符の更新
-	void eighthUpdate()override;	//4分音符の更新
+	void eighthUpdate()override;	//8分音符の更新
 
 	//ステージ遷移初期化
 	bool stageChangeInit();
