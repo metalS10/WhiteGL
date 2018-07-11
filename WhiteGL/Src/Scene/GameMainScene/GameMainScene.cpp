@@ -69,7 +69,7 @@ bool CGameMain::init()
 	notes = new CNotesUI();
 
 	//Player
-	m_game.setupTexture(pPlayerChara->texPass, TEX_TYPE::PNG, pPlayerChara->m_texID, pPlayerChara->m_pMove->m_pos, (*pPlayerChara->m_pAnimations)[0]->getCurrentChip());
+	//m_game.setupTexture(pPlayerChara->texPass, TEX_TYPE::PNG, pPlayerChara->m_texID, pPlayerChara->m_pMove->m_pos, (*pPlayerChara->m_pAnimations)[0]->getCurrentChip());
 	m_game.setupPoly(CVec4(pPlayerChara->m_pMove->m_pos.x, pPlayerChara->m_pMove->m_pos.y, 64.0f,64.0f),CVec4(100.0f,100.0f,100.0f,100.0f),0,POLY_TYPE::QUAD, TAG_PLAYER_1);
 	//音合わせUI
 	m_game.setupTexture(notes->texPas, TEX_TYPE::PNG, NOTES_ID, CVec2(WINDOW_RIGHT - (*notes->m_pAnimations)[0]->getCurrentChip().z * 0.5f,WINDOW_BOTTOM + (*notes->m_pAnimations)[0]->getCurrentChip().w * 0.5), (*notes->m_pAnimations)[0]->getCurrentChip(), LAYER::UI);
@@ -131,12 +131,15 @@ void CGameMain::rendUpdate()
 	{
 		for (CCharacter* pChara : (*m_pCharacters))
 		{
-			m_game.setTextureRect((*pChara->m_pAnimations)[pChara->m_state]->getCurrentChip(), pChara->m_texID);
-			m_game.setScale(pChara->m_scale, pChara->m_texID);
-			m_game.setPosition(pChara->m_pMove->m_pos, pChara->m_texID);
+			if (pChara != pPlayerChara)
+			{
+				m_game.setTextureRect((*pChara->m_pAnimations)[pChara->m_state]->getCurrentChip(), pChara->m_texID);
+				m_game.setScale(pChara->m_scale, pChara->m_texID);
+				m_game.setPosition(pChara->m_pMove->m_pos, pChara->m_texID);
+			}
 		}
 		m_game.setTextureRect((*notes->m_pAnimations)[notes->m_state]->getCurrentChip(), NOTES_ID);
-		m_game.setPosition(pPlayerChara->m_pMove->m_pos, pPlayerChara->m_texID);
+		//m_game.setPosition(pPlayerChara->m_pMove->m_pos, pPlayerChara->m_texID);
 		m_game.setPolyPos(CVec2(pPlayerChara->m_pMove->m_pos.x, pPlayerChara->m_pMove->m_pos.y), TAG_PLAYER_1);
 	}
 		
@@ -249,7 +252,7 @@ void CGameMain::update()
 
 	CLaunchScheduler::getInstance()->launchCharacters(m_game);
 
-	m_game.addPolyAngle(10.0f, TAG_PLAYER_1);
+	m_game.addPolyAngle(-pPlayerChara->m_CharaLaunchVector.x*10.0f, TAG_PLAYER_1);
 
 	//出撃の完了したトリガーをすべて取り外す
 	checkAndDelete(m_pLaunchSchedule);
@@ -291,7 +294,7 @@ void CGameMain::gameMain()
 				);
 				cameraPosX = 0.0f;
 
-				pPlayerChara->setPosition(CVec2(320.0f, 200.0f), PLAYER_ID);
+				pPlayerChara->setPosition(CVec2(320.0f, 200.0f));
 			}
 		}
 		//フェードアウトが終了したら

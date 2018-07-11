@@ -833,8 +833,8 @@ void CRenderer::polygonNotesAction()
 		if (_polyVert[i].z < _polyDefaultVert[i].x)
 		{
 			//Scale‚ð™X‚É–ß‚·
-			_polyVert[i].z += _polyDefaultVert[i].x*0.1f;
-			_polyVert[i].w += _polyDefaultVert[i].y*0.1f;
+			_polyVert[i].z += _polyDefaultVert[i].x*0.05f;
+			_polyVert[i].w += _polyDefaultVert[i].y*0.05f;
 		}
 		if (_polyColor[i].w > 10.0f)
 		{

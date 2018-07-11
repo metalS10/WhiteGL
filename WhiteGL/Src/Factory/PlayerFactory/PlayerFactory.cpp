@@ -10,7 +10,7 @@ std::vector<CAnimation*>* CPlayerPartsFactory::getAnimations()
 {
 	//アニメーションデータ群の生成
 	std::vector<CAnimation*>* m_pAnimations = new std::vector<CAnimation*>();
-	
+	/*
 	//直立アニメーションの設定
 	//m_pAnimations->push_back(new CChipListAnimation(10,true));
 	m_pAnimations->push_back(new CChipNotAnimation());
@@ -32,7 +32,7 @@ std::vector<CAnimation*>* CPlayerPartsFactory::getAnimations()
 	m_pAnimations->push_back(new CChipNotAnimation());
 	//回避落ちている時のアニメーションの設定
 	m_pAnimations->push_back(new CChipNotAnimation());
-
+	*/
 	return m_pAnimations;
 }
 
@@ -132,7 +132,7 @@ void CBasePlayerFactory::settingTexture(CPlayerCharacter* pPlayerCharacter)
 void CBasePlayerFactory::settingAnimations(CPlayerCharacter* pPlayerCharacter)
 {
 	//直立アニメーションに設定するためのチップデータの設定
-	(*pPlayerCharacter->m_pAnimations)[(int)CPlayerCharacter::STATE::STAND]->addChipData(new CChip(0, 0, 64, 64));
+	//(*pPlayerCharacter->m_pAnimations)[(int)CPlayerCharacter::STATE::STAND]->addChipData(new CChip(0, 0, 64, 64));
 	/*
 	(*pPlayerCharacter->m_pAnimations)[(int)CPlayerCharacter::STATE::STAND]->addChipData(new CChip(64, 0, 64, 64));
 	(*pPlayerCharacter->m_pAnimations)[(int)CPlayerCharacter::STATE::STAND]->addChipData(new CChip(64 * 2, 0, 64, 64));
@@ -140,7 +140,7 @@ void CBasePlayerFactory::settingAnimations(CPlayerCharacter* pPlayerCharacter)
 	(*pPlayerCharacter->m_pAnimations)[(int)CPlayerCharacter::STATE::STAND]->addChipData(new CChip(64 * 4, 0, 64, 64));
 	*/
 
-
+	/*
 	//歩行アニメーションに設定する1枚目のチップデータの作成
 	(*pPlayerCharacter->m_pAnimations)[(int)CPlayerCharacter::STATE::WALK]->addChipData(new CChip(64, 0, 64, 64));
 	//歩行アニメーションに設定する2枚目のチップデータの作成
@@ -169,7 +169,7 @@ void CBasePlayerFactory::settingAnimations(CPlayerCharacter* pPlayerCharacter)
 	//回避中落ちるチップデータ
 	(*pPlayerCharacter->m_pAnimations)[(int)CPlayerCharacter::STATE::SUPERFALING]->addChipData(new CChip(192, 64, 64, 64));
 
-
+*/
 }
 
 void CBasePlayerFactory::settingPhysicals(CPlayerCharacter* pPlayerCharacter)

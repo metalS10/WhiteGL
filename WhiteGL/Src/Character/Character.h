@@ -100,7 +100,7 @@ public:
 	void setColor(float r, float g, float b, float a);
 	void setColor(float opacity);
 
-	void setPosition(CVec2 vec, GLuint texID);
+	void setPosition(CVec2 vec);
 
 	/**
 	*@desc	DP‚ğ‰ñ•œ‚·‚éŠÖ”

@@ -22,7 +22,7 @@ CPlayerCharacter::CPlayerCharacter() {
 
 	this->m_hitPoint = 100;
 
-	this->m_texID = PLAYER_ID;
+	this->m_texID = NULL;
 
 	this->init();
 
@@ -113,7 +113,7 @@ void CPlayerCharacter::inputFunc()
 			//弾発射(playerFactoryのgetActionsにも注意)
 			(*this->m_pActions)[(int)ACTION::ATTACK]->start();
 			//アニメーションの初期化
-			(*this->m_pAnimations)[(int)STATE::ATTACK]->start();
+			//(*this->m_pAnimations)[(int)STATE::ATTACK]->start();
 			this->Allfalse();
 			m_isAttack1 = true;
 
@@ -125,7 +125,7 @@ void CPlayerCharacter::inputFunc()
 			//回避開始
 			(*this->m_pActions)[(int)ACTION::AVOIDANCE]->start();
 
-			(*this->m_pAnimations)[(int)STATE::AVOIDANCE]->start();
+			//(*this->m_pAnimations)[(int)STATE::AVOIDANCE]->start();
 		}
 		if (input->getOnKey(Input::Key::D) == true)
 		{
@@ -183,7 +183,7 @@ void CPlayerCharacter::moveFunc()
 void CPlayerCharacter::animationFunc()
 {
 	//アニメーション
-	(*this->m_pAnimations)[m_state]->update();
+	//(*this->m_pAnimations)[m_state]->update();
 
 }
 

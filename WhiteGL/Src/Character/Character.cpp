@@ -149,7 +149,7 @@ void CCharacter::removeFromParent()
 }
 
 
-void CCharacter::setPosition(CVec2 vec, GLuint texID)
+void CCharacter::setPosition(CVec2 vec)
 {
 	this->m_pMove->m_pos = vec;
 }
