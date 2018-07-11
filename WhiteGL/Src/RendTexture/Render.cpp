@@ -491,6 +491,18 @@ void CRenderer::setPolyPos(const CVec2 vertex, const GLuint tag)
 		}
 	}
 }
+void CRenderer::setPolyScale(const CVec2 scale, const GLuint tag)
+{
+	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
+	{
+		if (_polyTag[i] == tag)
+		{
+			_polyVert[i].z = scale.x;
+			_polyVert[i].w = scale.y;
+		}
+	}
+}
+
 void CRenderer::setPolyPosX(const float vertex, const GLuint tag)
 {
 	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
@@ -509,12 +521,44 @@ void CRenderer::setPolyAngle(const float angle, GLuint tag)
 			_polyAngle[i] = angle;
 	}
 }
+void CRenderer::setPolyColor(const CVec4 color, const GLuint tag)
+{
+	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
+	{
+		if (_polyTag[i] == tag)
+			_polyColor[i] = color;
+	}
+}
 void CRenderer::addPolyAngle(const float angle, GLuint tag)
 {
 	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
 	{
 		if (_polyTag[i] == tag)
 			_polyAngle[i] += angle;
+	}
+}
+float CRenderer::getPolyAngle(GLuint tag)
+{
+	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
+	{
+		if (_polyTag[i] == tag)
+			return _polyAngle[i];
+	}
+}
+CVec2 CRenderer::getPolyScale(GLuint tag)
+{
+	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
+	{
+		if (_polyTag[i] == tag)
+			return CVec2(_polyVert[i].z,_polyVert[i].w);
+	}
+}
+CVec4 CRenderer::getPolyColor(GLuint tag)
+{
+	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
+	{
+		if (_polyTag[i] == tag)
+			return _polyColor[i];
 	}
 }
 
@@ -833,8 +877,8 @@ void CRenderer::polygonNotesAction()
 		if (_polyVert[i].z < _polyDefaultVert[i].x)
 		{
 			//Scale‚ð™X‚É–ß‚·
-			_polyVert[i].z += _polyDefaultVert[i].x*0.05f;
-			_polyVert[i].w += _polyDefaultVert[i].y*0.05f;
+			_polyVert[i].z += _polyDefaultVert[i].x*0.02f;
+			_polyVert[i].w += _polyDefaultVert[i].y*0.02f;
 		}
 		if (_polyColor[i].w > 10.0f)
 		{

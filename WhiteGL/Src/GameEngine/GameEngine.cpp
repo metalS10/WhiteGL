@@ -78,6 +78,10 @@ void CGameEngine::setPolyPos(const CVec2 vertex,const GLuint tag)
 {
 	renderer->setPolyPos(vertex,tag);
 }
+void CGameEngine::setPolyScale(const CVec2 scale,const GLuint tag)
+{
+	renderer->setPolyScale(scale,tag);
+}
 void CGameEngine::setPolyPosX(const float vertex,const GLuint tag)
 {
 	renderer->setPolyPosX(vertex,tag);
@@ -86,9 +90,25 @@ void CGameEngine::setPolyAngle(const float angle, const GLuint tag)
 {
 	renderer->setPolyAngle(angle, tag);
 }
+void CGameEngine::setPolyColor(const CVec4 color, const GLuint tag)	//ƒ|ƒŠƒSƒ“‚ÌFÝ’è
+{
+	renderer->setPolyColor(color, tag);
+}
 void CGameEngine::addPolyAngle(const float angle, const GLuint tag)
 {
 	renderer->addPolyAngle(angle, tag);
+}
+float CGameEngine::getPolyAngle(const GLuint tag)
+{
+	return renderer->getPolyAngle(tag);
+}
+CVec2 CGameEngine::getPolyScale(const GLuint tag)
+{
+	return renderer->getPolyScale(tag);
+}
+CVec4 CGameEngine::getPolyColor(const GLuint tag)
+{
+	return renderer->getPolyColor(tag);
 }
 
 

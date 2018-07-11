@@ -25,6 +25,11 @@ private:
 	std::vector<float> m_trianglesLeft;
 	std::vector<float> m_trianglesRight;
 
+	int playerEffectCount[3] = {0,0,0};
+	bool moving = false;
+	float playerAngle = 0;
+	bool playerRolling = false;
+
 
 
 public:
@@ -54,6 +59,9 @@ public:
 
 	void scrollBackGroundTrianglesLeft(float posX);
 	void scrollBackGroundTrianglesRight(float posX);
+
+	void playerAction();
+	void playerEffect();
 
 
 

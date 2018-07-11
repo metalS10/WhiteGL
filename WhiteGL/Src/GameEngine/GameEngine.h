@@ -47,9 +47,14 @@ public:
 	void setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line, const POLY_TYPE polytype,const LAYER layer, const GLuint tag);		//layer設定あり背景三角ポリゴンの設定(vertex(中央X,中央Y,Width,Height))後に編集する場合のためのtag指定
 	void setTrianglesPolyPos(const float vertexX, const CVec4 color, const GLuint number);	//背景三角ポリゴンの位置再設定(X座標のみ)
 	void setPolyPos(const CVec2 vertex, const GLuint tag);	//ポリゴンの位置再設定
+	void setPolyScale(const CVec2 scale , const GLuint tag);	//ポリゴンのスケール再設定
 	void setPolyPosX(const float vertex, const GLuint tag);	//ポリゴンのX位置再設定
 	void setPolyAngle(const float angle, const GLuint tag);	//ポリゴンの回転設定
+	void setPolyColor(const CVec4 color, const GLuint tag);	//ポリゴンの色設定
 	void addPolyAngle(const float angle, const GLuint tag);	//ポリゴンの回転設定
+	float getPolyAngle(const GLuint tag);	//ポリゴンの回転ゲット
+	CVec2 getPolyScale(const GLuint tag);	//ポリゴンのスケール取得
+	CVec4 getPolyColor(const GLuint tag);	//ポリゴンの色取得
 	void setChipAnim(CAnimation *&&_val);		//Chipアニメーション設定
 	void setChipData(GLuint texID, CVec4 rectData);	
 	void update();

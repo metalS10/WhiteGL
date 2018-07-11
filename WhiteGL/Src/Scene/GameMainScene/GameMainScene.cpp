@@ -68,6 +68,11 @@ bool CGameMain::init()
 	SAFE_DELETE(notes);
 	notes = new CNotesUI();
 
+
+	//PlayerEffect
+	m_game.setupPoly(CVec4(pPlayerChara->m_pMove->m_pos.x, pPlayerChara->m_pMove->m_pos.y, 64.0f, 64.0f), CVec4(100.0f, 100.0f, 100.0f, 40.0f), 0, POLY_TYPE::QUAD, TAG_PLAYER_EFFECT_3);
+	m_game.setupPoly(CVec4(pPlayerChara->m_pMove->m_pos.x, pPlayerChara->m_pMove->m_pos.y, 64.0f, 64.0f), CVec4(100.0f, 100.0f, 100.0f, 60.0f), 0, POLY_TYPE::QUAD, TAG_PLAYER_EFFECT_2);
+	m_game.setupPoly(CVec4(pPlayerChara->m_pMove->m_pos.x, pPlayerChara->m_pMove->m_pos.y, 64.0f, 64.0f), CVec4(100.0f, 100.0f, 100.0f, 80.0f), 0, POLY_TYPE::QUAD, TAG_PLAYER_EFFECT_1);
 	//Player
 	//m_game.setupTexture(pPlayerChara->texPass, TEX_TYPE::PNG, pPlayerChara->m_texID, pPlayerChara->m_pMove->m_pos, (*pPlayerChara->m_pAnimations)[0]->getCurrentChip());
 	m_game.setupPoly(CVec4(pPlayerChara->m_pMove->m_pos.x, pPlayerChara->m_pMove->m_pos.y, 64.0f,64.0f),CVec4(100.0f,100.0f,100.0f,100.0f),0,POLY_TYPE::QUAD, TAG_PLAYER_1);
@@ -251,9 +256,8 @@ void CGameMain::update()
 	gameMain();
 
 	CLaunchScheduler::getInstance()->launchCharacters(m_game);
-
-	m_game.addPolyAngle(-pPlayerChara->m_CharaLaunchVector.x*10.0f, TAG_PLAYER_1);
-
+	this->playerAction();
+	
 	//出撃の完了したトリガーをすべて取り外す
 	checkAndDelete(m_pLaunchSchedule);
 	checkAndRemove(m_pCharacters);
@@ -538,6 +542,90 @@ void CGameMain::scrollBackGroundTrianglesRight(float posX)
 	}
 }
 
+void CGameMain::playerAction()
+{
+	//ダメージ中に色を変える
+	if (pPlayerChara->m_isDamage)
+	{
+		m_game.setPolyColor(CVec4(100.0f, 0.0f, 0.0f, 100.0f),TAG_PLAYER_1);
+	}
+	else
+	{
+		m_game.setPolyColor(CVec4(100.0f, 100.0f, 100.0f, 100.0f), TAG_PLAYER_1);
+	}
+	//回転情報
+	if (playerRolling)
+	{
+		playerAngle -= pPlayerChara->m_CharaLaunchVector.x*50.0f;
+		if (playerAngle >= 600 || playerAngle <= -600)
+		{
+			playerAngle = 0;
+			playerRolling = false;
+		}
+		m_game.setPolyAngle(playerAngle, TAG_PLAYER_1);
+	}
+	//Playerのエフェクト処理
+	this->playerEffect();
+}
+
+void CGameMain::playerEffect()
+{
+	//動いてたらエフェクト表示
+	if (pPlayerChara->m_pMove->m_vel.x != 0 || pPlayerChara->m_pMove->m_vel.y != 0)
+	{
+		playerEffectCount[0]++;
+		playerEffectCount[1]++;
+		playerEffectCount[2]++;
+		if (playerEffectCount[0] >= 2)
+		{
+			playerEffectCount[0] = 0;
+			m_game.setPolyPos(CVec2(pPlayerChara->m_pMove->m_pos.x, pPlayerChara->m_pMove->m_pos.y), TAG_PLAYER_EFFECT_1);
+			m_game.setPolyScale(m_game.getPolyScale(TAG_PLAYER_1), TAG_PLAYER_EFFECT_1);
+			m_game.setPolyAngle(m_game.getPolyAngle(TAG_PLAYER_1), TAG_PLAYER_EFFECT_1);
+			CVec4 playerColor = m_game.getPolyColor(TAG_PLAYER_1);
+			playerColor.w = 80.0f;
+			m_game.setPolyColor(playerColor, TAG_PLAYER_EFFECT_1);
+		}
+		if (playerEffectCount[1] >= 4)
+		{
+			playerEffectCount[1] = 0;
+			m_game.setPolyPos(CVec2(pPlayerChara->m_pMove->m_pos.x, pPlayerChara->m_pMove->m_pos.y), TAG_PLAYER_EFFECT_2);
+			m_game.setPolyScale(m_game.getPolyScale(TAG_PLAYER_1), TAG_PLAYER_EFFECT_2);
+			m_game.setPolyAngle(m_game.getPolyAngle(TAG_PLAYER_1), TAG_PLAYER_EFFECT_2);
+			CVec4 playerColor = m_game.getPolyColor(TAG_PLAYER_1);
+			playerColor.w = 60.0f;
+			m_game.setPolyColor(playerColor, TAG_PLAYER_EFFECT_2);
+		}
+		if (playerEffectCount[2] >= 6)
+		{
+			playerEffectCount[2] = 0;
+			m_game.setPolyPos(CVec2(pPlayerChara->m_pMove->m_pos.x, pPlayerChara->m_pMove->m_pos.y), TAG_PLAYER_EFFECT_3);
+			m_game.setPolyScale(m_game.getPolyScale(TAG_PLAYER_1), TAG_PLAYER_EFFECT_3);
+			m_game.setPolyAngle(m_game.getPolyAngle(TAG_PLAYER_1), TAG_PLAYER_EFFECT_3);
+			CVec4 playerColor = m_game.getPolyColor(TAG_PLAYER_1);
+			playerColor.w = 40.0f;
+			m_game.setPolyColor(playerColor, TAG_PLAYER_EFFECT_3);
+		}
+		moving = true;
+	}
+	//動いていなければエフェクト非表示
+	else
+	{
+		//前回の処理が「動いている状態」なら
+		if (moving == true)
+		{
+			moving = false;
+			m_game.setPolyColor(CVec4(100.0f, 100.0f, 100.0f, 0.0f), TAG_PLAYER_EFFECT_1); 
+			m_game.setPolyColor(CVec4(100.0f, 100.0f, 100.0f, 0.0f), TAG_PLAYER_EFFECT_2);
+			m_game.setPolyColor(CVec4(100.0f, 100.0f, 100.0f, 0.0f), TAG_PLAYER_EFFECT_3);
+			m_game.setPolyPos(CVec2(0,-1000), TAG_PLAYER_EFFECT_1);
+			m_game.setPolyPos(CVec2(0,-1000), TAG_PLAYER_EFFECT_2);
+			m_game.setPolyPos(CVec2(0,-1000), TAG_PLAYER_EFFECT_3);
+		}
+	}
+
+}
+
 void CGameMain::halfUpdate()
 {
 	m_game.notesAction(m_stage->backgroundType);
@@ -557,6 +645,8 @@ void CGameMain::qauarterUpdate()
 	
 	if(notes != NULL)
 		notes->quarter();
+
+	playerRolling = true;
 }
 
 void CGameMain::eighthUpdate()

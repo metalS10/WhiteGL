@@ -117,9 +117,14 @@ public:
 	//板ポリゴン設定
 	void setupPoly(const CVec4 vertex, const CVec4 color, const LAYER layer, const GLuint tag);
 	void setPolyPos(const CVec2 vertex, const GLuint tag);	//ポリゴンの座標再設定
+	void setPolyScale(const CVec2 scale, const GLuint tag);	//ポリゴンのスケール再設定
 	void setPolyPosX(const float vertex, const GLuint tag);	//ポリゴンの座標再設定
 	void setPolyAngle(const float angle,const GLuint tag);	//ポリゴンの回転設定
+	void setPolyColor(const CVec4 color, const GLuint tag);	//ポリゴンの色設定
 	void addPolyAngle(const float angle,const GLuint tag);	//ポリゴンの回転増
+	float getPolyAngle(const GLuint tag);	//ポリゴンの回転取得
+	CVec2 getPolyScale(const GLuint tag);	//ポリゴンのスケール取得
+	CVec4 getPolyColor(const GLuint tag);	//ポリゴンの色取得
 
 	void setupTextureSize(const CVec2 texPos, const CVec4 texRect, GLuint texID);
 
