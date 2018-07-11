@@ -110,13 +110,15 @@ void CPlayerCharacter::inputFunc()
 		}
 		if (input->getOnKey(Input::Key::Z) == true)
 		{
-			//弾発射(playerFactoryのgetActionsにも注意)
-			(*this->m_pActions)[(int)ACTION::ATTACK]->start();
-			//アニメーションの初期化
-			//(*this->m_pAnimations)[(int)STATE::ATTACK]->start();
-			this->Allfalse();
-			m_isAttack1 = true;
-
+			if (m_denkiPoint >= 5.0f)
+			{
+				//弾発射(playerFactoryのgetActionsにも注意)
+				(*this->m_pActions)[(int)ACTION::ATTACK]->start();
+				//アニメーションの初期化
+				//(*this->m_pAnimations)[(int)STATE::ATTACK]->start();
+				this->Allfalse();
+				m_isAttack1 = true;
+			}
 
 		}
 		if (input->getOnKey(Input::Key::X) == true)

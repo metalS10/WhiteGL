@@ -206,8 +206,6 @@ void CEnemyCharacter::hits(CCharacter* pChara)
 	if (this->m_isAlive == false)
 		return;
 
-	if (this->m_eneType == ENEMY_TYPE::KILLERHODAI)
-		return;
 
 	if (pChara->m_charaType == CHARACTER_TYPE::PLAYER)
 	{
@@ -287,7 +285,7 @@ void CEnemyCharacter::hitsBulletCharacter(CCharacter* pChara)
 		this->m_hitPoint -= pChara->m_attackPoint;
 
 		//キラーにダメージアクションはないので
-		if (this->m_eneType != ENEMY_TYPE::KILLER && this->m_eneType != ENEMY_TYPE::TROI)
+		if (this->m_eneType != ENEMY_TYPE::TROI)
 		{
 			//ダメージアクション
 			(*this->m_pActions)[1]->restart(this);

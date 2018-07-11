@@ -106,33 +106,7 @@ public:
 
 };
 
-class CKuriboFactory : public CEnemyCreateFactory
-{
-protected:
-	void settingMove(CEnemyCharacter* pChara, float posX, float posY)override;
-
-	void settingTexture(CEnemyCharacter* pChara)override;
-
-	void settingAnimations(CEnemyCharacter* pChara)override;
-
-	void settingPhysicals(CEnemyCharacter* pChara)override;
-
-	void settingActions(CEnemyCharacter* pChara)override;
-
-	void settingNotes(CEnemyCharacter* pChara)override;
-
-	void settingBody(CEnemyCharacter* pChara)override;
-
-	//Õ“Ë”»’è‹óŠÔ‚ÌÝ’è
-	void settingCollisionAreas(CEnemyCharacter* pChara)override;
-
-	void settingInitialize(CEnemyCharacter* pChara)override;
-
-	//“G‚Ì‘Ì—Í‚ÌÝ’è
-	void settingState(CEnemyCharacter* pChara)override;
-};
-
-class CGreenNokoNokoFactory : public CEnemyCreateFactory
+class CKuroFactory : public CEnemyCreateFactory
 {
 protected:
 	void settingMove(CEnemyCharacter* pChara, float posX, float posY)override;
@@ -159,32 +133,6 @@ protected:
 };
 
 class CGreenPataPataFactory : public CEnemyCreateFactory
-{
-protected:
-	void settingMove(CEnemyCharacter* pChara, float posX, float posY)override;
-
-	void settingTexture(CEnemyCharacter* pChara)override;
-
-	void settingAnimations(CEnemyCharacter* pChara)override;
-
-	void settingPhysicals(CEnemyCharacter* pChara)override;
-
-	void settingActions(CEnemyCharacter* pChara)override;
-
-	void settingNotes(CEnemyCharacter* pChara)override;
-
-	void settingBody(CEnemyCharacter* pChara)override;
-
-	//Õ“Ë”»’è‹óŠÔ‚ÌÝ’è
-	void settingCollisionAreas(CEnemyCharacter* pChara)override;
-
-	void settingInitialize(CEnemyCharacter* pChara)override;
-
-	//“G‚Ì‘Ì—Í‚ÌÝ’è
-	void settingState(CEnemyCharacter* pChara)override;
-};
-
-class CKillerHoudaiFactory : public CEnemyCreateFactory
 {
 protected:
 	void settingMove(CEnemyCharacter* pChara, float posX, float posY)override;
@@ -280,15 +228,11 @@ private:
 
 		//Hê‚ðŽæ‚è•t‚¯‚Ä‚¢‚­
 		//ƒNƒŠƒ{[Hê‚ÌŽæ‚è•t‚¯
-		(*this->m_pFactories)[ENEMY_TYPE::KURIBO] = new CKuriboFactory();
-		//ƒmƒRƒmƒRHê‚ÌŽæ‚è•t‚¯
-		(*this->m_pFactories)[ENEMY_TYPE::NOKONOKO] = new CGreenNokoNokoFactory();
+		(*this->m_pFactories)[ENEMY_TYPE::KURO] = new CKuroFactory();
 		//ƒpƒ^ƒpƒ^Hê‚ÌŽæ‚è•t‚¯
-		(*this->m_pFactories)[ENEMY_TYPE::PATAPATA] = new CGreenPataPataFactory();
-		//ƒLƒ‰[–C‘äHê‚ÌŽæ‚è•t‚¯
-		(*this->m_pFactories)[ENEMY_TYPE::KILLERHODAI] = new CKillerHoudaiFactory();
+		//(*this->m_pFactories)[ENEMY_TYPE::PATAPATA] = new CGreenPataPataFactory();
 		//ƒLƒ‰[Hê‚ÌŽæ‚è•t‚¯
-		(*this->m_pFactories)[ENEMY_TYPE::KILLER] = new CKillerFactory();
+		//(*this->m_pFactories)[ENEMY_TYPE::KILLER] = new CKillerFactory();
 		//ƒgƒ‚­‚È‚¢–Ø”nHê‚ÌŽæ‚è•t‚¯
 		(*this->m_pFactories)[ENEMY_TYPE::TROI] = new CTRoiFactory();
 	}

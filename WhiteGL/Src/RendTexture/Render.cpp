@@ -162,10 +162,10 @@ void CRenderer::render()
 
 				//êFê›íË
 				const GLfloat colorLine[] = {
-					0,0,0,100,
-					0,0,0,100,
-					0,0,0,100,
-					0,0,0,100,
+					0,0,0,_polyColor[j].w*0.01f,
+					0,0,0,_polyColor[j].w*0.01f,
+					0,0,0,_polyColor[j].w*0.01f,
+					0,0,0,_polyColor[j].w*0.01f,
 				};
 
 
@@ -884,6 +884,11 @@ void CRenderer::polygonNotesAction()
 		{
 			if(_polyTag[i] == TAG_BEATSACTION1 || _polyTag[i] == TAG_BEATSACTION2 || _polyTag[i] == TAG_BEATSACTION3 || _polyTag[i] == TAG_BEATSACTION4)
 				_polyColor[i].w -= 10.0f;
+		}
+		if (_polyTag[i] == TAG_PLAYER_1)
+		{
+			if (_polyColor[i].z < 100.0f)
+				_polyColor[i].z += 10.0f;
 		}
 	}
 }

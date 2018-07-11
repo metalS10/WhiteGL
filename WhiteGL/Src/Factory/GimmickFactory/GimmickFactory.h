@@ -283,65 +283,9 @@ protected:
 	void settingInitialize(CGimmickCharacter* pChara)override;
 };
 
-//回転するブロック
-class CRollBlockFactory : public CRollGimmickCreateFactory
-{
-protected:
-	void settingMove(CGimmickCharacter* pChara, float posX, float posY)override;
-	void settingTexture(CGimmickCharacter* pChara)override;
-	void settingAnimations(CGimmickCharacter* pChara)override;
-	void settingPhysicals(CGimmickCharacter* pChara)override;
-	void settingActions(CGimmickCharacter* pChara)override;
-	void settingNotes(CGimmickCharacter* pChara)override;
-	void settingBody(CGimmickCharacter* pChara)override;
-	void settingCollisionAreas(CGimmickCharacter* pChara)override;
-	void settingInitialize(CGimmickCharacter* pChara)override;
-};
 
-//ちくわブロック
-class CTikuwaBlockFactory : public CTikuwaGimmickCreateFactory
-{
-protected:
-	void settingMove(CGimmickCharacter* pChara, float posX, float posY)override;
-	void settingTexture(CGimmickCharacter* pChara)override;
-	void settingAnimations(CGimmickCharacter* pChara)override;
-	void settingPhysicals(CGimmickCharacter* pChara)override;
-	void settingActions(CGimmickCharacter* pChara)override;
-	void settingNotes(CGimmickCharacter* pChara)override;
-	void settingBody(CGimmickCharacter* pChara)override;
-	void settingCollisionAreas(CGimmickCharacter* pChara)override;
-	void settingInitialize(CGimmickCharacter* pChara)override;
-};
 
-//音符ブロック
-class CNoteBlockFactory : public CNoteGimmickCreateFactory
-{
-protected:
-	void settingMove(CGimmickCharacter* pChara, float posX, float posY)override;
-	void settingTexture(CGimmickCharacter* pChara)override;
-	void settingAnimations(CGimmickCharacter* pChara)override;
-	void settingPhysicals(CGimmickCharacter* pChara)override;
-	void settingActions(CGimmickCharacter* pChara)override;
-	void settingNotes(CGimmickCharacter* pChara)override;
-	void settingBody(CGimmickCharacter* pChara)override;
-	void settingCollisionAreas(CGimmickCharacter* pChara)override;
-	void settingInitialize(CGimmickCharacter* pChara)override;
-};
 
-//はてなブロック
-class CHatenaBlockFactory : public CHatenaGimmickCreateFactory
-{
-protected:
-	void settingMove(CGimmickCharacter* pChara, float posX, float posY)override;
-	void settingTexture(CGimmickCharacter* pChara)override;
-	void settingAnimations(CGimmickCharacter* pChara)override;
-	void settingPhysicals(CGimmickCharacter* pChara)override;
-	void settingActions(CGimmickCharacter* pChara)override;
-	void settingNotes(CGimmickCharacter* pChara)override;
-	void settingBody(CGimmickCharacter* pChara)override;
-	void settingCollisionAreas(CGimmickCharacter* pChara)override;
-	void settingInitialize(CGimmickCharacter* pChara)override;
-};
 
 //ワープ
 class CWorpFactory : public CWorpGimmickCreateFactory
@@ -383,14 +327,6 @@ private:
 		(*this->m_pFactories)[GIMMICK_TYPE::TOGE_R] = new CDamageBlockRightFactory();
 		//下棘工場の取り付け
 		(*this->m_pFactories)[GIMMICK_TYPE::TOGE_B] = new CDamageBlockBottomFactory();
-		//回るブロック工場の取り付け
-		(*this->m_pFactories)[GIMMICK_TYPE::ROLL] = new CRollBlockFactory();
-		//ちくわブロック工場の取り付け
-		(*this->m_pFactories)[GIMMICK_TYPE::TIKUWA] = new CTikuwaBlockFactory();
-		//音符ブロック工場の取り付け
-		(*this->m_pFactories)[GIMMICK_TYPE::NOTE] = new CNoteBlockFactory();
-		//はてなブロック工場の取り付け
-		(*this->m_pFactories)[GIMMICK_TYPE::HATENA] = new CHatenaBlockFactory();
 		//ワープ工場の取り付け
 		(*this->m_pFactories)[GIMMICK_TYPE::WORP] = new CWorpFactory();
 

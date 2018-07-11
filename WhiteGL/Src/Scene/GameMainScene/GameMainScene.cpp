@@ -618,9 +618,6 @@ void CGameMain::playerEffect()
 			m_game.setPolyColor(CVec4(100.0f, 100.0f, 100.0f, 0.0f), TAG_PLAYER_EFFECT_1); 
 			m_game.setPolyColor(CVec4(100.0f, 100.0f, 100.0f, 0.0f), TAG_PLAYER_EFFECT_2);
 			m_game.setPolyColor(CVec4(100.0f, 100.0f, 100.0f, 0.0f), TAG_PLAYER_EFFECT_3);
-			m_game.setPolyPos(CVec2(0,-1000), TAG_PLAYER_EFFECT_1);
-			m_game.setPolyPos(CVec2(0,-1000), TAG_PLAYER_EFFECT_2);
-			m_game.setPolyPos(CVec2(0,-1000), TAG_PLAYER_EFFECT_3);
 		}
 	}
 

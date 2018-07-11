@@ -27,11 +27,7 @@ enum class BLOCK_TYPE : int {
 enum class ENEMY_TYPE : int
 {
 	NONE		=	0,			//何もなし
-	KURIBO		=	102,		//クリボー
-	NOKONOKO	=	108,		//ノコノコ
-	PATAPATA	=	109,		//パタパタ
-	KILLERHODAI	=	124,		//キラー砲台
-	KILLER		=	1000,		//キラー
+	KURO		=	102,		//雑魚
 	TROI		=	110,		//トロくない木馬
 };
 
@@ -42,14 +38,10 @@ enum class ENEMY_TYPE : int
 enum class GIMMICK_TYPE : int
 {
 	NONE	=	0,		//何もなし
-	TIKUWA	=	132,	//落ちるやつ
-	ROLL	=	135,	//回るやつ
 	TOGE_L	=	136,	//左向きのとげ
 	TOGE_T	=	137,	//上向きのとげ
 	TOGE_R	=	138,	//右向きのとげ
 	TOGE_B	=	139,	//下向きのとげ
-	NOTE	=	140,	//跳ねるやつ
-	HATENA	=	141,	//ハテナブロック
 	WORP	=	142,	//ワープ
 };
 

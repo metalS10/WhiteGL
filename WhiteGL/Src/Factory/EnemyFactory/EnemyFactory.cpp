@@ -93,7 +93,7 @@ CCharacter* CEnemyFactory::create(float posX, float posY)
 //
 //========================================
 //移動データの設定
-void CKuriboFactory::settingMove(CEnemyCharacter* pChara, float posX, float posY)
+void CKuroFactory::settingMove(CEnemyCharacter* pChara, float posX, float posY)
 {
 	//初期位置の設定
 	pChara->m_pMove->m_pos.set(posX, posY);
@@ -104,14 +104,14 @@ void CKuriboFactory::settingMove(CEnemyCharacter* pChara, float posX, float posY
 }
 
 //テクスチャの設定
-void CKuriboFactory::settingTexture(CEnemyCharacter* pChara)
+void CKuroFactory::settingTexture(CEnemyCharacter* pChara)
 {
 	//テクスチャの設定
 	pChara->setTexture(IMAGE_ENEMY);
 }
 
 //アニメーションの設定
-void CKuriboFactory::settingAnimations(CEnemyCharacter* pChara)
+void CKuroFactory::settingAnimations(CEnemyCharacter* pChara)
 {
 
 	CAnimation* pAnimation = new CChipListAnimation(10, true);
@@ -124,14 +124,14 @@ void CKuriboFactory::settingAnimations(CEnemyCharacter* pChara)
 }
 
 //物理演算の設定
-void CKuriboFactory::settingPhysicals(CEnemyCharacter* pChara)
+void CKuroFactory::settingPhysicals(CEnemyCharacter* pChara)
 {
 	//重力演算の設定
 	pChara->m_pPhysicals->push_back(new CPhysicalGravity());
 }
 
 //アクションの設定
-void CKuriboFactory::settingActions(CEnemyCharacter* pChara)
+void CKuroFactory::settingActions(CEnemyCharacter* pChara)
 {
 	
 	//敵死亡アクションを0番で設定(順番に気を付ける)
@@ -146,20 +146,20 @@ void CKuriboFactory::settingActions(CEnemyCharacter* pChara)
 }
 
 //音に合わせるアクションの設定
-void CKuriboFactory::settingNotes(CEnemyCharacter* pChara)
+void CKuroFactory::settingNotes(CEnemyCharacter* pChara)
 {
 
 }
 
 //実体の設定
-void CKuriboFactory::settingBody(CEnemyCharacter* pChara)
+void CKuroFactory::settingBody(CEnemyCharacter* pChara)
 {
 	//実体データの設定
 	pChara->m_pBody->set(-18.5, 27, 18.5, -27);
 }
 
 //衝突判定空間の設定
-void CKuriboFactory::settingCollisionAreas(CEnemyCharacter* pChara)
+void CKuroFactory::settingCollisionAreas(CEnemyCharacter* pChara)
 {
 	//==========================================================
 	//画面端衝突空間の生成
@@ -195,7 +195,7 @@ void CKuriboFactory::settingCollisionAreas(CEnemyCharacter* pChara)
 }
 
 //初期化設定
-void CKuriboFactory::settingInitialize(CEnemyCharacter* pChara)
+void CKuroFactory::settingInitialize(CEnemyCharacter* pChara)
 {
 	//状態の設定
 	pChara->m_state = 0;
@@ -206,7 +206,7 @@ void CKuriboFactory::settingInitialize(CEnemyCharacter* pChara)
 	//有効フラグを立てる
 	pChara->m_activeFlag = true;
 
-	pChara->m_eneType = ENEMY_TYPE::KURIBO;
+	pChara->m_eneType = ENEMY_TYPE::KURO;
 
 	//生きているフラグを立てる
 	pChara->m_isAlive = true;
@@ -219,7 +219,7 @@ void CKuriboFactory::settingInitialize(CEnemyCharacter* pChara)
 }
 
 //体力の設定
-void CKuriboFactory::settingState(CEnemyCharacter* pChara)
+void CKuroFactory::settingState(CEnemyCharacter* pChara)
 {
 	//名前の設定
 	pChara->m_name = "YMD";		//sorce「山田ウィルス」
@@ -231,140 +231,6 @@ void CKuriboFactory::settingState(CEnemyCharacter* pChara)
 
 }
 
-//========================================
-//
-//緑のノコノコの生成工場
-//
-//========================================
-//移動データの設定
-void CGreenNokoNokoFactory::settingMove(CEnemyCharacter* pChara, float posX, float posY)
-{
-	//初期位置の設定
-	pChara->m_pMove->m_pos.set(posX, posY);
-
-	//速度の設定
-	pChara->m_moveVector.set(-1.0f, 0.0f);
-
-}
-
-//テクスチャの設定
-void CGreenNokoNokoFactory::settingTexture(CEnemyCharacter* pChara)
-{
-	//テクスチャの設定
-	pChara->setTexture(IMAGE_NOKONOKO);
-
-	//左向きに設定
-	pChara->setScale(-1.0f, 1.0f);
-}
-
-//アニメーションの設定
-void CGreenNokoNokoFactory::settingAnimations(CEnemyCharacter* pChara)
-{
-	//(*pChara->m_pAnimations)[0]->addChipData(new CChip(0, 0, 32, 54));
-	//歩行アニメーション
-	CAnimation* pAnimation = new CChipListAnimation(10, true);
-	pAnimation->addChipData(new CChip(0, 0, 32, 54));
-	pAnimation->addChipData(new CChip(32, 0, 32, 54));
-	pChara->m_pAnimations->push_back(pAnimation);
-
-}
-
-//物理演算の設定
-void CGreenNokoNokoFactory::settingPhysicals(CEnemyCharacter* pChara)
-{
-	//重力演算の設定
-	pChara->m_pPhysicals->push_back(new CPhysicalGravity());
-}
-
-//アクションの設定
-void CGreenNokoNokoFactory::settingActions(CEnemyCharacter* pChara)
-{
-	
-	//敵死亡アクションを0番で設定
-	pChara->m_pActions->push_back(new CActionEnemyDead(2.0f, 6.0f));
-
-	//敵ダメージアクション設定
-	pChara->m_pActions->push_back(new CActionEnemyDamage(5, 1, 3));
-	
-
-}
-
-//音に合わせるアクションの設定
-void CGreenNokoNokoFactory::settingNotes(CEnemyCharacter* pChara)
-{
-
-}
-
-//実体の設定
-void CGreenNokoNokoFactory::settingBody(CEnemyCharacter* pChara)
-{
-	//実体データの設定
-	pChara->m_pBody->set(-16, 27, 16, -27);
-}
-
-//衝突判定空間の設定
-void CGreenNokoNokoFactory::settingCollisionAreas(CEnemyCharacter* pChara)
-{
-	//==========================================================
-	//画面端衝突空間の生成
-	//==========================================================
-	CCollisionArea* pEndOfScreenArea = new CCollisionAreaEndOfScreen(pChara->m_pBody);
-
-	//画面端の衝突判定空間に領域を設定
-	//画面下端の領域を設定
-	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenBottom());
-	//画面左端の領域を設定
-	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenLeft());
-	//画面端の衝突空間を取り付ける
-	pChara->m_pCollisionAreas->push_back(pEndOfScreenArea);
-
-	//==========================================================
-	//マップ衝突空間の生成
-	//==========================================================
-	CCollisionArea* pMapArea = new CCollisionAreaMap(pChara->m_pBody);
-
-	//マップチップ衝突空間に領域を設定
-	
-	//下のマップチップ領域を設定
-	pMapArea->addTerritory(new CCollisionTerritoryMapChipBottom());
-	//右のマップチップ領域を設定
-	pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
-	//左のマップチップ領域を設定
-	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
-	
-
-	//画面端の衝突判定空間を取り付ける
-	pChara->m_pCollisionAreas->push_back(pMapArea);
-}
-
-//初期化設定
-void CGreenNokoNokoFactory::settingInitialize(CEnemyCharacter* pChara)
-{
-	//状態の設定
-	pChara->m_state = 0;
-
-	//有効フラグを立てる
-	pChara->m_activeFlag = true;
-
-	//生きているフラグを立てる
-	pChara->m_isAlive = true;
-
-	//生きているフラグを立てる
-	//pChara->setPosition(pChara->m_pMove->m_pos);
-
-	//チップデータを反映
-	//pChara->setTextureRect((*pChara->m_pAnimations)[pChara->m_state]->getCurrentChip());
-}
-
-//体力の設定
-void CGreenNokoNokoFactory::settingState(CEnemyCharacter* pChara)
-{
-	//名前の設定
-	pChara->m_name = "ノコノコ";
-	pChara->m_maxHitPoint = 5;
-
-	pChara->m_hitPoint = 5;
-}
 
 //========================================
 //
@@ -413,7 +279,7 @@ void CGreenPataPataFactory::settingActions(CEnemyCharacter* pChara)
 {
 	
 	//敵死亡アクションを0番で設定
-	pChara->m_pActions->push_back(new CActionEnemyDeadAndCreateEnemy((int)ENEMY_TYPE::NOKONOKO));
+	//pChara->m_pActions->push_back(new CActionEnemyDeadAndCreateEnemy((int)ENEMY_TYPE::NOKONOKO));
 
 	//上下運動アクションの取り付け
 	//基準点を初期位置に設定する
@@ -455,7 +321,7 @@ void CGreenPataPataFactory::settingInitialize(CEnemyCharacter* pChara)
 	//生きているフラグを立てる
 	pChara->m_isAlive = true;
 
-	pChara->m_eneType = ENEMY_TYPE::PATAPATA;
+	//pChara->m_eneType = ENEMY_TYPE::PATAPATA;
 
 	//生きているフラグを立てる
 	//pChara->setPosition(pChara->m_pMove->m_pos);
@@ -475,132 +341,6 @@ void CGreenPataPataFactory::settingState(CEnemyCharacter* pChara)
 	pChara->m_hitPoint = 5;
 }
 
-//========================================
-//
-//キラー砲台の生成工場
-//
-//========================================
-//移動データの設定
-void CKillerHoudaiFactory::settingMove(CEnemyCharacter* pChara, float posX, float posY)
-{
-	//初期位置の設定
-	pChara->m_pMove->m_pos.set(posX, posY);
-
-	//速度の設定
-	pChara->m_moveVector.set(0.0f, 0.0f);
-}
-
-//テクスチャの設定
-void CKillerHoudaiFactory::settingTexture(CEnemyCharacter* pChara)
-{
-	//テクスチャの設定
-	pChara->setTexture(IMAGE_KILLER);
-
-	//左向きに設定
-	pChara->setScale(-1.0f, 1.0f);
-}
-
-//アニメーションの設定
-void CKillerHoudaiFactory::settingAnimations(CEnemyCharacter* pChara)
-{
-	//直立アニメーションの設定
-	pChara->m_pAnimations->push_back(new CChipNotAnimation());
-
-	//直立アニメーションに設定するためのチップデータの設定
-	(*pChara->m_pAnimations)[0]->addChipData(new CChip(0, 0, 32, 32));
-
-}
-
-//物理演算の設定
-void CKillerHoudaiFactory::settingPhysicals(CEnemyCharacter* pChara)
-{
-	//重力演算の設定
-	pChara->m_pPhysicals->push_back(new CPhysicalGravity());
-}
-
-//アクションの設定
-void CKillerHoudaiFactory::settingActions(CEnemyCharacter* pChara)
-{
-	pChara->m_pActions->push_back(new CActionCreateEnemy((int)ENEMY_TYPE::KILLER));
-}
-
-//音に合わせるアクションの設定
-void CKillerHoudaiFactory::settingNotes(CEnemyCharacter* pChara)
-{
-
-}
-
-//実体の設定
-void CKillerHoudaiFactory::settingBody(CEnemyCharacter* pChara)
-{
-	//実体データの設定
-	pChara->m_pBody->set(-16, 16, 16, -16);
-}
-
-//衝突判定空間の設定
-void CKillerHoudaiFactory::settingCollisionAreas(CEnemyCharacter* pChara)
-{
-	//==========================================================
-	//画面端衝突空間の生成
-	//==========================================================
-	CCollisionArea* pEndOfScreenArea = new CCollisionAreaEndOfScreen(pChara->m_pBody);
-
-	//画面端の衝突判定空間に領域を設定
-	//画面下端の領域を設定
-	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenBottom());
-	//画面左端の領域を設定
-	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenLeft());
-	//画面端の衝突空間を取り付ける
-	pChara->m_pCollisionAreas->push_back(pEndOfScreenArea);
-
-	//==========================================================
-	//マップ衝突空間の生成
-	//==========================================================
-	CCollisionArea* pMapArea = new CCollisionAreaMap(pChara->m_pBody);
-
-	//マップチップ衝突空間に領域を設定
-	
-	//下のマップチップ領域を設定
-	pMapArea->addTerritory(new CCollisionTerritoryMapChipBottom());
-	//右のマップチップ領域を設定
-	pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
-	//左のマップチップ領域を設定
-	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
-	
-
-	//画面端の衝突判定空間を取り付ける
-	pChara->m_pCollisionAreas->push_back(pMapArea);
-}
-
-//初期化設定
-void CKillerHoudaiFactory::settingInitialize(CEnemyCharacter* pChara)
-{
-	//状態の設定
-	pChara->m_state = 0;
-
-	//有効フラグを立てる
-	pChara->m_activeFlag = true;
-
-	//生きているフラグを立てる
-	pChara->m_isAlive = true;
-
-	//生きているフラグを立てる
-	//pChara->setPosition(pChara->m_pMove->m_pos);
-
-	pChara->m_eneType = ENEMY_TYPE::KILLERHODAI;
-
-	//チップデータを反映
-	//pChara->setTextureRect((*pChara->m_pAnimations)[pChara->m_state]->getCurrentChip());
-}
-
-//体力の設定
-void CKillerHoudaiFactory::settingState(CEnemyCharacter* pChara)
-{
-	//名前の設定
-	pChara->m_name = "キラー砲台";
-
-	pChara->m_hitPoint = 1;
-}
 
 //========================================
 //
@@ -713,7 +453,7 @@ void CKillerFactory::settingInitialize(CEnemyCharacter* pChara)
 	//生きているフラグを立てる
 	pChara->m_isAlive = true;
 
-	pChara->m_eneType = ENEMY_TYPE::KILLER;
+	//pChara->m_eneType = ENEMY_TYPE::KILLER;
 
 	//生きているフラグを立てる
 	//pChara->setPosition(pChara->m_pMove->m_pos);
@@ -792,6 +532,9 @@ void CTRoiFactory::settingActions(CEnemyCharacter* pChara)
 
 	//TRoi専用アクションを設定
 	pChara->m_pActions->push_back(new CActionTRoi(3, 350));
+
+	//雑魚敵スポーンアクションを設定
+	pChara->m_pActions->push_back(new CActionCreateEnemy((int)ENEMY_TYPE::KURO));
 
 }
 
