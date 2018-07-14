@@ -139,7 +139,7 @@ void CGameMain::rendUpdate()
 			if (pChara != pPlayerChara)
 			{
 				m_game.setTextureRect((*pChara->m_pAnimations)[pChara->m_state]->getCurrentChip(), pChara->m_texID);
-				m_game.setScale(pChara->m_scale, pChara->m_texID);
+				m_game.setTexScale(pChara->m_scale, pChara->m_texID);
 				m_game.setPosition(pChara->m_pMove->m_pos, pChara->m_texID);
 			}
 		}

@@ -96,11 +96,15 @@ public:
 
 	CVec4 m_color = CVec4(1, 1, 1, 1);
 
+	//Œ»İ‚Ì•ûŒüƒL[“ü—Íî•ñ
+	CVec2 inputArrow = CVec2(0, 0);
+
 	void setColor(CVec4 color);
 	void setColor(float r, float g, float b, float a);
 	void setColor(float opacity);
 
 	void setPosition(CVec2 vec);
+
 
 	/**
 	*@desc	DP‚ğ‰ñ•œ‚·‚éŠÖ”

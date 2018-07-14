@@ -87,19 +87,27 @@ void CPlayerCharacter::inputFunc()
 	{
 		if (input->getOnKey(Input::Key::DPAD_LEFT) == true)
 		{
-
+			inputArrow.x = -1;
 			this->m_pMove->m_accele.x = -0.7f;
 			this->Allfalse();
 		}
 
-		if (input->getOnKey(Input::Key::DPAD_RIGHT) == true)
+		else if (input->getOnKey(Input::Key::DPAD_RIGHT) == true)
 		{
+			inputArrow.x =1;
 			this->m_pMove->m_accele.x = 0.7f;
 			this->Allfalse();
 		}
-
+		else
+		{
+			inputArrow.x = 0;
+		}
 		if (input->getOnKey(Input::Key::DPAD_UP) == true)
 		{
+
+			//現在の方向キー入力情報
+			inputArrow.y = 1;
+			/*
 			//地面についてたら
 			if (this->m_isGround)
 			{
@@ -107,6 +115,18 @@ void CPlayerCharacter::inputFunc()
 				(*this->m_pActions)[(int)ACTION::JUMP]->start();
 				this->Allfalse();
 			}
+			*/
+		}
+		else if (input->getOnKey(Input::Key::DPAD_DOWN) == true)
+		{
+
+			//現在の方向キー入力情報
+			inputArrow.y = -1;
+		}
+		else
+		{
+			//現在の方向キー入力情報
+			inputArrow.y = 0;
 		}
 		if (input->getOnKey(Input::Key::Z) == true)
 		{
@@ -545,5 +565,5 @@ void CPlayerCharacter::beatUpdate()
 	m_beatCounter = 0;
 	//playerのカウンター
 	musicNotesCounter = BEAT_INTERVAL;
-	DPHeal(1.0f);
+	DPHeal(0.5f);
 }

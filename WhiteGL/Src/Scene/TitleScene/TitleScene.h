@@ -5,6 +5,8 @@
 class CTitle : public CScene
 {
 private:
+	int select = 0;
+	bool pushButton = false;
 public:
 	CTitle();
 	~CTitle();
@@ -13,5 +15,6 @@ public:
 	void rendUpdate()override ;
 	void sceneUpdate()override {};
 	void qauarterUpdate()override;
+	void eighthUpdate()override;
 
 };

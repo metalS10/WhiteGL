@@ -304,7 +304,7 @@ void CRenderer::render()
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
-void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID, const LAYER layer)
+void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID, const LAYER layer ,const GLuint tag)
 {
 	//使用許可
 	glEnable(GL_TEXTURE_2D);
@@ -315,6 +315,7 @@ void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint t
 	glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
 
 	texScale[texID] = CVec2(1, 1);
+	texDefaultScale[texID] = 1.0f;
 
 	switch (tex_type)
 	{
@@ -429,6 +430,8 @@ void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint t
 	default:
 		break;
 	}
+	_texTag[texID] = tag;
+
 	//初期化
 	glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -537,7 +540,7 @@ void CRenderer::addPolyAngle(const float angle, GLuint tag)
 			_polyAngle[i] += angle;
 	}
 }
-float CRenderer::getPolyAngle(GLuint tag)
+float CRenderer::getPolyAngle(const GLuint tag)
 {
 	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
 	{
@@ -545,7 +548,7 @@ float CRenderer::getPolyAngle(GLuint tag)
 			return _polyAngle[i];
 	}
 }
-CVec2 CRenderer::getPolyScale(GLuint tag)
+CVec2 CRenderer::getPolyScale(const GLuint tag)
 {
 	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
 	{
@@ -553,7 +556,7 @@ CVec2 CRenderer::getPolyScale(GLuint tag)
 			return CVec2(_polyVert[i].z,_polyVert[i].w);
 	}
 }
-CVec4 CRenderer::getPolyColor(GLuint tag)
+CVec4 CRenderer::getPolyColor(const GLuint tag)
 {
 	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
 	{
@@ -564,13 +567,8 @@ CVec4 CRenderer::getPolyColor(GLuint tag)
 
 
 
-
-void CRenderer::setupTextureSize(const CVec2 texPos,const CVec4 texRect,const GLuint texID)
+void CRenderer::setupTextureSize(const CVec2 texPos, const CVec4 texRect, const GLuint texID)
 {
-	//glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
-
-	//float Xright = texRect.x + texRect.z;
-	//float Ytop = texRect.y + texRect.w;
 
 	//横幅縦幅をセット
 	texWH[texID] = CVec2(((texRect.x + texRect.z) - texRect.x) * 0.5f, ((texRect.y + texRect.w) - texRect.y) * 0.5f);
@@ -580,13 +578,39 @@ void CRenderer::setupTextureSize(const CVec2 texPos,const CVec4 texRect,const GL
 	//画像の矩形範囲を設定
 	CVec4 changerect4 = CVec4(texRect.x / tex[texID]->m_width, (texRect.x + texRect.z) / tex[texID]->m_width, texRect.y / tex[texID]->m_height, (texRect.y + texRect.w) / tex[texID]->m_height);
 	rect[texID] = CVec4(changerect4);
-	
 
-	
+
+
 
 	if (tex[texID] == NULL)
 	{
 		std::cerr << "BMP,PNG,JPEGなんでもないです" << std::endl;
+	}
+}
+void CRenderer::setupTextureSizeAtTag(const CVec2 texPos,const CVec4 texRect,const GLuint tag)
+{
+	for (int i = 0; i < MAX_TEXTURE_NUMBER; i++)
+	{
+		if (_texTag[i] == tag)
+		{
+			//横幅縦幅をセット
+			texWH[i] = CVec2(((texRect.x + texRect.z) - texRect.x) * 0.5f, ((texRect.y + texRect.w) - texRect.y) * 0.5f);
+			_rectPos[i] = CVec4(texPos.x - texWH[i].x, texPos.x + texWH[i].x, texPos.y - texWH[i].y, texPos.y + texWH[i].y);
+			_position[i] = texPos;
+
+			//画像の矩形範囲を設定
+			CVec4 changerect4 = CVec4(texRect.x / tex[i]->m_width, (texRect.x + texRect.z) / tex[i]->m_width, texRect.y / tex[i]->m_height, (texRect.y + texRect.w) / tex[i]->m_height);
+			rect[i] = CVec4(changerect4);
+
+
+
+
+			if (tex[i] == NULL)
+			{
+				std::cerr << "BMP,PNG,JPEGなんでもないです" << std::endl;
+			}
+			return;
+		}
 	}
 }
 
@@ -718,10 +742,21 @@ bool CRenderer::loadPngImage(const char *name, int &outWidth, int &outHeight, bo
 	/* That's it */
 	return true;
 }
-
 void CRenderer::setupTextureColor(const CVec4 color, const GLuint texID)
 {
 	colorRGBA[texID] = color;
+}
+
+void CRenderer::setupTextureColorAtTag(const CVec4 color, const GLuint tag)
+{
+	for (int i = 0; i < MAX_TEXTURE_NUMBER; i++)
+	{
+		if (_texTag[i] == tag)
+		{
+			colorRGBA[i] = color;
+			return;
+		}
+	}
 }
 
 void CRenderer::TextureFade(const GLuint texID, const bool out,const float fadeInterval)
@@ -738,6 +773,19 @@ void CRenderer::setScale(const CVec2 Size, const GLuint texID)
 	texScale[texID] = Size;
 	_rectPos[texID] = CVec4(_position[texID].x - texWH[texID].x * Size.x, _position[texID].x + texWH[texID].x * Size.x, _position[texID].y - texWH[texID].y * Size.y, _position[texID].y + texWH[texID].y * Size.y);
 }
+void CRenderer::setScaleAtTag(const CVec2 Size, const GLuint tag)
+{
+	for (int i = 0; i < MAX_TEXTURE_NUMBER; i++)
+	{
+
+		if (_texTag[i] == tag)
+		{
+			texScale[i] = Size;
+			_rectPos[i] = CVec4(_position[i].x - texWH[i].x * Size.x, _position[i].x + texWH[i].x * Size.x, _position[i].y - texWH[i].y * Size.y, _position[i].y + texWH[i].y * Size.y);
+			return;
+		}
+	}
+}
 
 void CRenderer::setPosition(const CVec2 position, const GLuint texID)
 {
@@ -748,17 +796,28 @@ void CRenderer::setPosition(const CVec2 position, const GLuint texID)
 		_position[texID].y - texWH[texID].y * texScale[texID].y,
 		_position[texID].y + texWH[texID].y * texScale[texID].y);
 }
+void CRenderer::setPositionAtTag(const CVec2 position, const GLuint tag)
+{
+	for (int i = 0; i < MAX_TEXTURE_NUMBER; i++)
+	{
+		if (_texTag[i] == tag)
+		{
+			_position[i] = position;
+			_rectPos[i] = CVec4(
+				_position[i].x - texWH[i].x * texScale[i].x,
+				_position[i].x + texWH[i].x * texScale[i].x,
+				_position[i].y - texWH[i].y * texScale[i].y,
+				_position[i].y + texWH[i].y * texScale[i].y);
+			return;
+		}
+	}
+}
 
 void CRenderer::setMapPosition(const CVec2 position, const GLuint texID)
 {
 	_position[texID] = position;
 	CVec4 defrect = _rectPos[texID];
 	_rectPos[texID] = CVec4(_position[texID].x + defrect.x, _position[texID].x + defrect.y, _position[texID].y + defrect.z, _position[texID].y + defrect.w);
-}
-
-void CRenderer::setRotate(const CVec3 rotate, const GLuint texID)
-{
-	glRotatef(rotate.x,rotate.y,rotate.z, texID);
 }
 
 
@@ -889,6 +948,17 @@ void CRenderer::polygonNotesAction()
 		{
 			if (_polyColor[i].z < 100.0f)
 				_polyColor[i].z += 10.0f;
+		}
+	}
+}
+void CRenderer::textureNotesAction()
+{
+	for (int i = 0; i < MAX_TEXTURE_NUMBER; i++)
+	{
+		if (texScale[i].x < texDefaultScale[i])
+		{
+			if (_texTag[i] == TAG_TITLE_TEXT1 || _texTag[i] == TAG_TITLE_TEXT2 || _texTag[i] == TAG_TITLE_TEXT3)
+				setScaleAtTag(CVec2(texScale[i].x + 0.011f, texScale[i].y + 0.01f), _texTag[i]);
 		}
 	}
 }

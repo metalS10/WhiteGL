@@ -8,8 +8,17 @@ void CGameEngine::setupTexture(const char* file,TEX_TYPE texType,GLuint texID,CV
 	//================================
 	//テクスチャの描画
 	//================================
-	renderer->setupTexture(file, texType, texID, LAYER::MAIN);
+	renderer->setupTexture(file, texType, texID, LAYER::MAIN,0);
 	renderer->setupTextureSize(texPos, texRect , texID);
+	renderer->setupTextureColor(color, texID);
+}
+void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color,const GLuint tag)
+{
+	//================================
+	//テクスチャの描画
+	//================================
+	renderer->setupTexture(file, texType, texID, LAYER::MAIN, tag);
+	renderer->setupTextureSize(texPos, texRect, texID);
 	renderer->setupTextureColor(color, texID);
 }
 void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect)
@@ -17,7 +26,16 @@ void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID,
 	//================================
 	//テクスチャの描画
 	//================================
-	renderer->setupTexture(file, texType, texID, LAYER::MAIN);
+	renderer->setupTexture(file, texType, texID, LAYER::MAIN,0);
+	renderer->setupTextureSize(texPos, texRect, texID);
+	renderer->setupTextureColor(CVec4(100.0f,100.0f,100.0f,100.0f), texID);
+}
+void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect,const GLuint tag)
+{
+	//================================
+	//テクスチャの描画
+	//================================
+	renderer->setupTexture(file, texType, texID, LAYER::MAIN,tag);
 	renderer->setupTextureSize(texPos, texRect, texID);
 	renderer->setupTextureColor(CVec4(100.0f,100.0f,100.0f,100.0f), texID);
 }
@@ -26,7 +44,16 @@ void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID,
 	//================================
 	//テクスチャの描画
 	//================================
-	renderer->setupTexture(file, texType, texID, layer);
+	renderer->setupTexture(file, texType, texID, layer,0);
+	renderer->setupTextureSize(texPos, texRect, texID);
+	renderer->setupTextureColor(color, texID);
+}
+void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color, LAYER layer,const GLuint tag)
+{
+	//================================
+	//テクスチャの描画
+	//================================
+	renderer->setupTexture(file, texType, texID, layer,tag);
 	renderer->setupTextureSize(texPos, texRect, texID);
 	renderer->setupTextureColor(color, texID);
 }
@@ -35,7 +62,16 @@ void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID,
 	//================================
 	//テクスチャの描画
 	//================================
-	renderer->setupTexture(file, texType, texID, layer);
+	renderer->setupTexture(file, texType, texID, layer,0);
+	renderer->setupTextureSize(texPos, texRect, texID);
+	renderer->setupTextureColor(CVec4(100.0f, 100.0f, 100.0f, 100.0f), texID);
+}
+void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, LAYER layer,const GLuint tag)
+{
+	//================================
+	//テクスチャの描画
+	//================================
+	renderer->setupTexture(file, texType, texID, layer,tag);
 	renderer->setupTextureSize(texPos, texRect, texID);
 	renderer->setupTextureColor(CVec4(100.0f, 100.0f, 100.0f, 100.0f), texID);
 }
@@ -230,15 +266,20 @@ void CGameEngine::update60()
 {
 	renderer->notesFadeBackground();
 	renderer->polygonNotesAction();
+	renderer->textureNotesAction();
 	m_hitStop--;
 	if (m_hitStop <= 0)
 		m_hitStop = 0;
 }
 
 
-void CGameEngine::setScale(CVec2 scale, GLuint texID)
+void CGameEngine::setTexScale(const CVec2 scale, const GLuint texID)
 {
 	renderer->setScale(scale, texID);
+}
+void CGameEngine::setTexScaleAtTag(const CVec2 scale, const GLuint tag)
+{
+	renderer->setScaleAtTag(scale, tag);
 }
 
 
@@ -308,6 +349,10 @@ void CGameEngine::layerSetPos(float x, float y,GLuint texID)
 	renderer->setMapPosition(CVec2(x, y), texID);
 }
 
+void CGameEngine::GameEnd()
+{
+	gameNow = false;
+}
 /**
 *	ゲームを実行する
 */

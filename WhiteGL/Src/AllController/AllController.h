@@ -50,6 +50,5 @@ namespace MS
 
 		void setScene(CScene* scene);
 		CScene* getScene();
-
 	};
 }

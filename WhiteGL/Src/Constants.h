@@ -115,8 +115,9 @@
 #define MAIN_MOVEBG PASS"Images/BG/p1.png"
 
 //sound
+#define SOUND_BGM_TITLE				PASS"sound/gleam.ogg"
 #define SOUND_BGM					PASS"sound/cyber_dungeon_001.ogg"
-#define SOUND_BGM2					PASS"sound/ENEMY.mp3"
+#define SOUND_BGM2					PASS"sound/BraveBattle.ogg"
 #define SOUND_DRUM_AVOIDANCE_MISS	PASS"sound/Drum/se_maoudamashii_instruments_drum1_hat.ogg"
 #define SOUND_DRUM_AVOIDANCE		PASS"sound/Drum/se_maoudamashii_instruments_drum2_hat.ogg"
 #define SOUND_DRUM_ATTACK_MISS		PASS"sound/Drum/se_maoudamashii_instruments_drum1_bassdrum1.ogg"
@@ -134,6 +135,9 @@
 #define TAG_BEATSACTION3 1007
 #define TAG_BEATSACTION4 1008
 
+#define TAG_TITLE_TEXT1 1001
+#define TAG_TITLE_TEXT2 1002
+#define TAG_TITLE_TEXT3 1003
 //Math
 #define M_PI       3.14159265358979323846f   // pi
 //etc

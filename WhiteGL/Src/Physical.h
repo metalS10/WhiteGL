@@ -19,7 +19,7 @@ public:
 class CPhysicalGravity :public CPhysical
 {
 public:
-	float GRAVITY = -0.5f;
+	float GRAVITY = -1.5f;
 	//デフォルトコンストラクタ
 	CPhysicalGravity()
 	{

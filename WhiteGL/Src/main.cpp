@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
 	*	引数で渡されたウィンドウに対してOS等から終了要求が来ていなければ0,着ていれば0以外を返す
 	*GLFWで作成したウィンドウが1つだけなら終了判定はこの関数を見るだけで十分
 	*/
-	while (!glfwWindowShouldClose(window) && glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
+	while (!glfwWindowShouldClose(window) &&  game.gameNow == true)
 	{
 		if (scene != CMS::getInstance()->getScene())
 		{

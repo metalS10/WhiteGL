@@ -77,9 +77,11 @@ void CActionAvoidance::update(CCharacter* pChara)
 			(*pChara->m_pSounds)[(int)SOUND::PLAYER_AVOIDANCE]->playChunk();
 			//最大速度の変更
 			(*pChara->m_pPhysicals)[1]->SetMaxSpeed(m_successAccele, 0.1f);
+
+			(*pChara->m_pPhysicals)[0]->setGravity(0.0f);
 			//x軸の移動速度に値を設定
-			pChara->m_pMove->m_vel.x = this->m_successAccele * pChara->m_CharaLaunchVector.x;
-			pChara->m_pMove->m_vel.y = 0;
+			pChara->m_pMove->m_vel.x = this->m_successAccele * pChara->inputArrow.x;
+			pChara->m_pMove->m_accele.y = this->m_successAccele * pChara->inputArrow.y;
 			pChara->m_isAvoidance = true;
 			//回避フラグをtrueにする
 			this->m_isAvoidance = true;
@@ -92,9 +94,12 @@ void CActionAvoidance::update(CCharacter* pChara)
 			(*pChara->m_pSounds)[(int)SOUND::PLAYER_AVOIDANCE_MISS]->playChunk();
 			//最大速度の変更
 			(*pChara->m_pPhysicals)[1]->SetMaxSpeed(m_missAccele, 0.1f);
+
+			(*pChara->m_pPhysicals)[0]->setGravity(0.0f);
 			//x軸の移動速度に値を設定
-			pChara->m_pMove->m_vel.x = this->m_missAccele * pChara->m_CharaLaunchVector.x;
-			pChara->m_pMove->m_vel.y = 0;
+			pChara->m_pMove->m_vel.x = this->m_missAccele * pChara->inputArrow.x;
+			pChara->m_pMove->m_accele.y = this->m_missAccele * pChara->inputArrow.y;
+
 			pChara->m_isAvoidance = true;
 			//回避フラグをtrueにする
 			this->m_isAvoidance = true;
@@ -111,8 +116,10 @@ void CActionAvoidance::update(CCharacter* pChara)
 		if (m_counter >= m_avoidanceIntarval)
 		{
 			pChara->m_pMove->m_vel.x = 0;
+			pChara->m_pMove->m_accele.y = 0;
 			pChara->m_isAvoidance = false;
 			(*pChara->m_pPhysicals)[1]->SetMaxSpeed(10.0f, 0.5f);
+			(*pChara->m_pPhysicals)[0]->setGravity(-1.5f);
 			//次発動可能インターバル
 			if (m_counter >= m_intarval)
 			{
@@ -142,6 +149,8 @@ void CActionAvoidance::restart(CCharacter* pChara)
 	//Y成分の速度濾過速度のリセット
 	pChara->m_pMove->m_vel.x = 0.0f;
 	pChara->m_pMove->m_accele.x = 0.0f;
+	pChara->m_pMove->m_vel.y = 0.0f;
+	pChara->m_pMove->m_accele.y = 0.0f;
 
 	//アクションの停止
 	this->stop();
