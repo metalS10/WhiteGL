@@ -140,8 +140,8 @@ public:
 
 	void deleteTexture(const GLuint texID);
 
-	void setScale(const CVec2 Size, const GLuint texID);
-	void setScaleAtTag(const CVec2 Size, const GLuint texID);
+	void setTextureScale(const CVec2 Size, const GLuint texID);
+	void setTextureScaleAtTag(const CVec2 Size, const GLuint texID);
 
 	void setPosition(const CVec2 position, const GLuint texID);
 	void setPositionAtTag(const CVec2 position, const GLuint tag);

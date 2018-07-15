@@ -71,7 +71,8 @@ public:
 	void setTextureRect(const CVec4 mrect,const GLuint texID);
 	void setPosition(CVec2 pos, GLuint texID);
 	void setTexScale(CVec2 scale,GLuint texID);
-	void setTexScaleAtTag(CVec2 scale,GLuint texID);
+	void setTexScaleAtTag(const CVec2 scale,const GLuint tag);
+	void setTexColorAtTag(const CVec4 color,const GLuint tag);
 	void deleteTexture(const GLuint texID);
 	void allTextureDelete();
 	void allTextureDeletenotPlayer();

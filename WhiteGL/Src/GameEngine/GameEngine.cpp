@@ -275,11 +275,15 @@ void CGameEngine::update60()
 
 void CGameEngine::setTexScale(const CVec2 scale, const GLuint texID)
 {
-	renderer->setScale(scale, texID);
+	renderer->setTextureScale(scale, texID);
 }
 void CGameEngine::setTexScaleAtTag(const CVec2 scale, const GLuint tag)
 {
-	renderer->setScaleAtTag(scale, tag);
+	renderer->setTextureScaleAtTag(scale, tag);
+}
+void CGameEngine::setTexColorAtTag(const CVec4 color, const GLuint tag)
+{
+	renderer->setupTextureColorAtTag(color, tag);
 }
 
 

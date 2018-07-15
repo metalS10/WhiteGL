@@ -768,12 +768,12 @@ void CRenderer::TextureFade(const GLuint texID, const bool out,const float fadeI
 
 }
 
-void CRenderer::setScale(const CVec2 Size, const GLuint texID)
+void CRenderer::setTextureScale(const CVec2 Size, const GLuint texID)
 {
 	texScale[texID] = Size;
 	_rectPos[texID] = CVec4(_position[texID].x - texWH[texID].x * Size.x, _position[texID].x + texWH[texID].x * Size.x, _position[texID].y - texWH[texID].y * Size.y, _position[texID].y + texWH[texID].y * Size.y);
 }
-void CRenderer::setScaleAtTag(const CVec2 Size, const GLuint tag)
+void CRenderer::setTextureScaleAtTag(const CVec2 Size, const GLuint tag)
 {
 	for (int i = 0; i < MAX_TEXTURE_NUMBER; i++)
 	{
@@ -958,7 +958,7 @@ void CRenderer::textureNotesAction()
 		if (texScale[i].x < texDefaultScale[i])
 		{
 			if (_texTag[i] == TAG_TITLE_TEXT1 || _texTag[i] == TAG_TITLE_TEXT2 || _texTag[i] == TAG_TITLE_TEXT3)
-				setScaleAtTag(CVec2(texScale[i].x + 0.011f, texScale[i].y + 0.01f), _texTag[i]);
+				setTextureScaleAtTag(CVec2(texScale[i].x + 0.011f, texScale[i].y + 0.01f), _texTag[i]);
 		}
 	}
 }

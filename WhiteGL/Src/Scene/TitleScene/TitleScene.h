@@ -5,8 +5,8 @@
 class CTitle : public CScene
 {
 private:
-	int select = 0;
-	bool pushButton = false;
+	int m_select = 0;
+	bool m_pushButton = false;
 public:
 	CTitle();
 	~CTitle();
@@ -16,5 +16,7 @@ public:
 	void sceneUpdate()override {};
 	void qauarterUpdate()override;
 	void eighthUpdate()override;
+
+	void selectingButton(const int selecting);
 
 };

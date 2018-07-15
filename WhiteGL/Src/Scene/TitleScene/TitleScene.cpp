@@ -60,6 +60,10 @@ bool CTitle::init()
 	//タイトルのバックグラウンド
 	m_game.setupTexture(TITLE_BG, TEX_TYPE::PNG, 0, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH, WINDOW_HEIGHT),LAYER::BG);
 	//m_game.setScale(CVec2(1,1), 0);
+
+	//ボタンの色を変えておく
+	selectingButton(m_select);
+
 	return true;
 }
 
@@ -73,7 +77,7 @@ void CTitle::update()
 	if (input->getOnKey(Input::Key::START) == true)
 	{
 		//gameStart
-		if (select == 0)
+		if (m_select == 0)
 		{
 			BGM->fadeOut(1000);
 			//ゲームメインシーンを生成
@@ -89,34 +93,37 @@ void CTitle::update()
 	//ステージセレクト
 	if (input->getOnKey(Input::Key::DPAD_RIGHT) == true)
 	{
-		if (!pushButton)
+		if (!m_pushButton)
 		{
-			select++;
-			if (select > 1)
+			m_select++;
+			if (m_select > 1)
 			{
-				select = 0;
+				m_select = 0;
 			}
-			pushButton = true;
+			m_pushButton = true;
+			//ボタンの色を変える
+			selectingButton(m_select);
 		}
 	}
 	else if (input->getOnKey(Input::Key::DPAD_LEFT) == true)
 	{
-		if (!pushButton)
+		if (!m_pushButton)
 		{
-			select--;
-			if (select < 0)
+			m_select--;
+			if (m_select < 0)
 			{
-				select = 1;
+				m_select = 1;
 			}
-			pushButton = true;
-
+			m_pushButton = true;
+			//ボタンの色を変える
+			selectingButton(m_select);
 		}
 	}
 	else
 	{
-		if (pushButton)
+		if (m_pushButton)
 		{
-			pushButton = false;
+			m_pushButton = false;
 		}
 	}
 	
@@ -127,12 +134,12 @@ void CTitle::qauarterUpdate()
 	m_game.setTexScaleAtTag(CVec2(0.9f, 0.9f), TAG_TITLE_TEXT1);
 	//printf("a");
 	//Startボタン
-	if (select == 0)
+	if (m_select == 0)
 	{
 		m_game.setTexScaleAtTag(CVec2(0.9f, 0.9f), TAG_TITLE_TEXT2);
 	}
 	//Endボタン
-	else if (select == 1)
+	else if (m_select == 1)
 	{
 		m_game.setTexScaleAtTag(CVec2(0.9f, 0.9f), TAG_TITLE_TEXT3);
 	}
@@ -141,4 +148,22 @@ void CTitle::qauarterUpdate()
 
 void CTitle::eighthUpdate()
 {
+}
+
+void CTitle::selectingButton(const int selecting)
+{
+	switch (selecting)
+	{
+	case 0:
+		m_game.setTexColorAtTag(CVec4(50.0f, 50.0f,100.0f,100.0f), TAG_TITLE_TEXT2);
+		m_game.setTexColorAtTag(CVec4(100.0f, 100.0f, 100.0f, 100.0f), TAG_TITLE_TEXT3);
+		break;
+	case 1:
+		m_game.setTexColorAtTag(CVec4(50.0f, 50.0f, 100.0f, 100.0f), TAG_TITLE_TEXT3);
+		m_game.setTexColorAtTag(CVec4(100.0f, 100.0f, 100.0f, 100.0f), TAG_TITLE_TEXT2);
+		break;
+	default:
+		printf("ステージ選択中ボタンfunctionに追加されていません\n");
+		break;
+	}
 }
