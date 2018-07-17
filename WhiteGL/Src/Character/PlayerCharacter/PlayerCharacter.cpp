@@ -46,10 +46,10 @@ bool CPlayerCharacter::init()
 
 	//攻撃音読み込み
 	this->m_pSounds = new std::vector<CSound*>();
-	this->m_pSounds->push_back(new CSound(SOUND_DRUM_AVOIDANCE_MISS, 3,100));
-	this->m_pSounds->push_back(new CSound(SOUND_DRUM_AVOIDANCE, 3,100));
-	this->m_pSounds->push_back(new CSound(SOUND_DRUM_ATTACK_MISS, 3,100));
-	this->m_pSounds->push_back(new CSound(SOUND_DRUM_ATTACK, 3,100));
+	this->m_pSounds->push_back(new CSound(SOUND_DRUM_AVOIDANCE_MISS	, 16,100));
+	this->m_pSounds->push_back(new CSound(SOUND_DRUM_AVOIDANCE		, 16,100));
+	this->m_pSounds->push_back(new CSound(SOUND_DRUM_ATTACK_MISS	, 16,100));
+	this->m_pSounds->push_back(new CSound(SOUND_DRUM_ATTACK			, 16,100));
 
 	for (CSound* sound : (*m_pSounds))
 	{
@@ -561,6 +561,12 @@ void CPlayerCharacter::beatUpdate()
 	if (m_beatInterval == 0)
 	{
 		setBeat(m_beatCounter);
+	}
+	//回避行動中じゃなければ
+	if (!m_isAvoidance)
+	{
+		//重力を戻す
+		(*this->m_pPhysicals)[0]->setGravity(-1.5f);
 	}
 	m_beatCounter = 0;
 	//playerのカウンター

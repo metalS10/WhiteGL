@@ -29,7 +29,7 @@ private:
 	bool moving = false;
 	float playerAngle = 0;
 	bool playerRolling = false;
-
+	
 
 
 public:
@@ -44,7 +44,7 @@ public:
 	void eighthUpdate()override;	//8分音符の更新
 
 	//ステージ遷移初期化
-	bool stageChangeInit();
+	bool stageChangeInit() override;
 
 	//ゲームの主な動きの更新
 	void gameMain();

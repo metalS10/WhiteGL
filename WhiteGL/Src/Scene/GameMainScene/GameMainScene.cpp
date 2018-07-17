@@ -13,11 +13,14 @@ CGameMain::~CGameMain()
 
 bool CGameMain::init()
 {
+	
 	//全テクスチャ削除
 	m_game.allTextureDelete();
 	//ステージ1を開く
 	m_stage = new CStage1_1();
 	BGM = m_stage->getBGM();
+	m_notesSound = new CSound(SOUND_QUARTER_NOTES, 1, 50.0f);
+	m_notesSound->LoadChunk();
 	if (CScene::init() == false)
 	{
 		printf("シーン初期化に失敗");
@@ -105,9 +108,6 @@ bool CGameMain::init()
 	pPlayerChara->input = input;
 
 
-	//ステージ切り替わり用の初期化
-	if (this->stageChangeInit() == false)
-		printf("ステージ遷移用初期化に失敗");
 
 
 	return true;
@@ -121,6 +121,7 @@ bool CGameMain::stageChangeInit()
 	m_polyRange = m_stage->m_polyRange;
 	//初期化
 	pPlayerChara->m_beatInterval = 0;
+	pPlayerChara->m_beatCounter = 0;
 
 	return true;
 }
@@ -472,6 +473,7 @@ void CGameMain::openMap()
 	if (this->stageChangeInit() == false)
 		printf("ステージ遷移用初期化に失敗");
 }
+
 //背景スクロール用の関数
 //左へスクロール中
 void CGameMain::scrollBackGroundTrianglesLeft(float posX)
@@ -549,8 +551,19 @@ void CGameMain::playerAction()
 	{
 		m_game.setPolyColor(CVec4(100.0f, 0.0f, 0.0f, 100.0f),TAG_PLAYER_1);
 	}
+	else if (pPlayerChara->musicNotesMiss > 0)
+	{
+		//beatsのミスはピンク
+		m_game.setPolyColor(CVec4(100.0f, 50.0f, 50.0f, 100.0f), TAG_PLAYER_1);
+	}
+	else if (pPlayerChara->m_isAvoidance)
+	{
+		//回避成功中の回避行動は黄色
+		m_game.setPolyColor(CVec4(100.0f, 100.0f, 0.0f, 100.0f), TAG_PLAYER_1);
+	}
 	else
 	{
+		//何もなければ戻す
 		m_game.setPolyColor(CVec4(100.0f, 100.0f, 100.0f, 100.0f), TAG_PLAYER_1);
 	}
 	//回転情報
@@ -630,7 +643,7 @@ void CGameMain::halfUpdate()
 
 void CGameMain::qauarterUpdate()
 {
-	//m_notesSound->playChunk();
+	m_notesSound->playChunk();
 	
 	m_game.polygonAction(TAG_PLAYER_1,0);
 	m_game.polygonAction(TAG_BEATSACTION1,1);

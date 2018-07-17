@@ -37,6 +37,9 @@ protected:
 	//BGM
 	CSound* BGM = NULL;
 
+	//間隔用の音
+	CSound* m_notesSound = NULL;
+
 	//BGMのBPM
 	float m_bgmBpm = 0;
 	//BPMに合わせて動かすためのカウンター
@@ -80,6 +83,9 @@ public:
 
 	//描画用Update
 	virtual void rendUpdate() ;
+
+	//ステージ変更後初期化
+	virtual bool stageChangeInit() { return true; };
 
 	//bpm等の少し細かい更新処理
 	//virtual void bpmUpdate();

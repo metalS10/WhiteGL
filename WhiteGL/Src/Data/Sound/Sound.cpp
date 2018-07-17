@@ -5,7 +5,7 @@ CSound::CSound(char* sound, const int bpm, const int channels,bool musicBool)
 	// SDL初期化
 	SDL_Init(SDL_INIT_AUDIO);
 	//周波数、フォーマット、チャンネル、バッファサイズ(大きいと遅延で死ぬ)
-	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, channels, 1024);
+	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, channels, 512);
 	// 曲ファイルをロード
 	m_soundName = sound;
 	m_bpm = bpm;
@@ -17,7 +17,7 @@ CSound::CSound(char* sound, const int bpm, const int channels, const int volume,
 	// SDL初期化
 	SDL_Init(SDL_INIT_AUDIO);
 	//周波数、フォーマット、チャンネル、バッファサイズ(大きいと遅延で死ぬ)
-	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, channels, 1024);
+	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, channels, 512);
 	// 曲ファイルをロード
 	m_soundName = sound;
 	m_bpm = bpm;
@@ -106,7 +106,7 @@ void CSound::playMusic()
 
 void CSound::playChunk()
 {
-	Mix_PlayChannel(overlapChunkCount, m_chunk, 0);            // 効果音1再生
+	Mix_PlayChannel(-1, m_chunk, 0);            // 効果音1再生
 	//std::cerr << Mix_GetError()<< std::endl;
 	overlapChunkCount++;
 	if (overlapChunkCount >= overlapChunkMax)

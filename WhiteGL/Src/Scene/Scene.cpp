@@ -5,6 +5,7 @@ CScene::CScene()
 }
 CScene::~CScene()
 {
+	SAFE_DELETE(m_notesSound);
 }
 
 bool CScene::init()
@@ -87,6 +88,10 @@ void CScene::rendUpdate()
 	{
 		m_BGMStart = true;
 		BGM->Play();
+
+		//ステージ切り替わり用の初期化
+		if (this->stageChangeInit() == false)
+			printf("ステージ遷移用初期化に失敗");
 
 		//LARGE_INDEGER変数の初期化
 		memset(&m_nFreq, 0x00, sizeof m_nFreq);

@@ -116,10 +116,10 @@ void CActionAvoidance::update(CCharacter* pChara)
 		if (m_counter >= m_avoidanceIntarval)
 		{
 			pChara->m_pMove->m_vel.x = 0;
+			pChara->m_pMove->m_vel.y = 0;
 			pChara->m_pMove->m_accele.y = 0;
 			pChara->m_isAvoidance = false;
 			(*pChara->m_pPhysicals)[1]->SetMaxSpeed(10.0f, 0.5f);
-			(*pChara->m_pPhysicals)[0]->setGravity(-1.5f);
 			//次発動可能インターバル
 			if (m_counter >= m_intarval)
 			{
