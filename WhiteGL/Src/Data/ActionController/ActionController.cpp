@@ -70,42 +70,61 @@ void CActionAvoidance::update(CCharacter* pChara)
 {
 	if (this->m_isAvoidanceStart == true && m_isAvoidance == false)
 	{
-		//ナイスタイミング
-		if (pChara->musicNotesCounter > 0 && pChara->musicNotesMiss <= 0 || pChara->m_beatCounter >= pChara->m_beatInterval && pChara->musicNotesMiss <= 0)
+		if (pChara->m_charaType == CHARACTER_TYPE::PLAYER)
 		{
-			//回避音
-			(*pChara->m_pSounds)[(int)SOUND::PLAYER_AVOIDANCE]->playChunk();
-			//最大速度の変更
-			(*pChara->m_pPhysicals)[1]->SetMaxSpeed(m_successAccele, 0.1f);
+			//ナイスタイミング
+			if (pChara->musicNotesCounter > 0 && pChara->musicNotesMiss <= 0 || pChara->m_beatCounter >= pChara->m_beatInterval && pChara->musicNotesMiss <= 0)
+			{
 
-			(*pChara->m_pPhysicals)[0]->setGravity(0.0f);
-			//x軸の移動速度に値を設定
-			pChara->m_pMove->m_vel.x = this->m_successAccele * pChara->inputArrow.x;
-			pChara->m_pMove->m_accele.y = this->m_successAccele * pChara->inputArrow.y;
-			pChara->m_isAvoidance = true;
-			//回避フラグをtrueにする
-			this->m_isAvoidance = true;
-			pChara->DPHeal(10.0f);
+				//回避音
+				(*pChara->m_pSounds)[(int)SOUND::PLAYER_AVOIDANCE]->playChunk();
+				//最大速度の変更
+				(*pChara->m_pPhysicals)[1]->SetMaxSpeed(m_successAccele, 0.1f);
+
+				(*pChara->m_pPhysicals)[0]->setGravity(0.0f);
+
+				//回避フラグをtrueにする
+				this->m_isAvoidance = true;
+				pChara->DPHeal(10.0f);
+
+				//x軸の移動速度に値を設定
+				pChara->m_pMove->m_vel.x = this->m_successAccele * pChara->inputArrow.x;
+				pChara->m_pMove->m_accele.y = this->m_successAccele * pChara->inputArrow.y;
+				pChara->m_isAvoidance = true;
+			}
+
+			//バッドタイミング
+			else if (!pChara->musicNotesCounter > 0)
+			{
+					//回避音
+					(*pChara->m_pSounds)[(int)SOUND::PLAYER_AVOIDANCE_MISS]->playChunk();
+					//最大速度の変更
+					(*pChara->m_pPhysicals)[1]->SetMaxSpeed(m_missAccele, 0.1f);
+
+					(*pChara->m_pPhysicals)[0]->setGravity(0.0f);
+
+					pChara->m_isAvoidance = true;
+
+					//Miss!
+					pChara->musicNotesMiss = 10;
+					//printf("AvoidanceMiss\n");
+
+				//x軸の移動速度に値を設定
+				pChara->m_pMove->m_vel.x = this->m_missAccele * pChara->inputArrow.x;
+				pChara->m_pMove->m_accele.y = this->m_missAccele * pChara->inputArrow.y;
+				//回避フラグをtrueにする
+				this->m_isAvoidance = true;
+
+			}
+
 		}
-		//バッドタイミング
-		else if (!pChara->musicNotesCounter > 0)
+		else
 		{
-			//回避音
-			(*pChara->m_pSounds)[(int)SOUND::PLAYER_AVOIDANCE_MISS]->playChunk();
-			//最大速度の変更
-			(*pChara->m_pPhysicals)[1]->SetMaxSpeed(m_missAccele, 0.1f);
-
-			(*pChara->m_pPhysicals)[0]->setGravity(0.0f);
-			//x軸の移動速度に値を設定
-			pChara->m_pMove->m_vel.x = this->m_missAccele * pChara->inputArrow.x;
-			pChara->m_pMove->m_accele.y = this->m_missAccele * pChara->inputArrow.y;
-
-			pChara->m_isAvoidance = true;
 			//回避フラグをtrueにする
 			this->m_isAvoidance = true;
-			//Miss!
-			pChara->musicNotesMiss = 10;
-			printf("AvoidanceMiss\n");
+
+			//x軸の移動速度に値を設定
+			pChara->m_pMove->m_vel.x = this->m_successAccele * pChara->m_CharaLaunchVector.x;
 		}
 	}
 	else if(m_isAvoidance)
@@ -118,8 +137,11 @@ void CActionAvoidance::update(CCharacter* pChara)
 			pChara->m_pMove->m_vel.x = 0;
 			pChara->m_pMove->m_vel.y = 0;
 			pChara->m_pMove->m_accele.y = 0;
-			pChara->m_isAvoidance = false;
-			(*pChara->m_pPhysicals)[1]->SetMaxSpeed(10.0f, 0.5f);
+			if (pChara->m_charaType == CHARACTER_TYPE::PLAYER)
+			{
+				pChara->m_isAvoidance = false;
+				(*pChara->m_pPhysicals)[1]->SetMaxSpeed(10.0f, 0.5f);
+			}
 			//次発動可能インターバル
 			if (m_counter >= m_intarval)
 			{
@@ -844,7 +866,7 @@ void CActionShotEnemyBullet::update(CCharacter* pChara)
 			//CCharacterAggregateにプレイヤーを追加
 			//敵出撃データを作成
 			//CBulletLaunchData* pLaunchData = new CBulletLaunchData(BULLET_TYPE::NORMAL, pChara->m_pMove->m_pos, pChara->m_shotLaunchVector);
-			CVec2 vec = CVec2(pChara->m_moveVector.x * 3, pChara->m_moveVector.y);
+			CVec2 vec = CVec2(pChara->m_moveVector.x * 8, pChara->m_moveVector.y);
 
 			CEnemyBulletLaunchData* pLaunchData = new CEnemyBulletLaunchData(
 				(BULLET_TYPE)this->m_bulletType,
@@ -874,6 +896,12 @@ void CActionShotEnemyBullet::update(CCharacter* pChara)
 		}
 	}
 }
+void CActionShotEnemyBullet::restart(CCharacter* pChara)
+{
+	this->m_shotCount = 0;
+	pChara->m_isAttack1 = false;
+}
+
 
 
 /**
@@ -938,70 +966,86 @@ void CActionTRoi::update(CCharacter* pChara)
 		switch (step)
 		{
 		case 0:
-			if (this->counter <= 0)
+			m_pPlayer = CCharacterAggregate::getInstance()->getAtTag(TAG_PLAYER_1);
+			if (pChara->m_pMove->m_pos.x < m_pPlayer->m_pMove->m_pos.x - 10)
 			{
-				m_pPlayer = CCharacterAggregate::getInstance()->getAtTag(TAG_PLAYER_1);
-				if (pChara->m_pMove->m_pos.x < m_pPlayer->m_pMove->m_pos.x - 10)
-				{
-					(*pChara->m_pActions)[2]->start();
-					pChara->setScale(1.0f, 1.0f);
-					pChara->m_moveVector = CVec2(20, 0);
-					pChara->m_pMove->m_vel = pChara->m_moveVector;
+				//円状の弾を発射
+				(*pChara->m_pActions)[2]->start();
+				//向きを変える
+				pChara->setScale(1.0f, 1.0f);
+				//横に移動
+				pChara->m_moveVector = CVec2(20, 0);
+				pChara->m_pMove->m_vel = pChara->m_moveVector;
 
-				}
-				else if (pChara->m_pMove->m_pos.x > m_pPlayer->m_pMove->m_pos.x + 10)
-				{
-					(*pChara->m_pActions)[2]->start();
-					pChara->setScale(-1.0f, 1.0f);
-					pChara->m_moveVector = CVec2(-20, 0);
-					pChara->m_pMove->m_vel = pChara->m_moveVector;
-				}
-				this->counter = this->m_intervalTime;
-
-				step++;
 			}
-			break;
+			else if (pChara->m_pMove->m_pos.x > m_pPlayer->m_pMove->m_pos.x + 10)
+			{
+				//円状の弾を発射
+				(*pChara->m_pActions)[2]->start();
+				//向きを変える
+				pChara->setScale(-1.0f, 1.0f);
+				//横に移動
+				pChara->m_moveVector = CVec2(-20, 0);
+				pChara->m_pMove->m_vel = pChara->m_moveVector;
+			}
+
+		break;
 
 		//飛ぶ
 		case 1:
-			if (pChara->m_pMove->m_pos.x < m_pPlayer->m_pMove->m_pos.x - 300 && pChara->m_pMove->m_vel.x < 0)
+			if (pChara->m_pMove->m_pos.x < m_pPlayer->m_pMove->m_pos.x - 1 && pChara->m_pMove->m_vel.x < 0)
 			{
-				(*pChara->m_pPhysicals)[0]->setGravity(0.0f);
 				pChara->setScale(1.0f, 1.0f);
-
-				pChara->m_moveVector = CVec2(0, 0);
-				step++;
-
 			}
-			else if (pChara->m_pMove->m_pos.x > m_pPlayer->m_pMove->m_pos.x + 300 && pChara->m_pMove->m_vel.x > 0)
+			else if (pChara->m_pMove->m_pos.x > m_pPlayer->m_pMove->m_pos.x + 1 && pChara->m_pMove->m_vel.x > 0)
 			{
-				(*pChara->m_pPhysicals)[0]->setGravity(0.0f);
 				pChara->setScale(-1.0f, 1.0f);
-
-				pChara->m_moveVector = CVec2(0, 0);
-				step++;
-
 			}
+
+			(*pChara->m_pPhysicals)[0]->setGravity(0.0f);
+			pChara->m_moveVector = CVec2(0, 0);
 
 
 			pChara->m_pMove->m_vel = pChara->m_moveVector;
 			break;
-
+		
 		case 2:
 			//空中停止
 			if (pChara->m_pMove->m_pos.y >= 300.0f)
 			{
 				(*pChara->m_pActions)[2]->start();
 				this->nowHeight = pChara->m_pMove->m_pos.y;
-				step++;
 			}
 			else
 			{
 				pChara->m_pMove->m_pos.y += 1;
 			}
 			break;
+		case 4:
+			m_pPlayer = CCharacterAggregate::getInstance()->getAtTag(TAG_PLAYER_1);
+
+			//円状の弾を発射
+			(*pChara->m_pActions)[2]->start();
+			if (pChara->m_pMove->m_pos.x < m_pPlayer->m_pMove->m_pos.x - 1)
+			{
+				//向きを変える
+				pChara->setScale(1.0f, 1.0f);
+				//横に移動
+				pChara->m_moveVector = CVec2(20, 0);
+
+			}
+			else if (pChara->m_pMove->m_pos.x > m_pPlayer->m_pMove->m_pos.x + 1)
+			{
+				//向きを変える
+				pChara->setScale(-1.0f, 1.0f);
+				//横に移動
+				pChara->m_moveVector = CVec2(-20, 0);
+			}
+
+			pChara->m_pMove->m_vel = pChara->m_moveVector;
+			break;
 		//浮く
-		case 3:
+		default:
 			if (up)
 			{
 				upheight += 0.1f;
@@ -1019,18 +1063,24 @@ void CActionTRoi::update(CCharacter* pChara)
 				}
 			}
 			pChara->m_pMove->m_pos.y += upheight;
-			this->counter--;
-			if (this->counter <= 0)
-			{
-				step = 0;
-				(*pChara->m_pPhysicals)[0]->setGravity(0.0f);
+			(*pChara->m_pPhysicals)[0]->setGravity(0.0f);
+			pChara->m_moveVector = CVec2(0, 0);
+			pChara->m_pMove->m_vel = pChara->m_moveVector;
 
-			}
+
+
 
 			break;
-		default:
-			break;
+		
 		}
 
+	}
+}
+void CActionTRoi::start()
+{
+	step++;
+	if (step >= 16)
+	{
+		step = 0;
 	}
 }

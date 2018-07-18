@@ -713,7 +713,7 @@ public:
 	*@param	再起動するキャラクター
 	*@tips	キャラクターのY成分のリセットも行なう
 	*/
-	void restart(CCharacter* pChara)override {}
+	void restart(CCharacter* pChara)override;
 };
 
 //====================================================
@@ -789,8 +789,6 @@ private:
 
 	CCharacter* m_pPlayer ;
 
-	int counter = 0;
-
 	int m_intervalTime = 0;
 
 	//プレイヤのポジション
@@ -817,8 +815,7 @@ public:
 	/**
 	*@desc	アクション開始
 	*/
-	void start() override
-	{}
+	void start() override;
 
 	/*
 	*@desc	更新処理

@@ -64,6 +64,7 @@ bool CTitle::init()
 	//ƒ{ƒ^ƒ“‚ÌF‚ğ•Ï‚¦‚Ä‚¨‚­
 	selectingButton(m_select);
 
+
 	return true;
 }
 

@@ -50,6 +50,7 @@ bool CPlayerCharacter::init()
 	this->m_pSounds->push_back(new CSound(SOUND_DRUM_AVOIDANCE		, 16,100));
 	this->m_pSounds->push_back(new CSound(SOUND_DRUM_ATTACK_MISS	, 16,100));
 	this->m_pSounds->push_back(new CSound(SOUND_DRUM_ATTACK			, 16,100));
+	this->m_pSounds->push_back(new CSound(SOUND_QUARTER_BEATS		, 16,80));
 
 	for (CSound* sound : (*m_pSounds))
 	{
@@ -556,7 +557,7 @@ void CPlayerCharacter::DodgeInterval()
 	}
 }
 
-void CPlayerCharacter::beatUpdate()
+void CPlayerCharacter::quarterUpdate()
 {
 	if (m_beatInterval == 0)
 	{

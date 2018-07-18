@@ -100,10 +100,9 @@ public:
 
 	//ジャスト回避(減らすだけ
 	void DodgeInterval();
-
-	//拍子間隔の更新処理
-	void beatUpdate();
-
+	\
+	//4分音符更新
+	void quarterUpdate() override;
 
 	/**
 	*@desc	下領域と衝突した際のイベントコールバック

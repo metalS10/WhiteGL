@@ -29,7 +29,6 @@ private:
 	bool moving = false;
 	float playerAngle = 0;
 	bool playerRolling = false;
-	
 
 
 public:

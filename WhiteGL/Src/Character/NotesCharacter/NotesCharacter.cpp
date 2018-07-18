@@ -105,6 +105,11 @@ void CNotesCharacter::checkState()
 {
 
 }
+//4•ª‰¹•„XV
+void CNotesCharacter::quarterUpdate()
+{
+
+}
 
 /**
 * @desc ”½‰fˆ—

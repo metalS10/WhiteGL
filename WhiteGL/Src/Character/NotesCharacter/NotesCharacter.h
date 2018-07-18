@@ -139,4 +139,7 @@ public:
 	{
 	}
 
+	//4•ª‰¹•„XV
+	void quarterUpdate() override;
+
 };

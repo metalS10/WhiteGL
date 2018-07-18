@@ -5,7 +5,6 @@ CScene::CScene()
 }
 CScene::~CScene()
 {
-	SAFE_DELETE(m_notesSound);
 }
 
 bool CScene::init()

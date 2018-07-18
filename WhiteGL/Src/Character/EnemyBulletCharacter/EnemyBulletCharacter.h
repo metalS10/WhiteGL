@@ -114,6 +114,9 @@ public:
 
 	void collision() override;
 
+	//4分音符更新
+	void quarterUpdate() override;
+
 
 	/**
 	* @desc キャラクター1体との衝突判定処理

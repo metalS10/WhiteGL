@@ -83,6 +83,10 @@ void InputFunc(CGameEngine game,Input::CGameInput* input)
 	{
 		input->setOnKey(Input::Key::GameEnd, true);
 	}
+	else
+	{
+		input->setOnKey(Input::Key::GameEnd, false);
+	}
 	if (gamepad.buttons & GamePad::Z)
 	{
 		input->setOnKey(Input::Key::Z, true);

@@ -122,7 +122,7 @@
 #define SOUND_DRUM_AVOIDANCE		PASS"sound/Drum/se_maoudamashii_instruments_drum2_hat.ogg"
 #define SOUND_DRUM_ATTACK_MISS		PASS"sound/Drum/se_maoudamashii_instruments_drum1_bassdrum1.ogg"
 #define SOUND_DRUM_ATTACK			PASS"sound/Drum/se_maoudamashii_instruments_drum2_bassdrum.ogg"
-#define SOUND_QUARTER_NOTES			PASS"sound/Drum/se_maoudamashii_instruments_drum1_bassdrum1.ogg"
+#define SOUND_QUARTER_BEATS			PASS"sound/Drum/se_maoudamashii_instruments_drum1_hat.ogg"
 
 
 //É^ÉO

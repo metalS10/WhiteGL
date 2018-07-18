@@ -140,8 +140,10 @@ void CKuroFactory::settingActions(CEnemyCharacter* pChara)
 	//敵ダメージアクション設定
 	pChara->m_pActions->push_back(new CActionEnemyDamage(5, 1, 3));
 
-	//弾発射アクションを設定
-	pChara->m_pActions->push_back(new CActionShotEnemyBullet((int)BULLET_TYPE::NORMAL, 60));
+	//弾発射アクションを設定//回避アクションを設定
+	pChara->m_pActions->push_back(new CActionAvoidance(5.0f, 5.0f, 9, 10));
+
+
 	
 }
 

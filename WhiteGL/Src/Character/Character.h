@@ -33,6 +33,7 @@ enum class SOUND : int
 	PLAYER_AVOIDANCE = 1,
 	PLAYER_ATTACK_MISS = 2,
 	PLAYER_ATTACK = 3,
+	PLAYER_BEATS	=	4,
 };
 
 //===============================================
@@ -256,6 +257,9 @@ public:
 	*@param	衝突してきたキャラクター
 	*/
 	virtual void hits(CCharacter* pChara) = 0;
+
+	//4分音符のタイミングで行う行動
+	virtual void quarterUpdate() {};
 
 	//生きているか死んでいるかのフラグ
 	//true...生きている　false...死んでいる

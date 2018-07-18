@@ -127,6 +127,9 @@ public:
 	*/
 	virtual void hits(CCharacter* pChara) override;
 
+	//4•ª‰¹•„XV
+	void quarterUpdate() override;
+
 	void hitsPlayerCharacter(CCharacter* pChara);
 
 	void hitsBulletCharacter(CCharacter* pChara);
@@ -146,4 +149,6 @@ public:
 	void isDeath();
 
 	bool Troi = false;
+
+	int beatsCounter = 0;
 };

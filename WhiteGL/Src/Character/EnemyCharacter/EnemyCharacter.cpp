@@ -174,6 +174,30 @@ void CEnemyCharacter::checkState()
 	}
 }
 
+//4•ª‰¹•„XV
+void CEnemyCharacter::quarterUpdate()
+{
+	switch (m_eneType)
+	{
+	case(ENEMY_TYPE::KURO):
+		m_beatCounter++;
+		if (m_beatCounter >= 1)
+		{
+			m_beatCounter = 0;
+			(*this->m_pActions)[2]->restart(this);
+		}
+		break;
+	case(ENEMY_TYPE::TROI):
+			(*this->m_pActions)[3]->start();
+		
+		break;
+	default:
+		printf("“G‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ\n");
+		break;
+
+	}
+}
+
 /**
 * @desc ”½‰fˆ—
 */

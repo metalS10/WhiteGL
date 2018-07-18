@@ -126,6 +126,9 @@ public:
 	*/
 	virtual void hits(CCharacter* pChara) override;
 
+	//4•ª‰¹•„XV
+	void quarterUpdate() override;
+
 
 	void collisionBottomCallback(int event)override
 	{

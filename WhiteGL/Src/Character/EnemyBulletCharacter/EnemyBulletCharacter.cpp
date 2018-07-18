@@ -147,6 +147,11 @@ void CEnemyBulletCharacter::checkState()
 		}
 	}
 }
+//4•ª‰¹•„XV
+void CEnemyBulletCharacter::quarterUpdate()
+{
+
+}
 
 /**
 * @desc ”½‰fˆ—

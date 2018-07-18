@@ -19,13 +19,13 @@ bool CGameMain::init()
 	//ステージ1を開く
 	m_stage = new CStage1_1();
 	BGM = m_stage->getBGM();
-	m_notesSound = new CSound(SOUND_QUARTER_NOTES, 1, 50.0f);
-	m_notesSound->LoadChunk();
 	if (CScene::init() == false)
 	{
 		printf("シーン初期化に失敗");
 		return false;
 	}	
+	
+
 	m_game.allTextureDelete();
 
 	//マップを開く(初期化)
@@ -61,6 +61,7 @@ bool CGameMain::init()
 
 
 	pPlayerChara = (CPlayerCharacter*)CPlayerFactoryManager::getInstance()->create(320.0f, 200.0f);
+
 
 	//プレイヤー1のタグを設定
 	pPlayerChara->m_tag = TAG_PLAYER_1;
@@ -252,6 +253,20 @@ void CGameMain::sceneUpdate()
 //ヒットストップが存在するので注意
 void CGameMain::update()
 {
+	//ゲームエンドボタンを押したら
+	if (input->getOnKey(Input::Key::GameEnd) == true)
+	{
+		gluLookAt(
+			-cameraPosX, 0.0f, 0.0f,
+			-cameraPosX, 0.0f, -10.0f,
+			0.0f, 1.0f, 0.0f
+		);
+		cameraPosX = 0.0f;
+		stageSelectinterval = 0;
+		m_stageEnd = false;
+		//タイトルシーンを生成
+		MS::CMS::getInstance()->setScene(new CTitle());		//ステージセレクト画面に戻る
+	}
 	//printf("%d\n",pPlayerChara->musicNotesCounter );
 	//ゲーム全体を制御する場所
 	gameMain();
@@ -643,16 +658,17 @@ void CGameMain::halfUpdate()
 
 void CGameMain::qauarterUpdate()
 {
-	m_notesSound->playChunk();
-	
+	(*pPlayerChara->m_pSounds)[(int)SOUND::PLAYER_BEATS]->Play();
 	m_game.polygonAction(TAG_PLAYER_1,0);
 	m_game.polygonAction(TAG_BEATSACTION1,1);
 	m_game.polygonAction(TAG_BEATSACTION2,1);
 	m_game.polygonAction(TAG_BEATSACTION3,1);
 	m_game.polygonAction(TAG_BEATSACTION4,1);
 	//拍子間隔の更新処理
-	pPlayerChara->beatUpdate();
-	
+	for (CCharacter* pChara : (*m_pCharacters))
+	{
+		pChara->quarterUpdate();
+	}
 	if(notes != NULL)
 		notes->quarter();
 

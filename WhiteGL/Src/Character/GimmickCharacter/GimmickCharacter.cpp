@@ -107,6 +107,11 @@ void CGimmickCharacter::checkState()
 {
 	
 }
+//4•ª‰¹•„XV
+void CGimmickCharacter::quarterUpdate()
+{
+
+}
 
 /**
 * @desc ”½‰fˆ—

@@ -153,6 +153,11 @@ void CAttackCharacter::checkState()
 		}
 	}
 }
+//4分音符更新
+void CAttackCharacter::quarterUpdate()
+{
+
+}
 
 /**
 * @desc 反映処理
@@ -205,6 +210,7 @@ void CAttackCharacter::hits(CCharacter* pChara)
 {
 
 }
+
 
 
 //コンストラクタ

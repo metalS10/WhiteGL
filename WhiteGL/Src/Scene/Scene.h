@@ -37,8 +37,6 @@ protected:
 	//BGM
 	CSound* BGM = NULL;
 
-	//ŠÔŠu—p‚Ì‰¹
-	CSound* m_notesSound = NULL;
 
 	//BGM‚ÌBPM
 	float m_bgmBpm = 0;

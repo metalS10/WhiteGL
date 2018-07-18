@@ -204,12 +204,12 @@ namespace GLFWEW
 			} 
 			keyMap[] =
 			{
-				{ GLFWBUTTONID_A,GamePad::A },
-				{ GLFWBUTTONID_B,GamePad::B },
-				{ GLFWBUTTONID_Y,GamePad::X },
+				{ GLFWBUTTONID_A,GamePad::X },
+				{ GLFWBUTTONID_B,GamePad::START },
+				{ GLFWBUTTONID_Y,GamePad::A },
 				{ GLFWBUTTONID_X,GamePad::Z },
 				{ GLFWBUTTONID_R, GamePad::L_SHIFT },
-				{ GLFWBUTTONID_Start,GamePad::START },
+				{ GLFWBUTTONID_Start,GamePad::GameEnd },
 			};
 			for (const auto& e : keyMap)
 			{
