@@ -139,6 +139,7 @@ public:
 	void TextureFade(const GLuint texID,const bool out,const float fadeInterval);
 
 	void deleteTexture(const GLuint texID);
+	void deletePoly(const GLuint tag);
 
 	void setTextureScale(const CVec2 Size, const GLuint texID);
 	void setTextureScaleAtTag(const CVec2 Size, const GLuint texID);

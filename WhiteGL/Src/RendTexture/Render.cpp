@@ -565,6 +565,17 @@ CVec4 CRenderer::getPolyColor(const GLuint tag)
 	}
 }
 
+void CRenderer::deletePoly(const GLuint tag)
+{
+	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
+	{
+		if (_polyTag[i] == tag)
+			setPolyPos(CVec2(0.0f,0.0f), tag);
+			setPolyScale(CVec2(0.0f,0.0f), tag);
+			setPolyAngle(0.0f, tag);
+	}
+}
+
 
 
 void CRenderer::setupTextureSize(const CVec2 texPos, const CVec4 texRect, const GLuint texID)

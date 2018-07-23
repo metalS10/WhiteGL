@@ -223,7 +223,14 @@ void CLaunchScheduler::launchCharacters(CGameEngine& game)
 
 			//キャラクターをメインレイヤーに取り付ける
 			//pLayer->addChild(pChara);
-			game.setupTexture(pChara->texPass, TEX_TYPE::PNG, pChara->m_texID, pChara->m_pMove->m_pos, (*pChara->m_pAnimations)[0]->getCurrentChip());
+			if (pChara->m_charaType == CHARACTER_TYPE::ATTACK)
+			{
+				game.setupPoly(CVec4(pChara->m_pMove->m_pos.x, pChara->m_pMove->m_pos.y, 32.0f, 32.0f), CVec4(0.0f, 0.0f, 0.0f, 100.0f), 0, POLY_TYPE::QUAD, TAG_PLAYER_ATTACK);
+			}
+			else
+			{
+				game.setupTexture(pChara->texPass, TEX_TYPE::PNG, pChara->m_texID, pChara->m_pMove->m_pos, (*pChara->m_pAnimations)[0]->getCurrentChip());
+			}
 			game.render();
 
 		}

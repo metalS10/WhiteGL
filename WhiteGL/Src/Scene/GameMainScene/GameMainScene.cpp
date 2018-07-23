@@ -138,7 +138,13 @@ void CGameMain::rendUpdate()
 	{
 		for (CCharacter* pChara : (*m_pCharacters))
 		{
-			if (pChara != pPlayerChara)
+			if (pChara->m_charaType == CHARACTER_TYPE::ATTACK)
+			{
+				m_game.setPolyPos(CVec2(pChara->m_pMove->m_pos.x, pChara->m_pMove->m_pos.y), TAG_PLAYER_ATTACK);
+				m_game.setPolyScale(CVec2(32.0f, 32.0f), TAG_PLAYER_ATTACK);
+				m_game.addPolyAngle(-10.0f, TAG_PLAYER_ATTACK);
+			}
+			else if (pChara != pPlayerChara)
 			{
 				m_game.setTextureRect((*pChara->m_pAnimations)[pChara->m_state]->getCurrentChip(), pChara->m_texID);
 				m_game.setTexScale(pChara->m_scale, pChara->m_texID);

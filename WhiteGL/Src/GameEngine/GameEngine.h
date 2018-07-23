@@ -74,6 +74,7 @@ public:
 	void setTexScaleAtTag(const CVec2 scale,const GLuint tag);
 	void setTexColorAtTag(const CVec4 color,const GLuint tag);
 	void deleteTexture(const GLuint texID);
+	void deletePoly(const GLuint tag);
 	void allTextureDelete();
 	void allTextureDeletenotPlayer();
 	void SetProgressBarWH(const GLuint texID, const CVec4 Rect, const CVec2 position);

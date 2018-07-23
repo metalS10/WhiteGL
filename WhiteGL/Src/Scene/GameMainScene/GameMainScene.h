@@ -91,7 +91,10 @@ public:
 
 			if ((*itr)->m_activeFlag == false)
 			{
-
+				if ((*itr)->m_charaType == CHARACTER_TYPE::ATTACK)
+				{
+					m_game.deletePoly(TAG_PLAYER_ATTACK);
+				}
 				(*itr)->removeFromParent();
 				itr = pCharas->erase(itr);
 

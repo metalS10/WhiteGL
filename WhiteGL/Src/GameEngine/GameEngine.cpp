@@ -408,6 +408,11 @@ CRenderer* CGameEngine::getRenderer()
 	return renderer;
 }
 
+void CGameEngine::deletePoly(const GLuint tag)
+{
+	renderer->deletePoly(tag);
+}
+
 //BBˆÈŠO‚ªÁ‚¦‚é
 void CGameEngine::allTextureDelete()
 {
