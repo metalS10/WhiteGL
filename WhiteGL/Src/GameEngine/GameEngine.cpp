@@ -297,9 +297,9 @@ void CGameEngine::SetProgressBarWH(const GLuint texID, const CVec4 Rect, const C
 	renderer->SetProgressBarWH(texID, Rect,position);
 }
 
-void CGameEngine::setPosition(CVec2 pos, GLuint texID)
+void CGameEngine::setTexPosition(CVec2 pos, GLuint texID)
 {
-	renderer->setPosition(pos, texID);
+	renderer->setTexPosition(pos, texID);
 }
 
 void CGameEngine::deleteTexture(const GLuint texID)
@@ -400,7 +400,7 @@ void* CGameEngine::TextureFade(const GLuint texID, const bool out, const float f
 }
 bool CGameEngine::getFadeEnd(const GLuint texID)
 {
-	return !renderer->actionFade[texID];
+	return !renderer->_texActionFade[texID];
 }
 
 CRenderer* CGameEngine::getRenderer()

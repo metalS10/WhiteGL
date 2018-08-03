@@ -148,7 +148,7 @@ void CGameMain::rendUpdate()
 			{
 				m_game.setTextureRect((*pChara->m_pAnimations)[pChara->m_state]->getCurrentChip(), pChara->m_texID);
 				m_game.setTexScale(pChara->m_scale, pChara->m_texID);
-				m_game.setPosition(pChara->m_pMove->m_pos, pChara->m_texID);
+				m_game.setTexPosition(pChara->m_pMove->m_pos, pChara->m_texID);
 			}
 		}
 		m_game.setTextureRect((*notes->m_pAnimations)[notes->m_state]->getCurrentChip(), NOTES_ID);
@@ -161,14 +161,14 @@ void CGameMain::rendUpdate()
 		
 		
 	//カメラ追従UI系
-	m_game.setPosition(CVec2(WINDOW_RIGHT*0.120f + cameraPosX, WINDOW_TOP*0.94f + cameraPosY), UI_BACK_ID);
-	m_game.setPosition(CVec2(WINDOW_RIGHT*0.12f + cameraPosX, WINDOW_TOP*0.962f + cameraPosY), OUTLINE_HP_ID);
-	m_game.setPosition(CVec2(WINDOW_RIGHT*0.12f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY), OUTLINE_DP_ID);
-	m_game.setPosition(CVec2(WINDOW_RIGHT*0.355f + cameraPosX, WINDOW_TOP*0.94f + cameraPosY), ENEMY_STATS_ID);
-	m_game.setPosition(CVec2(WINDOW_RIGHT*0.35f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY), OUTLLINE_ENEMYHP_ID);
+	m_game.setTexPosition(CVec2(WINDOW_RIGHT*0.120f + cameraPosX, WINDOW_TOP*0.94f + cameraPosY), UI_BACK_ID);
+	m_game.setTexPosition(CVec2(WINDOW_RIGHT*0.12f + cameraPosX, WINDOW_TOP*0.962f + cameraPosY), OUTLINE_HP_ID);
+	m_game.setTexPosition(CVec2(WINDOW_RIGHT*0.12f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY), OUTLINE_DP_ID);
+	m_game.setTexPosition(CVec2(WINDOW_RIGHT*0.355f + cameraPosX, WINDOW_TOP*0.94f + cameraPosY), ENEMY_STATS_ID);
+	m_game.setTexPosition(CVec2(WINDOW_RIGHT*0.35f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY), OUTLLINE_ENEMYHP_ID);
 	//m_game.setPosition(CVec2(WINDOW_RIGHT*0.35f + cameraPosX, WINDOW_TOP*0.92f), 11);
-	m_game.setPosition(CVec2(WINDOW_RIGHT*0.5f + cameraPosX, WINDOW_TOP*0.5f + cameraPosY), BG_ID);
-	m_game.setPosition(CVec2( (WINDOW_RIGHT - (*notes->m_pAnimations)[0]->getCurrentChip().z * 0.5f) + cameraPosX , (WINDOW_BOTTOM + (*notes->m_pAnimations)[0]->getCurrentChip().w * 0.5 ) + cameraPosY) , NOTES_ID);
+	m_game.setTexPosition(CVec2(WINDOW_RIGHT*0.5f + cameraPosX, WINDOW_TOP*0.5f + cameraPosY), BG_ID);
+	m_game.setTexPosition(CVec2( (WINDOW_RIGHT - (*notes->m_pAnimations)[0]->getCurrentChip().z * 0.5f) + cameraPosX , (WINDOW_BOTTOM + (*notes->m_pAnimations)[0]->getCurrentChip().w * 0.5 ) + cameraPosY) , NOTES_ID);
 	m_game.setPolyPosX(WINDOW_RIGHT * 0.01f +cameraPosX, TAG_BEATSACTION1);
 	m_game.setPolyPosX(WINDOW_RIGHT * 0.99f +cameraPosX, TAG_BEATSACTION2);
 	m_game.setPolyPosX(WINDOW_RIGHT * 0.5f	+cameraPosX, TAG_BEATSACTION3);
@@ -293,7 +293,7 @@ void CGameMain::update()
 	}
 
 	//背景のポジションセット
-	m_game.setPosition(CVec2(WINDOW_RIGHT * 0.5 + cameraPosX, WINDOW_TOP * 0.5 + cameraPosY), MAX_TEXTURE_NUMBER - 1);
+	m_game.setTexPosition(CVec2(WINDOW_RIGHT * 0.5 + cameraPosX, WINDOW_TOP * 0.5 + cameraPosY), MAX_TEXTURE_NUMBER - 1);
 }
 
 //ゲーム全体の動き(ステージ移動)

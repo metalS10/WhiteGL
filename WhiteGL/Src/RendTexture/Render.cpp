@@ -1,6 +1,7 @@
 #include "Render.h"
 
 
+//アニメーション更新処理
 void CRenderer::update(std::vector<CAnimation*>* anim)
 {
 	for (int i = 1 ; i <= anim->size();i++)
@@ -11,48 +12,51 @@ void CRenderer::update(std::vector<CAnimation*>* anim)
 
 
 
-		glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
+		glBindTexture(GL_TEXTURE_2D, _texID[texID]);
 
 
 		//画像の矩形範囲を設定
-		CVec4 changerect4 = CVec4(texRect.x / tex[texID]->m_width, (texRect.x + texRect.z) / tex[texID]->m_width, texRect.y / tex[texID]->m_height, (texRect.y + texRect.w) / tex[texID]->m_height);
-		rect[texID] = CVec4(changerect4);
+		CVec4 changerect4 = CVec4(texRect.x / _texImage[texID]->m_width, (texRect.x + texRect.z) / _texImage[texID]->m_width, texRect.y / _texImage[texID]->m_height, (texRect.y + texRect.w) / _texImage[texID]->m_height);
+		_texRect[texID] = CVec4(changerect4);
 	}
 	this->fadeSearch();
 }
+
+//フェードイン・アウト中のテクスチャの動き(色情報)
 void CRenderer::fadeSearch()
 {
 	for (int i = 0;i <= MAX_TEXTURE_NUMBER;i++)
 	{
 		//フェードインアウト
-		if (actionFade[i])
+		if (_texActionFade[i])
 		{
 			//フェードアウト
-			if (fadeOut[i])
+			if (_texFadeOut[i])
 			{
-				colorRGBA[i].w -= actionFadeInterval[i];
-				if (colorRGBA[i].w <= 0.0f)
+				_texColorRGBA[i].w -= _texActionFadeInterval[i];
+				if (_texColorRGBA[i].w <= 0.0f)
 				{
-					colorRGBA[i].w = 0.0f;
-					actionFade[i] = false;
+					_texColorRGBA[i].w = 0.0f;
+					_texActionFade[i] = false;
 				}
 			}
 			//フェードイン
 			else
 			{
-				colorRGBA[i].w += actionFadeInterval[i];
-				if (colorRGBA[i].w >= 100.0f)
+				_texColorRGBA[i].w += _texActionFadeInterval[i];
+				if (_texColorRGBA[i].w >= 100.0f)
 				{
-					colorRGBA[i].w = 100.0f;
-					actionFade[i] = false;
+					_texColorRGBA[i].w = 100.0f;
+					_texActionFade[i] = false;
 				}
 			}
 
-			glBindTexture(GL_TEXTURE_2D, g_texID[i]);
+			glBindTexture(GL_TEXTURE_2D, _texID[i]);
 		}
 	}
 }
 
+//全ての描画更新処理
 void CRenderer::render()
 {
 	// The following two lines enable semi transparent
@@ -181,7 +185,7 @@ void CRenderer::render()
 		}
 		for (int texID = 0; texID < MAX_TEXTURE_NUMBER; texID++)
 		{
-			if (g_texID[texID] != 0)
+			if (_texID[texID] != 0)
 			{
 
 				if ((GLuint)m_texLayer[texID] == i)
@@ -191,92 +195,92 @@ void CRenderer::render()
 					//使用許可
 					glEnable(GL_TEXTURE_2D);
 
-					if (texType[texID] == TEX_TYPE::BMP)
+					if (_texType[texID] == TEX_TYPE::BMP)
 					{
 						//場所指定
 						const GLfloat vtx2[] = {
-							_rectPos[texID].x, _rectPos[texID].z,0,
-							_rectPos[texID].y, _rectPos[texID].z,0,
-							_rectPos[texID].y, _rectPos[texID].w,0,
-							_rectPos[texID].x, _rectPos[texID].w,0,
+							_texRectPos[texID].x,_texRectPos[texID].z,0,
+							_texRectPos[texID].y,_texRectPos[texID].z,0,
+							_texRectPos[texID].y,_texRectPos[texID].w,0,
+							_texRectPos[texID].x,_texRectPos[texID].w,0,
 						};
 						glVertexPointer(3, GL_FLOAT, 0, vtx2);
 
 						const GLfloat color[] = {
-							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+							_texColorRGBA[texID].x*0.01f,_texColorRGBA[texID].y*0.01f,_texColorRGBA[texID].z*0.01f,_texColorRGBA[texID].w*0.01f,
+							_texColorRGBA[texID].x*0.01f,_texColorRGBA[texID].y*0.01f,_texColorRGBA[texID].z*0.01f,_texColorRGBA[texID].w*0.01f,
+							_texColorRGBA[texID].x*0.01f,_texColorRGBA[texID].y*0.01f,_texColorRGBA[texID].z*0.01f,_texColorRGBA[texID].w*0.01f,
+							_texColorRGBA[texID].x*0.01f,_texColorRGBA[texID].y*0.01f,_texColorRGBA[texID].z*0.01f,_texColorRGBA[texID].w*0.01f,
 						};
 						glColorPointer(4, GL_FLOAT, 0, color);
 
 						//テクスチャの領域指定
 						const GLfloat texuv[] = {
-							rect[texID].x, rect[texID].z,
-							rect[texID].y, rect[texID].z,
-							rect[texID].y, rect[texID].w,
-							rect[texID].x, rect[texID].w,
+							_texRect[texID].x, _texRect[texID].z,
+							_texRect[texID].y, _texRect[texID].z,
+							_texRect[texID].y, _texRect[texID].w,
+							_texRect[texID].x, _texRect[texID].w,
 						};
 						//頂点の設定
 						glTexCoordPointer(2, GL_FLOAT, 0, texuv);
 
 					}
-					else if (texType[texID] == TEX_TYPE::PNG)
+					else if (_texType[texID] == TEX_TYPE::PNG)
 					{
 						//場所指定
 						const GLfloat vtx2[] = {
-							_rectPos[texID].x, _rectPos[texID].z,0,
-							_rectPos[texID].y, _rectPos[texID].z,0,
-							_rectPos[texID].y, _rectPos[texID].w,0,
-							_rectPos[texID].x, _rectPos[texID].w,0,
+							_texRectPos[texID].x, _texRectPos[texID].z,0,
+							_texRectPos[texID].y, _texRectPos[texID].z,0,
+							_texRectPos[texID].y, _texRectPos[texID].w,0,
+							_texRectPos[texID].x, _texRectPos[texID].w,0,
 						};
 						glVertexPointer(3, GL_FLOAT, 0, vtx2);
 
 						const GLfloat color[] = {
-							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+							_texColorRGBA[texID].x*0.01f,_texColorRGBA[texID].y*0.01f,_texColorRGBA[texID].z*0.01f,_texColorRGBA[texID].w*0.01f,
+							_texColorRGBA[texID].x*0.01f,_texColorRGBA[texID].y*0.01f,_texColorRGBA[texID].z*0.01f,_texColorRGBA[texID].w*0.01f,
+							_texColorRGBA[texID].x*0.01f,_texColorRGBA[texID].y*0.01f,_texColorRGBA[texID].z*0.01f,_texColorRGBA[texID].w*0.01f,
+							_texColorRGBA[texID].x*0.01f,_texColorRGBA[texID].y*0.01f,_texColorRGBA[texID].z*0.01f,_texColorRGBA[texID].w*0.01f,
 
 						};
 						glColorPointer(4, GL_FLOAT, 0, color);
 
 						//テクスチャの領域指定
 						const GLfloat texuv[] = {
-							rect[texID].x, rect[texID].w,
-							rect[texID].y, rect[texID].w,
-							rect[texID].y, rect[texID].z,
-							rect[texID].x, rect[texID].z,
+							_texRect[texID].x, _texRect[texID].w,
+							_texRect[texID].y, _texRect[texID].w,
+							_texRect[texID].y, _texRect[texID].z,
+							_texRect[texID].x, _texRect[texID].z,
 						};
 						//頂点の設定
 						glTexCoordPointer(2, GL_FLOAT, 0, texuv);
 
 					}
-					else if (texType[texID] == TEX_TYPE::QUAD)
+					else if (_texType[texID] == TEX_TYPE::QUAD)
 					{
 						//場所指定
 						const GLfloat vtx2[] = {
-							_rectPos[texID].x, _rectPos[texID].z,0,
-							_rectPos[texID].y, _rectPos[texID].z,0,
-							_rectPos[texID].y, _rectPos[texID].w,0,
-							_rectPos[texID].x, _rectPos[texID].w,0,
+							_texRectPos[texID].x, _texRectPos[texID].z,0,
+							_texRectPos[texID].y, _texRectPos[texID].z,0,
+							_texRectPos[texID].y, _texRectPos[texID].w,0,
+							_texRectPos[texID].x, _texRectPos[texID].w,0,
 						};
 						glVertexPointer(3, GL_FLOAT, 0, vtx2);
 
 						const GLfloat color[] = {
-							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
-							colorRGBA[texID].x*0.01f,colorRGBA[texID].y*0.01f,colorRGBA[texID].z*0.01f,colorRGBA[texID].w*0.01f,
+							_texColorRGBA[texID].x*0.01f,_texColorRGBA[texID].y*0.01f,_texColorRGBA[texID].z*0.01f,_texColorRGBA[texID].w*0.01f,
+							_texColorRGBA[texID].x*0.01f,_texColorRGBA[texID].y*0.01f,_texColorRGBA[texID].z*0.01f,_texColorRGBA[texID].w*0.01f,
+							_texColorRGBA[texID].x*0.01f,_texColorRGBA[texID].y*0.01f,_texColorRGBA[texID].z*0.01f,_texColorRGBA[texID].w*0.01f,
+							_texColorRGBA[texID].x*0.01f,_texColorRGBA[texID].y*0.01f,_texColorRGBA[texID].z*0.01f,_texColorRGBA[texID].w*0.01f,
 						};
 						glColorPointer(4, GL_FLOAT, 0, color);
 
 						//テクスチャの領域指定
 						const GLfloat texuv[] = {
-							rect[texID].x, rect[texID].w,
-							rect[texID].y, rect[texID].w,
-							rect[texID].y, rect[texID].z,
-							rect[texID].x, rect[texID].z,
+							_texRect[texID].x, _texRect[texID].w,
+							_texRect[texID].y, _texRect[texID].w,
+							_texRect[texID].y, _texRect[texID].z,
+							_texRect[texID].x, _texRect[texID].z,
 						};
 						//頂点の設定
 						glTexCoordPointer(2, GL_FLOAT, 0, texuv);
@@ -284,7 +288,7 @@ void CRenderer::render()
 
 					glEnableClientState(GL_VERTEX_ARRAY);
 					//テクスチャの画像指定
-					glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
+					glBindTexture(GL_TEXTURE_2D, _texID[texID]);
 					//板ポリゴン表示
 					glDrawArrays(GL_QUADS, 0, 4);
 
@@ -309,23 +313,23 @@ void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint t
 	//使用許可
 	glEnable(GL_TEXTURE_2D);
 	//texIDを空いているところへ
-	glGenTextures(1, &g_texID[texID]);
+	glGenTextures(1, &_texID[texID]);
 
 	//画像データとテクスチャiDを結びつける
-	glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
+	glBindTexture(GL_TEXTURE_2D, _texID[texID]);
 
-	texScale[texID] = CVec2(1, 1);
-	texDefaultScale[texID] = 1.0f;
+	_texScale[texID] = CVec2(1, 1);
+	_texDefaultScale[texID] = 1.0f;
 
 	switch (tex_type)
 	{
 	case TEX_TYPE::BMP:
-		tex[texID] = new CBmpImage();
-		if (tex[texID]->load(file) == false)
+		_texImage[texID] = new CBmpImage();
+		if (_texImage[texID]->load(file) == false)
 		{
 			std::cerr << "ERROR : 画像の読み込みに失敗" << std::endl;
 		}
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tex[texID]->m_width, tex[texID]->m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, tex[texID]->m_bits);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _texImage[texID]->m_width, _texImage[texID]->m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, _texImage[texID]->m_bits);
 
 		//テクスチャの拡大・縮小方法の設定
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -338,16 +342,16 @@ void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint t
 		break;
 
 	case TEX_TYPE::PNG:
-		tex[texID] = new CPngImage();
-		if (tex[texID]->load(file) == false)
+		_texImage[texID] = new CPngImage();
+		if (_texImage[texID]->load(file) == false)
 		{
 			std::cerr << "ERROR : 画像の読み込みに失敗" << std::endl;
 		}
 
-		if (tex[texID]->m_format == PNG_COLOR_TYPE_RGBA)
+		if (_texImage[texID]->m_format == PNG_COLOR_TYPE_RGBA)
 		{
 			//テクスチャにPNGファイルから読み込んだピクセルを書き込む
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex[texID]->m_width, tex[texID]->m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex[texID]->m_bits);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _texImage[texID]->m_width, _texImage[texID]->m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, _texImage[texID]->m_bits);
 
 			//テクスチャの拡大・縮小方法の設定
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -358,10 +362,10 @@ void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint t
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 		}
-		else if (tex[texID]->m_format == PNG_COLOR_TYPE_RGB)
+		else if (_texImage[texID]->m_format == PNG_COLOR_TYPE_RGB)
 		{
 			//テクスチャにPNGファイルから読み込んだピクセルを書き込む
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tex[texID]->m_width, tex[texID]->m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, tex[texID]->m_bits);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _texImage[texID]->m_width, _texImage[texID]->m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, _texImage[texID]->m_bits);
 
 			//テクスチャの拡大・縮小方法の設定
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -372,7 +376,7 @@ void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint t
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 		}
-		else if (tex[texID]->m_format == PNG_COLOR_TYPE_PALETTE)
+		else if (_texImage[texID]->m_format == PNG_COLOR_TYPE_PALETTE)
 		{
 			GLubyte* textureImage;		
 
@@ -381,10 +385,10 @@ void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint t
 			const char* filename = file;
 			bool success = loadPngImage(filename, width, height, hasAlpha, &textureImage);
 			if (!success) {
-				std::cout << "Unable to load png file" << std::endl;
+				//std::cout << "Unable to load png file" << std::endl;
 				return;
 			}
-			std::cout << "Image loaded " << width << " " << height << " alpha " << hasAlpha << std::endl;
+			//std::cout << "Image loaded " << width << " " << height << " alpha " << hasAlpha << std::endl;
 			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 			glTexImage2D(GL_TEXTURE_2D, 0, hasAlpha ? 4 : 3, width,
 				height, 0, hasAlpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE,
@@ -400,10 +404,10 @@ void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint t
 
 			SAFE_DELETE(textureImage);
 		}
-		else if (tex[texID]->m_format == PNG_COLOR_TYPE_GRAY)
+		else if (_texImage[texID]->m_format == PNG_COLOR_TYPE_GRAY)
 		{
 			//テクスチャにPNGファイルから読み込んだピクセルを書き込む
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, tex[texID]->m_width, tex[texID]->m_height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, tex[texID]->m_bits);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, _texImage[texID]->m_width, _texImage[texID]->m_height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, _texImage[texID]->m_bits);
 			//grayってどう描画するんだろう
 			std::cout << "PNG_COLOR_TYPE_GRAY用描画システム未完成" << std::endl;
 		}
@@ -411,9 +415,9 @@ void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint t
 		break;
 
 	case TEX_TYPE::QUAD:
-		tex[texID] = new CPngImage();
+		_texImage[texID] = new CPngImage();
 
-		tex[texID]->m_width = 1;tex[texID]->m_height = 1;
+		_texImage[texID]->m_width = 1;_texImage[texID]->m_height = 1;
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_ONE, 1, 1, 0, GL_ONE, GL_UNSIGNED_BYTE, 0);
 
 		//テクスチャの拡大・縮小方法の設定
@@ -439,8 +443,8 @@ void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint t
 
 	//使用許可
 	glDisable(GL_TEXTURE_2D);
-	colorRGBA[texID] = (CVec4(100.0f, 100.0f, 100.0f, 100.0f));
-	texType[texID] = (tex_type);
+	_texColorRGBA[texID] = (CVec4(100.0f, 100.0f, 100.0f, 100.0f));
+	_texType[texID] = (tex_type);
 }
 //三角ポリゴンのセットアップ
 void CRenderer::setupTrianglesPoly(const CVec4 vertex,const CVec4 color,const GLuint line,const LAYER layer)
@@ -565,6 +569,7 @@ CVec4 CRenderer::getPolyColor(const GLuint tag)
 	}
 }
 
+//ポリゴンの削除
 void CRenderer::deletePoly(const GLuint tag)
 {
 	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
@@ -577,23 +582,23 @@ void CRenderer::deletePoly(const GLuint tag)
 }
 
 
-
+//テクスチャのサイズ設定
 void CRenderer::setupTextureSize(const CVec2 texPos, const CVec4 texRect, const GLuint texID)
 {
 
 	//横幅縦幅をセット
-	texWH[texID] = CVec2(((texRect.x + texRect.z) - texRect.x) * 0.5f, ((texRect.y + texRect.w) - texRect.y) * 0.5f);
-	_rectPos[texID] = CVec4(texPos.x - texWH[texID].x, texPos.x + texWH[texID].x, texPos.y - texWH[texID].y, texPos.y + texWH[texID].y);
-	_position[texID] = texPos;
+	_texWH[texID] = CVec2(((texRect.x + texRect.z) - texRect.x) * 0.5f, ((texRect.y + texRect.w) - texRect.y) * 0.5f);
+	_texRectPos[texID] = CVec4(texPos.x - _texWH[texID].x, texPos.x + _texWH[texID].x, texPos.y - _texWH[texID].y, texPos.y + _texWH[texID].y);
+	_texPosition[texID] = texPos;
 
 	//画像の矩形範囲を設定
-	CVec4 changerect4 = CVec4(texRect.x / tex[texID]->m_width, (texRect.x + texRect.z) / tex[texID]->m_width, texRect.y / tex[texID]->m_height, (texRect.y + texRect.w) / tex[texID]->m_height);
-	rect[texID] = CVec4(changerect4);
+	CVec4 changerect4 = CVec4(texRect.x / _texImage[texID]->m_width, (texRect.x + texRect.z) / _texImage[texID]->m_width, texRect.y / _texImage[texID]->m_height, (texRect.y + texRect.w) / _texImage[texID]->m_height);
+	_texRect[texID] = CVec4(changerect4);
 
 
 
 
-	if (tex[texID] == NULL)
+	if (_texImage[texID] == NULL)
 	{
 		std::cerr << "BMP,PNG,JPEGなんでもないです" << std::endl;
 	}
@@ -605,18 +610,18 @@ void CRenderer::setupTextureSizeAtTag(const CVec2 texPos,const CVec4 texRect,con
 		if (_texTag[i] == tag)
 		{
 			//横幅縦幅をセット
-			texWH[i] = CVec2(((texRect.x + texRect.z) - texRect.x) * 0.5f, ((texRect.y + texRect.w) - texRect.y) * 0.5f);
-			_rectPos[i] = CVec4(texPos.x - texWH[i].x, texPos.x + texWH[i].x, texPos.y - texWH[i].y, texPos.y + texWH[i].y);
-			_position[i] = texPos;
+			_texWH[i] = CVec2(((texRect.x + texRect.z) - texRect.x) * 0.5f, ((texRect.y + texRect.w) - texRect.y) * 0.5f);
+			_texRectPos[i] = CVec4(texPos.x - _texWH[i].x, texPos.x + _texWH[i].x, texPos.y - _texWH[i].y, texPos.y + _texWH[i].y);
+			_texPosition[i] = texPos;
 
 			//画像の矩形範囲を設定
-			CVec4 changerect4 = CVec4(texRect.x / tex[i]->m_width, (texRect.x + texRect.z) / tex[i]->m_width, texRect.y / tex[i]->m_height, (texRect.y + texRect.w) / tex[i]->m_height);
-			rect[i] = CVec4(changerect4);
+			CVec4 changerect4 = CVec4(texRect.x / _texImage[i]->m_width, (texRect.x + texRect.z) / _texImage[i]->m_width, texRect.y / _texImage[i]->m_height, (texRect.y + texRect.w) / _texImage[i]->m_height);
+			_texRect[i] = CVec4(changerect4);
 
 
 
 
-			if (tex[i] == NULL)
+			if (_texImage[i] == NULL)
 			{
 				std::cerr << "BMP,PNG,JPEGなんでもないです" << std::endl;
 			}
@@ -625,20 +630,22 @@ void CRenderer::setupTextureSizeAtTag(const CVec2 texPos,const CVec4 texRect,con
 	}
 }
 
+//テクスチャの削除
 void CRenderer::deleteTexture(const GLuint texID)
 {
 	//使用許可
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	glDeleteTextures(1, &g_texID[texID]);
-	g_texID[texID] = 0;
-	rect[texID] = {};
-	_rectPos[texID] = {};
+	glDeleteTextures(1, &_texID[texID]);
+	_texID[texID] = 0;
+	_texRect[texID] = {};
+	_texRectPos[texID] = {};
 
 	//使用許可
 	glDisable(GL_TEXTURE_2D);
 }
 
+//PngImageのロード関数(これだけめちゃくちゃ長いので分けました)
 bool CRenderer::loadPngImage(const char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData) {
 	png_structp png_ptr;
 	png_infop info_ptr;
@@ -753,36 +760,39 @@ bool CRenderer::loadPngImage(const char *name, int &outWidth, int &outHeight, bo
 	/* That's it */
 	return true;
 }
+
+//テクスチャの色設定
 void CRenderer::setupTextureColor(const CVec4 color, const GLuint texID)
 {
-	colorRGBA[texID] = color;
+	_texColorRGBA[texID] = color;
 }
-
 void CRenderer::setupTextureColorAtTag(const CVec4 color, const GLuint tag)
 {
 	for (int i = 0; i < MAX_TEXTURE_NUMBER; i++)
 	{
 		if (_texTag[i] == tag)
 		{
-			colorRGBA[i] = color;
+			_texColorRGBA[i] = color;
 			return;
 		}
 	}
 }
 
+//テクスチャのフェード設定
 void CRenderer::TextureFade(const GLuint texID, const bool out,const float fadeInterval)
 {
-	actionFade[texID] = true;
-	actionFadeInterval[texID] = fadeInterval;
-	fadeOut[texID] = out;
+	_texActionFade[texID] = true;
+	_texActionFadeInterval[texID] = fadeInterval;
+	_texFadeOut[texID] = out;
 	this->fadeSearch();
 
 }
 
+//テクスチャのスケール設定
 void CRenderer::setTextureScale(const CVec2 Size, const GLuint texID)
 {
-	texScale[texID] = Size;
-	_rectPos[texID] = CVec4(_position[texID].x - texWH[texID].x * Size.x, _position[texID].x + texWH[texID].x * Size.x, _position[texID].y - texWH[texID].y * Size.y, _position[texID].y + texWH[texID].y * Size.y);
+	_texScale[texID] = Size;
+	_texRectPos[texID] = CVec4(_texPosition[texID].x - _texWH[texID].x * Size.x, _texPosition[texID].x + _texWH[texID].x * Size.x, _texPosition[texID].y - _texWH[texID].y * Size.y, _texPosition[texID].y + _texWH[texID].y * Size.y);
 }
 void CRenderer::setTextureScaleAtTag(const CVec2 Size, const GLuint tag)
 {
@@ -791,91 +801,95 @@ void CRenderer::setTextureScaleAtTag(const CVec2 Size, const GLuint tag)
 
 		if (_texTag[i] == tag)
 		{
-			texScale[i] = Size;
-			_rectPos[i] = CVec4(_position[i].x - texWH[i].x * Size.x, _position[i].x + texWH[i].x * Size.x, _position[i].y - texWH[i].y * Size.y, _position[i].y + texWH[i].y * Size.y);
+			_texScale[i] = Size;
+			_texRectPos[i] = CVec4(_texPosition[i].x - _texWH[i].x * Size.x, _texPosition[i].x + _texWH[i].x * Size.x, _texPosition[i].y - _texWH[i].y * Size.y, _texPosition[i].y + _texWH[i].y * Size.y);
 			return;
 		}
 	}
 }
 
-void CRenderer::setPosition(const CVec2 position, const GLuint texID)
+//テクスチャの座標設定
+void CRenderer::setTexPosition(const CVec2 position, const GLuint texID)
 {
-	_position[texID] = position;
-	_rectPos[texID] = CVec4(
-		_position[texID].x - texWH[texID].x * texScale[texID].x,
-		_position[texID].x + texWH[texID].x * texScale[texID].x,
-		_position[texID].y - texWH[texID].y * texScale[texID].y,
-		_position[texID].y + texWH[texID].y * texScale[texID].y);
+	_texPosition[texID] = position;
+	_texRectPos[texID] = CVec4(
+		_texPosition[texID].x - _texWH[texID].x * _texScale[texID].x,
+		_texPosition[texID].x + _texWH[texID].x * _texScale[texID].x,
+		_texPosition[texID].y - _texWH[texID].y * _texScale[texID].y,
+		_texPosition[texID].y + _texWH[texID].y * _texScale[texID].y);
 }
-void CRenderer::setPositionAtTag(const CVec2 position, const GLuint tag)
+void CRenderer::setTexPositionAtTag(const CVec2 position, const GLuint tag)
 {
 	for (int i = 0; i < MAX_TEXTURE_NUMBER; i++)
 	{
 		if (_texTag[i] == tag)
 		{
-			_position[i] = position;
-			_rectPos[i] = CVec4(
-				_position[i].x - texWH[i].x * texScale[i].x,
-				_position[i].x + texWH[i].x * texScale[i].x,
-				_position[i].y - texWH[i].y * texScale[i].y,
-				_position[i].y + texWH[i].y * texScale[i].y);
+			_texPosition[i] = position;
+			_texRectPos[i] = CVec4(
+				_texPosition[i].x - _texWH[i].x * _texScale[i].x,
+				_texPosition[i].x + _texWH[i].x * _texScale[i].x,
+				_texPosition[i].y - _texWH[i].y * _texScale[i].y,
+				_texPosition[i].y + _texWH[i].y * _texScale[i].y);
 			return;
 		}
 	}
 }
 
+//マップデータの座標設定
 void CRenderer::setMapPosition(const CVec2 position, const GLuint texID)
 {
-	_position[texID] = position;
-	CVec4 defrect = _rectPos[texID];
-	_rectPos[texID] = CVec4(_position[texID].x + defrect.x, _position[texID].x + defrect.y, _position[texID].y + defrect.z, _position[texID].y + defrect.w);
+	_texPosition[texID] = position;
+	CVec4 defrect = _texRectPos[texID];
+	_texRectPos[texID] = CVec4(_texPosition[texID].x + defrect.x, _texPosition[texID].x + defrect.y, _texPosition[texID].y + defrect.z, _texPosition[texID].y + defrect.w);
 }
 
 
-void CRenderer::setTextureRect(const CVec4 Rect,const GLuint texID)
+//テクスチャの矩形設定
+void CRenderer::setTextureRect(const CVec4 rect,const GLuint texID)
 {
 	//使用許可
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
+	glBindTexture(GL_TEXTURE_2D, _texID[texID]);
 
 
 	//画像の矩形範囲を設定
-	CVec4 changerect4 = CVec4(Rect.x / tex[texID]->m_width, (Rect.x + Rect.z) / tex[texID]->m_width, Rect.y / tex[texID]->m_height, (Rect.y + Rect.w) / tex[texID]->m_height);
+	CVec4 changerect4 = CVec4(rect.x / _texImage[texID]->m_width, (rect.x + rect.z) / _texImage[texID]->m_width, rect.y / _texImage[texID]->m_height, (rect.y + rect.w) / _texImage[texID]->m_height);
 
-	rect[texID] = CVec4(changerect4);
+	_texRect[texID] = CVec4(changerect4);
 
 	//使用許可
 	glDisable(GL_TEXTURE_2D);
 }
 
-void CRenderer::SetProgressBarWH(const GLuint texID,const CVec4 Rect, const CVec2 position)
+//HPやBPのバーのための矩形設定
+void CRenderer::SetProgressBarWH(const GLuint texID,const CVec4 _texRect, const CVec2 position)
 {
 	//使用許可
 	glEnable(GL_TEXTURE_2D);
 	CVec2 vec2;
-	glBindTexture(GL_TEXTURE_2D, g_texID[texID]);
-	if (Rect.z >= 0)
+	glBindTexture(GL_TEXTURE_2D, _texID[texID]);
+	if (_texRect.z >= 0)
 	{
-		texWH[texID] = CVec2(Rect.z, 5.0f);
-		vec2 = CVec2(position.x + Rect.z, position.y);
+		_texWH[texID] = CVec2(_texRect.z, 5.0f);
+		vec2 = CVec2(position.x + _texRect.z, position.y);
 	}
 	else
 	{
-		texWH[texID] = CVec2(0.0f, 5.0f);
+		_texWH[texID] = CVec2(0.0f, 5.0f);
 		vec2 = CVec2(position.x + 0.0f, position.y);
 	}
-	_position[texID] = vec2;
-	_rectPos[texID] = CVec4(
-		_position[texID].x - texWH[texID].x * texScale[texID].x,
-		_position[texID].x + texWH[texID].x * texScale[texID].x,
-		_position[texID].y - texWH[texID].y * texScale[texID].y,
-		_position[texID].y + texWH[texID].y * texScale[texID].y);
+	_texPosition[texID] = vec2;
+	_texRectPos[texID] = CVec4(
+		_texPosition[texID].x - _texWH[texID].x * _texScale[texID].x,
+		_texPosition[texID].x + _texWH[texID].x * _texScale[texID].x,
+		_texPosition[texID].y - _texWH[texID].y * _texScale[texID].y,
+		_texPosition[texID].y + _texWH[texID].y * _texScale[texID].y);
 
 	//使用許可
 	glDisable(GL_TEXTURE_2D);
 
 }
-//全テクスチャ削除
+//ゲームの中のテクスチャをすべて削除
 void CRenderer::allTextureDelete()
 {
 	for (int i = 0;i < MAX_TEXTURE_NUMBER;i++)
@@ -883,7 +897,7 @@ void CRenderer::allTextureDelete()
 		if (i != MAX_TEXTURE_NUMBER - 1)
 		{
 			deleteTexture(i);
-			SAFE_DELETE(tex[i]);
+			SAFE_DELETE(_texImage[i]);
 		}
 	}
 	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
@@ -900,7 +914,8 @@ void CRenderer::allTextureDelete()
 		_polyTag[i] = {};
 	}
 }
-//ステージ移動全テクスチャ削除
+
+//ゲームに必要不可欠なテクスチャ以外のテクスチャを削除(ステージ移動)
 void CRenderer::allTextureDeletenotPlayer()
 {
 	for (int i = 0;i < MAX_TEXTURE_NUMBER;i++)
@@ -909,7 +924,7 @@ void CRenderer::allTextureDeletenotPlayer()
 		if (i != BLACKBORD_ID && i != NOTES_ID && i > BAR_ENEMYHP_ID)
 		{
 			deleteTexture(i);
-			SAFE_DELETE(tex[i]);
+			SAFE_DELETE(_texImage[i]);
 		}
 	}
 	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
@@ -920,6 +935,7 @@ void CRenderer::allTextureDeletenotPlayer()
 		_bgPolyMaxLine = {};
 	}
 }
+//背景用の更新処理
 void CRenderer::notesFadeBackground()
 {
 	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
@@ -938,7 +954,7 @@ void CRenderer::notesFadeBackground()
 		}
 	}
 }
-
+//beatsに合わせるアクションの更新処理
 void CRenderer::polygonNotesAction()
 {
 	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
@@ -962,18 +978,21 @@ void CRenderer::polygonNotesAction()
 		}
 	}
 }
+
+//テクスチャのbeatsに合わせるアクションの更新処理
 void CRenderer::textureNotesAction()
 {
 	for (int i = 0; i < MAX_TEXTURE_NUMBER; i++)
 	{
-		if (texScale[i].x < texDefaultScale[i])
+		if (_texScale[i].x < _texDefaultScale[i])
 		{
 			if (_texTag[i] == TAG_TITLE_TEXT1 || _texTag[i] == TAG_TITLE_TEXT2 || _texTag[i] == TAG_TITLE_TEXT3)
-				setTextureScaleAtTag(CVec2(texScale[i].x + 0.011f, texScale[i].y + 0.01f), _texTag[i]);
+				setTextureScaleAtTag(CVec2(_texScale[i].x + 0.011f, _texScale[i].y + 0.01f), _texTag[i]);
 		}
 	}
 }
 
+//背景用のランダム初期化
 void CRenderer::notesRandomFadeInit()
 {
 	for (int i = 0; i < MAX_BACKGROUND_NUMBER; i++)
@@ -992,6 +1011,7 @@ void CRenderer::notesRandomFadeInit()
 	}
 }
 
+//背景用の上に上がっていく初期化(mode)
 void CRenderer::notesUpFadeInit(GLuint mode)
 {
 	switch (mode)
@@ -1042,7 +1062,7 @@ void CRenderer::notesUpFadeInit(GLuint mode)
 	
 }
 
-
+//beatsに合わせるアクション(mode(0:サイズ,1色))
 void CRenderer::polygonNotesActionInit(const GLuint tag,const GLuint mode)
 {
 	for (int i = 0; i < MAX_POLYGON_NUMBER; i++)
