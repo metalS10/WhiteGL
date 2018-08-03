@@ -35,20 +35,20 @@ bool CTitle::init()
 
 			//m_trianglesLeft.push_back(m_polyRange*j);	//このポリゴンのx軸座標左を設定
 			//m_trianglesRight.push_back((m_polyRange*j) + m_polyRange);	//このポリゴンのx軸座標右を設定
-			m_game.setupPoly(CVec4(m_polyRange*j, m_polyRange * i, range, range), CVec4(r, r, 0.0f, 100.0f), i * 2.0f, POLY_TYPE::TRIANGLE, LAYER::MAIN);	//背景に反映
+			m_game.setupPoly(CVec4(m_polyRange*j, m_polyRange * i, range, range), CVec4(r, r, 100.0f, 100.0f), i * 2.0f, POLY_TYPE::TRIANGLE, LAYER::MAIN);	//背景に反映
 
 
 			//m_trianglesLeft.push_back(m_polyRange*j + m_polyRange * 0.5f);		//このポリゴンのx軸座標左を設定
 			//m_trianglesRight.push_back((m_polyRange*j + m_polyRange * 0.5f) + m_polyRange);		//このポリゴンのx軸座標右を設定
-			m_game.setupPoly(CVec4(m_polyRange*j + m_polyRange * 0.5f, range * 0.5f + (m_polyRange * i), range, -range), CVec4(r, r, 0.0f, 100.0f), (i + 0.5f) * 2.0f, POLY_TYPE::TRIANGLE,LAYER::MAIN);
+			m_game.setupPoly(CVec4(m_polyRange*j + m_polyRange * 0.5f, range * 0.5f + (m_polyRange * i), range, -range), CVec4(r, r, 100.0f, 100.0f), (i + 0.5f) * 2.0f, POLY_TYPE::TRIANGLE,LAYER::MAIN);
 		}
 	}
 	//タイトルのロゴ
-	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, UI_BACK_ID, CVec2(WINDOW_RIGHT*0.5f, WINDOW_TOP*0.8f), CVec4(0.0f, 34.0f, 300.0f, 80.0f), LAYER::UI, TAG_TITLE_TEXT1);
+	m_game.setupTexture(TITLE_TEXT, TEX_TYPE::PNG, UI_BACK_ID, CVec2(WINDOW_RIGHT*0.5f, WINDOW_TOP*0.8f), CVec4(0.0f, 0.0f, 300.0f, 80.0f), LAYER::UI, TAG_TITLE_TEXT1);
 	//タイトルのStartボタン
-	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, UI_BACK_ID+1, CVec2(WINDOW_RIGHT*0.3f, WINDOW_TOP*0.4f), CVec4(0.0f, 34.0f, 300.0f, 80.0f), LAYER::UI, TAG_TITLE_TEXT2);
+	m_game.setupTexture(TITLE_TEXT, TEX_TYPE::PNG, UI_BACK_ID+1, CVec2(WINDOW_RIGHT*0.3f, WINDOW_TOP*0.4f), CVec4(0.0f, 80.0f, 300.0f, 80.0f), LAYER::UI, TAG_TITLE_TEXT2);
 	//タイトルのEndボタン
-	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, UI_BACK_ID+2, CVec2(WINDOW_RIGHT*0.7f, WINDOW_TOP*0.4f), CVec4(0.0f, 34.0f, 300.0f, 80.0f), LAYER::UI, TAG_TITLE_TEXT3);
+	m_game.setupTexture(TITLE_TEXT, TEX_TYPE::PNG, UI_BACK_ID+2, CVec2(WINDOW_RIGHT*0.7f, WINDOW_TOP*0.4f), CVec4(0.0f, 160.0f, 300.0f, 80.0f), LAYER::UI, TAG_TITLE_TEXT3);
 
 
 	BGM = new CSound(SOUND_BGM_TITLE, 180,1,20,true);

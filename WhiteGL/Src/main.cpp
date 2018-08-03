@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
 
 	
 	//ブラックボード
-	game.setupTexture("", TEX_TYPE::QUAD, BLACKBORD_ID, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH,  WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f));
+	game.setupTexture("", TEX_TYPE::QUAD, BLACKBORD_ID, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH,  WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f),LAYER::UI);
 
 	
 

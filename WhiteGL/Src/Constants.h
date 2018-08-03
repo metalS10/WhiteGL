@@ -27,7 +27,7 @@
 #define WINDOW_BOTTOM 0
 
 //テクスチャ最大数
-#define MAX_TEXTURE_NUMBER 10000
+#define MAX_TEXTURE_NUMBER 15000
 #define MAX_POLYGON_NUMBER 500
 //MapChipのレイヤー最大数
 #define MAX_LAYER_NUMBER 3
@@ -110,9 +110,12 @@
 #define MAP_DATA_2 PASS"mapData/MapData2.tmx"
 
 //背景
-#define TITLE_BG PASS"Images/BG/title.png"
-#define MAIN_BG PASS"Images/BG/black0087.png"
+#define TITLE_BG PASS"Images/BG/GameBG.png"
+#define MAIN_BG PASS"Images/BG/MainBG.png"
 #define MAIN_MOVEBG PASS"Images/BG/p1.png"
+
+//Text
+#define TITLE_TEXT	PASS"Images/UI/TitleText.png"
 
 //sound
 #define SOUND_BGM_TITLE				PASS"sound/gleam.ogg"
