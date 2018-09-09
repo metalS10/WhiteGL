@@ -32,29 +32,30 @@ enum class LAYER : GLuint
 	BG = 0,
 	MAIN = 1,
 	UI = 2,
-	MAX = 2,
+	BB = 3,
+	MAX = BB,
 };
 
 //全ての描画を担うクラス
 class CRenderer
 {
 public:
-	CVec4 _texRectPos[MAX_TEXTURE_NUMBER] = {};	//テクスチャの切り取り矩形
-	CVec2 _texPosition[MAX_TEXTURE_NUMBER] = {};	//テクスチャのポジション
-	GLuint _texTag[MAX_TEXTURE_NUMBER] = {};		//テクスチャのタグ
-	CVec4 _texRect[MAX_TEXTURE_NUMBER] = {};		//テクスチャの矩形
-	CVec2 _texWH[MAX_TEXTURE_NUMBER] = {};			//テクスチャの縦横
-	CVec2 _texScale[MAX_TEXTURE_NUMBER] = {};		//テクスチャのスケール
-	float _texDefaultScale[MAX_TEXTURE_NUMBER] = {};	//テクスチャの初期スケール
-	TEX_TYPE _texType[MAX_TEXTURE_NUMBER] = {};		//テクスチャのタイプ
-	CVec4 _texColorRGBA[MAX_TEXTURE_NUMBER] = {};	//テクスチャの色情報
+	std::vector<CVec4>	_texRectPos		= {};	//テクスチャの切り取り矩形
+	std::vector<CVec2>	_texPosition	= {};	//テクスチャのポジション
+	std::vector<GLuint> _texTag			= {};	//テクスチャのタグ
+	std::vector<CVec4>	_texRect		= {};	//テクスチャの矩形
+	std::vector<CVec2>	_texWH			= {};	//テクスチャの縦横
+	std::vector<CVec2>	_texScale		= {};	//テクスチャのスケール
+	std::vector<float>	_texDefaultScale= {};	//テクスチャの初期スケール
+	std::vector<TEX_TYPE> _texType		= {};	//テクスチャのタイプ
+	std::vector<CVec4>	_texColorRGBA	= {};	//テクスチャの色情報
 
 	//テクスチャ情報
-	GLuint _texID[MAX_TEXTURE_NUMBER] = {};
-	CImage* _texImage[MAX_TEXTURE_NUMBER] = {};
-	bool _texActionFade[MAX_TEXTURE_NUMBER] = {};
-	float _texActionFadeInterval[MAX_TEXTURE_NUMBER] = {};
-	bool _texFadeOut[MAX_TEXTURE_NUMBER] = {};
+	std::vector<GLuint> _texID = {};
+	std::vector<CImage*> _texImage = {};
+	std::vector<bool> _texActionFade = {};
+	std::vector<float> _texActionFadeInterval = {};
+	std::vector<bool> _texFadeOut = {};
 
 	//板の三角ポリゴン用
 	CVec4 _bgPolyVert[MAX_BACKGROUND_NUMBER] = {};
@@ -68,14 +69,14 @@ public:
 	CVec4 _polyColor[MAX_POLYGON_NUMBER] = {};
 	CVec2 _polyDefaultVert[MAX_POLYGON_NUMBER] = {};
 	float _polyAngle[MAX_POLYGON_NUMBER] = {};
-	GLuint _polyTag[MAX_POLYGON_NUMBER] = {};
+	std::vector<GLuint> _polyTag = {};
 
 	//ポリゴン達のアニメーション用
 	GLuint upfadeCount = 0;
 	GLuint _beatUpSize = BEAT_BIGSIZE;
 	 
 	//レイヤ設定用
-	LAYER m_texLayer[MAX_TEXTURE_NUMBER] = {};
+	std::vector<LAYER> m_texLayer = {};
 	LAYER m_bgPolyLayer[MAX_BACKGROUND_NUMBER] = {};
 	LAYER m_polyLayer[MAX_POLYGON_NUMBER] = {};
 
@@ -83,7 +84,7 @@ public:
 
 	CRenderer()
 	{
-
+		init();
 	}
 
 	~CRenderer()
@@ -97,6 +98,9 @@ public:
 
 public:
 
+	//初期化
+	void init();
+
 	//アニメーション更新
 	void update(std::vector<CAnimation*>* anim);
 
@@ -104,17 +108,13 @@ public:
 	void render();
 
 	/**
-	*テクスチャの読み込み、IDの設定、画像範囲
-	*
-	*@param	texID	ID
+	*テクスチャ情報登録
 	*@param	file	ファイルパス
-	*@param	posLeft		画像の左の位置
-	*@param	posRight	画像の右の位置
-	*@param	posBottom	画像の下の位置
-	*@param	posTop		画像の上の位置
-	*@param	rect		矩形
+	*@param	tex_type	テクスチャの拡張子
+	*@param	tag		テクスチャID,texTag
+	*@param	layer	レイヤ設定
 	*/
-	void setupTexture(const char *file, const TEX_TYPE tex_type, GLuint texID,const LAYER layer,const GLuint tag);
+	void setupTexture(const char *file, const TEX_TYPE tex_type, GLuint tag,const LAYER layer);
 
 	//三角ポリゴン設定
 	void setupTrianglesPoly(const CVec4 vertex, const CVec4 color, const GLuint line,const LAYER layer);
@@ -132,38 +132,43 @@ public:
 	CVec2 getPolyScale(const GLuint tag);	//ポリゴンのスケール取得
 	CVec4 getPolyColor(const GLuint tag);	//ポリゴンの色取得
 
-	//テクスチャのサイズ設定
-	void setupTextureSize(const CVec2 texPos, const CVec4 texRect,const GLuint texID);
-	void setupTextureSizeAtTag(const CVec2 texPos, const CVec4 texRect,const GLuint tag);
+	//テクスチャのトランスフォーム設定(初期化)
+	void setupTextureTransform(const CVec2 texPos, const CVec4 texRect);
+	//テクスチャのトランスフォーム設定
+	void setupTextureTransformAtTag(const CVec2 texPos, const CVec4 texRect,const GLuint tag);
 
 	//PngImageのロード関数(これだけめちゃくちゃ長いので分けました)
 	bool loadPngImage(const char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData);
 
-	//テクスチャの色設定
-	void setupTextureColor(const CVec4 cloar,const GLuint texID);
+	//テクスチャの色設定(初期化)
+	void setupTextureColor(const CVec4 cloar);
+	//テクスチャ色変更設定
 	void setupTextureColorAtTag(const CVec4 cloar,const GLuint tag);
 	
 	//テクスチャのフェード設定
-	void TextureFade(const GLuint texID,const bool out,const float fadeInterval);
+	void TextureFade(const GLuint tag,const bool out,const float fadeInterval);
+	//テクスチャフェード終了しているか
+	bool endTextureFade(GLuint tag);
 
 	//テクスチャの削除
-	void deleteTexture(const GLuint texID);
+	void deleteTexture(const GLuint tag);
 	//ポリゴンの削除
 	void deletePoly(const GLuint tag);
 
 	//テクスチャのスケール設定
 	void setTextureScale(const CVec2 Size, const GLuint texID);
-	void setTextureScaleAtTag(const CVec2 Size, const GLuint texID);
+	void setTextureScaleAtTag(const CVec2 Size, const GLuint tag);
 
 	//テクスチャの座標設定
 	void setTexPosition(const CVec2 position, const GLuint texID);
 	void setTexPositionAtTag(const CVec2 position, const GLuint tag);
 
 	//マップデータの座標設定
-	void setMapPosition(const CVec2 position, const GLuint texID);
+	void setMapPosition(const CVec2 position, const GLuint tag);
 
 	//テクスチャの矩形設定
 	void setTextureRect(const CVec4 Rect, const GLuint texID);
+	void setTextureRectAtTag(const CVec4 Rect, const GLuint tag);
 
 	//フェードイン・アウト中のテクスチャの色変更処理
 	void fadeSearch();

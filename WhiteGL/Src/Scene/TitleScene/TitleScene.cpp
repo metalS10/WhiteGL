@@ -17,8 +17,8 @@ bool CTitle::init()
 	m_game.allTextureDelete();
 
 	gluLookAt(
-		-cameraPosX, 0.0f, 0.0f,
-		-cameraPosX, 0.0f, -10.0f,
+		-cameraPosX, -cameraPosY, 0.0f,
+		-cameraPosX, -cameraPosY, -10.0f,
 		0.0f, 1.0f, 0.0f
 	);
 	//背景の設定
@@ -44,11 +44,11 @@ bool CTitle::init()
 		}
 	}
 	//タイトルのロゴ
-	m_game.setupTexture(TITLE_TEXT, TEX_TYPE::PNG, UI_BACK_ID, CVec2(WINDOW_RIGHT*0.5f, WINDOW_TOP*0.8f), CVec4(0.0f, 0.0f, 300.0f, 80.0f), LAYER::UI, TAG_TITLE_TEXT1);
+	m_game.setupTexture(TITLE_TEXT, TEX_TYPE::PNG, TAG_TITLE_TEXT1, CVec2(WINDOW_RIGHT*0.5f, WINDOW_TOP*0.8f), CVec4(0.0f, 0.0f, 300.0f, 80.0f), LAYER::UI);
 	//タイトルのStartボタン
-	m_game.setupTexture(TITLE_TEXT, TEX_TYPE::PNG, UI_BACK_ID+1, CVec2(WINDOW_RIGHT*0.3f, WINDOW_TOP*0.4f), CVec4(0.0f, 80.0f, 300.0f, 80.0f), LAYER::UI, TAG_TITLE_TEXT2);
+	m_game.setupTexture(TITLE_TEXT, TEX_TYPE::PNG, TAG_TITLE_TEXT2, CVec2(WINDOW_RIGHT*0.3f, WINDOW_TOP*0.4f), CVec4(0.0f, 80.0f, 300.0f, 80.0f), LAYER::UI);
 	//タイトルのEndボタン
-	m_game.setupTexture(TITLE_TEXT, TEX_TYPE::PNG, UI_BACK_ID+2, CVec2(WINDOW_RIGHT*0.7f, WINDOW_TOP*0.4f), CVec4(0.0f, 160.0f, 300.0f, 80.0f), LAYER::UI, TAG_TITLE_TEXT3);
+	m_game.setupTexture(TITLE_TEXT, TEX_TYPE::PNG, TAG_TITLE_TEXT3, CVec2(WINDOW_RIGHT*0.7f, WINDOW_TOP*0.4f), CVec4(0.0f, 160.0f, 300.0f, 80.0f), LAYER::UI);
 
 
 	BGM = new CSound(SOUND_BGM_TITLE, 180,1,20,true);

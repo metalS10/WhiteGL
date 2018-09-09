@@ -1,5 +1,6 @@
 #include "Sound.h"
 
+//BGM用コンストラクタ
 CSound::CSound(char* sound, const int bpm, const int channels,bool musicBool)
 {
 	// SDL初期化
@@ -26,7 +27,7 @@ CSound::CSound(char* sound, const int bpm, const int channels, const int volume,
 	m_volume = volume;
 }
 
-
+//SE用コンストラクタ
 CSound::CSound(char* sound, const int overlapMax)
 {
 	// SDL初期化
@@ -81,7 +82,7 @@ void CSound::LoadChunk()
 	{
 		std::cerr<<"error,音楽ファイルの読み込みに失敗"<<std::endl;
 	}
-	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 512);
 	m_chunk = Mix_LoadWAV(m_soundName);
 
 	setChunkVolume(m_volume);

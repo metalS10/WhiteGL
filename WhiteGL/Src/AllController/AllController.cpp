@@ -50,7 +50,7 @@ void CMS::setTexID(int ID,int idType)
 
 int CMS::getTexID(int idType)
 {
-	return 	TexID[idType];
+	return TexID[idType];
 }
 
 void CMS::setScene(CScene* scene)

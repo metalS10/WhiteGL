@@ -1,9 +1,6 @@
 #pragma once
-#pragma comment(lib, "winmm.lib")
 
 #include <Windows.h>
-#include <string>
-#include <mmsystem.h>
 #include "GL\glut.h"
 
 using namespace std;
@@ -52,7 +49,7 @@ void FPS::GetFPS()
 	Time = timeGetTime();
 	if (Time - Oldtime>Frame*FrameTime) {
 		Frame++;
-		if (Time - Oldtime<Frame*FrameTimeO) {//描画タイミングに間に合った場合
+		if ((Time - Oldtime)<Frame*FrameTimeO) {//描画タイミングに間に合った場合
 			str = "LOOP_MAX:[";str += _ltoa(LoopMax, buf, 10);str += "] FPS:[";str += _ltoa(CurrentFps - FrameSkip, buf, 10);
 			str += "] FRAME:[";str += _ltoa(Frame, buf, 10);str += "] FRAMESKIP:[";str += _ltoa(FrameSkip, buf, 10);
 			str += "] SLEEP:[";str += _ltoa(sleep, buf, 10);str += "]";

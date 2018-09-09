@@ -23,7 +23,7 @@ namespace MS
 
 		CGameEngine& game = CGameEngine();
 
-		GLFWwindow* window = game.init(WINDOW_SIZE, "WhiteV_GL");
+		GLFWwindow* window = game.init(WINDOW_SIZE, "WhiteBeats");
 
 		static CMS* m_pSharedMS;
 

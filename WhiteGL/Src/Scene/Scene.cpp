@@ -13,6 +13,7 @@ bool CScene::init()
 	m_game.ActionStage(MAX_TEXTURE_NUMBER - 1, 1.0f, true);
 
 
+
 	//BGM開始初期化
 	m_BGMStart = false;
 	//BGMをロード
@@ -114,7 +115,7 @@ void CScene::rendUpdate()
 		}
 		else
 		{
-			//対応していなければ1ms感覚のtimeGetTime()を使用(少しずつずれます)
+			//対応していなければ1ms感覚のtimeGetTime()を使用(少しずれます)
 			m_nInit.QuadPart = timeGetTime();
 		}
 	}

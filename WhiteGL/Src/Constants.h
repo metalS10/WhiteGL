@@ -5,9 +5,8 @@
 *		ﾏｸﾛなどを設定する場
 */
 
-//絶対パス
-#define PASS "Resources/"
-#define LPASS L"Resources/"
+//パス
+#define PATH "Resources/"
 #ifndef NULL
 #ifdef __cplusplus
 #define NULL 0
@@ -36,11 +35,11 @@
 
 //テクスチャIDの設定---------------------------------------------------------------
 //弾
-#define START_BULLET_TEXTURE_NUMBER 1000
+#define START_BULLET_TEXTURE_NUMBER 2000
 //敵
 #define START_ENEMY_TEXTURE_NUMBER START_BULLET_TEXTURE_NUMBER + 1000
 //敵攻撃
-#define START_ENEMY_BULLET_TEXTURE_NUMBER START_ENEMY_TEXTURE_NUMBER+1000
+#define START_ENEMY_BULLET_TEXTURE_NUMBER START_ENEMY_TEXTURE_NUMBER + 1000
 //ギミック
 #define START_GIMMICK_TEXTURE_NUMBER START_ENEMY_BULLET_TEXTURE_NUMBER + 1000
 //音に合わせるやつ
@@ -55,93 +54,98 @@
 //背景用拍子のサイズ変更値
 #define BEAT_BIGSIZE	30.0f;
 
-//テクスチャID
-#define BG_ID					0	//BackGround
-#define SCROLLBG_ID				1	//ScrollBackGround
-//#define PLAYER_ID				3	//Player
-#define UI_BACK_ID				4	//UIBack
-#define OUTLINE_HP_ID			5	//HPWaku
-#define OUTLINE_DP_ID			6	//DPWaku
-#define BAR_HP_ID				7	//HPBar
-#define BAR_DP_ID				8	//DPBar
-#define ENEMY_STATS_ID			9	//ENEMYStats
-#define OUTLLINE_ENEMYHP_ID		10	//EHPBarWaku
-#define BAR_ENEMYHP_ID			11	//EHPBar
-#define BLACKBORD_ID			MAX_TEXTURE_NUMBER - 1
-#define NOTES_ID				MAX_TEXTURE_NUMBER - 2
+/*=========================================
+*	テクスチャTAG基テクスチャID
+*=========================================*/
+#define TAG_BG					0	//BackGround
+#define TAG_SCROLLBG			1	//ScrollBackGround
+//#define TAG_PLAYER			3	//Player
+#define TAG_UI_BACK				4	//UIBack
+#define TAG_OUTLINE_HP			5	//HPWaku
+#define TAG_OUTLINE_DP			6	//DPWaku
+#define TAG_BAR_HP				7	//HPBar
+#define TAG_BAR_DP				8	//DPBar
+#define TAG_ENEMY_STATS			9	//ENEMYStats
+#define TAG_OUTLLINE_ENEMYHP	10	//EHPBarWaku
+#define TAG_BAR_ENEMYHP		11	//EHPBar
+#define TAG_BLACKBORD			MAX_TEXTURE_NUMBER - 1
+#define TAG_NOTES				MAX_TEXTURE_NUMBER - 2
+//GameMain
+#define TAG_PLAYER_1 1001			//プレイヤーキャラクター
+#define TAG_PLAYER_EFFECT_1 1002	//プレイヤーキャラクターの残像
+#define TAG_PLAYER_EFFECT_2 1003	//プレイヤーキャラクターの残像
+#define TAG_PLAYER_EFFECT_3 1004	//プレイヤーキャラクターの残像
+#define TAG_BEATSACTION1 1005		//画面端のユーザーインターフェース
+#define TAG_BEATSACTION2 1006		//画面端のユーザーインターフェース
+#define TAG_BEATSACTION3 1007		//画面端のユーザーインターフェース
+#define TAG_BEATSACTION4 1008		//画面端のユーザーインターフェース
+#define TAG_PLAYER_ATTACK 1009		//プレイヤーキャラクターの攻撃
+//Title
+#define TAG_TITLE_TEXT1 1001		//タイトルの文字画像
+#define TAG_TITLE_TEXT2 1002		//タイトルの文字画像
+#define TAG_TITLE_TEXT3 1003		//タイトルの文字画像
 
 
 
 
 //プレイヤー
-#define IMAGE_PLAYER PASS"player.png"
+#define IMAGE_PLAYER PATH"player.png"
 
 //攻撃
-#define IMAGE_NORMALATTACK PASS"Images/Attack/attack_sword.png"
-#define IMAGE_GETSUGATENSHO PASS"Images/Attack/getsugatenshou.png"
+#define IMAGE_NORMALATTACK PATH"Images/Attack/attack_sword.png"
+#define IMAGE_GETSUGATENSHO PATH"Images/Attack/getsugatenshou.png"
 
 //敵
-#define IMAGE_ENEMY PASS"Images/Enemy/Enemy.png"
-#define IMAGE_NOKONOKO PASS""
-#define IMAGE_PATAPATA PASS""
-#define IMAGE_KILLER PASS""
-#define IMAGE_TROI PASS"Images/Enemy/enemy_Troi.png"
+#define IMAGE_ENEMY PATH"Images/Enemy/Enemy.png"
+#define IMAGE_NOKONOKO PATH""
+#define IMAGE_PATAPATA PATH""
+#define IMAGE_KILLER PATH""
+#define IMAGE_TROI PATH"Images/Enemy/enemy_Troi.png"
 
 //ギミック
-#define IMAGE_DAMAGEBLOCK PASS"Images/damageBlock.png"
-#define IMAGE_ROLLBLOCK PASS""
-#define IMAGE_TIKUWABLOCK PASS""
-#define IMAGE_NOTEBLOCK PASS""
-#define IMAGE_HATENABLOCK PASS""
-#define IMAGE_WORP PASS"Images/Gimmick/worp.png"
+#define IMAGE_DAMAGEBLOCK PATH"Images/damageBlock.png"
+#define IMAGE_ROLLBLOCK PATH""
+#define IMAGE_TIKUWABLOCK PATH""
+#define IMAGE_NOTEBLOCK PATH""
+#define IMAGE_HATENABLOCK PATH""
+#define IMAGE_WORP PATH"Images/Gimmick/worp.png"
 
 //弾
-#define IMAGE_NORMAL_FIRE PASS"Images/normalBullet.png"
-#define IMAGE_FIREBALL PASS""
+#define IMAGE_NORMAL_FIRE PATH"Images/normalBullet.png"
+#define IMAGE_FIREBALL PATH""
 
 //UI
-#define IMAGE_GAMEUI	PASS"Images/UI/WhiteUI.png"
-#define IMAGE_STAGEEND	PASS"Images/UI/StageEnd.png"
-#define IMAGE_NOTES_UI	PASS"Images/UI/NotesUI.png"
+#define IMAGE_GAMEUI	PATH"Images/UI/WhiteUI.png"
+#define IMAGE_STAGEEND	PATH"Images/UI/StageEnd.png"
+#define IMAGE_NOTES_UI	PATH"Images/UI/NotesUI.png"
 
 //マップ
-#define MAP_PASS PASS"mapData/"
-#define MAP_DATA_1 PASS"mapData/1_MapData.tmx"
-#define MAP_DATA_2 PASS"mapData/MapData2.tmx"
+#define MAP_PASS PATH"mapData/"
+#define MAP_DATA_1 PATH"mapData/1_MapData.tmx"
+#define MAP_DATA_2 PATH"mapData/MapData2.tmx"
 
 //背景
-#define TITLE_BG PASS"Images/BG/GameBG.png"
-#define MAIN_BG PASS"Images/BG/MainBG.png"
-#define MAIN_MOVEBG PASS"Images/BG/p1.png"
+#define TITLE_BG PATH"Images/BG/GameBG.png"
+#define MAIN_BG PATH"Images/BG/MainBG.png"
+#define MAIN_MOVEBG PATH"Images/BG/p1.png"
 
 //Text
-#define TITLE_TEXT	PASS"Images/UI/TitleText.png"
+#define TITLE_TEXT	PATH"Images/UI/TitleText.png"
 
 //sound
-#define SOUND_BGM_TITLE				PASS"sound/gleam.ogg"
-#define SOUND_BGM					PASS"sound/cyber_dungeon_001.ogg"
-#define SOUND_BGM2					PASS"sound/BraveBattle.ogg"
-#define SOUND_DRUM_AVOIDANCE_MISS	PASS"sound/Drum/se_maoudamashii_instruments_drum1_hat.ogg"
-#define SOUND_DRUM_AVOIDANCE		PASS"sound/Drum/se_maoudamashii_instruments_drum2_hat.ogg"
-#define SOUND_DRUM_ATTACK_MISS		PASS"sound/Drum/se_maoudamashii_instruments_drum1_bassdrum1.ogg"
-#define SOUND_DRUM_ATTACK			PASS"sound/Drum/se_maoudamashii_instruments_drum2_bassdrum.ogg"
-#define SOUND_QUARTER_BEATS			PASS"sound/Drum/se_maoudamashii_instruments_drum1_hat.ogg"
+#define SOUND_BGM_TITLE				PATH"sound/gleam.ogg"
+#define SOUND_BGM					PATH"sound/cyber_dungeon_001.ogg"
+#define SOUND_BGM2					PATH"sound/BraveBattle.ogg"
+#define SOUND_DRUM_AVOIDANCE_MISS	PATH"sound/Drum/se_maoudamashii_instruments_drum1_hat.ogg"
+#define SOUND_DRUM_AVOIDANCE		PATH"sound/Drum/se_maoudamashii_instruments_drum2_hat.ogg"
+#define SOUND_DRUM_ATTACK_MISS		PATH"sound/Drum/se_maoudamashii_instruments_drum1_bassdrum1.ogg"
+#define SOUND_DRUM_ATTACK			PATH"sound/Drum/se_maoudamashii_instruments_drum2_bassdrum.ogg"
+#define SOUND_QUARTER_BEATS			PATH"sound/Drum/se_maoudamashii_instruments_drum1_hat.ogg"
 
 
-//タグ
-#define TAG_PLAYER_1 1001
-#define TAG_PLAYER_EFFECT_1 1002
-#define TAG_PLAYER_EFFECT_2 1003
-#define TAG_PLAYER_EFFECT_3 1004
-#define TAG_BEATSACTION1 1005
-#define TAG_BEATSACTION2 1006
-#define TAG_BEATSACTION3 1007
-#define TAG_BEATSACTION4 1008
-#define TAG_PLAYER_ATTACK 1009
 
-#define TAG_TITLE_TEXT1 1001
-#define TAG_TITLE_TEXT2 1002
-#define TAG_TITLE_TEXT3 1003
+
+
 //Math
 #define M_PI       3.14159265358979323846f   // pi
 //etc

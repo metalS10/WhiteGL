@@ -2,78 +2,47 @@
 
 
 
+//描画初期化(ステージ移動時等)
+void CGameEngine::renderInit()
+{
+	renderer->init();
+}
 
 void CGameEngine::setupTexture(const char* file,TEX_TYPE texType,GLuint texID,CVec2 texPos,CVec4 texRect,CVec4 color)
 {
 	//================================
 	//テクスチャの描画
 	//================================
-	renderer->setupTexture(file, texType, texID, LAYER::MAIN,0);
-	renderer->setupTextureSize(texPos, texRect , texID);
-	renderer->setupTextureColor(color, texID);
-}
-void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color,const GLuint tag)
-{
-	//================================
-	//テクスチャの描画
-	//================================
-	renderer->setupTexture(file, texType, texID, LAYER::MAIN, tag);
-	renderer->setupTextureSize(texPos, texRect, texID);
-	renderer->setupTextureColor(color, texID);
+	renderer->setupTexture(file, texType, texID, LAYER::MAIN);
+	renderer->setupTextureTransform(texPos, texRect);
+	renderer->setupTextureColor(color);
 }
 void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect)
 {
 	//================================
 	//テクスチャの描画
 	//================================
-	renderer->setupTexture(file, texType, texID, LAYER::MAIN,0);
-	renderer->setupTextureSize(texPos, texRect, texID);
-	renderer->setupTextureColor(CVec4(100.0f,100.0f,100.0f,100.0f), texID);
-}
-void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect,const GLuint tag)
-{
-	//================================
-	//テクスチャの描画
-	//================================
-	renderer->setupTexture(file, texType, texID, LAYER::MAIN,tag);
-	renderer->setupTextureSize(texPos, texRect, texID);
-	renderer->setupTextureColor(CVec4(100.0f,100.0f,100.0f,100.0f), texID);
+	renderer->setupTexture(file, texType, texID, LAYER::MAIN);
+	renderer->setupTextureTransform(texPos, texRect);
+	renderer->setupTextureColor(CVec4(100.0f,100.0f,100.0f,100.0f));
 }
 void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color, LAYER layer)
 {
 	//================================
 	//テクスチャの描画
 	//================================
-	renderer->setupTexture(file, texType, texID, layer,0);
-	renderer->setupTextureSize(texPos, texRect, texID);
-	renderer->setupTextureColor(color, texID);
-}
-void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color, LAYER layer,const GLuint tag)
-{
-	//================================
-	//テクスチャの描画
-	//================================
-	renderer->setupTexture(file, texType, texID, layer,tag);
-	renderer->setupTextureSize(texPos, texRect, texID);
-	renderer->setupTextureColor(color, texID);
+	renderer->setupTexture(file, texType, texID, layer);
+	renderer->setupTextureTransform(texPos, texRect);
+	renderer->setupTextureColor(color);
 }
 void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, LAYER layer)
 {
 	//================================
 	//テクスチャの描画
 	//================================
-	renderer->setupTexture(file, texType, texID, layer,0);
-	renderer->setupTextureSize(texPos, texRect, texID);
-	renderer->setupTextureColor(CVec4(100.0f, 100.0f, 100.0f, 100.0f), texID);
-}
-void CGameEngine::setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, LAYER layer,const GLuint tag)
-{
-	//================================
-	//テクスチャの描画
-	//================================
-	renderer->setupTexture(file, texType, texID, layer,tag);
-	renderer->setupTextureSize(texPos, texRect, texID);
-	renderer->setupTextureColor(CVec4(100.0f, 100.0f, 100.0f, 100.0f), texID);
+	renderer->setupTexture(file, texType, texID, layer);
+	renderer->setupTextureTransform(texPos, texRect);
+	renderer->setupTextureColor(CVec4(100.0f, 100.0f, 100.0f, 100.0f));
 }
 
 void CGameEngine::setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line, const POLY_TYPE polytype)
@@ -289,7 +258,7 @@ void CGameEngine::setTexColorAtTag(const CVec4 color, const GLuint tag)
 
 void CGameEngine::setTextureRect(const CVec4 mrect,const GLuint texID)
 {	
-	renderer->setTextureRect(mrect,texID);
+	renderer->setTextureRectAtTag(mrect,texID);
 }
 
 void CGameEngine::SetProgressBarWH(const GLuint texID, const CVec4 Rect, const CVec2 position)
@@ -299,7 +268,7 @@ void CGameEngine::SetProgressBarWH(const GLuint texID, const CVec4 Rect, const C
 
 void CGameEngine::setTexPosition(CVec2 pos, GLuint texID)
 {
-	renderer->setTexPosition(pos, texID);
+	renderer->setTexPositionAtTag(pos, texID);
 }
 
 void CGameEngine::deleteTexture(const GLuint texID)
@@ -378,14 +347,14 @@ void CGameEngine::Run()
 */
 
 //アクション系
-bool CGameEngine::ActionStage(GLuint texID, const float fadeInterval, const bool fade)
+bool CGameEngine::ActionStage(GLuint tag, const float fadeInterval, const bool fade)
 {
 	if (!actionone1)
 	{
-		renderer->TextureFade(texID, fade, fadeInterval);
+		renderer->TextureFade(tag, fade, fadeInterval);
 		actionone1 = true;
 	}
-	if (getFadeEnd(texID))
+	if (getFadeEnd(tag))
 	{
 		actionone1 = false;
 		return true;
@@ -398,9 +367,9 @@ void* CGameEngine::TextureFade(const GLuint texID, const bool out, const float f
 	renderer->TextureFade(texID, out, fadeInterval);
 	return this;
 }
-bool CGameEngine::getFadeEnd(const GLuint texID)
+bool CGameEngine::getFadeEnd(const GLuint tag)
 {
-	return !renderer->_texActionFade[texID];
+	return !renderer->endTextureFade(tag);
 }
 
 CRenderer* CGameEngine::getRenderer()

@@ -16,6 +16,9 @@ bool CGameMain::init()
 	
 	//全テクスチャ削除
 	m_game.allTextureDelete();
+
+	m_game.renderInit();
+
 	//ステージ1を開く
 	m_stage = new CStage1_1();
 	BGM = m_stage->getBGM();
@@ -50,8 +53,8 @@ bool CGameMain::init()
 
 
 	//背景
-	m_game.setupTexture(MAIN_BG, TEX_TYPE::PNG, BG_ID, CVec2(WINDOW_RIGHT*0.5f, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, WINDOW_RIGHT, WINDOW_TOP),LAYER::BG);
-	m_game.setupTexture(MAIN_MOVEBG, TEX_TYPE::PNG, SCROLLBG_ID, CVec2(WINDOW_RIGHT * 3, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, 6400.0f, 720.0f),LAYER::BG);
+	m_game.setupTexture(MAIN_BG, TEX_TYPE::PNG, TAG_BG, CVec2(WINDOW_RIGHT*0.5f, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, WINDOW_RIGHT, WINDOW_TOP),LAYER::BG);
+	m_game.setupTexture(MAIN_MOVEBG, TEX_TYPE::PNG, TAG_SCROLLBG, CVec2(WINDOW_RIGHT * 3, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, 6400.0f, 720.0f),LAYER::BG);
 	
 	//画面全体UI
 	m_game.setupPoly(CVec4(WINDOW_RIGHT * 0.01f, WINDOW_TOP * 0.5f, WINDOW_TOP * 0.01, WINDOW_TOP * 0.99f), CVec4(100.0f, 100.0f, 100.0f, 100.0f), NULL, POLY_TYPE::QUAD, LAYER::UI, TAG_BEATSACTION1);
@@ -81,27 +84,27 @@ bool CGameMain::init()
 	//m_game.setupTexture(pPlayerChara->texPass, TEX_TYPE::PNG, pPlayerChara->m_texID, pPlayerChara->m_pMove->m_pos, (*pPlayerChara->m_pAnimations)[0]->getCurrentChip());
 	m_game.setupPoly(CVec4(pPlayerChara->m_pMove->m_pos.x, pPlayerChara->m_pMove->m_pos.y, 64.0f,64.0f),CVec4(100.0f,100.0f,100.0f,100.0f),0,POLY_TYPE::QUAD, TAG_PLAYER_1);
 	//音合わせUI
-	m_game.setupTexture(notes->texPas, TEX_TYPE::PNG, NOTES_ID, CVec2(WINDOW_RIGHT - (*notes->m_pAnimations)[0]->getCurrentChip().z * 0.5f,WINDOW_BOTTOM + (*notes->m_pAnimations)[0]->getCurrentChip().w * 0.5), (*notes->m_pAnimations)[0]->getCurrentChip(), LAYER::UI);
+	m_game.setupTexture(notes->texPas, TEX_TYPE::PNG, TAG_NOTES, CVec2(WINDOW_RIGHT - (*notes->m_pAnimations)[0]->getCurrentChip().z * 0.5f,WINDOW_BOTTOM + (*notes->m_pAnimations)[0]->getCurrentChip().w * 0.5), (*notes->m_pAnimations)[0]->getCurrentChip(), LAYER::UI);
 
 
-	//UIのバック
-	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, UI_BACK_ID, CVec2(WINDOW_RIGHT*0.120f, WINDOW_TOP*0.94f), CVec4(0.0f, 34.0f, 300.0f, 80.0f), LAYER::UI);
+	//UIの背景
+	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, TAG_UI_BACK, CVec2(WINDOW_RIGHT*0.120f, WINDOW_TOP*0.94f), CVec4(0.0f, 34.0f, 300.0f, 80.0f), LAYER::UI);
 
 	//HPの枠
-	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, OUTLINE_HP_ID, CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.962f), CVec4(0.0f, 20.0f, 210.0f, 14.0f), LAYER::UI);
+	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, TAG_OUTLINE_HP, CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.962f), CVec4(0.0f, 20.0f, 210.0f, 14.0f), LAYER::UI);
 	//DPの枠
-	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, OUTLINE_DP_ID, CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.92f), CVec4(0.0f, 20.0f, 210.0f, 14.0f), LAYER::UI);
+	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, TAG_OUTLINE_DP, CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.92f), CVec4(0.0f, 20.0f, 210.0f, 14.0f), LAYER::UI);
 
 	//HP
-	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, BAR_HP_ID , CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.962f), CVec4(0.0f, 0.0f, 200.0f, 10.0f), LAYER::UI);
+	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, TAG_BAR_HP , CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.962f), CVec4(0.0f, 0.0f, 200.0f, 10.0f), LAYER::UI);
 	//DP
-	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, BAR_DP_ID, CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.92f), CVec4(0.0f, 10.0f, 200.0f, 10.0f), LAYER::UI);
+	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, TAG_BAR_DP, CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.92f), CVec4(0.0f, 10.0f, 200.0f, 10.0f), LAYER::UI);
 	//EnemyStats
-	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, ENEMY_STATS_ID, CVec2(WINDOW_RIGHT*0.355f, WINDOW_TOP*0.94f), CVec4(0.0f, 34.0f, 300.0f, 80.0f), LAYER::UI);
+	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, TAG_ENEMY_STATS, CVec2(WINDOW_RIGHT*0.355f, WINDOW_TOP*0.94f), CVec4(0.0f, 34.0f, 300.0f, 80.0f), LAYER::UI);
 	//EnemyHPwaku
-	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, OUTLLINE_ENEMYHP_ID, CVec2(WINDOW_RIGHT*0.35f, WINDOW_TOP*0.92f), CVec4(0.0f, 20.0f, 210.0f, 14.0f), LAYER::UI);
+	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, TAG_OUTLLINE_ENEMYHP, CVec2(WINDOW_RIGHT*0.35f, WINDOW_TOP*0.92f), CVec4(0.0f, 20.0f, 210.0f, 14.0f), LAYER::UI);
 	//EnemyHP
-	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, BAR_ENEMYHP_ID, CVec2(WINDOW_RIGHT*0.35f, WINDOW_TOP*0.92f), CVec4(0.0f, 0.0f, 200.0f, 10.0f), LAYER::UI);
+	m_game.setupTexture(IMAGE_GAMEUI, TEX_TYPE::PNG, TAG_BAR_ENEMYHP, CVec2(WINDOW_RIGHT*0.35f, WINDOW_TOP*0.92f), CVec4(0.0f, 0.0f, 200.0f, 10.0f), LAYER::UI);
 
 
 
@@ -151,7 +154,7 @@ void CGameMain::rendUpdate()
 				m_game.setTexPosition(pChara->m_pMove->m_pos, pChara->m_texID);
 			}
 		}
-		m_game.setTextureRect((*notes->m_pAnimations)[notes->m_state]->getCurrentChip(), NOTES_ID);
+		m_game.setTextureRect((*notes->m_pAnimations)[notes->m_state]->getCurrentChip(), TAG_NOTES);
 		//m_game.setPosition(pPlayerChara->m_pMove->m_pos, pPlayerChara->m_texID);
 		m_game.setPolyPos(CVec2(pPlayerChara->m_pMove->m_pos.x, pPlayerChara->m_pMove->m_pos.y), TAG_PLAYER_1);
 	}
@@ -161,23 +164,23 @@ void CGameMain::rendUpdate()
 		
 		
 	//カメラ追従UI系
-	m_game.setTexPosition(CVec2(WINDOW_RIGHT*0.120f + cameraPosX, WINDOW_TOP*0.94f + cameraPosY), UI_BACK_ID);
-	m_game.setTexPosition(CVec2(WINDOW_RIGHT*0.12f + cameraPosX, WINDOW_TOP*0.962f + cameraPosY), OUTLINE_HP_ID);
-	m_game.setTexPosition(CVec2(WINDOW_RIGHT*0.12f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY), OUTLINE_DP_ID);
-	m_game.setTexPosition(CVec2(WINDOW_RIGHT*0.355f + cameraPosX, WINDOW_TOP*0.94f + cameraPosY), ENEMY_STATS_ID);
-	m_game.setTexPosition(CVec2(WINDOW_RIGHT*0.35f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY), OUTLLINE_ENEMYHP_ID);
+	m_game.setTexPosition(CVec2(WINDOW_RIGHT*0.120f + cameraPosX, WINDOW_TOP*0.94f + cameraPosY), TAG_UI_BACK);
+	m_game.setTexPosition(CVec2(WINDOW_RIGHT*0.12f + cameraPosX, WINDOW_TOP*0.962f + cameraPosY), TAG_OUTLINE_HP);
+	m_game.setTexPosition(CVec2(WINDOW_RIGHT*0.12f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY), TAG_OUTLINE_DP);
+	m_game.setTexPosition(CVec2(WINDOW_RIGHT*0.355f + cameraPosX, WINDOW_TOP*0.94f + cameraPosY), TAG_ENEMY_STATS);
+	m_game.setTexPosition(CVec2(WINDOW_RIGHT*0.35f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY), TAG_OUTLLINE_ENEMYHP);
 	//m_game.setPosition(CVec2(WINDOW_RIGHT*0.35f + cameraPosX, WINDOW_TOP*0.92f), 11);
-	m_game.setTexPosition(CVec2(WINDOW_RIGHT*0.5f + cameraPosX, WINDOW_TOP*0.5f + cameraPosY), BG_ID);
-	m_game.setTexPosition(CVec2( (WINDOW_RIGHT - (*notes->m_pAnimations)[0]->getCurrentChip().z * 0.5f) + cameraPosX , (WINDOW_BOTTOM + (*notes->m_pAnimations)[0]->getCurrentChip().w * 0.5 ) + cameraPosY) , NOTES_ID);
+	m_game.setTexPosition(CVec2(WINDOW_RIGHT*0.5f + cameraPosX, WINDOW_TOP*0.5f + cameraPosY), TAG_BG);
+	m_game.setTexPosition(CVec2( (WINDOW_RIGHT - (*notes->m_pAnimations)[0]->getCurrentChip().z * 0.5f) + cameraPosX , (WINDOW_BOTTOM + (*notes->m_pAnimations)[0]->getCurrentChip().w * 0.5 ) + cameraPosY) , TAG_NOTES);
 	m_game.setPolyPosX(WINDOW_RIGHT * 0.01f +cameraPosX, TAG_BEATSACTION1);
 	m_game.setPolyPosX(WINDOW_RIGHT * 0.99f +cameraPosX, TAG_BEATSACTION2);
 	m_game.setPolyPosX(WINDOW_RIGHT * 0.5f	+cameraPosX, TAG_BEATSACTION3);
 	m_game.setPolyPosX(WINDOW_RIGHT * 0.5f	+cameraPosX, TAG_BEATSACTION4);
 	
 	//HPをHPCarに反映
-	m_game.SetProgressBarWH(BAR_HP_ID, CVec4(0.0f, 0.0f, pPlayerChara->m_hitPoint, 10.0f), CVec2(WINDOW_RIGHT*0.042f + cameraPosX, WINDOW_TOP*0.962f + cameraPosY));
+	m_game.SetProgressBarWH(TAG_BAR_HP, CVec4(0.0f, 0.0f, pPlayerChara->m_hitPoint, 10.0f), CVec2(WINDOW_RIGHT*0.042f + cameraPosX, WINDOW_TOP*0.962f + cameraPosY));
 	//DPも同様
-	m_game.SetProgressBarWH(BAR_DP_ID, CVec4(0.0f, 10.0f, pPlayerChara->m_denkiPoint, 10.0f), CVec2(WINDOW_RIGHT*0.042f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY));
+	m_game.SetProgressBarWH(TAG_BAR_DP, CVec4(0.0f, 10.0f, pPlayerChara->m_denkiPoint, 10.0f), CVec2(WINDOW_RIGHT*0.042f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY));
 
 	if (!m_stageEnd)
 	{
@@ -192,7 +195,7 @@ void CGameMain::rendUpdate()
 			{
 				//ENEMYHPBarにはセットした敵のHPを設定
 				float EnemyHP = 100 * pPlayerChara->m_pNowEnemy->m_hitPoint / pPlayerChara->m_pNowEnemy->m_maxHitPoint;
-				m_game.SetProgressBarWH(BAR_ENEMYHP_ID, CVec4(0.0f, 0.0f, EnemyHP, 10.0f), CVec2(WINDOW_RIGHT*0.272f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY));
+				m_game.SetProgressBarWH(TAG_BAR_ENEMYHP, CVec4(0.0f, 0.0f, EnemyHP, 10.0f), CVec2(WINDOW_RIGHT*0.272f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY));
 
 				//敵の名前をラベルにセット
 				//text->setString(pPlayerChara->m_pNowEnemy->m_name);
@@ -204,7 +207,7 @@ void CGameMain::rendUpdate()
 			else
 			{
 				//空にする
-				m_game.SetProgressBarWH(BAR_ENEMYHP_ID, CVec4(0.0f, 0.0f, 0.0f, 10.0f), CVec2(WINDOW_RIGHT*0.272f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY));
+				m_game.SetProgressBarWH(TAG_BAR_ENEMYHP, CVec4(0.0f, 0.0f, 0.0f, 10.0f), CVec2(WINDOW_RIGHT*0.272f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY));
 
 
 				//名前を空にするのはちょっと待つ
@@ -221,7 +224,7 @@ void CGameMain::rendUpdate()
 	else
 	{
 		//空にする
-		m_game.SetProgressBarWH(BAR_ENEMYHP_ID, CVec4(0.0f, 0.0f, 0.0f, 10.0f), CVec2(WINDOW_RIGHT*0.272f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY));
+		m_game.SetProgressBarWH(TAG_BAR_ENEMYHP, CVec4(0.0f, 0.0f, 0.0f, 10.0f), CVec2(WINDOW_RIGHT*0.272f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY));
 
 		//名前を空にするのはちょっと待つ
 		this->m_EnemyNameInterval++;
@@ -307,7 +310,7 @@ void CGameMain::gameMain()
 		if (!movingstage)
 		{
 			//フェードアウト
-			if (m_game.ActionStage(MAX_TEXTURE_NUMBER - 1, 1.0f, false) == true)
+			if (m_game.ActionStage(TAG_BLACKBORD, 1.0f, false) == true)
 			{
 				//フェードアウトが終了した
 				movingstage = true;
@@ -327,7 +330,7 @@ void CGameMain::gameMain()
 		if (movingstage == true)
 		{
 			//フェードイン開始
-			if (m_game.ActionStage(MAX_TEXTURE_NUMBER - 1, 1.0f, true))
+			if (m_game.ActionStage(TAG_BLACKBORD, 1.0f, true))
 			{
 				//フェードインが終了
 				movingstage = false;
@@ -442,7 +445,7 @@ void CGameMain::StageEnd(bool clear)
 		{
 			//BGMのフェードアウト
 			BGM->fadeOut(300);
-			if (m_game.ActionStage(MAX_TEXTURE_NUMBER - 1, 1.0f, false) == true)
+			if (m_game.ActionStage(TAG_BLACKBORD, 1.0f, false) == true)
 			{
 				movingstage = true;
 				gluLookAt(

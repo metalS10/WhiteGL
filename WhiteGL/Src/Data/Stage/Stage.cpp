@@ -38,6 +38,7 @@ void CStage1_1::init(CGameEngine& game)
 	}
 }
 
+//スクロール更新の際の背景色情報
 CVec4 CStage1_1::getChangePositionColor(bool Top)
 {
 	float r = rand() % 100;
@@ -101,6 +102,7 @@ void CStage1_2::init(CGameEngine& game)
 	}
 }
 
+//スクロール更新の際の背景色情報
 CVec4 CStage1_2::getChangePositionColor(bool Top)
 {
 	float r = rand() % 100;

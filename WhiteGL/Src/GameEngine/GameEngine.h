@@ -39,14 +39,11 @@ public:
 	CGameEngine() {}
 	~CGameEngine(){}
 	GLFWwindow* init(int w, int h, const char* file);
+	void renderInit();		//描画の初期化
 	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color);	//テクスチャ設定
-	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color,const GLuint tag);	//テクスチャ設定(tagあり)
 	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect);				//色変更なしoverload
-	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, const GLuint tag);				//色変更なしoverload(tagあり)
 	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color, LAYER layer);	//テクスチャ設定(レイヤー設定あり)
-	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, CVec4 color, LAYER layer, const GLuint tag);	//テクスチャ設定(レイヤー設定あり)(tagあり)
 	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, LAYER layer);				//色変更なしoverload(レイヤー設定あり)
-	void setupTexture(const char* file, TEX_TYPE texType, GLuint texID, CVec2 texPos, CVec4 texRect, LAYER layer, const GLuint tag);				//色変更なしoverload(レイヤー設定あり)(tagあり)
 	void setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line, const POLY_TYPE polytype);		//背景三角ポリゴンの設定(vertex(中央X,中央Y,Width,Height))
 	void setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line, const POLY_TYPE polytype,const LAYER layer);		//layer設定あり背景三角ポリゴンの設定(vertex(中央X,中央Y,Width,Height))
 	void setupPoly(const CVec4 vertex, const CVec4 color,const GLuint line, const POLY_TYPE polytype,const GLuint tag);		//layer設定あり背景三角ポリゴンの設定(vertex(中央X,中央Y,Width,Height))後に編集する場合のためのtag指定
@@ -86,7 +83,7 @@ public:
 	//アクション
 	bool ActionStage(const GLuint texID, const float fadeInterval, const bool fade);
 	void* TextureFade(const GLuint texID, const bool out ,const float fadeInterval);
-	bool getFadeEnd(const GLuint texID);
+	bool getFadeEnd(const GLuint tag);
 
 	CRenderer* getRenderer();
 

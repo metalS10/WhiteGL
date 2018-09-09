@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
 
 	
 	//ブラックボード
-	game.setupTexture("", TEX_TYPE::QUAD, BLACKBORD_ID, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH,  WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f),LAYER::UI);
+	game.setupTexture("", TEX_TYPE::QUAD, TAG_BLACKBORD, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH,  WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f),LAYER::BB);
 
 	
 
@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
 
 
 
-	//ゲームメインシーンを生成
+	//シーンを生成
 	CMS::getInstance()->setScene(new CTitle());
 	//現在のシーンに反映
 	scene = CMS::getInstance()->getScene();
