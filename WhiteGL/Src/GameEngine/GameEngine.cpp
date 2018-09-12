@@ -244,7 +244,7 @@ void CGameEngine::update60()
 
 void CGameEngine::setTexScale(const CVec2 scale, const GLuint texID)
 {
-	renderer->setTextureScale(scale, texID);
+	renderer->setTextureScaleAtTag(scale, texID);
 }
 void CGameEngine::setTexScaleAtTag(const CVec2 scale, const GLuint tag)
 {

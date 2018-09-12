@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Windows.h>
+#include <string>
 #include "GL\glut.h"
 
 using namespace std;
@@ -18,9 +19,11 @@ public:
 	float FrameTime, FrameTimeO;
 	FPS(int);
 	void SetFPS(int);
-	void GetFPS();
+	void update();
+	bool getDraw();
 private:
-	string str;
+	//データ表記用
+	string dataStr;
 	char buf[255];
 };
 //コンストラクタ
@@ -42,35 +45,45 @@ void FPS::SetFPS(int fps) {
 	FrameTime = 1000.0f / fps - 0.000001f;//1フレームの時間
 	FrameTimeO = 1000.0f / fps + 0.000001f;
 }
-void FPS::GetFPS()
+void FPS::update()
 {
-	draw = false;
+	
 	LoopCount++;
 	Time = timeGetTime();
 	if (Time - Oldtime>Frame*FrameTime) {
 		Frame++;
-		if ((Time - Oldtime)<Frame*FrameTimeO) {//描画タイミングに間に合った場合
-			str = "LOOP_MAX:[";str += _ltoa(LoopMax, buf, 10);str += "] FPS:[";str += _ltoa(CurrentFps - FrameSkip, buf, 10);
-			str += "] FRAME:[";str += _ltoa(Frame, buf, 10);str += "] FRAMESKIP:[";str += _ltoa(FrameSkip, buf, 10);
-			str += "] SLEEP:[";str += _ltoa(sleep, buf, 10);str += "]";
+		
+			dataStr = "LOOP_MAX:["; dataStr += _ltoa(LoopMax, buf, 10); dataStr += "] FPS:["; dataStr += _ltoa(CurrentFps - FrameSkip, buf, 10);
+			dataStr += "] FRAME:["; dataStr += _ltoa(Frame, buf, 10); dataStr += "] FRAMESKIP:["; dataStr += _ltoa(FrameSkip, buf, 10);
+			dataStr += "] SLEEP:["; dataStr += _ltoa(sleep, buf, 10); dataStr += "]";
 			//glutSetWindowTitle(str.c_str());
 			draw = true;
-			Sleep(sleep);
-		}
-		else {//描画タイミングに間に合わなかった場合：フレームスキップ
-			if (sleep>1)sleep--;//ウェイトを減らす
-			Skip++;
-		}
+			//Sleep(sleep);
+		
 	}
 	if (Time - Oldtime>1000 - FrameTime) {//一秒おきの処理
 		LoopMax = LoopCount;
-		if (LoopMax>CPUMax) { if (sleep<15)sleep++; }//十分に余力がある場合ウェイトを増やす
-		if (LoopMax<CPUMin) { if (sleep>1)sleep--; }//余裕が無い場合ウェイトを減らす
 		CurrentFps = Frame;
 		FrameSkip = Skip;
 		Skip = 0;
 		LoopCount = 0;
 		Frame = 0;
 		Oldtime = Time;
+	}
+	//std::cerr << dataStr << std::endl;
+	
+}
+
+//描画可能タイミングかどうか
+bool FPS::getDraw()
+{
+	if (draw)
+	{
+		draw = false;
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }

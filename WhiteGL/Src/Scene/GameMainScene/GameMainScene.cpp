@@ -1,4 +1,5 @@
 #include "GameMainScene.h"
+#include "../TitleScene/TitleScene.h"
 
 CGameMain::CGameMain()
 {
@@ -17,6 +18,7 @@ bool CGameMain::init()
 	//全テクスチャ削除
 	m_game.allTextureDelete();
 
+	//描画情報の初期化
 	m_game.renderInit();
 
 	//ステージ1を開く
@@ -51,6 +53,8 @@ bool CGameMain::init()
 	CCharacterAggregate::removeInstance();
 	CCharacterAggregate::getInstance()->set(m_pCharacters);
 
+	//ブラックボード
+	m_game.setupTexture("", TEX_TYPE::QUAD, TAG_BLACKBORD, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH, WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f), LAYER::BB);
 
 	//背景
 	m_game.setupTexture(MAIN_BG, TEX_TYPE::PNG, TAG_BG, CVec2(WINDOW_RIGHT*0.5f, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, WINDOW_RIGHT, WINDOW_TOP),LAYER::BG);
@@ -110,8 +114,6 @@ bool CGameMain::init()
 
 
 	pPlayerChara->input = input;
-
-
 
 
 	return true;

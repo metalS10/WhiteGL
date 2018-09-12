@@ -322,7 +322,7 @@ void CRenderer::render()
 
 				glEnableClientState(GL_VERTEX_ARRAY);
 				//テクスチャの画像指定
-				glBindTexture(GL_TEXTURE_2D, j + 1);
+				glBindTexture(GL_TEXTURE_2D, _texID[j]);
 				//板ポリゴン表示
 				glDrawArrays(GL_QUADS, 0, 4);
 
@@ -385,7 +385,6 @@ void CRenderer::setupTexture(const char *file, const TEX_TYPE tex_type, GLuint t
 		{
 			std::cerr << "ERROR : 画像の読み込みに失敗" << std::endl;
 		}
-
 		if (_texImage.back()->m_format == PNG_COLOR_TYPE_RGBA)
 		{
 			//テクスチャにPNGファイルから読み込んだピクセルを書き込む
@@ -894,7 +893,6 @@ void CRenderer::setTexPositionAtTag(const CVec2 position, const GLuint tag)
 {
 	for (int i = 0; i < _texTag.size(); i++)
 	{
-		std::cerr << _texTag.data() << std::endl;
 		if (_texTag[i] == tag)
 		{
 			_texPosition[i] = position;
@@ -1055,7 +1053,7 @@ void CRenderer::polygonNotesAction()
 			if(_polyTag[i] == TAG_BEATSACTION1 || _polyTag[i] == TAG_BEATSACTION2 || _polyTag[i] == TAG_BEATSACTION3 || _polyTag[i] == TAG_BEATSACTION4)
 				_polyColor[i].w -= 10.0f;	//小さくしていく
 		}
-		for (int j = 0; j < _polyTag.size(); j++)
+		if (i < _polyTag.size())
 		{
 			if (_polyTag[i] == TAG_PLAYER_1)
 			{

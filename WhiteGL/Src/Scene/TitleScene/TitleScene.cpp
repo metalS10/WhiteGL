@@ -1,5 +1,7 @@
 #include "TitleScene.h"
 
+#include "../GameMainScene/GameMainScene.h"
+
 CTitle::CTitle()
 {
 	this->init();
@@ -15,6 +17,9 @@ bool CTitle::init()
 
 	//全テクスチャ削除
 	m_game.allTextureDelete();
+
+	//描画情報の初期化
+	m_game.renderInit();
 
 	gluLookAt(
 		-cameraPosX, -cameraPosY, 0.0f,

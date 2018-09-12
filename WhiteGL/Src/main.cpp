@@ -143,7 +143,6 @@ int main(int argc, char *argv[])
 
 	Input::CGameInput* input = MS::CMS::getInstance()->getInput();
 
-	
 	/**
 	*memo
 	*メインループ
@@ -164,14 +163,15 @@ int main(int argc, char *argv[])
 		
 		
 		//描画用Update
-		scene->rendUpdate();
+		scene->rendUpdate();//
 		
 		//入力感知
 		InputFunc(game, input);
+		game.update();//
 
-		game.update();
-		fps->GetFPS();//FPSを得る
-		if (fps->draw) {//秒間60フレーム
+
+		fps->update();//FPSを得る
+		if (fps->getDraw()) {//秒間60フレーム
 			game.update60();
 			scene->sceneUpdate();
 			if (game.m_hitStop == 0)

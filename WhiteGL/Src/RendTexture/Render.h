@@ -10,7 +10,6 @@
 #include "GLFW/glfw3.h"
 #include "../Image/image.h"
 #include "../Vec2.h"
-#include "../Vec3.h"
 #include "../Vec4.h"
 #include "../Constants.h"
 #include "../Data/Animation/Animation.h"
