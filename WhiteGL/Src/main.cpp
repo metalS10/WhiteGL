@@ -106,6 +106,10 @@ void InputFunc(CGameEngine game,Input::CGameInput* input)
 	}
 }
 
+void test(int* value)
+{
+	(*value) += 100;
+}
 
 /**
 *	@file main.cpp
@@ -142,6 +146,14 @@ int main(int argc, char *argv[])
 	scene = CMS::getInstance()->getScene();
 
 	Input::CGameInput* input = MS::CMS::getInstance()->getInput();
+
+	int unko = 0;
+	printf("%d\n",unko);
+	test(&unko);
+	printf("%d\n", unko);
+
+	//SAFE_DELETE(unko);
+
 
 	/**
 	*memo

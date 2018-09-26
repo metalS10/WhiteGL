@@ -224,12 +224,6 @@ void CGameEngine::update()
 	}
 	*/
 }
-void CGameEngine::render()
-{
-	glfwPollEvents();
-
-	renderer->render();
-}
 
 void CGameEngine::update60()
 {
@@ -261,9 +255,9 @@ void CGameEngine::setTextureRect(const CVec4 mrect,const GLuint texID)
 	renderer->setTextureRectAtTag(mrect,texID);
 }
 
-void CGameEngine::SetProgressBarWH(const GLuint texID, const CVec4 Rect, const CVec2 position)
+void CGameEngine::SetProgressBarWH(const GLuint tag, const CVec4 Rect, const CVec2 position)
 {
-	renderer->SetProgressBarWH(texID, Rect,position);
+	renderer->SetProgressBarWH(tag, Rect,position);
 }
 
 void CGameEngine::setTexPosition(CVec2 pos, GLuint texID)

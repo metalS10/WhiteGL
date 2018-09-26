@@ -124,6 +124,9 @@
     <Filter Include="ソース ファイル\Render\Render">
       <UniqueIdentifier>{554144c0-7a4e-4a9a-b821-ec3372b3e82c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Render\RendInfo">
+      <UniqueIdentifier>{7fcd67d5-dab4-4505-be73-4006f06b61f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\main.cpp">
@@ -227,6 +230,9 @@
     </ClCompile>
     <ClCompile Include="Src\RendTexture\Render.cpp">
       <Filter>ソース ファイル\Render\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\RendInfo\RendInfo.cpp">
+      <Filter>ソース ファイル\Render\RendInfo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -370,6 +376,9 @@
     </ClInclude>
     <ClInclude Include="Src\RendTexture\Render.h">
       <Filter>ソース ファイル\Render\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\RendInfo\RendInfo.h">
+      <Filter>ソース ファイル\Render\RendInfo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

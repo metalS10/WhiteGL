@@ -947,26 +947,33 @@ void CRenderer::setTextureRectAtTag(const CVec4 rect, const GLuint tag)
 }
 
 //HPやBPのバーのための矩形設定
-void CRenderer::SetProgressBarWH(const GLuint texID,const CVec4 _texRect, const CVec2 position)
+void CRenderer::SetProgressBarWH(const GLuint tag,const CVec4 _texRect, const CVec2 position)
 {
-	CVec2 vec2;
-	if (_texRect.z >= 0)
+	for (int i = 0; i < _texTag.size(); i++)
 	{
-		_texWH[texID] = CVec2(_texRect.z, 5.0f);
-		vec2 = CVec2(position.x + _texRect.z, position.y);
-	}
-	else
-	{
-		_texWH[texID] = CVec2(0.0f, 5.0f);
-		vec2 = CVec2(position.x + 0.0f, position.y);
-	}
-	_texPosition[texID] = vec2;
-	_texRectPos[texID] = CVec4(
-		_texPosition[texID].x - _texWH[texID].x * _texScale[texID].x,
-		_texPosition[texID].x + _texWH[texID].x * _texScale[texID].x,
-		_texPosition[texID].y - _texWH[texID].y * _texScale[texID].y,
-		_texPosition[texID].y + _texWH[texID].y * _texScale[texID].y);
+		if (_texTag[i] == tag)
+		{
+			CVec2 vec2;
+			if (_texRect.z >= 0)
+			{
+				_texWH[i] = CVec2(_texRect.z, 5.0f);
+				vec2 = CVec2(position.x + _texRect.z, position.y);
+			}
+			else
+			{
+				_texWH[i] = CVec2(0.0f, 5.0f);
+				vec2 = CVec2(position.x + 0.0f, position.y);
+			}
+			_texPosition[i] = vec2;
+			_texRectPos[i] = CVec4(
+				_texPosition[i].x - _texWH[i].x * _texScale[i].x,
+				_texPosition[i].x + _texWH[i].x * _texScale[i].x,
+				_texPosition[i].y - _texWH[i].y * _texScale[i].y,
+				_texPosition[i].y + _texWH[i].y * _texScale[i].y);
 
+			return;
+		}
+	}
 
 }
 //ゲームの中のテクスチャをすべて削除

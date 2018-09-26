@@ -231,7 +231,6 @@ void CLaunchScheduler::launchCharacters(CGameEngine& game)
 			{
 				game.setupTexture(pChara->texPass, TEX_TYPE::PNG, pChara->m_texID, pChara->m_pMove->m_pos, (*pChara->m_pAnimations)[0]->getCurrentChip());
 			}
-			game.render();
 
 		}
 	}
