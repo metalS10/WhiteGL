@@ -71,19 +71,19 @@
 #define TAG_BLACKBORD			MAX_TEXTURE_NUMBER - 1
 #define TAG_NOTES				MAX_TEXTURE_NUMBER - 2
 //GameMain
-#define TAG_PLAYER_1 1001			//プレイヤーキャラクター
-#define TAG_PLAYER_EFFECT_1 1002	//プレイヤーキャラクターの残像
-#define TAG_PLAYER_EFFECT_2 1003	//プレイヤーキャラクターの残像
-#define TAG_PLAYER_EFFECT_3 1004	//プレイヤーキャラクターの残像
-#define TAG_BEATSACTION1 1005		//画面端のユーザーインターフェース
-#define TAG_BEATSACTION2 1006		//画面端のユーザーインターフェース
-#define TAG_BEATSACTION3 1007		//画面端のユーザーインターフェース
-#define TAG_BEATSACTION4 1008		//画面端のユーザーインターフェース
-#define TAG_PLAYER_ATTACK 1009		//プレイヤーキャラクターの攻撃
+#define TAG_PLAYER_1 101			//プレイヤーキャラクター
+#define TAG_PLAYER_EFFECT_1 102	//プレイヤーキャラクターの残像
+#define TAG_PLAYER_EFFECT_2 103	//プレイヤーキャラクターの残像
+#define TAG_PLAYER_EFFECT_3 104	//プレイヤーキャラクターの残像
+#define TAG_BEATSACTION1 105		//画面端のユーザーインターフェース
+#define TAG_BEATSACTION2 106		//画面端のユーザーインターフェース
+#define TAG_BEATSACTION3 107		//画面端のユーザーインターフェース
+#define TAG_BEATSACTION4 108		//画面端のユーザーインターフェース
+#define TAG_PLAYER_ATTACK 109		//プレイヤーキャラクターの攻撃
 //Title
-#define TAG_TITLE_TEXT1 1001		//タイトルの文字画像
-#define TAG_TITLE_TEXT2 1002		//タイトルの文字画像
-#define TAG_TITLE_TEXT3 1003		//タイトルの文字画像
+#define TAG_TITLE_TEXT1 101		//タイトルの文字画像
+#define TAG_TITLE_TEXT2 102		//タイトルの文字画像
+#define TAG_TITLE_TEXT3 103		//タイトルの文字画像
 
 
 

@@ -1,6 +1,7 @@
 
 #include "EnemyBulletCharacter.h"
 #include "../../Data/Map/Map.h"
+#include "../../AllController/AllController.h"
 
 //=======================================================
 //弾のメンバ関数のコードの追加はここから
@@ -74,6 +75,11 @@ void CEnemyBulletCharacter::moveFunc()
 
 	//移動計算
 	this->m_pMove->moveBy();
+
+	//描画情報更新
+	setTextureRect((*m_pAnimations)[m_state]->getCurrentChip());
+	setTextureScale(m_scale);
+	setTexPosition(m_pMove->m_pos);
 }
 
 //アニメーション処理

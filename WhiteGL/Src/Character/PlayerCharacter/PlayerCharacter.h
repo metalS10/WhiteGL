@@ -10,12 +10,23 @@
 //==================================================
 class CPlayerCharacter : public CCharacter
 {
+private:
+	//PlayerEffect
+	rendInfo::CPolygonRendInfo* m_playerEffect[3];
+	//Playerの回転度数
+	float playerAngle = 0;
+	//エフェクトのインターバルカウンター
+	int playerEffectCount[3] = { 0,0,0 };
+
 public:
 	//コンストラクタ
 	CPlayerCharacter();
 
 	//デストラクタ
 	~CPlayerCharacter();
+
+	//Playerが回るべきタイミングかどうか
+	bool playerRolling = false;
 
 	//初期化処理
 	bool init() override;
@@ -100,7 +111,7 @@ public:
 
 	//ジャスト回避(減らすだけ
 	void DodgeInterval();
-	\
+	
 	//4分音符更新
 	void quarterUpdate() override;
 
@@ -146,4 +157,7 @@ public:
 	void Allfalse();
 	//拍子間隔設定
 	void setBeat(int beat);
+	
+	//プレイヤーのエフェクト操作
+	void playerEffect();
 };

@@ -7,11 +7,15 @@ CNotesUI::CNotesUI()
 
 CNotesUI::~CNotesUI()
 {
-
+	SAFE_DELETE(m_pAnimations);
+	SAFE_DELETE(m_pNotes);
 }
 
 bool CNotesUI::init()
 {
+	//音合わせUI
+	
+
 	std::vector<CAnimation*>* anim = new std::vector<CAnimation*>();
 
 	//テクスチャの設定
@@ -33,12 +37,21 @@ bool CNotesUI::init()
 
 	m_pNotes = new CNotesAnimation2();
 
+	//描画設定
+	setImage(texPas, rendInfo::TEX_TYPE::PNG, TAG_NOTES, CVec2(WINDOW_RIGHT - (*m_pAnimations)[0]->getCurrentChip().z * 0.5f, WINDOW_BOTTOM + (*m_pAnimations)[0]->getCurrentChip().w * 0.5), (*m_pAnimations)[0]->getCurrentChip(), rendInfo::LAYER::UI);
+
+
 	return true;
 }
 
 void CNotesUI::update()
 {
 	(*this->m_pAnimations)[m_state]->update();
+
+	
+	((*m_pAnimations)[m_state]->getCurrentChip());
+
+	setTextureRect((*m_pAnimations)[m_state]->getCurrentChip());
 }
 
 

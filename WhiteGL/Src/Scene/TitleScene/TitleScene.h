@@ -6,6 +6,13 @@ class CTitle : public CScene
 private:
 	int m_select = 0;
 	bool m_pushButton = false;
+
+	rendInfo::CTexRendInfo* m_titleText	;
+	rendInfo::CTexRendInfo* m_startButton;
+	rendInfo::CTexRendInfo* m_endButton	;
+	rendInfo::CTexRendInfo* m_titleBG	;
+
+	std::vector<rendInfo::CTriPolygonRendInfo*> m_bgPoly;
 public:
 	CTitle();
 	~CTitle();

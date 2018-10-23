@@ -4,11 +4,11 @@
 #include "../Data/ActionController/ActionController.h"
 #include "../Data/Collision/Collision.h"
 #include "../Data/CollisionArea/CollisionArea.h"
-#include "../gameInput.h"
 #include "../Data/Map/Map.h"
 #include "../Data/Notes/Notes.h"
-#include "../AllController/AllController.h"
 #include "../Data/Sound/Sound.h"
+#include "../RendInfo/RendInfo.h"
+#include "../gameInput.h"
 
 
 //===============================================
@@ -40,7 +40,7 @@ enum class SOUND : int
 //	キャラクタークラス
 //		すべてのキャラクターの雛形となる抽象クラス
 //===============================================
-class CCharacter
+class CCharacter : public rendInfo::CTexRendInfo,public rendInfo::CPolygonRendInfo
 {
 public:
 	//コンストラクタ

@@ -18,16 +18,22 @@ private:
 	int m_EnemyNameInterval = 0;
 	CStage* m_stage = NULL;
 	CNotesUI* notes = NULL;
-	//”wŒiƒ|ƒŠƒSƒ“‚Ì•~‚«‹l‚ßŠÔŠu
-	float m_polyRange = 0.0f;
-	//”wŒi‚Ìƒ|ƒWƒVƒ‡ƒ“ŒQ
-	std::vector<float> m_trianglesLeft;
-	std::vector<float> m_trianglesRight;
 
-	int playerEffectCount[3] = {0,0,0};
-	bool moving = false;
-	float playerAngle = 0;
-	bool playerRolling = false;
+	//BG(”wŒi)
+	rendInfo::CTexRendInfo* m_backGround1;
+	rendInfo::CTexRendInfo* m_backGround2;
+	//UI‚Ì”wŒi
+	rendInfo::CTexRendInfo* m_UIBack;
+	rendInfo::CTexRendInfo* m_HPwaku;	//HPUI˜g
+	rendInfo::CTexRendInfo* m_BPwaku;	//BPUI˜g
+	rendInfo::CTexRendInfo* m_HP;	//BPUI
+	rendInfo::CTexRendInfo* m_BP;	//BPUI
+	rendInfo::CTexRendInfo* m_EnemyStatsUI;	//EnemyUI
+	rendInfo::CTexRendInfo* m_EnemyHPwaku;	//EnemyHPUI˜g
+	rendInfo::CTexRendInfo* m_EnemyHP;	//EnemyHPUI
+	rendInfo::CTexRendInfo* m_GameEndUI;	//EnemyHPUI
+	//‰æ–Ê‘S‘ÌUI
+	rendInfo::CPolygonRendInfo m_cirUI[4];
 
 
 public:
@@ -53,14 +59,6 @@ public:
 	void StageEnd(bool clear);
 	//TiledMap‚Ì“Ç‚İ‚İ&ŠJ‚­
 	void openMap();
-
-
-	void scrollBackGroundTrianglesLeft(float posX);
-	void scrollBackGroundTrianglesRight(float posX);
-
-	void playerAction();
-	void playerEffect();
-
 
 
 	/**
@@ -90,13 +88,8 @@ public:
 
 			if ((*itr)->m_activeFlag == false)
 			{
-				if ((*itr)->m_charaType == CHARACTER_TYPE::ATTACK)
-				{
-					m_game.deletePoly(TAG_PLAYER_ATTACK);
-				}
 				(*itr)->removeFromParent();
 				itr = pCharas->erase(itr);
-
 			}
 			else
 			{

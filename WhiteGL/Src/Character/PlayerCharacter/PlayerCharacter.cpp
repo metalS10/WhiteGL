@@ -1,8 +1,6 @@
 
 #include "PlayerCharacter.h"
-//#include "Model/Map/Map.h"
-//#include "Data/LaunchData/LaunchData.h"
-//#include "Data/LaunchTrigger/LaunchTrigger.h"
+#include "../../AllController/AllController.h"
 
 //================================================
 //プレイヤーキャラクターのメンバ関数のコード追加はここから
@@ -32,6 +30,10 @@ CPlayerCharacter::CPlayerCharacter() {
 //デストラクタ
 CPlayerCharacter::~CPlayerCharacter() {
 	SAFE_DELETE(m_pSounds);
+	this->deletePoly();
+	SAFE_DELETE(m_playerEffect[0])
+	SAFE_DELETE(m_playerEffect[1])
+	SAFE_DELETE(m_playerEffect[2])
 }
 
 //初期化処理
@@ -52,6 +54,18 @@ bool CPlayerCharacter::init()
 	this->m_pSounds->push_back(new CSound(SOUND_DRUM_ATTACK			, 16,100));
 	this->m_pSounds->push_back(new CSound(SOUND_QUARTER_BEATS		, 16,80));
 
+	//ポリゴンを設定
+	this->setupPoly(CVec4(0.0f, 0.0f, 64.0f, 64.0f), CVec4(100.0f, 100.0f, 100.0f, 100.0f), rendInfo::LAYER::MAIN);
+
+	//PlayerEffect
+	m_playerEffect[0] = new rendInfo::CPolygonRendInfo();
+	m_playerEffect[1] = new rendInfo::CPolygonRendInfo();
+	m_playerEffect[2] = new rendInfo::CPolygonRendInfo();
+	m_playerEffect[0]->setupPoly(CVec4(0.0f, 0.0f, 64.0f, 64.0f), CVec4(100.0f, 100.0f, 100.0f, 40.0f), rendInfo::LAYER::MAIN);
+	m_playerEffect[1]->setupPoly(CVec4(0.0f, 0.0f, 64.0f, 64.0f), CVec4(100.0f, 100.0f, 100.0f, 60.0f), rendInfo::LAYER::MAIN);
+	m_playerEffect[2]->setupPoly(CVec4(0.0f, 0.0f, 64.0f, 64.0f), CVec4(100.0f, 100.0f, 100.0f, 80.0f), rendInfo::LAYER::MAIN);
+
+
 	for (CSound* sound : (*m_pSounds))
 	{
 		sound->LoadChunk();
@@ -71,7 +85,9 @@ void CPlayerCharacter::update()
 	//ジャスト回避インターバル
 	this->DodgeInterval();
 
-	this->animationFunc();
+	//ポリゴンの拍子アクション
+	this->polygonBeatsAction();
+
 	//キャラクターの更新処理呼び出し
 	CCharacter::update();
 }
@@ -383,13 +399,101 @@ void CPlayerCharacter::checkState()
 void CPlayerCharacter::applyFunc()
 {
 	
+	//ダメージ中に色を変える
+	if (m_isDamage)
+	{
+		setPolyColor(CVec4(100.0f, 0.0f, 0.0f, 100.0f));
+	}
+	else if (musicNotesMiss > 0)
+	{
+		//beatsのミスはピンク
+		setPolyColor(CVec4(100.0f, 50.0f, 50.0f, 100.0f));
+	}
+	else if (m_isAvoidance)
+	{
+		//回避成功中の回避行動は黄色
+		setPolyColor(CVec4(100.0f, 100.0f, 0.0f, 100.0f));
+	}
+	else
+	{
+		//何もなければ戻す
+		setPolyColor(CVec4(100.0f, 100.0f, 100.0f, 100.0f));
+	}
+	//回転情報
+	if (playerRolling)
+	{
+		playerAngle -= m_CharaLaunchVector.x*50.0f;
+		if (playerAngle >= 600 || playerAngle <= -600)
+		{
+			playerAngle = 0;
+			playerRolling = false;
+		}
+		setPolyAngle(playerAngle);
+	}
+	//Playerのエフェクト処理
+	this->playerEffect();
+
 	//位置データを反映
 	//rendTex->setPosition(this->m_pMove->m_pos,5);
+	//頂点座標の更新
+	setPolyPos(CVec2(m_pMove->m_pos.x, m_pMove->m_pos.y));
 
 	//チップデータを反映
 	//game.setTextureRect((*this->m_pAnimations)[1]->getCurrentChip());
-	
+
 }
+void CPlayerCharacter::playerEffect()
+{
+	//動いてたらエフェクト表示
+	if (m_state == (int)STATE::WALK)
+	{
+		playerEffectCount[0]++;
+		playerEffectCount[1]++;
+		playerEffectCount[2]++;
+		if (playerEffectCount[0] >= 2)
+		{
+			playerEffectCount[0] = 0;
+			m_playerEffect[0]->setPolyPos(CVec2(m_pMove->m_pos.x, m_pMove->m_pos.y));
+			m_playerEffect[0]->setPolyScale(getPolyScale());
+			m_playerEffect[0]->setPolyAngle(getPolyAngle());
+			CVec4 playerColor = getPolyColor();
+			playerColor.w = 80.0f;
+			m_playerEffect[0]->setPolyColor(playerColor);
+		}
+		if (playerEffectCount[1] >= 4)
+		{
+			playerEffectCount[1] = 0;
+			m_playerEffect[1]->setPolyPos(CVec2(m_pMove->m_pos.x, m_pMove->m_pos.y));
+			m_playerEffect[1]->setPolyScale(getPolyScale());
+			m_playerEffect[1]->setPolyAngle(getPolyAngle());
+			CVec4 playerColor = getPolyColor();
+			playerColor.w = 60.0f;
+			m_playerEffect[1]->setPolyColor(playerColor);
+		}
+		if (playerEffectCount[2] >= 6)
+		{
+			playerEffectCount[2] = 0;
+			m_playerEffect[2]->setPolyPos(CVec2(m_pMove->m_pos.x, m_pMove->m_pos.y));
+			m_playerEffect[2]->setPolyScale(getPolyScale());
+			m_playerEffect[2]->setPolyAngle(getPolyAngle());
+			CVec4 playerColor = getPolyColor();
+			playerColor.w = 40.0f;
+			m_playerEffect[2]->setPolyColor(playerColor);
+		}
+	}
+	//動いていなければエフェクト非表示
+	else
+	{
+		//前回の処理が「動いている状態」なら
+		if (m_state != (int)STATE::WALK)
+		{
+			m_playerEffect[0]->setPolyColor(CVec4(100.0f, 100.0f, 100.0f, 0.0f));
+			m_playerEffect[1]->setPolyColor(CVec4(100.0f, 100.0f, 100.0f, 0.0f));
+			m_playerEffect[2]->setPolyColor(CVec4(100.0f, 100.0f, 100.0f, 0.0f));
+		}
+	}
+}
+
 
 /**
 *	@desc キャラクター１体との衝突判定処理

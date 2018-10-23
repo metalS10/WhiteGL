@@ -180,6 +180,7 @@ CMapManager* CMapManager::getInstance()
 
 //デストラクタ
 CMapManager::~CMapManager() {
+	SAFE_DELETE(m_pMap);
 }
 
 //破棄
@@ -247,14 +248,6 @@ CMap* CMapManager::setMap(const std::string & fileName_)
 		//初期位置の設定
 		m_pMap->setPosition(0.0f, 0.0f);
 
-		//取り付けられているすべてのタイルのエイリアスのデフォルトをアンチエイリアスに設定
-		//ちらつき防止
-		/*
-		for (const auto & child : this->m_pMap->getChildren())
-		{
-			static_cast<cocos2d::SpriteBatchNode*>(child)->getTexture()->setAntiAliasTexParameters();
-		}
-		*/
 		return this->m_pMap;
 	}
 	else

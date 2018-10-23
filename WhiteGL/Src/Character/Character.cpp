@@ -10,13 +10,13 @@ CCharacter::CCharacter()
 CCharacter::~CCharacter()
 {
 	SAFE_DELETE(this->m_pBody);
-	
+
 	for (CAction* pAction : (*m_pActions))
 	{
 		SAFE_DELETE(pAction);
 	}
 	SAFE_DELETE(this->m_pActions);
-	
+
 	for (CPhysical* pPhysical : (*m_pPhysicals))
 	{
 		SAFE_DELETE(pPhysical);
@@ -29,17 +29,25 @@ CCharacter::~CCharacter()
 	}
 	SAFE_DELETE(this->m_pAnimations);
 
-	for (CNotes* pNotes : (*m_pNotes))
+	if (m_pNotes != NULL) 
 	{
-		SAFE_DELETE(pNotes);
+		for (CNotes* pNotes : (*m_pNotes))
+		{
+			SAFE_DELETE(pNotes);
+		}
+		SAFE_DELETE(this->m_pNotes);
 	}
-	SAFE_DELETE(this->m_pNotes);
 
-	for (CSound* pSounds : (*m_pSounds))
+	if (m_pSounds != NULL)
 	{
-		SAFE_DELETE(pSounds);
+		for (CSound* pSounds : (*m_pSounds))
+		{
+			SAFE_DELETE(pSounds);
+		}
+		SAFE_DELETE(this->m_pSounds);
 	}
-	SAFE_DELETE(this->m_pSounds);
+
+	this->deleteTexture();
 }
 
 //初期化処理
@@ -83,7 +91,8 @@ void CCharacter::update()
 	//反映処理
 	this->applyFunc();
 
-	
+	//テクスチャの拍子アクション
+	this->textureNotesAction();
 }
 
 void CCharacter::half()
@@ -145,7 +154,8 @@ void CCharacter::DPHeal(float dp_value)
 
 void CCharacter::removeFromParent()
 {
-	MS::CMS::getInstance()->getGame().deleteTexture(this->m_texID);
+	deleteTexture();
+	deletePoly();
 }
 
 

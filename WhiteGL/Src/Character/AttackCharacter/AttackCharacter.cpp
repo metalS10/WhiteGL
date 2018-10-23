@@ -1,6 +1,7 @@
 
 #include "AttackCharacter.h"
 #include "../../Data/Map/Map.h"
+#include "../../AllController/AllController.h"
 
 //=======================================================
 //弾のメンバ関数のコードの追加はここから
@@ -23,7 +24,7 @@ CAttackCharacter::CAttackCharacter()
 //デストラクタ
 CAttackCharacter::~CAttackCharacter()
 {
-	//CCLOG("unko");
+	this->deletePoly();
 }
 
 //初期化処理
@@ -35,6 +36,8 @@ bool CAttackCharacter::init()
 		std::cerr<<"攻撃の初期化に失敗"<<std::endl;
 		return false;
 	}
+
+	this->setupPoly(CVec4(0.0f,0.0f, 32.0f, 32.0f), CVec4(0.0f, 0.0f, 0.0f, 100.0f), rendInfo::LAYER::MAIN);
 
 	return true;
 }
@@ -52,6 +55,8 @@ bool CAttackCharacter::init(float posX, float posY)
 		std::cerr << "攻撃初期化に失敗"<<std::endl;
 		return false;
 	}
+
+	this->setupPoly(CVec4(0.0f, 0.0f, 32.0f, 32.0f), CVec4(0.0f, 0.0f, 0.0f, 100.0f), rendInfo::LAYER::MAIN);
 
 	return true;
 }
@@ -169,6 +174,10 @@ void CAttackCharacter::applyFunc()
 
 	//チップデータを反映
 	//this->setTextureRect((*this->m_pAnimations)[m_state]->getCurrentChip());
+
+	this->setPolyPos(CVec2(m_pMove->m_pos.x, m_pMove->m_pos.y));
+	this->setPolyScale(CVec2(32.0f, 32.0f));
+	this->addPolyAngle(-10.0f);
 }
 
 /**

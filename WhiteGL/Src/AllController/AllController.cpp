@@ -28,11 +28,20 @@ void CMS::removeInstance()
 CMS::~CMS()
 {
 	removeInstance();
+
+	SAFE_DELETE(window);
+	SAFE_DELETE(m_pScene);
+	SAFE_DELETE(input);
+
 }
 
 CGameEngine& CMS::getGame()
 {
 	return game;
+}
+render::CRenderer* CMS::getRenderer()
+{
+	return game.getRenderer();
 }
 GLFWwindow* CMS::getWindow()
 {

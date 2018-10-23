@@ -190,7 +190,9 @@
     <ClCompile Include="Src\GameEngine\GameEngine.cpp" />
     <ClCompile Include="Src\GLFWEW\GLFWEW.cpp" />
     <ClCompile Include="Src\Image\image.cpp" />
+    <ClCompile Include="Src\Image\LoadImage\LoadImage.cpp" />
     <ClCompile Include="Src\interpreter\interpreter2.cpp" />
+    <ClCompile Include="Src\interpreter\TMXTiledMap.cpp" />
     <ClCompile Include="Src\interpreter\xmlparser.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\NotesUI\NotesUI.cpp" />
@@ -200,6 +202,7 @@
     <ClCompile Include="Src\Scene\GameMainScene\GameMainScene.cpp" />
     <ClCompile Include="Src\Scene\Scene.cpp" />
     <ClCompile Include="Src\Scene\TitleScene\TitleScene.cpp" />
+    <ClCompile Include="Src\Search\BinarySearch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -235,7 +238,8 @@
     <ClInclude Include="Src\GamePad.h" />
     <ClInclude Include="Src\GLFWEW\GLFWEW.h" />
     <ClInclude Include="Src\Image\image.h" />
-    <ClInclude Include="Src\interpreter\CCTMXTiledMap.h" />
+    <ClInclude Include="Src\Image\LoadImage\LoadImage.h" />
+    <ClInclude Include="Src\interpreter\TMXTiledMap.h" />
     <ClInclude Include="Src\interpreter\Element.h" />
     <ClInclude Include="Src\interpreter\interpreter.h" />
     <ClInclude Include="Src\interpreter\xmlparser.h" />
@@ -249,6 +253,7 @@
     <ClInclude Include="Src\Scene\GameMainScene\GameMainScene.h" />
     <ClInclude Include="Src\Scene\Scene.h" />
     <ClInclude Include="Src\Scene\TitleScene\TitleScene.h" />
+    <ClInclude Include="Src\Search\BinarySearch.h" />
     <ClInclude Include="Src\Vec2.h" />
     <ClInclude Include="Src\Vec3.h" />
     <ClInclude Include="Src\Vec4.h" />

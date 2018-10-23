@@ -2,12 +2,12 @@
 *	main.cpp
 *		2017/09/29	Mats
 */
+#include "GLFWEW/GLFWEW.h"
 #include "AllController/AllController.h"
 #include "Factory/PlayerFactory/PlayerFactory.h"
 #include "Data/FPS.h"
 #include "Data/LaunchTrigger/LaunchTrigger.h"
 #include "Scene/TitleScene/TitleScene.h"
-
 using namespace MS;
 CScene* scene;
 
@@ -106,10 +106,6 @@ void InputFunc(CGameEngine game,Input::CGameInput* input)
 	}
 }
 
-void test(int* value)
-{
-	(*value) += 100;
-}
 
 /**
 *	@file main.cpp
@@ -128,12 +124,6 @@ int main(int argc, char *argv[])
 		return false;
 
 	
-	//ブラックボード
-	game.setupTexture("", TEX_TYPE::QUAD, TAG_BLACKBORD, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH,  WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f),LAYER::BB);
-
-	
-
-	
 	FPS* fps = new FPS(60);
 
 	GLFWEW::Window& FwewWindow = GLFWEW::Window::Instance();
@@ -142,17 +132,12 @@ int main(int argc, char *argv[])
 
 	//シーンを生成
 	CMS::getInstance()->setScene(new CTitle());
+
 	//現在のシーンに反映
 	scene = CMS::getInstance()->getScene();
 
 	Input::CGameInput* input = MS::CMS::getInstance()->getInput();
 
-	int unko = 0;
-	printf("%d\n",unko);
-	test(&unko);
-	printf("%d\n", unko);
-
-	//SAFE_DELETE(unko);
 
 
 	/**

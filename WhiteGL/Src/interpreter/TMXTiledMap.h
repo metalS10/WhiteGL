@@ -5,7 +5,8 @@
 #include <string>
 #include "../Vec2.h"
 #include "../Rect.h"
-#include "../AllController/AllController.h"
+#include "../RendInfo/RendInfo.h"
+#include "interpreter.h"
 
 /**
  * @addtogroup _2d
@@ -30,11 +31,13 @@ enum
 
 class /*CC_DLL*/ TMXTiledMap
 {
+private:
+	std::vector<rendInfo::CTexRendInfo*> m_tileTextures;
 public:
 
-	TMXTiledMap() {}
+	TMXTiledMap();
 	
-	~TMXTiledMap() {}
+	~TMXTiledMap();
 
     /** The map's size property measured in tiles. 
      *
@@ -98,37 +101,19 @@ public:
 	CVec2 _mapPosition = CVec2(0.0f,0.0f);
 
 	CVec2 po = CVec2(0,0);
+
+	int countMap = 0;
   
-	void load(const std::string& tmxFile)
-	{
-		CGameEngine& game = MS::CMS::getInstance()->getGame();
-
-		xml = new LoadXml(tmxFile.c_str());
-
-		game.loadTMXMap(xml->m_layerData, xml->m_width, xml->m_height);
-		game.TMXMapSetPos(0.0f, 0.0f);
-
-		_tileSize = CSize(xml->m_layerData[0].m_tileWidth, xml->m_layerData[0].m_tileHeight);
-		_mapSize = CSize(xml->m_width, xml->m_height);
-	}
-	int i = 0;
+	void load(const std::string& tmxFile);
 	// public
-	CLayerData getLayer(const int layerName)
-	{
-		return xml->m_layerData[layerName];
-	}
+	
+	CLayerData getLayer(const int layerName);
 
-	uint32_t getTileGIDAt(const CVec2& pos, const int layerData)
-	{
+	uint32_t getTileGIDAt(const CVec2& pos, const int layerData);
 
-		int idx = static_cast<int>(((int)pos.x + (int)pos.y * xml->m_width));
-		// Bits on the far end of the 32-bit global tile ID are used for tile flags
-		uint32_t tile = xml->m_layerData[layerData].m_gid[idx];
+	void loadTMXMap(CLayerData layerData[MAX_LAYER_NUMBER], int width, int height);
+	void TMXMapSetPos(float x, float y);
 
-
-
-		return (tile & kTMXFlippedMask);
-	}
 
 };
 

@@ -140,9 +140,6 @@ public:
 	virtual void hits(CCharacter* pChara) override;
 
 
-
-
-
 	void collisionBottomCallback(int event)override
 	{
 		this->m_activeFlag = false;

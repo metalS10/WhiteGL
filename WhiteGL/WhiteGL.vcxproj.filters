@@ -127,6 +127,12 @@
     <Filter Include="ソース ファイル\Render\RendInfo">
       <UniqueIdentifier>{7fcd67d5-dab4-4505-be73-4006f06b61f3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\BinarySearch">
+      <UniqueIdentifier>{ac845792-35ae-4423-80ff-d005e0a4b6ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Render\Image\LoadImage">
+      <UniqueIdentifier>{7c71492e-93a2-44a8-ac25-eb21faf15f0e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\main.cpp">
@@ -234,6 +240,15 @@
     <ClCompile Include="Src\RendInfo\RendInfo.cpp">
       <Filter>ソース ファイル\Render\RendInfo</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Search\BinarySearch.cpp">
+      <Filter>ソース ファイル\BinarySearch</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Image\LoadImage\LoadImage.cpp">
+      <Filter>ソース ファイル\Render\Image\LoadImage</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\interpreter\TMXTiledMap.cpp">
+      <Filter>ヘッダー ファイル\interpreter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -253,9 +268,6 @@
     </ClInclude>
     <ClInclude Include="Src\interpreter\Element.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\interpreter\CCTMXTiledMap.h">
-      <Filter>ヘッダー ファイル\interpreter</Filter>
     </ClInclude>
     <ClInclude Include="Src\gameInput.h">
       <Filter>ソース ファイル\Input</Filter>
@@ -379,6 +391,15 @@
     </ClInclude>
     <ClInclude Include="Src\RendInfo\RendInfo.h">
       <Filter>ソース ファイル\Render\RendInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Search\BinarySearch.h">
+      <Filter>ソース ファイル\BinarySearch</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Image\LoadImage\LoadImage.h">
+      <Filter>ソース ファイル\Render\Image\LoadImage</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\interpreter\TMXTiledMap.h">
+      <Filter>ヘッダー ファイル\interpreter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

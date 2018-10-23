@@ -1,10 +1,9 @@
 #pragma once
 #include <stdio.h>
 #include "../../Constants.h"
-#include "../../interpreter/CCTMXTiledMap.h"
+#include "../../interpreter/TMXTiledMap.h"
 #include "../../Vec2.h"
 #include <vector>
-#include "../../AllController/AllController.h"
 
 //=====================================================
 //前方宣言
@@ -205,7 +204,6 @@ public:
 	//マップの設定
 	CMap* setMap(const std::string & fileName);
 
-	CGameEngine& game = MS::CMS::getInstance()->getGame();
 
 	
 };

@@ -9,6 +9,8 @@ using namespace std;
 #define CPUMax 30000
 #define CPUMin 10000
 
+#pragma warning(disable : 4996)
+
 //FPSŠÇ—ƒNƒ‰ƒX
 class FPS {
 public:
@@ -52,10 +54,6 @@ void FPS::update()
 	Time = timeGetTime();
 	if (Time - Oldtime>Frame*FrameTime) {
 		Frame++;
-		
-			dataStr = "LOOP_MAX:["; dataStr += _ltoa(LoopMax, buf, 10); dataStr += "] FPS:["; dataStr += _ltoa(CurrentFps - FrameSkip, buf, 10);
-			dataStr += "] FRAME:["; dataStr += _ltoa(Frame, buf, 10); dataStr += "] FRAMESKIP:["; dataStr += _ltoa(FrameSkip, buf, 10);
-			dataStr += "] SLEEP:["; dataStr += _ltoa(sleep, buf, 10); dataStr += "]";
 			//glutSetWindowTitle(str.c_str());
 			draw = true;
 			//Sleep(sleep);

@@ -1,4 +1,5 @@
 #include "NotesCharacter.h"
+#include "../../AllController/AllController.h"
 
 //=======================================================
 //ギミックのメンバ関数のコードの追加はここから
@@ -32,6 +33,8 @@ bool CNotesCharacter::init()
 		std::cerr << "音に合わせて動くキャラクター初期化に失敗" << std::endl;
 		return false;
 	}
+
+
 	return true;
 }
 
@@ -48,6 +51,8 @@ bool CNotesCharacter::init(float posX, float posY)
 		std::cerr << "音に合わせて動くキャラクター初期化に失敗" << std::endl;
 		return false;
 	}
+
+	
 
 	return true;
 }
@@ -72,6 +77,12 @@ void CNotesCharacter::moveFunc()
 
 	//移動計算
 	this->m_pMove->moveBy();
+
+	//描画情報更新
+	setTextureRect((*m_pAnimations)[m_state]->getCurrentChip());
+	setTextureScale(m_scale);
+	setTexPosition(m_pMove->m_pos);
+
 }
 
 //アニメーション処理

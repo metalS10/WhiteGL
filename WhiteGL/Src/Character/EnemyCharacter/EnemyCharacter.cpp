@@ -1,6 +1,7 @@
 
 #include "EnemyCharacter.h"
 #include "../../Data/Map/Map.h"
+#include "../../AllController/AllController.h"
 
 //=======================================================
 //敵キャラクターのメンバ関数のコードの追加はここから
@@ -87,6 +88,11 @@ void CEnemyCharacter::moveFunc()
 	{
 		pPlayerChara->m_pNowEnemy = NULL;
 	}
+
+	//描画情報更新
+	setTextureRect((*m_pAnimations)[m_state]->getCurrentChip());
+	setTextureScale(m_scale);
+	setTexPosition(m_pMove->m_pos);
 }
 
 //アニメーション処理

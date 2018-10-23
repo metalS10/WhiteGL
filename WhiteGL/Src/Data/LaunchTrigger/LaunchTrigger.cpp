@@ -201,7 +201,7 @@ void CLaunchScheduler::createLauncher(std::vector<CLaunchTrigger*>* pLaunchSched
 *@desc	キャラクターの出撃
 *@param	取り付けるレイヤー
 */
-void CLaunchScheduler::launchCharacters(CGameEngine& game)
+void CLaunchScheduler::launchCharacters()
 {
 	//スケジューラーに取り付けられている起動できるトリガー全てを起動する
 	std::shared_ptr<CLauncher::CLaunchTriggerIterator>itr = this->m_pLauncher->iterator();
@@ -225,11 +225,10 @@ void CLaunchScheduler::launchCharacters(CGameEngine& game)
 			//pLayer->addChild(pChara);
 			if (pChara->m_charaType == CHARACTER_TYPE::ATTACK)
 			{
-				game.setupPoly(CVec4(pChara->m_pMove->m_pos.x, pChara->m_pMove->m_pos.y, 32.0f, 32.0f), CVec4(0.0f, 0.0f, 0.0f, 100.0f), 0, POLY_TYPE::QUAD, TAG_PLAYER_ATTACK);
 			}
 			else
 			{
-				game.setupTexture(pChara->texPass, TEX_TYPE::PNG, pChara->m_texID, pChara->m_pMove->m_pos, (*pChara->m_pAnimations)[0]->getCurrentChip());
+				pChara->setImage(pChara->texPass, rendInfo::TEX_TYPE::PNG, pChara->m_texID, pChara->m_pMove->m_pos, (*pChara->m_pAnimations)[0]->getCurrentChip(), rendInfo::LAYER::MAIN);
 			}
 
 		}

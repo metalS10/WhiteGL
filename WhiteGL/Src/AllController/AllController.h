@@ -41,6 +41,7 @@ namespace MS
 		static void removeInstance();
 
 		CGameEngine& getGame();
+		render::CRenderer* getRenderer();
 		GLFWwindow* getWindow();
 
 		Input::CGameInput* getInput();

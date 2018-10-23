@@ -3,10 +3,15 @@
 #include "../Data/Sound/Sound.h"
 #include <Windows.h>
 #include <vector>
+#include "../RendInfo/RendInfo.h"
 
 //シーンの親となるクラス
 class CScene
 {
+protected:
+
+	//BlackBoad
+	rendInfo::CTexRendInfo* m_blackBoad;
 protected:
 
 	//カメラの動いた値を設定する変数
@@ -75,7 +80,7 @@ public:
 	virtual bool init();
 
 	//更新処理
-	virtual void update() {};
+	virtual void update();
 	//ゲーム本体更新
 	virtual void sceneUpdate() {};
 
@@ -95,11 +100,13 @@ public:
 	void cameraShake();
 
 
-	void moveScene(CScene* scene);
 
 	//分音符に合わせて呼ばれる関数
 	virtual void halfUpdate();
 	virtual void qauarterUpdate();
 	virtual void eighthUpdate();
+
+	bool ActionStage(rendInfo::CTexRendInfo* black, const float fadeInterval, const bool fade);
+	bool actionone1 = false;
 
 };

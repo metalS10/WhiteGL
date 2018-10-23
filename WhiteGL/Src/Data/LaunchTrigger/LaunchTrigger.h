@@ -339,7 +339,7 @@ public:
 	*@desc	キャラクターの出撃
 	*@param	取り付けるレイヤー
 	*/
-	void launchCharacters(CGameEngine& game);
+	void launchCharacters();
 };
 
 

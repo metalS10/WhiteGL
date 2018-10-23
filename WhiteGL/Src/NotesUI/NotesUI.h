@@ -1,8 +1,9 @@
 #pragma once
 #include "../Data/Notes/Notes.h"
 #include "../Data/Animation/Animation.h"
+#include "../RendInfo/RendInfo.h"
 
-class CNotesUI
+class CNotesUI : public rendInfo::CTexRendInfo
 {
 private :
 

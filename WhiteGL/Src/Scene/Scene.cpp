@@ -5,13 +5,16 @@ CScene::CScene()
 }
 CScene::~CScene()
 {
+	SAFE_DELETE(BGM);
 }
 
 bool CScene::init()
 {
+	//ブラックボード
+	m_blackBoad = new rendInfo::CTexRendInfo();
+	m_blackBoad->setImage("", rendInfo::TEX_TYPE::QUAD, TAG_BLACKBORD, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH, WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f), rendInfo::LAYER::BB);
 
-	m_game.ActionStage(MAX_TEXTURE_NUMBER - 1, 1.0f, true);
-
+	input = MS::CMS::getInstance()->getInput();
 
 
 	//BGM開始初期化
@@ -29,6 +32,12 @@ bool CScene::init()
 
 
 	return true;
+}
+
+
+void CScene::update()
+{
+	m_blackBoad->textureActionFade();
 }
 
 //カメラシェイクのセット
@@ -173,4 +182,21 @@ void CScene::eighthUpdate()
 {
 	//std::cerr << 8 << std::endl;
 	//se3->Play();
+}
+
+
+//アクション系
+bool CScene::ActionStage(rendInfo::CTexRendInfo* black, const float fadeInterval, const bool fade)
+{
+	if (!actionone1)
+	{
+		black->setActionFade(fade, fadeInterval);
+		actionone1 = true;
+	}
+	if (black->endTextureFade())
+	{
+		actionone1 = false;
+		return true;
+	}
+	return false;
 }
