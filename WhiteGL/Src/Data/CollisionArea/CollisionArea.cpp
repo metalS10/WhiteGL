@@ -606,7 +606,7 @@ void CCollisionTerritoryOutOfScreenRight::collision(CCharacter* pChara, CVec2 ba
 	if (pChara->m_pMove->m_vel.x > 0.0f)
 	{
 		//右に画面端があるかどうかをチェック
-		if ((pChara->m_pMove->m_pos.x + basePt.x) > WINDOW_RIGHT*3)
+		if ((pChara->m_pMove->m_pos.x + basePt.x) > WINDOW_RIGHT*10)
 		{
 			//イベントコールバックの呼び出し
 			this->callEventCallback(pChara);

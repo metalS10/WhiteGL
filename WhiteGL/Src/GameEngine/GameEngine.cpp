@@ -8,8 +8,8 @@ CGameEngine::CGameEngine()
 }
 CGameEngine::~CGameEngine()
 {
-}
 
+}
 //描画初期化(ステージ移動時等)
 void CGameEngine::renderInit()
 {

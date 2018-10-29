@@ -17,17 +17,13 @@ CTitle::~CTitle()
 	SAFE_DELETE(m_startButton);
 	SAFE_DELETE(m_endButton);
 	SAFE_DELETE(m_titleBG);
+	SAFE_DELETE(m_blackBoad);
 }
 
 bool CTitle::init()
 {
 	//描画情報の初期化
 	m_game.renderInit();
-
-	//ブラックボード
-	m_blackBoad = new rendInfo::CTexRendInfo();
-	m_blackBoad->setImage("", rendInfo::TEX_TYPE::QUAD, TAG_BLACKBORD, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH, WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f), rendInfo::LAYER::BB);
-
 
 	gluLookAt(
 		-cameraPosX, -cameraPosY, 0.0f,
@@ -91,6 +87,13 @@ bool CTitle::init()
 	selectingButton(m_select);
 
 
+	//ブラックボード
+	m_blackBoad = new rendInfo::CTexRendInfo();
+	m_blackBoad->setImage("", rendInfo::TEX_TYPE::QUAD, TAG_BLACKBORD, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH, WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 100.0f), rendInfo::LAYER::BB);
+
+	m_blackBoad->setActionFade(true, 10.0f);
+
+
 	return true;
 }
 
@@ -101,22 +104,39 @@ void CTitle::rendUpdate()
 
 void CTitle::update()
 {
+	//フェードアウト更新
+	m_blackBoad->textureActionFade();
+
 	CScene::update();
-	if (input->getOnKey(Input::Key::START) == true)
+	if (input->getOnKey(Input::Key::START) == true && !m_pushStart)
 	{
+		//スタートボタンを押した合図
+		m_pushStart = true;
 		//gameStart
 		if (m_select == 0)
 		{
 			BGM->fadeOut(1000);
-			//ゲームメインシーンを生成
-			MS::CMS::getInstance()->setScene(new CGameMain());
+
+			//ゲームスタートする合図
+			m_start = true;
+
 		}
 		//gameEnd
 		else
 		{
 			BGM->fadeOut(1000);
-			m_game.GameEnd();
+
+			//必要ないが一応ゲーム終了する合図
+			m_start = false;
+
 		}
+		m_blackBoad->setActionFade(false, 10.0f);
+
+	}
+	//ボタンを押した後なら
+	else if (m_pushStart)
+	{
+		selectEnter(m_start);
 	}
 	//ステージセレクト
 	if (input->getOnKey(Input::Key::DPAD_RIGHT) == true)
@@ -164,6 +184,23 @@ void CTitle::update()
 	m_titleText->textureNotesAction();
 	m_startButton->textureNotesAction();
 	m_endButton->textureNotesAction();
+}
+
+void CTitle::selectEnter(bool start)
+{
+	if (m_blackBoad->endTextureFade())
+	{
+		if (start)
+		{
+			//ゲームメインシーンを生成
+			MS::CMS::getInstance()->setScene(new CGameMain());
+		}
+		else
+		{
+			//ゲームを終了する
+			m_game.GameEnd();
+		}
+	}
 }
 
 void CTitle::qauarterUpdate()

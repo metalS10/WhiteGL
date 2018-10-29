@@ -33,7 +33,7 @@ private:
 	rendInfo::CTexRendInfo* m_EnemyHP;	//EnemyHPUI
 	rendInfo::CTexRendInfo* m_GameEndUI;	//EnemyHPUI
 	//‰æ–Ê‘S‘ÌUI
-	rendInfo::CPolygonRendInfo m_cirUI[4];
+	rendInfo::CPolygonRendInfo* m_cirUI[4];
 
 
 public:

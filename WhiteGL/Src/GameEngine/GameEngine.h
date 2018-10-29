@@ -7,7 +7,6 @@
 #include "../GamePad.h"
 
 
-class CCharacter;
 class CGameEngine
 {
 private :

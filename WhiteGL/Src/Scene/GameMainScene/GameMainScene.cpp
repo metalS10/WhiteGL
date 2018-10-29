@@ -26,8 +26,13 @@ CGameMain::~CGameMain()
 	SAFE_DELETE(m_EnemyHPwaku);	//EnemyHPUI枠
 	SAFE_DELETE(m_EnemyHP);	//EnemyHPUI
 	SAFE_DELETE(m_GameEndUI);	//EnemyHPUI
+	SAFE_DELETE(m_cirUI[0]);
+	SAFE_DELETE(m_cirUI[1]);
+	SAFE_DELETE(m_cirUI[2]);
+	SAFE_DELETE(m_cirUI[3]);
 
 	SAFE_DELETE(pPlayerChara);
+	SAFE_DELETE(m_blackBoad);
 
 
 }
@@ -45,7 +50,7 @@ bool CGameMain::init()
 
 	//ブラックボード
 	m_blackBoad = new rendInfo::CTexRendInfo();
-	m_blackBoad->setImage("", rendInfo::TEX_TYPE::QUAD, TAG_BLACKBORD, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH, WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f), rendInfo::LAYER::BB);
+	m_blackBoad->setImage("", rendInfo::TEX_TYPE::QUAD, TAG_BLACKBORD, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH, WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 100.0f), rendInfo::LAYER::BB);
 
 	if (CScene::init() == false)
 	{
@@ -82,10 +87,14 @@ bool CGameMain::init()
 	m_backGround2->setImage(MAIN_MOVEBG, rendInfo::TEX_TYPE::PNG, TAG_SCROLLBG, CVec2(WINDOW_RIGHT * 3, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, 6400.0f, 720.0f), rendInfo::LAYER::BG);
 	
 	//画面全体UI
-	m_cirUI[0].setupPoly(CVec4(WINDOW_RIGHT * 0.01f, WINDOW_TOP * 0.5f, WINDOW_TOP * 0.01f, WINDOW_TOP * 0.99f), CVec4(100.0f, 100.0f, 100.0f, 100.0f),rendInfo::LAYER::UI);
-	m_cirUI[1].setupPoly(CVec4(WINDOW_RIGHT * 0.99f, WINDOW_TOP * 0.5f, WINDOW_TOP * 0.01f, WINDOW_TOP * 0.99f), CVec4(100.0f, 100.0f, 100.0f, 100.0f), rendInfo::LAYER::UI);
-	m_cirUI[2].setupPoly(CVec4(WINDOW_RIGHT * 0.5f, WINDOW_TOP * 0.01f, WINDOW_RIGHT * 0.985f, WINDOW_TOP * 0.01f), CVec4(100.0f, 100.0f, 100.0f, 100.0f), rendInfo::LAYER::UI);
-	m_cirUI[3].setupPoly(CVec4(WINDOW_RIGHT * 0.5f, WINDOW_TOP * 0.99f, WINDOW_RIGHT * 0.985f, WINDOW_TOP * 0.01f), CVec4(100.0f, 100.0f, 100.0f, 100.0f), rendInfo::LAYER::UI);
+	m_cirUI[0] = new rendInfo::CPolygonRendInfo();
+	m_cirUI[1] = new rendInfo::CPolygonRendInfo();
+	m_cirUI[2] = new rendInfo::CPolygonRendInfo();
+	m_cirUI[3] = new rendInfo::CPolygonRendInfo();
+	m_cirUI[0]->setupPoly(CVec4(WINDOW_RIGHT * 0.01f, WINDOW_TOP * 0.5f, WINDOW_TOP * 0.01f, WINDOW_TOP * 0.99f), CVec4(100.0f, 100.0f, 100.0f, 100.0f),rendInfo::LAYER::UI);
+	m_cirUI[1]->setupPoly(CVec4(WINDOW_RIGHT * 0.99f, WINDOW_TOP * 0.5f, WINDOW_TOP * 0.01f, WINDOW_TOP * 0.99f), CVec4(100.0f, 100.0f, 100.0f, 100.0f), rendInfo::LAYER::UI);
+	m_cirUI[2]->setupPoly(CVec4(WINDOW_RIGHT * 0.5f, WINDOW_TOP * 0.01f, WINDOW_RIGHT * 0.985f, WINDOW_TOP * 0.01f), CVec4(100.0f, 100.0f, 100.0f, 100.0f), rendInfo::LAYER::UI);
+	m_cirUI[3]->setupPoly(CVec4(WINDOW_RIGHT * 0.5f, WINDOW_TOP * 0.99f, WINDOW_RIGHT * 0.985f, WINDOW_TOP * 0.01f), CVec4(100.0f, 100.0f, 100.0f, 100.0f), rendInfo::LAYER::UI);
 	
 
 	pPlayerChara = (CPlayerCharacter*)CPlayerFactoryManager::getInstance()->create(320.0f, 200.0f);
@@ -134,6 +143,8 @@ bool CGameMain::init()
 
 
 	pPlayerChara->input = input;
+	//フェードアウト
+	m_blackBoad->setActionFade(true, 10.0f);
 
 
 	return true;
@@ -159,13 +170,13 @@ void CGameMain::rendUpdate()
 	m_BPwaku->setTexPosition(CVec2(WINDOW_RIGHT*0.12f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY));
 	m_EnemyStatsUI->setTexPosition(CVec2(WINDOW_RIGHT*0.355f + cameraPosX, WINDOW_TOP*0.94f + cameraPosY));
 	m_EnemyHP->setTexPosition(CVec2(WINDOW_RIGHT*0.35f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY));
-	m_EnemyHPwaku->setTexPosition(CVec2(WINDOW_RIGHT*0.35f + cameraPosX, WINDOW_TOP*0.92f));
+	m_EnemyHPwaku->setTexPosition(CVec2(WINDOW_RIGHT*0.35f + cameraPosX, WINDOW_TOP*0.92f + cameraPosY));
 	m_backGround1->setTexPosition(CVec2(WINDOW_RIGHT*0.5f + cameraPosX, WINDOW_TOP*0.5f + cameraPosY));
 	notes->setTexPosition(CVec2(WINDOW_RIGHT-50.0f + cameraPosX, WINDOW_BOTTOM+50.0f + cameraPosY));
-	m_cirUI[0].setPolyPosX(WINDOW_RIGHT * 0.01f +cameraPosX);
-	m_cirUI[1].setPolyPosX(WINDOW_RIGHT * 0.99f +cameraPosX);
-	m_cirUI[2].setPolyPosX(WINDOW_RIGHT * 0.5f	+cameraPosX);
-	m_cirUI[3].setPolyPosX(WINDOW_RIGHT * 0.5f	+cameraPosX);
+	m_cirUI[0]->setPolyPosX(WINDOW_RIGHT * 0.01f +cameraPosX);
+	m_cirUI[1]->setPolyPosX(WINDOW_RIGHT * 0.99f +cameraPosX);
+	m_cirUI[2]->setPolyPosX(WINDOW_RIGHT * 0.5f	+cameraPosX);
+	m_cirUI[3]->setPolyPosX(WINDOW_RIGHT * 0.5f	+cameraPosX);
 	
 	//HPをHPCarに反映
 	m_HP->SetProgressBarWH(CVec4(0.0f, 0.0f, pPlayerChara->m_hitPoint, 10.0f), CVec2(WINDOW_RIGHT*0.042f + cameraPosX, WINDOW_TOP*0.962f + cameraPosY));
@@ -248,12 +259,20 @@ void CGameMain::sceneUpdate()
 	//背景用
 	m_stage->update();
 
+	//画面全体UIアクション更新
+	m_cirUI[0]->polygonBeatsAction();
+	m_cirUI[1]->polygonBeatsAction();
+	m_cirUI[2]->polygonBeatsAction();
+	m_cirUI[3]->polygonBeatsAction();
+
 	
 }
 
 //ヒットストップが存在するので注意
 void CGameMain::update()
 {
+	m_blackBoad->textureActionFade();
+
 	//ゲームエンドボタンを押したら
 	if (input->getOnKey(Input::Key::GameEnd) == true)
 	{
@@ -294,7 +313,6 @@ void CGameMain::update()
 //ゲーム全体の動き(ステージ移動)
 void CGameMain::gameMain()
 {
-
 	//次のステージへ
 	if (pPlayerChara->m_nextStage)
 	{
@@ -505,10 +523,10 @@ void CGameMain::qauarterUpdate()
 {
 	(*pPlayerChara->m_pSounds)[(int)SOUND::PLAYER_BEATS]->Play();
 	pPlayerChara->polygonBeatsActionInit(0);
-	m_cirUI[0].polygonBeatsActionInit(1);
-	m_cirUI[1].polygonBeatsActionInit(1);
-	m_cirUI[2].polygonBeatsActionInit(1);
-	m_cirUI[3].polygonBeatsActionInit(1);
+	m_cirUI[0]->polygonBeatsActionInit(1);
+	m_cirUI[1]->polygonBeatsActionInit(1);
+	m_cirUI[2]->polygonBeatsActionInit(1);
+	m_cirUI[3]->polygonBeatsActionInit(1);
 	//拍子間隔の更新処理
 	for (CCharacter* pChara : (*m_pCharacters))
 	{

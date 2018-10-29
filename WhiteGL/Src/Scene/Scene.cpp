@@ -11,9 +11,7 @@ CScene::~CScene()
 bool CScene::init()
 {
 	//ブラックボード
-	m_blackBoad = new rendInfo::CTexRendInfo();
-	m_blackBoad->setImage("", rendInfo::TEX_TYPE::QUAD, TAG_BLACKBORD, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH, WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 0.0f), rendInfo::LAYER::BB);
-
+	
 	input = MS::CMS::getInstance()->getInput();
 
 
@@ -37,7 +35,7 @@ bool CScene::init()
 
 void CScene::update()
 {
-	m_blackBoad->textureActionFade();
+	//m_blackBoad->textureActionFade();
 }
 
 //カメラシェイクのセット

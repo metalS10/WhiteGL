@@ -330,7 +330,7 @@ void CTexRendInfo::textureActionFade()
 		else
 		{
 			_texColorRGBA.w += _texActionFadeCounter;
-			if (_texColorRGBA.w >= 100.0f)
+			if (_texColorRGBA.w > 100.0f)
 			{
 				_texColorRGBA.w = 100.0f;
 				_texActionFade = false;
@@ -344,7 +344,7 @@ void CTexRendInfo::textureActionFade()
 //テクスチャフェード終了しているかどうかを返す
 bool CTexRendInfo::endTextureFade()
 {
-	return _texActionFade;
+	return !_texActionFade;
 }
 //テクスチャを拍子に合わせるか否かのセット
 void CTexRendInfo::setTexActionBeats(bool action)
@@ -498,6 +498,7 @@ void CPolygonRendInfo::polygonBeatsAction()
 //beatsに合わせるアクション(mode(0:サイズ,1色))
 void CPolygonRendInfo::polygonBeatsActionInit(const int mode)
 {
+	_polyActionBeats = true;
 	switch (mode)
 	{
 	case 0:
