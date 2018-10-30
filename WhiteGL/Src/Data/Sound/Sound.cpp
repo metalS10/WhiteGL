@@ -57,8 +57,8 @@ CSound::~CSound()
 {
 	Mix_FreeMusic(m_music);		// ロードした曲を開放
 	Mix_FreeChunk(m_chunk);		// ロードした効果音1を開放
-	Mix_CloseAudio();			// SDL_Mixerクローズ
-	SDL_Quit();					// SDL使用終了
+	//Mix_CloseAudio();			// SDL_Mixerクローズ
+	//SDL_Quit();					// SDL使用終了
 }
 
 void CSound::Load()

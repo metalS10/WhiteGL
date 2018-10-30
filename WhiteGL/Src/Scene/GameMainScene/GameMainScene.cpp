@@ -155,6 +155,8 @@ bool CGameMain::stageChangeInit()
 	pPlayerChara->m_beatInterval = 0;
 	pPlayerChara->m_beatCounter = 0;
 
+	cameraMoveX = 0.0f;
+	cameraMoveY = 0.0f;
 	return true;
 }
 
@@ -493,11 +495,64 @@ void CGameMain::openMap()
 	}
 	m_game.changeStageInit();
 
+	//------------------------------------
+	//画像の再生成
+	//------------------------------------
+	//ブラックボード
+	m_blackBoad = new rendInfo::CTexRendInfo();
+	m_blackBoad->setImage("", rendInfo::TEX_TYPE::QUAD, TAG_BLACKBORD, CVec2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT*0.5), CVec4(0.0f, 0.0f, WINDOW_WIDTH, WINDOW_HEIGHT), CVec4(0.0f, 0.0f, 0.0f, 100.0f), rendInfo::LAYER::BB);
+
+
 	//BGMのフェードアウト
 	BGM->fadeOut(300);
 
 	m_stage = m_stage->changeStage();
 	BGM = m_stage->getBGM();
+
+	m_backGround1 = new rendInfo::CTexRendInfo();
+	m_backGround2 = new rendInfo::CTexRendInfo();
+	//背景
+	m_backGround1->setImage(MAIN_BG, rendInfo::TEX_TYPE::PNG, TAG_BG, CVec2(WINDOW_RIGHT*0.5f, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, WINDOW_RIGHT, WINDOW_TOP), rendInfo::LAYER::BG);
+	m_backGround2->setImage(MAIN_MOVEBG, rendInfo::TEX_TYPE::PNG, TAG_SCROLLBG, CVec2(WINDOW_RIGHT * 3, WINDOW_TOP*0.5f), CVec4(0.0f, 0.0f, 6400.0f, 720.0f), rendInfo::LAYER::BG);
+
+	//画面全体UI
+	m_cirUI[0] = new rendInfo::CPolygonRendInfo();
+	m_cirUI[1] = new rendInfo::CPolygonRendInfo();
+	m_cirUI[2] = new rendInfo::CPolygonRendInfo();
+	m_cirUI[3] = new rendInfo::CPolygonRendInfo();
+	m_cirUI[0]->setupPoly(CVec4(WINDOW_RIGHT * 0.01f, WINDOW_TOP * 0.5f, WINDOW_TOP * 0.01f, WINDOW_TOP * 0.99f), CVec4(100.0f, 100.0f, 100.0f, 100.0f), rendInfo::LAYER::UI);
+	m_cirUI[1]->setupPoly(CVec4(WINDOW_RIGHT * 0.99f, WINDOW_TOP * 0.5f, WINDOW_TOP * 0.01f, WINDOW_TOP * 0.99f), CVec4(100.0f, 100.0f, 100.0f, 100.0f), rendInfo::LAYER::UI);
+	m_cirUI[2]->setupPoly(CVec4(WINDOW_RIGHT * 0.5f, WINDOW_TOP * 0.01f, WINDOW_RIGHT * 0.985f, WINDOW_TOP * 0.01f), CVec4(100.0f, 100.0f, 100.0f, 100.0f), rendInfo::LAYER::UI);
+	m_cirUI[3]->setupPoly(CVec4(WINDOW_RIGHT * 0.5f, WINDOW_TOP * 0.99f, WINDOW_RIGHT * 0.985f, WINDOW_TOP * 0.01f), CVec4(100.0f, 100.0f, 100.0f, 100.0f), rendInfo::LAYER::UI);
+
+	m_UIBack = new rendInfo::CTexRendInfo();
+	m_HPwaku = new rendInfo::CTexRendInfo();
+	m_BPwaku = new rendInfo::CTexRendInfo();
+	m_HP = new rendInfo::CTexRendInfo();
+	m_BP = new rendInfo::CTexRendInfo();
+	m_EnemyStatsUI = new rendInfo::CTexRendInfo();
+	m_EnemyHPwaku = new rendInfo::CTexRendInfo();
+	m_EnemyHP = new rendInfo::CTexRendInfo();
+
+	//UIの背景
+	m_UIBack->setImage(IMAGE_GAMEUI, rendInfo::TEX_TYPE::PNG, TAG_UI_BACK, CVec2(WINDOW_RIGHT*0.120f, WINDOW_TOP*0.94f), CVec4(0.0f, 34.0f, 300.0f, 80.0f), rendInfo::LAYER::UI);
+
+	//HPの枠
+	m_HPwaku->setImage(IMAGE_GAMEUI, rendInfo::TEX_TYPE::PNG, TAG_OUTLINE_HP, CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.962f), CVec4(0.0f, 20.0f, 210.0f, 14.0f), rendInfo::LAYER::UI);
+	//DPの枠
+	m_BPwaku->setImage(IMAGE_GAMEUI, rendInfo::TEX_TYPE::PNG, TAG_OUTLINE_DP, CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.92f), CVec4(0.0f, 20.0f, 210.0f, 14.0f), rendInfo::LAYER::UI);
+
+	//HP
+	m_HP->setImage(IMAGE_GAMEUI, rendInfo::TEX_TYPE::PNG, TAG_BAR_HP, CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.962f), CVec4(0.0f, 0.0f, 200.0f, 10.0f), rendInfo::LAYER::UI);
+	//DP
+	m_BP->setImage(IMAGE_GAMEUI, rendInfo::TEX_TYPE::PNG, TAG_BAR_DP, CVec2(WINDOW_RIGHT*0.12f, WINDOW_TOP*0.92f), CVec4(0.0f, 10.0f, 200.0f, 10.0f), rendInfo::LAYER::UI);
+	//EnemyStats
+	m_EnemyStatsUI->setImage(IMAGE_GAMEUI, rendInfo::TEX_TYPE::PNG, TAG_ENEMY_STATS, CVec2(WINDOW_RIGHT*0.355f, WINDOW_TOP*0.94f), CVec4(0.0f, 34.0f, 300.0f, 80.0f), rendInfo::LAYER::UI);
+	//EnemyHPwaku
+	m_EnemyHPwaku->setImage(IMAGE_GAMEUI, rendInfo::TEX_TYPE::PNG, TAG_OUTLLINE_ENEMYHP, CVec2(WINDOW_RIGHT*0.35f, WINDOW_TOP*0.92f), CVec4(0.0f, 20.0f, 210.0f, 14.0f), rendInfo::LAYER::UI);
+	//EnemyHP
+	m_EnemyHP->setImage(IMAGE_GAMEUI, rendInfo::TEX_TYPE::PNG, TAG_BAR_ENEMYHP, CVec2(WINDOW_RIGHT*0.35f, WINDOW_TOP*0.92f), CVec4(0.0f, 0.0f, 200.0f, 10.0f), rendInfo::LAYER::UI);
+
 
 	if (CScene::init() == false)
 	{

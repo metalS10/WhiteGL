@@ -166,7 +166,7 @@ CVec4 CStage1_1::getChangePositionColor(bool Top)
 //次のステージを返す。クリアならNULL。
 CStage* CStage1_1::changeStage()
 {
-	SAFE_DELETE(bgm);
+	CMapManager::removeInstance();
 	for(rendInfo::CTriPolygonRendInfo* triPoly:m_bgPoly)
 	{
 		SAFE_DELETE(triPoly);
@@ -246,6 +246,7 @@ CVec4 CStage1_2::getChangePositionColor(bool Top)
 //次のステージを返す。クリアならNULL。
 CStage* CStage1_2::changeStage()
 {
+	CMapManager::removeInstance();
 	for (rendInfo::CTriPolygonRendInfo* triPoly : m_bgPoly)
 	{
 		SAFE_DELETE(triPoly);

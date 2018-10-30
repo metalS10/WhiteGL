@@ -16,7 +16,13 @@ protected:
 	std::vector<rendInfo::CTriPolygonRendInfo*> m_bgPoly;
 public:
 	CStage(){}
-	~CStage(){}
+	~CStage()
+	{
+		for (rendInfo::CTriPolygonRendInfo* triPoly : m_bgPoly)
+		{
+			SAFE_DELETE(triPoly);
+		}
+	}
 	//初期化処理(指定のマップを開く)
 	virtual void init() {}
 	//次のステージを返す。クリアならNULL。

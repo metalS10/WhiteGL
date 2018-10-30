@@ -79,6 +79,7 @@ void CScene::cameraShake()
 				if (this->m_shakeCount <= 0)
 				{
 					this->cameraMoveY = 0.0f;
+					this->cameraPosY = 0.0f;
 					this->m_shakeCount = 0;
 					this->m_shake = false;
 				}

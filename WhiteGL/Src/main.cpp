@@ -182,10 +182,14 @@ int main(int argc, char *argv[])
 		glfwSwapBuffers(window);
 	}
 
-
-
+	
 	SAFE_DELETE(fps);
 	SAFE_DELETE(scene);
+
+	// SDL_Mixerクローズ
+	Mix_CloseAudio();			
+	//SDLの使用終了
+	SDL_Quit();	
 	return 0;
 }
 

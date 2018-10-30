@@ -445,7 +445,7 @@ void CPlayerCharacter::applyFunc()
 void CPlayerCharacter::playerEffect()
 {
 	//動いてたらエフェクト表示
-	if (m_state == (int)STATE::WALK)
+	if (m_state == (int)STATE::WALK || m_state == (int)STATE::FALING || m_state == (int)STATE::JUMPING)
 	{
 		playerEffectCount[0]++;
 		playerEffectCount[1]++;
