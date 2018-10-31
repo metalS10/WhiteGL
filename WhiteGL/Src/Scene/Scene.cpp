@@ -42,6 +42,7 @@ void CScene::update()
 void CScene::SetCameraShake(float range, int count, int frame) 
 {
 	m_shake = true;
+	m_shakeEnd = false;
 	m_shakeRange = range;
 	m_shakeCount = count;
 	m_shakeFrame = frame;
@@ -56,30 +57,37 @@ void CScene::cameraShake()
 			this->m_shakeFrameCount++;
 			if (this->m_shakeFrame <= this->m_shakeFrameCount)
 			{
-				if (m_shakeFripFrop)
+				if (this->m_shakeCount > 0)
 				{
-					this->m_shakeFrameCount = 0;
+					if (m_shakeFripFrop)
+					{
+						this->m_shakeFrameCount = 0;
 
-					this->cameraMoveY = this->m_shakeRange;
+						this->cameraMoveY = this->m_shakeRange;
 
-					this->m_shakeRange *= -0.5f;
-					this->m_shakeFripFrop = true;
+						this->m_shakeRange *= -0.5f;
+						this->m_shakeFripFrop = true;
+					}
+					else
+					{
+						this->m_shakeFrameCount = 0;
+						this->m_shakeCount--;
+
+						this->cameraMoveY = this->m_shakeRange;
+
+						this->m_shakeRange *= -1.0f;
+						this->m_shakeFripFrop = false;
+					}
 				}
-				else
+				if (this->m_shakeCount <= 0 && !m_shakeEnd)
 				{
-					this->m_shakeFrameCount = 0;
-					this->m_shakeCount--;
-
-					this->cameraMoveY = this->m_shakeRange;
-
-					this->m_shakeRange *= -1.0f;
-					this->m_shakeFripFrop = false;
+					this->cameraMoveY = -this->cameraPosY * 0.5f;
+					this->m_shakeEnd = true;
+					m_shakeCount--;
 				}
-
-				if (this->m_shakeCount <= 0)
+				else if (this->m_shakeCount <= 0)
 				{
 					this->cameraMoveY = 0.0f;
-					this->cameraPosY = 0.0f;
 					this->m_shakeCount = 0;
 					this->m_shake = false;
 				}

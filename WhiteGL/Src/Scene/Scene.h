@@ -33,6 +33,7 @@ protected:
 	int m_shakeFrame = 0;
 	int m_shakeFrameCount = 0;
 	bool m_shakeFripFrop = false;
+	bool m_shakeEnd = false;
 
 	//ƒQ[ƒ€ƒGƒ“ƒWƒ“
 	CGameEngine& m_game = MS::CMS::getInstance()->getGame();
